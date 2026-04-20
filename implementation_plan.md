@@ -34,6 +34,7 @@
 | **Responsive UI** | Every size uses `.w`, `.h`, `.sp` from `flutter_screenutil` |
 | **Clean code** | No magic numbers, no unused imports, all names are meaningful |
 | **Follow Figma** | UI must match Figma exactly — no custom/invented UI |
+| **Dark-mode ready** | Colors defined via `ThemeExtension<AppColorScheme>` — `copyWith` + `lerp` support built-in |
 
 ---
 
@@ -41,169 +42,105 @@
 
 ### Colors
 
-```dart
-// Primary
-static const Color primary          = Color(0xFF2D4B73); // Deep Blue — buttons, active nav, headings
-static const Color primaryLight     = Color(0xFF4A6CF7); // Medium Blue — gradient start, highlights
+| Token | Hex | Usage |
+|---|---|---|
+| `primary` | `#2D4B73` | Buttons, active nav, headings |
+| `primaryLight` | `#4A6CF7` | Gradient start, highlights |
+| `scaffoldBg` | `#F9FAFB` | Page background (off-white) |
+| `surface` | `#FFFFFF` | Cards, nav bar, inputs |
+| `textPrimary` | `#111827` | Headings, body text |
+| `textSecondary` | `#6B7280` | Subtitles, labels |
+| `textHint` | `#9CA3AF` | Hints, disabled states |
+| `ongoingBg` | `#E7F0FF` | "Ongoing" badge background |
+| `ongoingText` | `#2D4B73` | "Ongoing" badge text |
+| `completedBg` | `#E7F7F2` | "Completed" badge background |
+| `completedText` | `#0E9F6E` | "Completed" badge text |
 
-// Gradient (onboarding, impact cards)
-// LinearGradient: Color(0xFF4A6CF7) → Color(0xFF2D4B73)
+**Dark mode equivalents** (ready for future use):
 
-// Status
-static const Color ongoingBg        = Color(0xFFE7F0FF); // Light Blue — "Ongoing" badge background
-static const Color ongoingText      = Color(0xFF2D4B73); // Deep Blue — "Ongoing" badge text
-static const Color completedBg      = Color(0xFFE7F7F2); // Mint Green — "Completed" badge background
-static const Color completedText    = Color(0xFF0E9F6E); // Dark Green — "Completed" badge text
+| Token | Hex |
+|---|---|
+| `primary` | `#4A6CF7` |
+| `scaffoldBg` | `#111827` |
+| `surface` | `#1F2937` |
+| `textPrimary` | `#F9FAFB` |
+| `textSecondary` | `#9CA3AF` |
 
-// Background
-static const Color scaffoldBg       = Color(0xFFF9FAFB); // Off-white — page background
-static const Color surface          = Color(0xFFFFFFFF); // White — cards, nav bar, inputs
+**Gradient:** `#4A6CF7 → #2D4B73` (onboarding, impact cards)
 
-// Text
-static const Color textPrimary      = Color(0xFF111827); // Near Black — headings, body
-static const Color textSecondary    = Color(0xFF6B7280); // Medium Gray — subtitles, labels
-static const Color textHint         = Color(0xFF9CA3AF); // Light Gray — hints, disabled
-```
+### Typography — Inter Font
 
-### Typography — Inter font
-
-```dart
-// All sizes in .sp via flutter_screenutil
-displayLarge     → 24.sp / Bold       // Splash, onboarding main titles
-headlineMedium   → 20.sp / SemiBold   // Page titles
-titleLarge       → 18.sp / SemiBold   // Card titles, section headers
-bodyLarge        → 16.sp / Regular    // Buttons, subheadings
-bodyMedium       → 14.sp / Regular    // Standard body, labels
-labelSmall       → 12.sp / Regular    // Status badges, dates, roles, metadata
-```
+| Token | Size | Weight | Usage |
+|---|---|---|---|
+| `displayLarge` | `24.sp` | Bold | Splash, onboarding titles |
+| `headlineMedium` | `20.sp` | SemiBold | Page titles |
+| `titleLarge` | `18.sp` | SemiBold | Card titles, section headers |
+| `bodyLarge` | `16.sp` | Regular | Buttons, subheadings |
+| `bodyMedium` | `14.sp` | Regular | Standard body, labels |
+| `labelSmall` | `12.sp` | Regular | Badges, dates, metadata |
 
 ### Spacing (flutter_screenutil)
 
-```dart
-static const double xs   = 4;   // → 4.w
-static const double sm   = 8;   // → 8.w
-static const double md   = 16;  // → 16.w  (card internal padding, element gaps)
-static const double lg   = 20;  // → 20.w  (page horizontal margin)
-static const double xl   = 24;  // → 24.w
-static const double xxl  = 32;  // → 32.w
-```
+| Token | Value | Usage |
+|---|---|---|
+| `xs` | `4.w` | Tight gaps |
+| `sm` | `8.w` | Small gaps |
+| `md` | `16.w` | Card padding, element gaps |
+| `lg` | `20.w` | Page horizontal margin |
+| `xl` | `24.w` | Section gaps |
+| `xxl` | `32.w` | Large sections |
 
 ### Border Radius
 
-```dart
-static const double radiusCard      = 12; // Cards and buttons  → .r
-static const double radiusCardLarge = 16; // Large cards        → .r
-static const double radiusPill      = 20; // Status badges/chips → .r (fully rounded)
-```
+| Token | Value | Usage |
+|---|---|---|
+| `radiusCard` | `12.r` | Cards, buttons |
+| `radiusCardLarge` | `16.r` | Large cards |
+| `radiusPill` | `20.r` | Status badges, chips |
 
-### Elevation / Shadow
+### Shadow
 
-```dart
-// Soft shadow used on white cards against the off-white background
-BoxShadow(
-  color: Colors.black.withOpacity(0.05),
-  blurRadius: 4,
-  offset: Offset(0, 4),
-)
-```
+Soft shadow on white cards against off-white background: `color: black 5% opacity`, `blurRadius: 4`, `offset: (0, 4)`.
 
 ---
 
-## 📦 Packages (pubspec.yaml)
+## 📦 Packages
 
-```yaml
-dependencies:
-  flutter:
-    sdk: flutter
+| Package | Version | Purpose |
+|---|---|---|
+| `flutter_bloc` | `^8.1.6` | State management — Bloc pattern with Cubit support |
+| `equatable` | `^2.0.5` | Value equality for entities, states, events |
+| `go_router` | `^14.2.0` | Declarative routing with type-safe route configuration |
+| `get_it` | `^8.0.2` | Service locator for dependency injection |
+| `dio` | `^5.6.0` | HTTP client with interceptors, timeout config, multipart support |
+| `pretty_dio_logger` | `^1.4.0` | Readable request/response logs — debug mode only |
+| `web_socket_channel` | `^3.0.1` | WebSocket client for real-time chat |
+| `dartz` | `^0.10.1` | Functional error handling — `Either<Failure, Data>` for all use cases |
+| `flutter_screenutil` | `^5.9.3` | Responsive sizing — `.w` `.h` `.sp` on all widgets |
+| `cached_network_image` | `^3.4.1` | Efficient network image loading with disk caching |
+| `flutter_svg` | `^2.0.10+1` | SVG asset rendering |
+| `shimmer` | `^3.0.0` | Skeleton loading animation while data is fetching |
+| `lottie` | `^3.1.2` | Lottie animation player — onboarding, AI matching |
+| `fl_chart` | `^0.69.0` | Charts — productivity stats and activity bar chart on home |
+| `google_fonts` | `^6.2.1` | Inter font family — matches Figma typography |
+| `shared_preferences` | `^2.3.2` | Lightweight key-value — auth token and first-launch flag only |
+| `sqflite` | `^2.3.3+1` | Relational local database — offline caching |
+| `path` | `^1.9.0` | Correct local file path for sqflite on each platform |
+| `image_picker` | `^1.1.2` | Device image/camera picker — profile photo upload |
+| `file_picker` | `^8.1.2` | Multi-type file picker — chat file attachment |
+| `path_provider` | `^2.1.4` | App file system paths — file picker and attachments |
+| `intl` | `^0.19.0` | Date formatting — task due dates, message timestamps |
+| `connectivity_plus` | `^6.0.5` | Network connectivity detection — offline check |
+| `internet_connection_checker_plus` | `^2.5.1` | Reliable active internet checker |
+| `rxdart` | `^0.28.0` | Reactive stream utilities — WebSocket stream transformations |
 
-  # State management — Bloc pattern with Cubit support
-  flutter_bloc: ^8.1.6
+**Dev dependencies:**
 
-  # Value equality for entities, states, events — required by Bloc
-  equatable: ^2.0.5
-
-  # Declarative routing with type-safe route configuration
-  go_router: ^14.2.0
-
-  # Service locator for dependency injection
-  get_it: ^8.0.2
-
-  # HTTP client with interceptors, timeout config, and multipart support
-  dio: ^5.6.0
-
-  # Dio interceptor for readable request/response logs in debug mode only
-  pretty_dio_logger: ^1.4.0
-
-  # WebSocket client for real-time chat messaging
-  web_socket_channel: ^3.0.1
-
-  # Functional error handling — Either<Failure, Data> for all use cases
-  dartz: ^0.10.1
-
-  # Responsive layout sizing — .w .h .sp units on all widgets
-  flutter_screenutil: ^5.9.3
-
-  # Efficient network image loading with disk caching
-  cached_network_image: ^3.4.1
-
-  # SVG asset rendering support
-  flutter_svg: ^2.0.10+1
-
-  # Skeleton loading animation shown while data is fetching
-  shimmer: ^3.0.0
-
-  # Lottie animation player — used in onboarding and AI matching screens
-  lottie: ^3.1.2
-
-  # Chart library — used for productivity stats and activity bar chart on home screen
-  fl_chart: ^0.69.0
-
-  # Inter font family from Google Fonts — matches Figma typography
-  google_fonts: ^6.2.1
-
-  # Lightweight key-value storage — used only for auth token and first-launch flag
-  shared_preferences: ^2.3.2
-
-  # Relational local database — used for offline caching of projects, tasks, and messages
-  sqflite: ^2.3.3+1
-
-  # Provides the correct local database file path for sqflite on each platform
-  path: ^1.9.0
-
-  # Device image/camera picker — used in profile photo upload
-  image_picker: ^1.1.2
-
-  # Multi-type file picker — used in chat file attachment
-  file_picker: ^8.1.2
-
-  # App file system paths — needed by file picker and attachments
-  path_provider: ^2.1.4
-
-  # Date formatting for task due dates and message timestamps
-  intl: ^0.19.0
-
-  # Network connectivity detection — used in NetworkInfo for offline check
-  connectivity_plus: ^6.0.5
-
-  # Reliable active internet checker (beyond connectivity status)
-  internet_connection_checker_plus: ^2.5.1
-
-  # Reactive stream utilities — used for WebSocket stream transformations in chat
-  rxdart: ^0.28.0
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-
-  # Unit testing utilities for Bloc/Cubit — emit sequence assertions
-  bloc_test: ^9.1.7
-
-  # Mock objects for unit tests without code generation
-  mocktail: ^1.0.4
-
-  # Dart lint rules enforcing clean code style
-  flutter_lints: ^5.0.0
-```
+| Package | Version | Purpose |
+|---|---|---|
+| `bloc_test` | `^9.1.7` | Unit testing for Bloc/Cubit — emit sequence assertions |
+| `mocktail` | `^1.0.4` | Mock objects for unit tests without code generation |
+| `flutter_lints` | `^5.0.0` | Dart lint rules enforcing clean code style |
 
 ---
 
@@ -219,7 +156,7 @@ lib/
 │   │   ├── app_strings.dart          ← exists, fill with all string literals
 │   │   └── app_spacing.dart          ← NEW: spacing constants
 │   ├── theme/
-│   │   ├── app_color.dart            ← exists, fill from Figma tokens above
+│   │   ├── app_color_scheme.dart     ← NEW: ThemeExtension with light + dark
 │   │   ├── app_them.dart             ← exists, fill ThemeData
 │   │   └── text_style.dart           ← exists, fill typography from Figma
 │   ├── network/
@@ -237,17 +174,25 @@ lib/
 │   │   └── error_strings.dart        ← exists, error message constants
 │   ├── helper/
 │   │   ├── api/                      ← exists
-│   │   └── cache/                    ← exists, add CacheHelper (SharedPreferences)
+│   │   ├── cache/                    ← exists, add CacheHelper (SharedPreferences)
+│   │   └── database/                 ← NEW: AppDatabase (sqflite)
+│   ├── usecases/
+│   │   └── usecase.dart              ← NEW: abstract UseCase base class
 │   ├── utils/
 │   │   ├── validators.dart           ← NEW
 │   │   ├── date_formatter.dart       ← NEW
-│   │   └── extensions.dart           ← NEW
+│   │   ├── extensions.dart           ← NEW
+│   │   └── pagination/
+│   │       ├── pagination_params.dart     ← NEW (Phase 28)
+│   │       ├── paginated_entity.dart      ← NEW (Phase 28)
+│   │       └── paginated_model.dart       ← NEW (Phase 28)
 │   └── widgets/
 │       ├── bridge_app_button.dart    ← exists, implement from Figma
 │       ├── app_text_field.dart       ← NEW
 │       ├── app_loading.dart          ← NEW
 │       ├── app_error_widget.dart     ← NEW
-│       └── app_avatar.dart           ← NEW
+│       ├── app_avatar.dart           ← NEW
+│       └── app_paginated_list.dart   ← NEW (Phase 28)
 │
 └── features/
     ├── auth/
@@ -262,6 +207,238 @@ lib/
 
 ---
 
+## 🗺️ User Flows
+
+### Flow 1 — App Entry (All Roles)
+
+```mermaid
+flowchart TD
+    A([App Launch]) --> B[Splash Screen\n1.5s delay]
+    B --> C{First launch?}
+    C -- Yes --> D[Onboarding\n3 slides]
+    C -- No --> E{Token exists?}
+    D --> F[Login Page]
+    E -- No --> F
+    E -- Yes --> G{Role?}
+
+    F --> H[Register Page]
+    F --> I[Forgot Password Page]
+    F --> J{Login Success?}
+    J -- No --> F
+    J -- Yes --> K[OTP Verification]
+    H --> K
+    K --> L{OTP Valid?}
+    L -- No --> K
+    L -- Yes --> M[Profile Setup\nRole · Track · Seniority]
+    M --> G
+
+    G -- Student --> N[Student Home]
+    G -- Supervisor --> O[Supervisor Home]
+    G -- Company --> P[Company Dashboard]
+```
+
+---
+
+### Flow 2 — Student Journey
+
+```mermaid
+flowchart TD
+    A([Student Home]) --> B[View Dashboard\nProgress · AI Insight · Chart]
+
+    A --> C[Browse Teams]
+    C --> D[AI Matching\nAuto score]
+    C --> E[Manual Browse\nTeam cards]
+    D --> F{Match found?}
+    F -- Yes --> G[View Match Result\nAccept / Skip]
+    F -- No --> E
+    E --> H[Request to Join Team]
+    G --> H
+    H --> I{Request Status}
+    I -- Pending --> J[Wait for Supervisor]
+    I -- Accepted --> K[My Workspace]
+
+    K --> L[Projects List\nOngoing / Completed tabs]
+    L --> M[Project Detail\nTask Board]
+    M --> N[View Task Detail]
+    M --> O[Update Task Status\nOngoing → Completed]
+
+    A --> P[Chat List]
+    P --> Q[Team Chat Room]
+    Q --> R[Send Text Message]
+    Q --> S[Send Code Snippet]
+    Q --> T[Send File Attachment]
+
+    A --> U[Profile Page]
+    U --> V[Edit Profile\nName · Bio · Skills]
+    U --> W[View Portfolio\nProjects · Ratings]
+
+    A --> X[Notifications]
+    X --> Y[Mark as Read]
+    X --> Z[Tap → Navigate to Source]
+```
+
+---
+
+### Flow 3 — Supervisor Journey
+
+```mermaid
+flowchart TD
+    A([Supervisor Home]) --> B[View Dashboard\nTeam Stats · Progress]
+
+    A --> C[Create Team]
+    C --> D[Fill Form\nName · Category · Skills · Size]
+    D --> E[Team Created]
+    E --> F[Team Workspace]
+
+    F --> G[Projects List]
+    G --> H[Project Detail\nTask Board]
+    H --> I[Create Task]
+    I --> J[Assign Member\nSet Priority · Due Date]
+    J --> K[Task Added to Board]
+    H --> L[Update Any Task Status]
+
+    E --> M[Manage Join Requests]
+    M --> N{Decision}
+    N -- Accept --> O[Member Added to Team]
+    N -- Reject --> P[Request Rejected]
+
+    F --> Q[Team Settings]
+    Q --> R[Remove Member]
+    Q --> S[Delete Project\nConfirmation Dialog]
+    S --> T[Routed back to Projects List]
+
+    A --> U[Chat List]
+    U --> V[Team Chat Room]
+    V --> W[Send Message / File]
+
+    A --> X[Profile Page]
+    A --> Y[Notifications]
+```
+
+---
+
+### Flow 4 — Company Journey
+
+```mermaid
+flowchart TD
+    A([Company Dashboard]) --> B[Posted Projects Overview\nStats · Active Teams]
+
+    A --> C[Browse Talent]
+    C --> D[Filter Talent\nBy Track · Seniority · Skills]
+    D --> E{Results?}
+    E -- Yes --> F[Talent List\nDeveloper Cards]
+    E -- No --> G[No Results State\nClear Filters]
+    G --> D
+
+    F --> H[View Talent Card\nName · Skills · Projects count]
+    H --> I[View Full Profile\nRead-only]
+    I --> J[View Portfolio\nImpact Metrics · Ratings]
+
+    A --> K[Notifications]
+    K --> L[Mark as Read]
+```
+
+---
+
+### Navigation Guard Summary
+
+| From | Condition | Redirected To |
+|---|---|---|
+| Any protected route | No token | `/login` |
+| `/onboarding` | `isFirstLaunch = false` | `/login` |
+| `/profile-setup` | Role already set in cache | `/home` |
+| `/create-team` | Role = Student | `/teams` discovery |
+| `/team-settings` | Role ≠ Supervisor | `/home` |
+| `/company` routes | Role ≠ Company | `/home` |
+| Token expired (401) | Any API call | `/login` (via interceptor) |
+
+---
+
+## 🗄️ Local Database Schema (sqflite)
+
+> All tables use `INTEGER` for booleans (0/1) and Unix timestamps (ms). Schema version starts at `1` — increment on every structural change and handle in `onUpgrade` (ALTER TABLE only — never DROP).
+
+### Table: `users`
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | TEXT PRIMARY KEY | |
+| `name` | TEXT NOT NULL | |
+| `email` | TEXT NOT NULL | |
+| `role` | TEXT NOT NULL | `student` / `supervisor` / `company` |
+| `track` | TEXT | `frontend` / `backend` / `mobile` / `ai` / `design` |
+| `seniority` | TEXT | `junior` / `mid` / `senior` |
+| `avatar_url` | TEXT | Nullable |
+| `bio` | TEXT | Nullable |
+| `cached_at` | INTEGER NOT NULL | Unix ms — used for TTL check |
+
+### Table: `messages`
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | TEXT PRIMARY KEY | |
+| `room_id` | TEXT NOT NULL | Indexed with `sent_at DESC` |
+| `sender_id` | TEXT NOT NULL | |
+| `sender_name` | TEXT NOT NULL | |
+| `sender_avatar` | TEXT | Nullable |
+| `content` | TEXT NOT NULL | |
+| `type` | TEXT NOT NULL | Default `text` — `text` / `code` / `file` |
+| `attachment_url` | TEXT | Nullable |
+| `sent_at` | INTEGER NOT NULL | Unix ms |
+| `is_read` | INTEGER NOT NULL | Default `0` — `0` = unread, `1` = read |
+
+### Table: `projects`
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | TEXT PRIMARY KEY | |
+| `title` | TEXT NOT NULL | |
+| `status` | TEXT NOT NULL | `ongoing` / `completed` — indexed |
+| `progress_percent` | INTEGER NOT NULL | Default `0` |
+| `team_id` | TEXT NOT NULL | |
+| `my_role` | TEXT | Current user's role on this project |
+| `cached_at` | INTEGER NOT NULL | |
+
+### Table: `tasks`
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | TEXT PRIMARY KEY | |
+| `project_id` | TEXT NOT NULL | Compound index with `status` |
+| `title` | TEXT NOT NULL | |
+| `description` | TEXT | Nullable |
+| `status` | TEXT NOT NULL | `todo` / `ongoing` / `completed` |
+| `priority` | TEXT NOT NULL | `low` / `medium` / `high` |
+| `assignee_id` | TEXT | Nullable |
+| `due_date` | INTEGER | Unix ms, nullable |
+| `cached_at` | INTEGER NOT NULL | |
+
+### Table: `notifications`
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | TEXT PRIMARY KEY | |
+| `type` | TEXT NOT NULL | `team_invite` / `task_assigned` / `task_updated` / `message` |
+| `title` | TEXT NOT NULL | |
+| `body` | TEXT NOT NULL | |
+| `is_read` | INTEGER NOT NULL | Default `0` — indexed with `created_at DESC` |
+| `created_at` | INTEGER NOT NULL | Unix ms |
+| `meta` | TEXT | JSON string for navigation e.g. `{"teamId":"123"}` |
+
+### Cache Strategy
+
+| Table | TTL | Invalidation |
+|---|---|---|
+| `users` | 30 min | On profile update or logout |
+| `messages` | Persistent | New messages appended; older pages on scroll |
+| `projects` | 15 min | On pull-to-refresh or status change |
+| `tasks` | 15 min | On task status update |
+| `notifications` | Persistent | Cleared on logout |
+
+> `isCacheStale(cachedAt, ttlMinutes)` — helper in `core/utils/` that checks if `now - cachedAt > ttl * 60 * 1000`.
+
+---
+
 ## 🚀 Implementation Phases
 
 ---
@@ -273,6 +450,14 @@ lib/
 - [ ] Run `flutter pub get` — zero errors
 - [ ] Verify `assets/images/` and `assets/svg/` sections registered
 
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| Package version conflict | Run `flutter pub deps` to inspect the dependency tree; pin exact versions if needed |
+| `flutter pub get` fails | Verify `environment.sdk` constraint matches installed Flutter SDK version |
+| Asset folder missing | Create `assets/images/` and `assets/svg/` directories before running pub get |
+| SDK constraint mismatch | Update `sdk: ^3.x.x` in `pubspec.yaml` to match current Flutter SDK |
+
 **Deliverable:** Clean project with all packages installed.
 
 ---
@@ -280,62 +465,40 @@ lib/
 ### Phase 1 — Design System & Theme
 **Goal:** Fill all empty theme files using Figma tokens exactly as extracted above.
 
-- [ ] `core/theme/app_color.dart` — implement all color constants from Figma tokens section
+- [ ] `core/theme/app_color_scheme.dart` — implement `AppColorScheme extends ThemeExtension<AppColorScheme>` with `light` and `dark` static const instances, `copyWith`, and `lerp` overrides (see Design System section for all hex values)
 - [ ] `core/theme/text_style.dart` — Inter font, full hierarchy using `.sp` for all sizes
-- [ ] `core/theme/app_them.dart` — build `ThemeData` from color + text tokens, light mode only
+- [ ] `core/theme/app_them.dart` — build `ThemeData` with `extensions: [AppColorScheme.light]`; dark theme with `extensions: [AppColorScheme.dark]`; pass both to `MaterialApp.router` with `ThemeMode.system`
 - [ ] `core/constant/app_spacing.dart` — spacing and border radius constants from Figma
 - [ ] `core/constant/app_strings.dart` — fill all string literals used across the app
 - [ ] `app.dart` — `MaterialApp.router` wrapped in `ScreenUtilInit` (design size: `390×844`), theme applied
 
-**Deliverable:** Design system ready — all Figma tokens available as named Dart constants.
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| Google Fonts fails (no internet on first launch) | Add Inter font as a local asset in `pubspec.yaml` as fallback — never rely on network for fonts |
+| `ScreenUtilInit` not wrapping `MaterialApp` | App crashes on `.w`/`.h`/`.sp` — ensure `ScreenUtilInit` is the root widget in `app.dart` |
+| `ThemeData` not applied globally | Wrap every test with `MaterialApp(theme: AppTheme.light)` to avoid null theme errors in widget tests |
+| Wrong design size set in `ScreenUtilInit` | All sizes will be off — design size must match Figma frame: `width: 390, height: 844` |
+
+**Deliverable:** Design system ready — all Figma tokens available, `context.colors.*` and `context.*TextStyle` ready for use.
 
 ---
 
 ### Phase 2 — Core: Error Handling & UseCase Base
 **Goal:** Build the error layer and base UseCase contract.
 
-- [ ] `core/error/exception.dart`:
-  ```dart
-  class ServerException extends Equatable {
-    const ServerException({required this.message});
-    final String message;
-    @override List<Object> get props => [message];
-  }
-  class CacheException extends Equatable {
-    const CacheException({required this.message});
-    final String message;
-    @override List<Object> get props => [message];
-  }
-  class NetworkException extends Equatable {
-    const NetworkException({required this.message});
-    final String message;
-    @override List<Object> get props => [message];
-  }
-  class UnauthorizedException extends Equatable {
-    const UnauthorizedException({required this.message});
-    final String message;
-    @override List<Object> get props => [message];
-  }
-  ```
-- [ ] `core/error/failure.dart`:
-  ```dart
-  abstract class Failure extends Equatable {}
-  class ServerFailure extends Failure { ... }
-  class NetworkFailure extends Failure {}
-  class CacheFailure extends Failure { ... }
-  class UnauthorizedFailure extends Failure {}
-  ```
+- [ ] `core/error/exception.dart` — define `ServerException`, `CacheException`, `NetworkException`, `UnauthorizedException` — all with `required named message` parameter and `Equatable` props
+- [ ] `core/error/failure.dart` — define `ServerFailure`, `NetworkFailure`, `CacheFailure`, `UnauthorizedFailure` all extending abstract `Failure extends Equatable`
 - [ ] `core/error/error_strings.dart` — constant error message strings
-- [ ] `core/usecases/usecase.dart`:
-  ```dart
-  abstract class UseCase<Type, Params> {
-    Future<Either<Failure, Type>> call({required Params params});
-  }
-  class NoParams extends Equatable {
-    const NoParams();
-    @override List<Object> get props => [];
-  }
-  ```
+- [ ] `core/usecases/usecase.dart` — abstract `UseCase<Type, Params>` with `call({required Params params})` returning `Either<Failure, Type>`; also define `NoParams extends Equatable`
+
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| Unknown exception type not caught | Add `UnknownFailure` as catch-all in every `RepositoryImpl` catch block |
+| `UseCase` called with wrong `Params` type | Dart's type system catches this at compile time — never use `dynamic` for params |
+| Null API response body | `ServerException` with `ErrorStrings.nullResponse` — never call `.!` on nullable response data |
+| `Failure` compared without `props` | All `Failure` subclasses must override `props` via `Equatable` — required for `BlocTest` assertions |
 
 **Deliverable:** Failure hierarchy + UseCase base class available for all features.
 
@@ -349,12 +512,22 @@ lib/
 - [ ] `core/network/api_client.dart`:
   - Dio instance with base URL, timeouts (`connectTimeout: 30s`, `receiveTimeout: 30s`)
   - `AuthInterceptor` — reads token from `CacheHelper`, attaches as `Authorization: Bearer <token>`
-  - `ErrorInterceptor` — maps HTTP status codes → typed exceptions (401 → `UnauthorizedException`, 5xx → `ServerException`)
+  - `ErrorInterceptor` — maps HTTP status codes → typed exceptions (`401 → UnauthorizedException`, `5xx → ServerException`)
   - `pretty_dio_logger` added only in debug mode
-- [ ] `core/helper/cache/cache_helper.dart` — `SharedPreferences` wrapper:
+- [ ] `core/helper/cache/cache_helper.dart` — `SharedPreferences` wrapper with:
   - `saveToken(String)`, `getToken()`, `deleteToken()`
   - `saveUserRole(String)`, `getUserRole()`
   - `setFirstLaunch(bool)`, `isFirstLaunch()`
+
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| No internet connection | `NetworkInfo.isConnected` checked in every `RepositoryImpl` before API call → `Left(NetworkFailure())` |
+| Token expired (401) | `AuthInterceptor` catches 401 → clears token via `CacheHelper` → emits router refresh signal → redirect to `/login` |
+| Request timeout | `DioExceptionType.connectionTimeout` / `receiveTimeout` caught → `Left(NetworkFailure())` |
+| Server error (5xx) | `ErrorInterceptor` maps 5xx → `ServerException(message: ErrorStrings.serverError)` |
+| Malformed JSON response | `FormatException` caught in `RemoteDataSource` → throw `ServerException(message: ErrorStrings.parseError)` |
+| `CacheHelper` write fails | Wrap all `SharedPreferences` writes in try-catch → log error, continue gracefully |
 
 **Deliverable:** `ApiClient` ready — all future datasources use `sl<ApiClient>()`.
 
@@ -363,131 +536,76 @@ lib/
 ### Phase 4 — Core: Router & DI Shell
 **Goal:** Wire `go_router` and register all core singletons in `get_it`.
 
-- [ ] `core/navigation/app_route_constant.dart` — all route paths as `static const String`:
-  ```dart
-  static const String splash = '/';
-  static const String onboarding = '/onboarding';
-  static const String login = '/login';
-  static const String register = '/register';
-  static const String otp = '/otp';
-  static const String forgotPassword = '/forgot-password';
-  static const String profileSetup = '/profile-setup';
-  static const String home = '/home';
-  // ... all remaining routes
-  ```
+- [ ] `core/navigation/app_route_constant.dart` — all route paths as `static const String`: `/`, `/onboarding`, `/login`, `/register`, `/otp`, `/forgot-password`, `/profile-setup`, `/home`, and all feature routes
 - [ ] `core/navigation/app_route.dart` — `GoRouter` configuration:
   - `redirect` guard: check token + role → appropriate entry point
-  - Stub routes returning `const Scaffold(body: SizedBox())` for all pages
+  - Stub routes returning empty `Scaffold` for all unbuilt pages
   - `StatefulShellRoute` for bottom navigation shell (added in Phase 13)
 - [ ] `core/di/di.dart` — register core with category comments:
-  ```dart
-  // ─── Local Storage ───────────────────────────────────────────
-  final sharedPreferences = await SharedPreferences.getInstance();
-  sl.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
-  sl.registerLazySingleton<CacheHelper>(() => CacheHelper(sl()));
-
-  // ─── Network ─────────────────────────────────────────────────
-  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
-  sl.registerLazySingleton<ApiClient>(() => ApiClient(sl()));
-
-  // Feature DI sections follow the same pattern:
-  // ─── Data Sources ─────────────────────────────────────────────
-  // sl.registerLazySingleton<AuthRemoteDataSource>(() => AuthRemoteDataSourceImpl(sl()));
-  // sl.registerLazySingleton<AuthLocalDataSource>(() =>  AuthLocalDataSourceImpl(sl()));
-
-  // ─── Repositories ─────────────────────────────────────────────
-  // sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl(), sl(), sl()));
-
-  // ─── Use Cases ────────────────────────────────────────────────
-  // sl.registerLazySingleton<LoginUseCase>(() => LoginUseCase(sl()));
-
-  // ─── Bloc / Cubit ─────────────────────────────────────────────
-  // sl.registerFactory<AuthBloc>(() => AuthBloc(sl(), sl()));
-  ```
+  - `// ─── Local Storage` — `SharedPreferences`, `CacheHelper`
+  - `// ─── Network` — `NetworkInfo`, `ApiClient`
+  - Feature DI sections follow: `// ─── Data Sources`, `// ─── Repositories`, `// ─── Use Cases`, `// ─── Bloc / Cubit`
 - [ ] `main.dart` — `await initDi()` before `runApp()`
+
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| `sl<T>()` called before `initDi()` completes | `await initDi()` is strictly the first call in `main()` — never call `sl<>()` at class-level |
+| Route not found (typo in path) | `GoRouter.errorBuilder` renders a branded "Page not found" screen, never crashes |
+| Protected route accessed by wrong role | `redirect` guard in `GoRouter` reads role from `CacheHelper` and redirects to the correct entry point |
+| Deep link with invalid path | `GoRouter` catches unknown paths via `errorBuilder` |
+| `SharedPreferences` not initialized before DI | `await SharedPreferences.getInstance()` is always first in `initDi()` before any other registration |
 
 **Deliverable:** App starts, routing redirects correctly, DI shell initialized.
 
 ---
 
 ### Phase 5 — Core: Extensions, Color Schema & Shared Widgets
-**Goal:** Create `BuildContext` extensions for colors and text styles so every feature accesses the design system through `context` — never by importing `AppColors` or `AppTextStyles` directly. Then build the shared widget library from Figma.
+**Goal:** Create `BuildContext` extensions for colors and text styles so every feature accesses the design system through `context`. Build the shared widget library from Figma.
 
-#### 5a — AppColorScheme Extension
-- [ ] `core/theme/app_color.dart` — define a custom `AppColorScheme` class holding all Figma tokens:
-  ```dart
-  class AppColorScheme {
-    const AppColorScheme();
-    final Color primary          = const Color(0xFF2D4B73);
-    final Color primaryLight     = const Color(0xFF4A6CF7);
-    final Color scaffoldBg       = const Color(0xFFF9FAFB);
-    final Color surface          = const Color(0xFFFFFFFF);
-    final Color textPrimary      = const Color(0xFF111827);
-    final Color textSecondary    = const Color(0xFF6B7280);
-    final Color textHint         = const Color(0xFF9CA3AF);
-    final Color ongoingBg        = const Color(0xFFE7F0FF);
-    final Color ongoingText      = const Color(0xFF2D4B73);
-    final Color completedBg      = const Color(0xFFE7F7F2);
-    final Color completedText    = const Color(0xFF0E9F6E);
-  }
-  ```
+#### 5a — AppColorScheme as ThemeExtension
+- [ ] `core/theme/app_color_scheme.dart` — `AppColorScheme extends ThemeExtension<AppColorScheme>`:
+  - All color fields as `required` named constructor parameters
+  - `static const light` — all Figma light-mode hex values
+  - `static const dark` — all dark-mode hex values (ready for future)
+  - `copyWith` override — all fields nullable, full fallback to `this`
+  - `lerp` override — `Color.lerp` on every field for smooth theme transitions
+- [ ] `core/theme/app_them.dart` — `lightTheme` with `extensions: [AppColorScheme.light]`, `darkTheme` with `extensions: [AppColorScheme.dark]`
+- [ ] `app.dart` — `theme: lightTheme`, `darkTheme: darkTheme`, `themeMode: ThemeMode.system`
 
-#### 5b — BuildContext Color Extension
-- [ ] `core/utils/extensions.dart` — add color extension on `BuildContext`:
-  ```dart
-  extension AppColorsExtension on BuildContext {
-    AppColorScheme get colors => const AppColorScheme();
-  }
-  ```
-  - **Usage in any feature:** `context.colors.primary` — never `AppColors.primary` directly
-  - Enforced: features must only use `context.colors.*` — no direct `AppColors` imports outside `core/`
+#### 5b — BuildContext Color Extension (API unchanged)
+- [ ] `core/utils/extensions.dart` — `AppColorScheme get colors` on `BuildContext`, reads via `Theme.of(this).extension<AppColorScheme>()!`
+  - **Usage:** `context.colors.primary` — identical API, zero feature code changes when dark mode is toggled
+  - Enforced: no feature file imports `AppColorScheme` directly — always via `context.colors.*`
 
 #### 5c — BuildContext Text Style Extension
-- [ ] `core/utils/extensions.dart` — add text style extension on `BuildContext`:
-  ```dart
-  extension AppTextStylesExtension on BuildContext {
-    TextStyle get displayLarge   => Theme.of(this).textTheme.displayLarge!;
-    TextStyle get headlineMedium => Theme.of(this).textTheme.headlineMedium!;
-    TextStyle get titleLarge     => Theme.of(this).textTheme.titleLarge!;
-    TextStyle get bodyLarge      => Theme.of(this).textTheme.bodyLarge!;
-    TextStyle get bodyMedium     => Theme.of(this).textTheme.bodyMedium!;
-    TextStyle get labelSmall     => Theme.of(this).textTheme.labelSmall!;
-  }
-  ```
-  - **Usage in any feature:** `context.headlineMedium` — never `AppTextStyles.headlineMedium` directly
-  - All styles are already registered in `ThemeData` in Phase 1 — extensions just expose them via context
+- [ ] `core/utils/extensions.dart` — `displayLarge`, `headlineMedium`, `titleLarge`, `bodyLarge`, `bodyMedium`, `labelSmall` getters on `BuildContext`, all reading from `Theme.of(this).textTheme.*!`
+  - **Usage:** `context.headlineMedium` — never `AppTextStyles.headlineMedium` directly
 
 #### 5d — Other BuildContext Utilities
-- [ ] `core/utils/extensions.dart` — add remaining utilities:
-  ```dart
-  extension BuildContextExtension on BuildContext {
-    void showSnackBar(String message) { ... }
-    double get screenWidth  => MediaQuery.of(this).size.width;
-    double get screenHeight => MediaQuery.of(this).size.height;
-  }
-
-  extension StringExtension on String {
-    String get capitalize => isEmpty ? '' : '${this[0].toUpperCase()}${substring(1)}';
-  }
-  ```
+- [ ] `core/utils/extensions.dart` — `showSnackBar(String)`, `screenWidth`, `screenHeight` on `BuildContext`
+- [ ] `core/utils/extensions.dart` — `capitalize` getter on `String`
 
 #### 5e — Shared Widgets (strictly from Figma)
-- [ ] `bridge_app_button.dart` — primary and secondary variants from Figma:
-  - Uses `context.colors.primary` and `context.bodyLarge` — no direct imports
-  - Background: `context.colors.primary`, border radius: `12.r`, height: `52.h`
-  - Loading state replaces label with `CircularProgressIndicator`
-- [ ] `app_text_field.dart` — from Figma input style:
-  - Fill: `context.colors.surface`, subtle border, radius: `12.r`
-  - Padding: `16.w` horizontal, `14.h` vertical
-  - Uses `context.bodyMedium` for text style
+- [ ] `bridge_app_button.dart` — primary and secondary variants; uses `context.colors.primary`; border radius `12.r`; height `52.h`; loading state replaces label with `CircularProgressIndicator`
+- [ ] `app_text_field.dart` — fill `context.colors.surface`; subtle border; radius `12.r`; padding `16.w`×`14.h`; uses `context.bodyMedium`
 - [ ] `app_loading.dart` — centered `CircularProgressIndicator` using `context.colors.primary`
-- [ ] `app_error_widget.dart` — error icon + message + retry (from Figma error/empty states)
-- [ ] `app_avatar.dart` — `CachedNetworkImage` in circle, fallback to initials
-- [ ] `core/utils/validators.dart` — email, password, required field validators
+- [ ] `app_error_widget.dart` — error icon + message + retry button (from Figma empty/error states)
+- [ ] `app_avatar.dart` — `CachedNetworkImage` in circle; fallback to initials on solid color background
+- [ ] `core/utils/validators.dart` — email, password (min 8 chars, 1 uppercase, 1 number), required field validators
 - [ ] `core/utils/date_formatter.dart` — format timestamps for messages and task due dates
 
 > [!IMPORTANT]
 > **Enforcement rule:** Every feature — without exception — accesses colors via `context.colors.*` and text styles via `context.headlineMedium` etc. No feature file may import `AppColors` or `AppTextStyles` directly. All design values flow through `BuildContext` extensions defined in `core/utils/extensions.dart`.
+
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| `CachedNetworkImage` broken/null URL | `AppAvatar` `errorWidget` renders initials on a solid color background — never shows broken image |
+| Button double-tap (spam) | `AppButton` disables itself while `isLoading == true` — `onPressed: isLoading ? null : callback` |
+| Keyboard overlaps text fields | All scaffolds that contain forms must set `resizeToAvoidBottomInset: true` |
+| `TextTheme` slot is null | All `context.headlineMedium` etc. are `!` — ensure every slot is defined in `AppTheme.textTheme` in Phase 1 |
+| Extension conflict (two extensions define same getter) | Keep all `BuildContext` extensions in a single file `extensions.dart` to prevent conflicts |
 
 **Deliverable:** `BuildContext` color + text style extensions live in `core/`. Every future feature widget uses `context.colors.*` and `context.*TextStyle` — zero direct design class imports outside core.
 
@@ -499,148 +617,213 @@ lib/
 > **Figma:** Centered logo on `#F9FAFB` background with app name "TeamUP"
 
 - [ ] `features/auth/presentation/pages/splash_page.dart`
-  - Display app logo from `assets/images/` centered on `AppColors.scaffoldBg`
-  - App name text using `displayLarge` style, color `AppColors.primary`
+  - Display app logo from `assets/images/` centered on `scaffoldBg`
+  - App name text using `displayLarge` style, color `context.colors.primary`
   - Short delay (1.5s) then let `go_router` redirect handle navigation
   - No business logic in the page itself — redirect handled by router guard
+
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| Token exists but is expired | `AuthInterceptor` handles 401 on first protected call → clears token → redirects to `/login` |
+| `SharedPreferences` read fails | Treat as unauthenticated — router guard defaults to `/login` on any read exception |
+| App logo asset missing | Provide a text fallback (app name styled with `displayLarge`) until asset is added |
+| Splash shows for too long (slow device) | Cap delay to 1500ms regardless of device speed |
 
 **Deliverable:** Branded splash screen, auto-redirects via router.
 
 ---
 
 ### Phase 7 — Onboarding
-**Goal:** 3-slide first-launch onboarding exactly as shown in Figma.
+**Goal:** 3-slide onboarding flow that only appears on first launch.
 
-> **Figma:** Full-screen slides with illustration at top, title + subtitle below, dot indicators, Skip + Next buttons. Gradient from `#4A6CF7` → `#2D4B73` on some slides.
+> **Figma:** Full-screen slides with Lottie animation top half, title + subtitle bottom half, dot indicator, "Skip" top-right, "Get Started" / "Next" primary button. Final slide shows "Get Started".
 
-- [ ] `core/helper/cache/cache_helper.dart` — add `isFirstLaunch` flag
-- [ ] `features/auth/presentation/pages/onboarding_page.dart`:
-  - `PageView` with exactly 3 slides matching Figma content and illustrations
-  - Dot page indicators matching Figma style
-  - "Skip" button top-right (text style, `AppColors.textSecondary`)
-  - "Next" button bottom — primary button style; last slide shows "Get Started"
-  - On complete: write `isFirstLaunch = false`, navigate to `/login`
-- [ ] `features/auth/presentation/widgets/onboarding_slide.dart`:
-  - Illustration area (Lottie or image — matching Figma asset)
+- [ ] `features/auth/presentation/pages/onboarding_page.dart`
+  - `PageController` with 3 slides
+  - Dot indicator matching Figma style
+  - "Skip" button navigates directly to `/login`, writes `isFirstLaunch = false`
+  - "Get Started" on final slide navigates to `/login`, writes `isFirstLaunch = false`
+  - Lottie animations from `assets/` for each slide
   - Title: `titleLarge` style
-  - Subtitle: `bodyMedium`, `AppColors.textSecondary`
+  - Subtitle: `bodyMedium`, `context.colors.textSecondary`
+
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| Back button pressed on slide 1 | Use `PopScope(canPop: false)` on onboarding page — back button does nothing or exits app |
+| App killed mid-onboarding | `isFirstLaunch` flag is only written `false` after "Get Started" — safe to show onboarding again |
+| Lottie file fails to load | Show static image fallback from `assets/images/` — never show empty white space |
+| User taps Skip very fast | `PageController` handles it gracefully — write `isFirstLaunch = false` before navigating |
 
 **Deliverable:** Onboarding runs once on first launch, matches Figma exactly.
 
 ---
 
 ### Phase 8 — Auth: Login
-**Goal:** Login screen matching Figma design, connected to AuthBloc.
+**Goal:** Login screen matching Figma design, connected to `LoginCubit`.
 
 > **Figma:** "Welcome Back" heading, email + password fields, "Forgot Password?" link, primary CTA button, social login row (Google / GitHub / Apple icons), "Don't have an account? Register" link.
 
 - [ ] **Domain**
   - `user_entity.dart` — `id`, `name`, `email`, `role`, `track`, `seniority`, `token`
   - `auth_repository.dart` (abstract) — `login` method
-  - `login_usecase.dart` → `Either<Failure, UserEntity>`
+  - `login_usecase.dart` → `Either<Failure, UserEntity>`; `LoginParams` with `required named` email + password
 - [ ] **Data**
   - `user_model.dart` — extends `UserEntity`, `fromJson` / `toJson`
   - `auth_remote_datasource.dart` — Dio call to login endpoint
   - `auth_local_datasource.dart` — save/read token via `CacheHelper`
   - `auth_repository_impl.dart`
-- [ ] **Presentation**
-  - `AuthBloc`: `LoginRequested` event → `AuthLoading`, `AuthSuccess(user)`, `AuthFailure(message)`
-  - `login_page.dart` — matches Figma layout exactly:
-    - `BlocConsumer`:
-      - `listener`: navigate on `AuthSuccess`, show `SnackBar` on `AuthFailure`
-      - `buildWhen: (previous, current) => current is AuthLoading` — only rebuild for button loading state
+- [ ] **Presentation** — `LoginCubit` (NOT a shared AuthBloc):
+  - States: `LoginInitial`, `LoginLoading`, `LoginSuccess({required user})`, `LoginFailure({required message})` — all `sealed`, all `Equatable`
+  - `login()` method with `required named` email + password
+  - `login_page.dart` — `BlocConsumer<LoginCubit, LoginState>`:
+    - `listener`: navigate on `LoginSuccess`, show `SnackBar` on `LoginFailure`
+    - `buildWhen`: rebuild only for `LoginLoading` / `LoginInitial` (button state)
     - Email `AppTextField`, password `AppTextField` with eye toggle
-    - Primary `AppButton` — shows loader when state is `AuthLoading`
-    - Social login buttons — UI only (functionality in later phase)
-  - Register all in `di.dart`
+    - Primary `AppButton` — shows loader when state is `LoginLoading`
+    - Social login buttons — UI only
+  - Register in `di.dart` under `// ─── Use Cases` and `// ─── Cubit`
 
-**Deliverable:** Login screen, Figma-accurate, connected to AuthBloc.
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| Wrong credentials (400/401) | `LoginFailure` state → `SnackBar` with server message; form stays, no navigation |
+| Network down during login | `NetworkFailure` → `SnackBar` "No internet connection"; retry by tapping login again |
+| Double-tap submit | `AppButton` disabled during `LoginLoading` — no double requests |
+| Empty fields submitted | `Form.validate()` blocks submission before any API call |
+| Email not verified (403) | `ServerFailure` with specific message → SnackBar prompts user to check email |
+
+**Deliverable:** Login screen, Figma-accurate, connected to `LoginCubit`.
 
 ---
 
 ### Phase 9 — Auth: Register
-**Goal:** Registration screen matching Figma.
+**Goal:** Registration screen matching Figma, connected to `RegisterCubit`.
 
 > **Figma:** "Create Account" heading, name + email + password + confirm password fields, primary CTA, "Already have an account? Login" link.
 
-- [ ] **Domain** — add `register` to `AuthRepository`, `RegisterUseCase`
-- [ ] **Data** — `register(name, email, password)` in `AuthRemoteDataSource` + impl
-- [ ] **Presentation**
-  - Add `RegisterRequested` event to `AuthBloc`
-  - `register_page.dart` — matches Figma layout:
-    - 4 fields: full name, email, password, confirm password
+- [ ] **Domain** — add `register` to `AuthRepository`, `RegisterUseCase`; `RegisterParams` with `required named` name, email, password
+- [ ] **Data** — `register` in `AuthRemoteDataSource` + impl
+- [ ] **Presentation** — `RegisterCubit`:
+  - States: `RegisterInitial`, `RegisterLoading`, `RegisterSuccess`, `RegisterFailure({required message})` — all `sealed`, `Equatable`
+  - `register()` method with `required named` name, email, password
+  - `register_page.dart` — 4 fields: full name, email, password, confirm password
     - Form validation using `validators.dart`
-    - `buildWhen: (previous, current) => current is AuthLoading` — button state only
-    - On `AuthSuccess` → navigate to `/otp`
+    - `buildWhen`: rebuild only for `RegisterLoading` / `RegisterInitial`
+    - On `RegisterSuccess` → navigate to `/otp`
+  - Register in `di.dart`
 
-**Deliverable:** Register screen, Figma-accurate.
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| Email already exists (409) | `ServerFailure` with "Email already in use" message displayed as `SnackBar` |
+| Password ≠ confirm password | `FormFieldValidator` catches mismatch before API call; no network request fired |
+| Password too weak | `validators.dart` enforces min 8 chars, 1 uppercase, 1 number; shown inline under field |
+| Network failure | `NetworkFailure` → `SnackBar`; button re-enabled immediately |
+
+**Deliverable:** Register screen, Figma-accurate, connected to `RegisterCubit`.
 
 ---
 
 ### Phase 10 — Auth: OTP Verification
-**Goal:** OTP verification screen matching Figma, with countdown resend.
+**Goal:** OTP verification screen matching Figma, with countdown resend, connected to `OtpCubit`.
 
 > **Figma:** "Enter OTP" heading, subtitle with email masked, 6 individual digit boxes in a row, countdown timer, "Resend Code" text button.
 
-- [ ] **Domain** — `VerifyOtpUseCase`, `ResendOtpUseCase`
+- [ ] **Domain** — `VerifyOtpUseCase`, `ResendOtpUseCase`; `OtpParams` with `required named` code
 - [ ] **Data** — add to `AuthRemoteDataSource` + impl
-- [ ] **Presentation**
-  - Add `OtpVerified`, `OtpResendRequested` events to `AuthBloc`
-  - `otp_verification_page.dart` — matches Figma:
+- [ ] **Presentation** — `OtpCubit`:
+  - States: `OtpInitial`, `OtpLoading`, `OtpSuccess`, `OtpResendSuccess`, `OtpFailure({required message})` — all `sealed`, `Equatable`
+  - `verifyOtp({required String code})` and `resendOtp()` methods
+  - `otp_verification_page.dart`:
     - 6 individual `TextField` boxes with auto-focus and auto-advance
-    - Timer: 60s countdown; when 0 → "Resend Code" button becomes active
-    - `buildWhen`: only rebuild when state changes to `AuthLoading` (for verify button) or timer ticks (isolated `StatefulWidget`)
-    - On `AuthSuccess` → navigate to `/profile-setup`
+    - Timer: 60s countdown in an **isolated `StatefulWidget`** — does NOT use `OtpCubit`
+    - `buildWhen`: rebuild only for `OtpLoading`, `OtpInitial`, `OtpFailure`
+    - On `OtpSuccess` → navigate to `/profile-setup`
 
-**Deliverable:** OTP screen with 6-box input and resend timer.
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| Wrong OTP entered | `OtpFailure` → shake animation on boxes + "Invalid code" `SnackBar`; clear all boxes |
+| OTP expired (server 410) | `OtpFailure` → "Code expired" `SnackBar`; timer resets, "Resend" button becomes active |
+| Resend request spam | Resend button disabled during `OtpLoading`; re-enabled after response |
+| Network failure during verify | `NetworkFailure` → `SnackBar`; OTP boxes retain entered digits |
+| User navigates back | OTP is invalidated on server if user re-registers — handled by server |
+
+**Deliverable:** OTP screen with 6-box input and resend timer, connected to `OtpCubit`.
 
 ---
 
 ### Phase 11 — Auth: Forgot Password
-**Goal:** Password recovery screen matching Figma.
+**Goal:** Password recovery screen matching Figma, connected to `ForgotPasswordCubit`.
 
 > **Figma:** "Reset Password" heading, subtitle instruction, email field, "Send Reset Link" primary button, back arrow navigation.
 
-- [ ] **Domain** — `ForgotPasswordUseCase`
+- [ ] **Domain** — `ForgotPasswordUseCase`; `ForgotPasswordParams` with `required named` email
 - [ ] **Data** — add to `AuthRemoteDataSource`
-- [ ] **Presentation**
-  - Add `ForgotPasswordRequested` event to `AuthBloc`
+- [ ] **Presentation** — `ForgotPasswordCubit`:
+  - States: `ForgotPasswordInitial`, `ForgotPasswordLoading`, `ForgotPasswordSuccess`, `ForgotPasswordFailure({required message})` — all `sealed`, `Equatable`
+  - `sendResetLink({required String email})` method
   - `forgot_password_page.dart` — matches Figma layout
-  - On success → show success message (Figma confirmation state)
+  - On `ForgotPasswordSuccess` → show Figma confirmation state inline (not navigation)
 
-**Deliverable:** Forgot password screen, Figma-accurate.
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| Email not registered (404) | `ServerFailure` → "No account found with this email" `SnackBar` |
+| Network failure | `NetworkFailure` → `SnackBar`; button re-enabled |
+| User submits empty email | `validator` blocks submission before any API call |
+
+**Deliverable:** Forgot password screen, Figma-accurate, connected to `ForgotPasswordCubit`.
 
 ---
 
 ### Phase 12 — Auth: Profile Setup
-**Goal:** Role/track/seniority selection screen matching Figma.
+**Goal:** Role/track/seniority selection screen matching Figma, connected to `ProfileSetupCubit`.
 
 > **Figma:** Multi-step form with tap-to-select cards for each option. Step 1: role (Student / Supervisor / Company cards). Step 2: track (Frontend / Backend / Mobile / AI / Design). Step 3: seniority (Junior / Mid / Senior). Progress indicator at top.
 
-- [ ] **Domain** — `SetupProfileUseCase` with `ProfileSetupParams(role, track, seniority)`
+- [ ] **Domain** — `SetupProfileUseCase` with `ProfileSetupParams({required role, required track, required seniority})`
 - [ ] **Data** — add to `AuthRemoteDataSource`, save role to `CacheHelper`
-- [ ] **Presentation**
-  - Add `ProfileSetupSubmitted` event to `AuthBloc`
+- [ ] **Presentation** — `ProfileSetupCubit`:
+  - States: `ProfileSetupInitial`, `ProfileSetupLoading`, `ProfileSetupSuccess`, `ProfileSetupFailure({required message})` — all `sealed`, `Equatable`
+  - `submit({required String role, required String track, required String seniority})` method
   - `profile_setup_page.dart` — matches Figma multi-step layout:
     - Step progress indicator (top)
-    - Selection cards styled per Figma (border highlight when selected, `AppColors.primary`)
-    - "Continue" button navigates to next step
-    - On final step submit → navigate to `/home`
+    - Selection cards styled per Figma (border highlight when selected, `context.colors.primary`)
+    - "Continue" button disabled until selection made; advances to next step
+    - On `ProfileSetupSuccess` → navigate to `/home`
+  - Register in `di.dart`
 
-**Deliverable:** Profile setup working, user role saved, redirected to home.
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| No option selected, taps Continue | "Continue" button disabled until a card is selected — validated before navigation |
+| Network failure on final submit | `ProfileSetupFailure` → `SnackBar`; user stays on step 3, selection preserved |
+| Role saved then app crashes | On restart, router reads role from `CacheHelper` — skips profile setup if role exists |
+
+**Deliverable:** Profile setup working, user role saved, redirected to home. Connected to `ProfileSetupCubit`.
 
 ---
 
 ### Phase 13 — Main Shell & Bottom Navigation
 **Goal:** App shell with bottom navigation bar matching Figma.
 
-> **Figma:** Bottom nav with 4 tabs — Home, Chat, Projects, Profile. Active tab icon uses `AppColors.primary`, inactive uses `AppColors.textSecondary`. White background with top shadow.
+> **Figma:** Bottom nav with 4 tabs — Home, Chat, Projects, Profile. Active tab icon uses `primary`, inactive uses `textSecondary`. White background with top shadow.
 
 - [ ] `features/home/presentation/pages/main_shell_page.dart`
   - `StatefulShellRoute` with 4 branches in `go_router`
   - Bottom nav: items, icons, and active/inactive colors exactly from Figma
   - Company role sees different tab label/icon for "Talent" browse
   - Tab state preserved — no rebuilds when switching tabs
+
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| Back button on root home tab | `PopScope` on `MainShellPage` — shows exit confirmation dialog or minimizes app |
+| Company role accesses Student-only tab | `redirect` guard in `go_router` prevents navigation; redirects to Company's default tab |
+| Tab rebuild when switching | `StatefulShellRoute` preserves each branch's state — no data re-fetch on tab switch |
 
 **Deliverable:** App shell with Figma-accurate bottom navigation.
 
@@ -657,190 +840,285 @@ lib/
   - `HomeCubit` — states: `HomeLoading`, `HomeLoaded`, `HomeError`
   - `home_page.dart` — matches Figma layout exactly:
     - Greeting header with `AppAvatar`
-    - Circular progress card: fl_chart `PieChart`, colors from Figma
+    - Circular progress card: `fl_chart` `PieChart`, colors from Figma
     - AI insight card: bordered card, icon + insight text
-    - Bar chart: fl_chart `BarChart` with `AppColors.primary` bars
-    - Quick action buttons from Figma: "Join Team" + "Create Team"
+    - Bar chart: `fl_chart` `BarChart`, bar colors from `ongoingBg`/`completedBg`
+    - Pull-to-refresh via `RefreshIndicator`
     - `BlocBuilder(buildWhen: (p, c) => c is HomeLoaded || c is HomeError)` — shimmer shown during `HomeLoading` independently
     - Shimmer skeleton matching Figma card shapes during initial load
+
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| API returns empty stats (new user) | Show zero-state UI — progress = 0%, chart bars = 0 — never show loading forever |
+| Partial failure (stats OK, insights fail) | Show available section — failed section renders `AppErrorWidget` with retry |
+| Pull-to-refresh fails | Keep old data visible; show `SnackBar` "Failed to refresh" — don't clear existing data |
+| Network down on page load | `HomeError` state → `AppErrorWidget` with retry button; shimmer replaced by error |
 
 **Deliverable:** Home screen matching Figma exactly.
 
 ---
 
-### Phase 15 — Teams: Discovery & Browse
-**Goal:** Team discovery page matching Figma list design.
+### Phase 15 — Teams Discovery
+**Goal:** Teams browse page matching Figma.
 
-> **Figma:** Page title "Find a Team". Scrollable list of team cards — each card: team name, project category badge (pill chip), member avatar stack, AI match % badge, "Request to Join" outline button.
+> **Figma:** Search bar at top. Horizontal filter chips: All / Frontend / Backend / Mobile / AI / Design. Vertical list of team cards: team avatar, name, member count, skills chips, "Request to Join" button.
 
-- [ ] **Domain** — `TeamEntity`, `TeamsRepository`, `GetRecommendedTeamsUseCase`
+- [ ] **Domain** — `TeamEntity`, `TeamsRepository`, `GetRecommendedTeamsUseCase`; params include `PaginationParams` (Phase 28 retrofit)
 - [ ] **Data** — `TeamModel`, `TeamsRemoteDataSource`, `TeamsRepositoryImpl`
 - [ ] **Presentation**
-  - `TeamsBloc` — `LoadTeams` event → `TeamsLoading`, `TeamsLoaded`, `TeamsError`
-  - `teams_discovery_page.dart` — scrollable list, matches Figma
-  - `TeamCard` widget — matches Figma card design: white surface, `12.r` radius, soft shadow
-  - `MemberAvatarStack` — overlapping `AppAvatar` widgets as in Figma
+  - `TeamsBloc`: `LoadTeams`, `FilterTeams` events — states: `TeamsLoading`, `TeamsLoaded`, `TeamsError`
+  - `teams_discovery_page.dart` — matches Figma layout
+  - `TeamCard` — matches Figma card design
+  - Filter chips from Figma design
   - Shimmer skeleton matching Figma card shape
   - `buildWhen: (p, c) => c is TeamsLoaded || c is TeamsError`
+
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| No recommended teams (new user) | Show Figma "No Teams" empty state with "Create Team" CTA |
+| Network failure on load | `TeamsError` state → `AppErrorWidget` with retry button |
+| User already in a team | "Request to Join" button replaced with "Already a member" disabled state |
+| User already sent a request | Button shows "Pending" disabled state — queried from entity's `requestStatus` field |
 
 **Deliverable:** Teams discovery page matching Figma.
 
 ---
 
-### Phase 16 — Teams: AI Matching
-**Goal:** AI matching animated screen matching Figma.
+### Phase 16 — AI Matching
+**Goal:** AI team matching screen matching Figma.
 
-> **Figma:** Centered animated progress circle with % value. "Analyzing your skills..." subtitle text. Background gradient. Result card slides up with team name, score, "Accept" and "Skip" buttons.
+> **Figma:** "Find Your Team" heading, "Start Matching" button triggers matching flow. Loading state: animated Lottie + "Finding your perfect team..." text. Result: match score percentage in large circular indicator, team card with "Accept" and "Skip" buttons.
 
-- [ ] **Domain** — `GetAiMatchScoreUseCase`, `MatchResultEntity`
-- [ ] **Data** — add to `TeamsRemoteDataSource`
+- [ ] **Domain** — `AiMatchResultEntity`, `AiMatchRepository`, `GetAiMatchUseCase`
+- [ ] **Data** — `AiMatchResultModel`, datasource, impl
 - [ ] **Presentation**
-  - `ai_matching_page.dart` — matches Figma animation screen:
-    - Lottie animation while matching runs
+  - `TeamsBloc` — add `StartAiMatching` event, `AiMatchLoading`, `AiMatchResult`, `AiMatchNotFound` states
+  - `ai_matching_page.dart` — matches Figma layout:
+    - Lottie animation during loading
     - Circular indicator using Figma gradient colors
     - Result card from Figma design
+
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| No match found (score = 0%) | Show Figma "No Match" result card with message + "Browse Manually" button |
+| AI service timeout (> 30s) | Show timeout `AppErrorWidget` with "Try Again" button |
+| Server error during matching | `TeamsError` → `AppErrorWidget`; Lottie animation stops |
+| User navigates away during match | Cancel in-flight request via `Dio.CancelToken`; disconnect cleanly |
 
 **Deliverable:** AI matching screen matching Figma.
 
 ---
 
-### Phase 17 — Teams: Join & Create Team
-**Goal:** Join request flow + create team form matching Figma.
+### Phase 17 — Join & Create Team
+**Goal:** Join request flow and team creation form matching Figma.
 
-> **Figma:** "Request to Join" bottom sheet/page with team details and confirm button. "Create Team" form: project name field, category selector, required skills chips, team size input.
+> **Figma:** "Request to Join" bottom sheet: team info, message field, "Send Request" button. Create Team form: name, category, required skills (multi-select chips), max members count.
 
-- [ ] **Domain** — `RequestJoinTeamUseCase`, `CreateTeamUseCase`
-- [ ] **Data** — add to `TeamsRemoteDataSource`
+- [ ] **Domain** — `JoinTeamUseCase`, `CreateTeamUseCase`
+- [ ] **Data** — add to `TeamsRemoteDataSource` + impl
 - [ ] **Presentation**
-  - `TeamsBloc` — add `JoinTeamRequested`, `CreateTeamRequested` events
-  - Join: bottom sheet matching Figma confirm design
+  - Add `SendJoinRequest`, `CreateTeam` events to `TeamsBloc`
+  - `join_request_bottom_sheet.dart` — matches Figma bottom sheet
   - `create_team_page.dart` — form matching Figma layout
   - Route guard: create team only for Supervisor role
+
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| Team already full | `ServerFailure` "Team is full" → `SnackBar`; bottom sheet stays open |
+| Join request already sent | "Request to Join" replaced with "Pending" chip — no duplicate requests |
+| Duplicate team name (409) | `ServerFailure` → inline error under team name field in create form |
+| Student accesses Create Team route | Router guard redirects to `/teams` discovery page |
+| Network failure on join/create | `TeamsError` → `SnackBar`; user can retry |
 
 **Deliverable:** Join request + create team functional.
 
 ---
 
-### Phase 18 — Workspace: Projects List
-**Goal:** Projects list page matching Figma.
+### Phase 18 — Projects List
+**Goal:** Projects list screen matching Figma.
 
-> **Figma:** Page title "My Projects". TabBar: "Ongoing" / "Completed". Each project card: project name, color-coded status badge, team member avatars, role label (e.g. "Frontend Dev"), linear progress bar.
+> **Figma:** "My Projects" heading with tab filter: Ongoing / Completed. Project cards: title, team name, progress bar, member avatars row, status chip.
 
-- [ ] **Domain** — `ProjectEntity`, `WorkspaceRepository`, `GetProjectsUseCase`
-- [ ] **Data** — `ProjectModel`, `WorkspaceRemoteDataSource`, `WorkspaceRepositoryImpl`
+- [ ] **Domain** — `ProjectEntity`, `ProjectsRepository`, `GetProjectsUseCase`
+- [ ] **Data** — `ProjectModel`, datasource, impl, sqflite cache
 - [ ] **Presentation**
-  - `WorkspaceBloc` — `LoadProjects` event → `ProjectsLoading`, `ProjectsLoaded`, `ProjectsError`
-  - `projects_list_page.dart` — matches Figma TabBar + list layout
-  - `ProjectCard` — matches Figma card design exactly (status badge, progress bar, avatars)
+  - `WorkspaceBloc`: `LoadProjects`, `FilterByStatus` events — states: `ProjectsLoading`, `ProjectsLoaded`, `ProjectsError`
+  - `projects_list_page.dart` — matches Figma layout
+  - `ProjectCard` — matches Figma card design
+  - `ProjectStatusChip` — matches Figma status chip (ongoing/completed colors from tokens)
   - Empty state: matches Figma "No Projects" illustration + CTA
   - Shimmer skeleton during load
+
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| Empty project list | Show Figma "No Projects" empty state with "Explore Teams" CTA |
+| Network failure | `ProjectsError` → `AppErrorWidget` with retry; no crash |
+| Pull-to-refresh failure | Keep stale data visible; show `SnackBar` "Couldn't refresh" |
+| Project deleted by supervisor while user is viewing | On next refresh, removed from list — optimistic removal not applied |
 
 **Deliverable:** Projects list matching Figma, with tab filter.
 
 ---
 
-### Phase 19 — Workspace: Task Board
-**Goal:** Task list per project matching Figma.
+### Phase 19 — Task Board
+**Goal:** Task board screen matching Figma.
 
-> **Figma:** Project detail page: project name header, team members strip, task list grouped by status. Task card: title, assignee avatar, priority indicator dot, due date, status chip.
+> **Figma:** "Tasks" heading with project name subtitle. Kanban-style or list view. Task cards: title, assignee avatar, priority label chip, due date, status chip. Tap card → task detail page with full description.
 
-- [ ] **Domain** — `TaskEntity`, `GetProjectTasksUseCase`, `UpdateTaskStatusUseCase`
-- [ ] **Data** — `TaskModel`, add to `WorkspaceRemoteDataSource`
+- [ ] **Domain** — `TaskEntity`, `TasksRepository`, `GetTasksUseCase`, `UpdateTaskStatusUseCase`
+- [ ] **Data** — `TaskModel`, datasource, impl, sqflite cache
 - [ ] **Presentation**
-  - `WorkspaceBloc` — add `LoadTasks`, `UpdateTaskStatus` events
-  - `project_detail_page.dart` — matches Figma layout
+  - Add `LoadTasks`, `UpdateTaskStatus` events to `WorkspaceBloc`
+  - `task_board_page.dart` — matches Figma layout
   - `TaskCard` — matches Figma task card design
   - `TaskStatusChip` — pill chip with Figma colors (ongoing/completed from color tokens)
   - `task_detail_page.dart` — full detail view matching Figma
+
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| Empty task list | Show Figma "No Tasks" empty state; Supervisor sees "+ Create Task" CTA |
+| Task status update fails (network) | Revert optimistic UI update → show `SnackBar` "Update failed, try again" |
+| Concurrent status update (409 conflict) | Show `SnackBar` "Task was updated by someone else — refresh to see latest" |
+| Assignee avatar URL broken | `AppAvatar` falls back to initials |
 
 **Deliverable:** Task board matching Figma.
 
 ---
 
-### Phase 20 — Workspace: Create Task & Supervisor Settings
-**Goal:** Create task form + supervisor settings panel matching Figma.
+### Phase 20 — Create Task & Supervisor Settings
+**Goal:** Task creation form and supervisor settings panel matching Figma.
 
-> **Figma:** Create Task form: title field, assignee picker (user avatars), priority selector (Low/Medium/High), date picker. Team Settings page: member list with remove option, "Danger Zone" section with red delete button and confirmation dialog.
+> **Figma:** Create Task bottom sheet: title, description, assignee dropdown, priority chips, due date picker, "Add Task" button. Team Settings: member list with "Remove" option, delete project button.
 
-- [ ] **Domain** — `CreateTaskUseCase`, `DeleteProjectUseCase`
-- [ ] **Data** — add to `WorkspaceRemoteDataSource`
+- [ ] **Domain** — `CreateTaskUseCase`, `RemoveMemberUseCase`, `DeleteProjectUseCase`
+- [ ] **Data** — add to datasources + impl
 - [ ] **Presentation**
-  - `create_task_page.dart` — matches Figma form exactly
+  - Add events to `WorkspaceBloc`
+  - `create_task_bottom_sheet.dart` — matches Figma layout
   - `team_settings_page.dart` — matches Figma settings layout (Supervisor role only, route guarded)
   - Delete confirmation dialog — matches Figma dialog design
+
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| No assignee selected | Form validator blocks submit with "Please select an assignee" |
+| Due date in the past | `validators.dart` rejects dates before `DateTime.now()` |
+| Create task fails (network) | `WorkspaceError` → `SnackBar`; form stays; data preserved |
+| Delete project with active tasks | Server handles cascade; router pops to projects list after success |
+| Non-supervisor accesses settings | Route guard redirects away before the page renders |
 
 **Deliverable:** Task creation and supervisor settings panel.
 
 ---
 
-### Phase 21 — Chat: List & Room (REST History)
-**Goal:** Chat list page and chat room with message history, matching Figma.
+### Phase 21 — Chat History (REST)
+**Goal:** Chat list and room with REST-loaded message history, matching Figma.
 
-> **Figma:** Chat list: rows with team avatar, team name, last message preview, timestamp. Chat room: messages list (sent=right blue bubble, received=left gray bubble), avatar beside received, timestamp below. Input bar: text field + send icon.
+> **Figma:** Chat list: room rows with avatar, room name, last message preview, unread badge, timestamp. Chat room: messages grouped by date, sent (right, primary color) vs received (left, surface color) bubbles.
 
-- [ ] **Domain** — `MessageEntity`, `ChatRepository`, `GetMessagesUseCase`
-- [ ] **Data** — `MessageModel`, `ChatRemoteDataSource` (Dio), `ChatRepositoryImpl`
+- [ ] **Domain** — `ChatRoomEntity`, `MessageEntity`, `ChatRepository`, `GetChatRoomsUseCase`, `GetMessagesUseCase`
+- [ ] **Data** — models, datasource, impl, sqflite cache for messages
 - [ ] **Presentation**
-  - `ChatBloc` — `LoadMessages` event
-  - `chat_list_page.dart` — matches Figma list design
-  - `chat_room_page.dart` — `ListView.builder` reversed for bottom-up display
-  - `MessageBubble` — matches Figma: sent (right, `AppColors.primary`), received (left, `AppColors.surface`)
+  - `ChatBloc`: `LoadChatRooms`, `LoadMessages` events — states: `ChatLoading`, `ChatRoomsLoaded`, `MessagesLoaded`, `ChatError`
+  - `chat_list_page.dart` — list of rooms matching Figma
+  - `chat_room_page.dart` — message list matching Figma
+  - `MessageBubble` — matches Figma: sent (right, `context.colors.primary`), received (left, `context.colors.surface`)
   - `ChatInputBar` — matches Figma input bar design
+
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| Empty message history (new room) | Show "Start the conversation!" empty state centered in chat room |
+| Network failure loading history | `AppErrorWidget` with retry; don't show empty state — differentiate from truly empty |
+| Very long message | `MessageBubble` uses `maxLines` soft clamp with "Read more" expand toggle |
+| Chat room with no members yet | Disable input bar; show "Waiting for members" hint text |
 
 **Deliverable:** Chat list and room with REST history, matching Figma.
 
 ---
 
-### Phase 22 — Chat: Real-time WebSocket
-**Goal:** Connect WebSocket for live messaging.
+### Phase 22 — Real-time WebSocket
+**Goal:** Connect chat room to WebSocket for live message delivery.
 
-- [ ] **Data** — `ChatSocketDataSource` using `web_socket_channel`:
-  - `connect(roomId)`, `disconnect()`, `sendMessage(text)`, `messagesStream` → `Stream<MessageEntity>`
-  - `rxdart` for stream debounce / transformation
-- [ ] **Domain** — `SendMessageUseCase`, `WatchMessagesUseCase` (returns `Stream`)
-- [ ] **Presentation** — update `ChatBloc`:
-  - `ConnectSocket`, `DisconnectSocket`, `SendMessage`, `MessageReceived` events
-  - Subscribe in `ChatBloc` on `ConnectSocket` — listen to stream
-  - `buildWhen: (p, c) => c is MessagesUpdated` — list rebuilds only when new message arrives
+> **Figma:** Sent message appears instantly on right side. Received message appears on left side in real-time without refresh.
+
+- [ ] **Domain** — `ConnectToChatUseCase`, `SendMessageUseCase`, `DisconnectChatUseCase`
+- [ ] **Data** — `ChatWebSocketDataSource` using `web_socket_channel`; auto-reconnect with exponential backoff (max 3 attempts)
+- [ ] **Presentation**
+  - Add `ConnectToChat`, `SendMessage`, `MessageReceived`, `DisconnectChat` events to `ChatBloc`
+  - Connect on `chat_room_page.dart` init; disconnect on page pop via `go_router` listener
   - Send button uses `context.read<ChatBloc>().add(SendMessage(...))` — no page rebuild
   - Disconnect on page pop via `go_router` listener
+
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| WebSocket connection drops mid-session | Auto-reconnect with exponential backoff — max 3 attempts; show "Reconnecting..." banner |
+| Send fails (socket closed) | Queue the message locally; retry on reconnect; show "Sending..." indicator on bubble |
+| Duplicate messages (ID collision) | Deduplicate in `ChatBloc` by message `id` before adding to state list |
+| App goes to background | Disconnect socket on `AppLifecycleState.paused`; reconnect on `resumed` |
+| Message sent with no internet | `NetworkFailure` → message marked as "Failed" with retry icon in bubble |
 
 **Deliverable:** Real-time bidirectional chat.
 
 ---
 
-### Phase 23 — Chat: Rich Messages
-**Goal:** Code snippets and file attachments in chat matching Figma.
+### Phase 23 — Rich Messages
+**Goal:** Support code snippet and file attachment messages in chat, matching Figma.
 
-> **Figma:** Code message bubble: dark background, monospace text, copy icon. File attachment: file icon + filename + size.
+> **Figma:** Code bubble: monospace font block with language tag + copy icon. File bubble: file icon + filename + size + download icon. Image attachment: thumbnail in bubble, tap to open full-screen.
 
-- [ ] `MessageEntity` — add `type` enum (text/code/file), `attachmentUrl`
-- [ ] `CodeSnippetBubble` — matches Figma code bubble design
-- [ ] `FileAttachmentWidget` — matches Figma file attachment design
-- [ ] Update `ChatInputBar` — attachment icon → file picker (matches Figma icons)
+- [ ] **Domain** — extend `MessageEntity` with `type`, `attachmentUrl`, `fileName`, `fileSize`
+- [ ] **Data** — `UploadFileUseCase`; multipart Dio call
+- [ ] **Presentation**
+  - `CodeSnippetBubble` — matches Figma code bubble design
+  - `FileAttachmentWidget` — matches Figma file attachment design
+  - Update `ChatInputBar` — attachment icon → file picker (matches Figma icons)
+
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| File size exceeds 10 MB | Validate before upload → show `SnackBar` "File too large (max 10 MB)" |
+| Unsupported file type | `file_picker` configured with allowed extensions; unsupported types blocked |
+| Image attachment fails to load | `CachedNetworkImage` `errorWidget` shows file icon placeholder |
+| Code paste with no language detected | Default syntax: plain text; copy icon always shown |
 
 **Deliverable:** Rich message types matching Figma.
 
 ---
 
-### Phase 24 — Profile: View & Edit
-**Goal:** User profile page matching Figma.
+### Phase 24 — Profile View & Edit
+**Goal:** Profile page matching Figma.
 
-> **Figma:** Large avatar at top, name, role badge, track label, seniority label. Skills section with pill chips. Bio text section. Edit button (pencil icon top-right). Edit opens same page in edit mode with fields.
+> **Figma:** Profile header: large avatar, name, role badge, track chip. Stats row: projects count, tasks completed, rating. Skills section: chips grid. "Edit Profile" button. Edit mode: in-place or separate page.
 
-- [ ] **Domain** — `ProfileEntity`, `ProfileRepository`, `GetProfileUseCase`, `UpdateProfileUseCase`
-- [ ] **Data** — `ProfileModel`, `ProfileRemoteDataSource`, `ProfileRepositoryImpl`
+- [ ] **Domain** — `ProfileEntity`, `ProfileRepository`, `GetProfileUseCase`, `UpdateProfileUseCase`, `UploadAvatarUseCase`
+- [ ] **Data** — `ProfileModel`, datasource, impl, sqflite cache
 - [ ] **Presentation**
-  - `ProfileCubit` — states: `ProfileLoading`, `ProfileLoaded`, `ProfileError`, `ProfileUpdating`
-  - `profile_page.dart` — matches Figma profile layout exactly
+  - `ProfileCubit` — states: `ProfileLoading`, `ProfileLoaded`, `ProfileError`, `ProfileUpdating`, `ProfileUpdated`
+  - `profile_page.dart` — matches Figma layout
   - `SkillChip` — pill chip matching Figma chip design
   - Edit mode — fields editable in-place or on separate page per Figma
+
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| No avatar URL (new user) | `AppAvatar` renders initials on `context.colors.primary` background |
+| Profile update fails (network) | Revert UI to previous state; show `SnackBar` "Update failed" |
+| Image upload fails | Keep old avatar; show `SnackBar` "Couldn't upload photo" |
+| Too many skills added | Cap at 10 skills; "+ Add Skill" button disabled beyond limit |
 
 **Deliverable:** Profile page matching Figma.
 
 ---
 
-### Phase 25 — Profile: Portfolio
+### Phase 25 — Portfolio
 **Goal:** Portfolio section matching Figma.
 
 > **Figma:** Portfolio cards: project name, role, impact metric (e.g. "Reduced load time by 40%"), star rating (peer rating), "Mentor Choice" badge (gold star icon). Detail page expands the card.
@@ -852,6 +1130,13 @@ lib/
   - `ImpactMetricCard` — matches Figma metric display
   - `PeerRatingWidget` — star row matching Figma rating stars
   - Mentor badge — matching Figma badge asset
+
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| Empty portfolio (new user) | Show "No portfolio items yet" empty state with subtitle |
+| Portfolio card image fails | `CachedNetworkImage` placeholder icon shown — no broken image |
+| Impact metric text too long | Clamp to 2 lines with ellipsis; full text shown on `PortfolioDetailPage` |
 
 **Deliverable:** Portfolio section matching Figma.
 
@@ -871,6 +1156,14 @@ lib/
   - Unread badge on bottom nav tab icon
   - `buildWhen: (p, c) => c is NotificationsLoaded || c is UnreadCountChanged`
 
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| Empty notification list | Show "You're all caught up! 🎉" empty state illustration |
+| Mark as read fails (network) | Optimistic UI update applied immediately; silently retry in background; no visible error |
+| Notification action → resource deleted | Navigate to target; catch 404 → show `SnackBar` "This item no longer exists"; pop back |
+| Very old notifications (> 30 days) | Group under "Earlier" section; no special handling needed |
+
 **Deliverable:** Notification center matching Figma.
 
 ---
@@ -889,7 +1182,153 @@ lib/
   - `TalentCard` — matches Figma talent card
   - Route guard: Company role only
 
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| Empty talent list | Show "No developers found" empty state |
+| Filter returns no results | Show "No results for this filter" empty state with "Clear Filters" button |
+| Talent profile not accessible (404) | `SnackBar` "Profile unavailable"; navigate back to talent list |
+| Non-company role accesses company route | Router guard redirects to `/home` before page renders |
+| Network failure loading talent | `AppErrorWidget` with retry; don't show empty state |
+
 **Deliverable:** Company role fully functional, matching Figma.
+
+---
+
+### Phase 28 — Core: Pagination Pattern
+**Goal:** Define a reusable, type-safe pagination system in `core/` and apply it to every list screen in the app.
+
+> **Why a separate phase:** Pagination touches the domain, data, and presentation layers of 5 features simultaneously. Defining the pattern once in `core/` and retrofitting all lists ensures consistency and avoids duplicated scroll logic across features.
+
+#### 28a — Core Pagination Utilities
+
+- [ ] `core/utils/pagination/pagination_params.dart` — `PaginationParams extends Equatable`:
+  - `required named` fields: `page`, `limit`
+  - `static const defaultLimit = 20`
+  - `static const first` — page 1 with default limit
+  - `nextPage()` — returns new instance with `page + 1`
+
+- [ ] `core/utils/pagination/paginated_entity.dart` — generic `PaginatedEntity<T> extends Equatable`:
+  - `required named` fields: `items`, `totalCount`, `currentPage`, `totalPages`, `hasNextPage`
+  - `appendPage(PaginatedEntity<T> next)` — returns new entity merging both item lists
+
+- [ ] `core/utils/pagination/paginated_model.dart` — `PaginatedModel<T>`:
+  - `fromJson(json, fromJsonT)` factory — maps `data`, `total_count`, `current_page`, `total_pages`
+  - `hasNextPage` computed getter
+
+#### 28b — Pagination State Convention
+
+Every paginated Bloc/Cubit `Loaded` state must include:
+- `items` — the current full list (previous + new page appended)
+- `hasNextPage` — whether more pages exist
+- `currentPage` — the last successfully loaded page
+- `isLoadingMore` — `true` while the next page is in-flight (default `false`)
+
+Two standard events added to every paginated Bloc: `LoadFirstPage` (initial load / pull-to-refresh) and `LoadNextPage` (scroll-triggered).
+
+Guard in Bloc handler: if `state.isLoadingMore` is already `true`, ignore `LoadNextPage` to prevent duplicate requests.
+
+#### 28c — Shared Pagination Widget
+
+- [ ] `core/widgets/app_paginated_list.dart` — `AppPaginatedList<T> extends StatefulWidget`:
+  - `required named` params: `items`, `itemBuilder`, `onLoadMore`, `hasNextPage`, `isLoadingMore`
+  - Optional `onRefresh` callback (Future) — wraps in `RefreshIndicator` when provided
+  - `ScrollController` — calls `onLoadMore` when scroll reaches 90% of max extent
+  - Shows `AppLoading` spinner at bottom while `isLoadingMore == true`
+  - When `hasNextPage == false` → shows subtle "No more items" end indicator
+
+#### 28d — Apply to All List Screens
+
+| Screen | Phase | Pagination Type | Page Size |
+|---|---|---|---|
+| Teams Discovery | 15 | Page-based (`page`, `limit`) | 20 teams |
+| Projects List | 18 | Page-based | 20 projects |
+| Chat History | 21 | Cursor-based (`beforeMessageId`) | 30 messages |
+| Notifications | 26 | Page-based | 30 notifications |
+| Talent Browse | 27 | Page-based | 20 talents |
+
+> **Chat uses cursor-based** because messages have natural ordering by ID and new messages arrive via WebSocket — page numbers would shift and cause duplicates.
+
+- [ ] **Teams (Phase 15 retrofit):** `GetRecommendedTeamsUseCase` params include `PaginationParams`; `TeamsBloc` gets `LoadNextPage` event + `isLoadingMore` + `hasNextPage` in `TeamsLoaded`; `teams_discovery_page.dart` replaces `ListView` with `AppPaginatedList`
+- [ ] **Projects (Phase 18 retrofit):** Same pattern applied to `GetProjectsUseCase` + `WorkspaceBloc` + `projects_list_page.dart`
+- [ ] **Chat History (Phase 21 retrofit):** `GetMessagesUseCase` uses `CursorPaginationParams(beforeMessageId, limit)`; load older messages when user scrolls to top of reversed list
+- [ ] **Notifications (Phase 26 retrofit):** `GetNotificationsUseCase` + `NotificationsCubit` + `notifications_page.dart`
+- [ ] **Talent Browse (Phase 27 retrofit):** `GetTalentListUseCase` + `CompanyCubit` + `talent_browse_page.dart` — filter params preserved across pages
+
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| `LoadNextPage` fired while already loading | Guard in Bloc: if `state.isLoadingMore` return immediately — ignore duplicate events |
+| Network fails on `LoadNextPage` | Keep existing items; show `SnackBar` "Couldn't load more"; `isLoadingMore = false` |
+| Pull-to-refresh while `isLoadingMore` | Cancel/ignore `LoadNextPage`; run `LoadFirstPage` which resets page to 1 |
+| Last page reached, user still scrolls | `hasNextPage == false` → `onLoadMore` never called by `AppPaginatedList` |
+| Filter changes (Talent Browse) | Reset to `PaginationParams.first`; clear existing items before new fetch |
+| Chat cursor: gap due to WS messages | WS messages appended to top of list in real-time; REST history loads older messages downward — no overlap |
+
+**Deliverable:** Single reusable pagination system in `core/`. All 5 list screens use `AppPaginatedList` with consistent load-more, pull-to-refresh, and error handling behavior.
+
+---
+
+### Phase 29 — Testing
+**Goal:** Write unit tests for all UseCases, Cubits, and Repository implementations using `bloc_test` and `mocktail`.
+
+> **Why last:** Tests are written after each feature is stable — this phase documents the conventions and minimum coverage targets. Teams should write tests **during** each phase; Phase 29 is the final verification sweep.
+
+#### 29a — Test Folder Structure
+
+Mirror `lib/` exactly under `test/`:
+- `test/core/network/` — error interceptor tests
+- `test/core/utils/` — pagination params, validators, date formatter tests
+- `test/features/auth/domain/` — `LoginUseCase`, `RegisterUseCase` tests
+- `test/features/auth/data/` — `AuthRepositoryImpl` tests
+- `test/features/auth/presentation/` — `LoginCubit`, `RegisterCubit`, `OtpCubit`, `ForgotPasswordCubit`, `ProfileSetupCubit` tests
+- Same pattern for `home/`, `teams/`, `workspace/`, `chat/`, `profile/`, `notifications/`
+
+#### 29b — UseCase Test Convention
+
+For every UseCase, write tests covering:
+1. **Success path** — mock repository returns `Right(entity)`; assert result equals `Right(entity)`; verify repository called exactly once; verify no more interactions
+2. **Server failure** — mock returns `Left(ServerFailure)`; assert result is `Left`
+3. **Network failure** — mock returns `Left(NetworkFailure)`; assert result is `Left`
+
+Use `MockAuthRepository extends Mock implements AuthRepository` pattern via `mocktail`.
+
+#### 29c — Cubit Test Convention
+
+Use `blocTest<CubitType, StateType>` for every state transition:
+1. **Success:** `build` returns cubit with mocked UseCase returning `Right`; `act` calls cubit method; `expect` lists `[LoadingState, SuccessState]`
+2. **Failure:** same setup with `Left` return; `expect` lists `[LoadingState, FailureState]`
+
+Always call `tearDown(() => cubit.close())`.
+
+#### 29d — Repository Test Convention
+
+For every `RepositoryImpl`, write tests covering:
+1. **Online + success** — `networkInfo.isConnected = true`; remote returns model; assert `Right(model)`
+2. **Offline** — `networkInfo.isConnected = false`; assert `Left(NetworkFailure())`; verify remote never called
+3. **Remote throws `ServerException`** — assert `Left(ServerFailure(message: ...))`
+4. **Remote throws `CacheException`** — assert `Left(CacheFailure(message: ...))`
+
+#### 29e — Coverage Targets
+
+| Layer | Minimum Coverage | Priority |
+|---|---|---|
+| `domain/usecases/` | **100%** | Every UseCase must have success + failure tests |
+| `presentation/cubit/` | **90%** | Every state transition must be verified |
+| `data/repositories/` | **80%** | Online success, offline, and exception paths |
+| `core/utils/` | **80%** | Validators, pagination params, date formatter |
+| `core/network/` | **70%** | Error interceptor mapping |
+| `presentation/pages/` | Excluded | Widget tests out of scope for this phase |
+
+#### ⚠️ Edge Cases
+| Scenario | Handling |
+|---|---|
+| Mock returns unexpected type | Use `registerFallbackValue` in `setUpAll` for custom `Equatable` objects |
+| Async cubit test timeout | Set `timeout` param in `blocTest` if UseCase is slow |
+| `sealed class` states need no extra setup | `sealed` classes are final — no mocking needed, just instantiate |
+| `NoParams` equality check | `const NoParams()` — always equal via `Equatable.props = []` |
+
+**Deliverable:** All UseCases, Cubits, and Repositories have unit tests. `flutter test --coverage` runs clean with ≥ 85% overall coverage.
 
 ---
 
@@ -902,14 +1341,14 @@ lib/
 | **2** | Error Handling & UseCase Base | Foundation |
 | **3** | Network Client (Dio) | Foundation |
 | **4** | Router & DI Shell | Foundation |
-| **5** | Shared Widgets | Foundation |
+| **5** | Extensions, Color Schema & Shared Widgets | Foundation |
 | **6** | Splash Screen | Auth |
 | **7** | Onboarding | Auth |
-| **8** | Login | Auth |
-| **9** | Register | Auth |
-| **10** | OTP Verification | Auth |
-| **11** | Forgot Password | Auth |
-| **12** | Profile Setup | Auth |
+| **8** | Login (`LoginCubit`) | Auth |
+| **9** | Register (`RegisterCubit`) | Auth |
+| **10** | OTP Verification (`OtpCubit`) | Auth |
+| **11** | Forgot Password (`ForgotPasswordCubit`) | Auth |
+| **12** | Profile Setup (`ProfileSetupCubit`) | Auth |
 | **13** | Main Shell & Bottom Nav | Navigation |
 | **14** | Home Dashboard | Home |
 | **15** | Teams Discovery | Teams |
@@ -925,9 +1364,11 @@ lib/
 | **25** | Portfolio | Profile |
 | **26** | Notifications | Notifications |
 | **27** | Company Role | Company |
+| **28** | Pagination Pattern | Core Enhancement |
+| **29** | Testing (UseCases · Cubits · Repositories) | Quality |
 
 ---
 
-> **Total: 27 focused phases** — each independently deliverable and testable.
+> **Total: 29 focused phases** — each independently deliverable and testable.
 > **Rule: Every screen must match Figma exactly — no invented UI.**
-> **Ready to execute starting from Phase 0.**
+> **Auth: No shared AuthBloc — 5 independent Cubits (LoginCubit, RegisterCubit, OtpCubit, ForgotPasswordCubit, ProfileSetupCubit).**

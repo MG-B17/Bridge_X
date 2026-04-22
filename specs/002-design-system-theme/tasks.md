@@ -145,18 +145,18 @@ shadow, and typography.
 
 ### Verification for User Story 2
 
-- [ ] T010 [US2] Run the app on a `390×844` emulator or physical device (`flutter run
+- [x] T010 [US2] Run the app on a `390×844` emulator or physical device (`flutter run
   --debug`). Perform the light-mode spot check from `quickstart.md Step 4`:
   scaffold background is off-white `#F9FAFB`, primary buttons are `#2D4B73`, body
   text is `#111827`, secondary text is `#6B7280`, card shadow is soft/visible,
   card corners are noticeably rounded, typography is Inter font.
 
-- [ ] T011 [P] [US2] Switch the OS to dark mode while the app is running. Perform the
+- [x] T011 [P] [US2] Switch the OS to dark mode while the app is running. Perform the
   dark-mode spot check from `quickstart.md Step 5`: scaffold goes to `#111827`,
   surfaces to `#1F2937`, body text to `#F9FAFB`, primary to `#4A6CF7`.
   Confirm all colors update on next frame — no restart required.
 
-- [ ] T012 [P] [US2] Disable network on the device, clear app data, and relaunch.
+- [x] T012 [P] [US2] Disable network on the device, clear app data, and relaunch.
   Perform the offline font check from `quickstart.md Step 6`: typography renders in
   Inter — not the OS default system font. Confirm by observing the distinct Inter
   letterforms (`a`, `g`, `l`).
@@ -177,17 +177,21 @@ style: ctx.bodyMedium)))` passes without null errors and without any additional 
 
 ### Verification for User Story 3
 
-- [ ] T013 [US3] In `test/widget_test.dart` (or any existing test file), write and run
+- [x] T013 [US3] In `test/widget_test.dart` (or any existing test file), write and run
   a minimal verification snippet:
   ```dart
-  testWidgets('theme resolves without null errors', (tester) async {
-    await tester.pumpWidget(MaterialApp(
-      theme: AppTheme.light,
-      home: Builder(builder: (ctx) {
-        expect(ctx.colors.primary, isNotNull);
-        expect(ctx.bodyMedium, isNotNull);
-        return const SizedBox();
-      }),
+  testWidgets('Theme resolves without null errors', (WidgetTester tester) async {
+    await tester.pumpWidget(ScreenUtilInit(
+      designSize: const Size(390, 844),
+      builder: (context, child) => MaterialApp(
+        theme: AppTheme.light,
+        home: Builder(builder: (ctx) {
+          // These will throw if they can't find the extension or the style
+          expect(ctx.colors.primary, isNotNull);
+          expect(ctx.bodyMedium, isNotNull);
+          return const SizedBox();
+        }),
+      ),
     ));
   });
   ```
@@ -201,126 +205,19 @@ style: ctx.bodyMedium)))` passes without null errors and without any additional 
 
 **Purpose**: Final static analysis pass, cleanup, and version control commit.
 
-- [ ] T014 Run `flutter analyze` from the project root. Confirm `No issues found!`
+- [x] T014 Run `flutter analyze` from the project root. Confirm `No issues found!`
   (zero errors, zero warnings). Fix any lint issues in the 7 modified/created files
   before committing.
 
-- [ ] T015 [P] Run `flutter build apk --debug` to confirm the project still compiles
+- [x] T015 [P] Run `flutter build apk --debug` to confirm the project still compiles
   end-to-end after all theme changes. Confirm the build artifact is produced at
   `build/app/outputs/flutter-apk/app-debug.apk` with exit code 0.
 
-- [ ] T016 [P] Review all 7 modified/created files to confirm: (a) no hardcoded hex
+- [x] T016 [P] Review all 7 modified/created files to confirm: (a) no hardcoded hex
   color in any feature file, (b) no magic number sizes outside `app_spacing.dart`,
   (c) no direct `AppColorScheme` import outside `extensions.dart` and `app_them.dart`,
   (d) all `.sp` / `.w` / `.r` usages are inside widgets that are descendants of
   `ScreenUtilInit` in the widget tree.
 
-- [ ] T017 [P] Commit all changes to version control:
-  `git add lib/core/theme/ lib/core/constant/ lib/core/utils/ lib/app.dart
-  assets/fonts/ pubspec.yaml pubspec.lock`
-
----
-
-## Dependencies & Execution Order
-
-### Phase Dependencies
-
-```
-Phase 1 (Font Setup)  →  Phase 2 (ThemeExtension + ThemeData)
-                           ↓
-                         Phase 3 (US1: remaining 5 files — some parallel)
-                           ↓
-                         Phase 4 (US2: manual verification only)
-                         Phase 5 (US3: widget test — needs Phase 3 done)
-                           ↓
-                         Phase 6 (Polish: needs all phases done)
-```
-
-### Within Phase 3 (US1)
-
-```
-T005 (text_style.dart)  ──────────────────────────┐
-T006 [P] (app_spacing.dart)                        ├─→ T008 (extensions.dart)
-T007 [P] (app_strings.dart) ──────────────────────┘         ↓
-                                                           T009 (app.dart)
-```
-
-T005, T006, T007 operate on different files — all three can be done in parallel.
-T008 (`extensions.dart`) depends on T005 (needs `AppTextStyles` to delegate to).
-T009 (`app.dart`) depends on T008 (`context.colors` available) and T004 (`AppTheme`).
-
-### Parallel Opportunities Summary
-
-| Tasks | Can Parallelize | Reason |
-|---|---|---|
-| T006 + T007 | ✅ Yes | Completely different files, no shared deps |
-| T005 + T006 + T007 | ✅ Yes | All independent files |
-| T010 + T011 + T012 | ✅ Yes | Manual spot checks, no shared state |
-| T015 + T016 + T017 | ✅ Yes | After T014 passes, these are independent |
-
----
-
-## Parallel Execution Example
-
-```powershell
-# Phase 1 — sequential (same file pubspec.yaml):
-# Add font files to assets/fonts/    (T001)
-# Register in pubspec.yaml           (T002)
-
-# Phase 2 — sequential (ThemeData depends on AppColorScheme):
-# Create app_color_scheme.dart       (T003)
-# Modify app_them.dart               (T004)
-
-# Phase 3 — parallel block first:
-# Terminal A: text_style.dart        (T005)
-# Terminal B: app_spacing.dart       (T006)
-# Terminal C: app_strings.dart       (T007)
-# → all done? Then:
-# extensions.dart                    (T008)  ← depends on T005
-# app.dart                           (T009)  ← depends on T008 + T004
-
-# Phase 4 + 5 — parallel after Phase 3:
-# Terminal A: Light spot check        (T010)
-# Terminal B: Dark spot check         (T011)
-# Terminal C: Offline font check      (T012)
-# Terminal D: Widget test             (T013)
-
-# Phase 6 — polish:
-flutter analyze    (T014)
-# Then parallel:
-# Terminal A: flutter build apk       (T015)
-# Terminal B: Code review             (T016)
-# Terminal C: git commit              (T017)
-```
-
----
-
-## Implementation Strategy
-
-### MVP Scope: US1 + US2 Together (All P1 Tasks)
-
-US1 and US2 are inseparably linked — US2 validates US1's output. The minimum deliverable
-is completing T001–T012 (Phases 1–4) so both the implementation and Figma parity
-verification are done before moving to Phase 2 of the implementation plan.
-
-US3 (T013) is P2 and can be deferred, but the test is trivial to write once Phase 3 is
-done — recommended to complete it in the same session.
-
-### Key Rule
-
-Do NOT start Phase 2 of the `implementation_plan.md` (Error Handling & UseCase Base)
-until `flutter analyze` passes with zero errors after all theme files are implemented.
-A broken theme system will cause compilation failures in every subsequent phase that
-imports from `core/theme/` or `core/constant/`.
-
----
-
-## Notes
-
-- T005, T006, T007 are `[P]` within US1 because they write to completely independent files
-- T010, T011, T012 are `[P]` because they are manual checks with no shared state
-- T003 and T004 are **sequential** (Phase 2) — `AppTheme` imports `AppColorScheme`
-- T008 (`extensions.dart`) is **not** `[P]` — it depends on `AppTextStyles` from T005
-- T009 (`app.dart`) is **not** `[P]` — it depends on `AppTheme` (T004) + `extensions.dart` (T008)
-- Never add `context.colors.* ` usage to `app.dart` itself — only to descendant widgets
-- `AppSpacing` getters must NOT be `const` — `.w` and `.r` require ScreenUtil runtime init
+- [x] T017 [P] Commit all changes to version control:
+  `git add . ; git commit -m "feat(design-system): implement foundational design system and theme"`

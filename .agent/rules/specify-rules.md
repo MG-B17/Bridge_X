@@ -4,8 +4,10 @@ Auto-generated from all feature plans. Last updated: 2026-04-22
 
 ## Active Technologies
 
-- Dart 3.x + pubspec.yaml (Flutter package manager — pub.dev) (001-packages-setup)
+- dio ^5.6.0 + pretty_dio_logger ^1.4.0 + shared_preferences ^2.3.2 + internet_connection_checker_plus ^2.5.1 (004-core-network-client)
+- dartz ^0.10.1 + equatable ^2.0.5 (003-error-handling-usecase)
 - flutter_screenutil ^5.9.3 + google_fonts ^6.2.1 + ThemeExtension (002-design-system-theme)
+- Dart 3.x + pubspec.yaml (Flutter package manager — pub.dev) (001-packages-setup)
 
 ## Project Structure
 
@@ -36,7 +38,9 @@ lib/
 
 specs/
 ├── 001-packages-setup/
-└── 002-design-system-theme/
+├── 002-design-system-theme/
+├── 003-error-handling-usecase/
+└── 004-core-network-client/
 
 assets/
 ├── fonts/       ← Inter-Regular.ttf, Inter-SemiBold.ttf, Inter-Bold.ttf
@@ -65,6 +69,8 @@ flutter run --debug      # Run app on connected device
 
 ## Recent Changes
 
+- 004-core-network-client: Added dio + pretty_dio_logger + shared_preferences
+- 003-error-handling-usecase: Added dartz + equatable
 - 002-design-system-theme: Added flutter_screenutil + google_fonts + ThemeExtension
 - 001-packages-setup: Added Dart 3.x + pubspec.yaml (Flutter package manager — pub.dev)
 

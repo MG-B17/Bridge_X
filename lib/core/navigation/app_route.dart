@@ -1,12 +1,11 @@
+import 'package:bridgex/features/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:bridgex/core/helper/cache/cache_helper.dart';
-import 'package:bridgex/core/di/di.dart';
 import 'app_route_constant.dart';
 
 class AppRoute {
   static final GoRouter router = GoRouter(
-    initialLocation: AppRouteConstant.root,
+    initialLocation: AppRouteConstant.splash,
     errorBuilder: (context, state) {
       return const Scaffold(
         body: Center(
@@ -14,43 +13,10 @@ class AppRoute {
         ),
       );
     },
-    redirect: (context, state) {
-      final cacheHelper = sl<CacheHelper>();
-      final token = cacheHelper.getToken();
-      final isFirstLaunch = cacheHelper.isFirstLaunch();
-      final role = cacheHelper.getUserRole();
-      
-      final currentPath = state.uri.path;
-      final isAuthRoute = currentPath == AppRouteConstant.login ||
-          currentPath == AppRouteConstant.register ||
-          currentPath == AppRouteConstant.otp ||
-          currentPath == AppRouteConstant.forgotPassword;
-
-      if (currentPath == AppRouteConstant.root) {
-        if (isFirstLaunch) return AppRouteConstant.onboarding;
-        if (token == null) return AppRouteConstant.login;
-        if (role == null) return AppRouteConstant.profileSetup;
-        return AppRouteConstant.home;
-      }
-      
-      if (currentPath == AppRouteConstant.onboarding) {
-        if (!isFirstLaunch) return AppRouteConstant.login;
-      }
-
-      if (currentPath == AppRouteConstant.profileSetup) {
-        if (role != null) return AppRouteConstant.home;
-      }
-
-      if (token == null && !isAuthRoute && currentPath != AppRouteConstant.onboarding) {
-        return AppRouteConstant.login;
-      }
-
-      return null;
-    },
     routes: [
       GoRoute(
-        path: AppRouteConstant.root,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Splash Screen Stub'))),
+        path: AppRouteConstant.splash,
+        builder: (context, state) => const SplashPage(),
       ),
       GoRoute(
         path: AppRouteConstant.onboarding,

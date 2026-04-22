@@ -445,6 +445,7 @@ flowchart TD
 
 ### Phase 0 — Packages Setup
 **Goal:** Add all packages to pubspec.yaml, verify the project builds.
+**UI Screen Required:** No
 
 - [ ] Add all packages listed above to `pubspec.yaml`
 - [ ] Run `flutter pub get` — zero errors
@@ -464,6 +465,7 @@ flowchart TD
 
 ### Phase 1 — Design System & Theme
 **Goal:** Fill all empty theme files using Figma tokens exactly as extracted above.
+**UI Screen Required:** No
 
 - [ ] `core/theme/app_color_scheme.dart` — implement `AppColorScheme extends ThemeExtension<AppColorScheme>` with `light` and `dark` static const instances, `copyWith`, and `lerp` overrides (see Design System section for all hex values)
 - [ ] `core/theme/text_style.dart` — Inter font, full hierarchy using `.sp` for all sizes
@@ -486,6 +488,7 @@ flowchart TD
 
 ### Phase 2 — Core: Error Handling & UseCase Base
 **Goal:** Build the error layer and base UseCase contract.
+**UI Screen Required:** No
 
 - [ ] `core/error/exception.dart` — define `ServerException`, `CacheException`, `NetworkException`, `UnauthorizedException` — all with `required named message` parameter and `Equatable` props
 - [ ] `core/error/failure.dart` — define `ServerFailure`, `NetworkFailure`, `CacheFailure`, `UnauthorizedFailure` all extending abstract `Failure extends Equatable`
@@ -506,6 +509,7 @@ flowchart TD
 
 ### Phase 3 — Core: Network Client (Dio)
 **Goal:** Fully configured Dio instance with auth and error interceptors.
+**UI Screen Required:** No
 
 - [ ] `core/network/network_info.dart` — implement using `internet_connection_checker_plus`
 - [ ] `core/network/api_endpoints.dart` — all URL constants as `static const String` (stubs until backend ready)
@@ -535,6 +539,7 @@ flowchart TD
 
 ### Phase 4 — Core: Router & DI Shell
 **Goal:** Wire `go_router` and register all core singletons in `get_it`.
+**UI Screen Required:** No
 
 - [ ] `core/navigation/app_route_constant.dart` — all route paths as `static const String`: `/`, `/onboarding`, `/login`, `/register`, `/otp`, `/forgot-password`, `/profile-setup`, `/home`, and all feature routes
 - [ ] `core/navigation/app_route.dart` — `GoRouter` configuration:
@@ -562,6 +567,7 @@ flowchart TD
 
 ### Phase 5 — Core: Extensions, Color Schema & Shared Widgets
 **Goal:** Create `BuildContext` extensions for colors and text styles so every feature accesses the design system through `context`. Build the shared widget library from Figma.
+**UI Screen Required:** Yes — shared component screens (AppButton, AppTextField, AppAvatar, AppLoading, AppErrorWidget)
 
 #### 5a — AppColorScheme as ThemeExtension
 - [ ] `core/theme/app_color_scheme.dart` — `AppColorScheme extends ThemeExtension<AppColorScheme>`:
@@ -613,6 +619,7 @@ flowchart TD
 
 ### Phase 6 — Splash Screen
 **Goal:** Branded splash screen that checks auth state and redirects.
+**UI Screen Required:** Yes — Splash screen
 
 > **Figma:** Centered logo on `#F9FAFB` background with app name "TeamUP"
 
@@ -636,6 +643,7 @@ flowchart TD
 
 ### Phase 7 — Onboarding
 **Goal:** 3-slide onboarding flow that only appears on first launch.
+**UI Screen Required:** Yes — Onboarding slides (all 3)
 
 > **Figma:** Full-screen slides with Lottie animation top half, title + subtitle bottom half, dot indicator, "Skip" top-right, "Get Started" / "Next" primary button. Final slide shows "Get Started".
 
@@ -662,6 +670,7 @@ flowchart TD
 
 ### Phase 8 — Auth: Login
 **Goal:** Login screen matching Figma design, connected to `LoginCubit`.
+**UI Screen Required:** Yes — Login screen
 
 > **Figma:** "Welcome Back" heading, email + password fields, "Forgot Password?" link, primary CTA button, social login row (Google / GitHub / Apple icons), "Don't have an account? Register" link.
 
@@ -700,6 +709,7 @@ flowchart TD
 
 ### Phase 9 — Auth: Register
 **Goal:** Registration screen matching Figma, connected to `RegisterCubit`.
+**UI Screen Required:** Yes — Register screen
 
 > **Figma:** "Create Account" heading, name + email + password + confirm password fields, primary CTA, "Already have an account? Login" link.
 
@@ -728,6 +738,7 @@ flowchart TD
 
 ### Phase 10 — Auth: OTP Verification
 **Goal:** OTP verification screen matching Figma, with countdown resend, connected to `OtpCubit`.
+**UI Screen Required:** Yes — OTP verification screen
 
 > **Figma:** "Enter OTP" heading, subtitle with email masked, 6 individual digit boxes in a row, countdown timer, "Resend Code" text button.
 
@@ -757,6 +768,7 @@ flowchart TD
 
 ### Phase 11 — Auth: Forgot Password
 **Goal:** Password recovery screen matching Figma, connected to `ForgotPasswordCubit`.
+**UI Screen Required:** Yes — Forgot Password screen
 
 > **Figma:** "Reset Password" heading, subtitle instruction, email field, "Send Reset Link" primary button, back arrow navigation.
 
@@ -781,6 +793,7 @@ flowchart TD
 
 ### Phase 12 — Auth: Profile Setup
 **Goal:** Role/track/seniority selection screen matching Figma, connected to `ProfileSetupCubit`.
+**UI Screen Required:** Yes — Profile Setup steps (all 3 steps)
 
 > **Figma:** Multi-step form with tap-to-select cards for each option. Step 1: role (Student / Supervisor / Company cards). Step 2: track (Frontend / Backend / Mobile / AI / Design). Step 3: seniority (Junior / Mid / Senior). Progress indicator at top.
 
@@ -809,6 +822,7 @@ flowchart TD
 
 ### Phase 13 — Main Shell & Bottom Navigation
 **Goal:** App shell with bottom navigation bar matching Figma.
+**UI Screen Required:** Yes — Main shell + Bottom navigation bar
 
 > **Figma:** Bottom nav with 4 tabs — Home, Chat, Projects, Profile. Active tab icon uses `primary`, inactive uses `textSecondary`. White background with top shadow.
 
@@ -831,6 +845,7 @@ flowchart TD
 
 ### Phase 14 — Home Dashboard
 **Goal:** Home screen matching Figma dashboard design.
+**UI Screen Required:** Yes — Home dashboard screen
 
 > **Figma:** Top greeting header with user avatar. Circular progress card (tasks completion %). AI insight card with text and icon. Weekly activity bar chart. Quick action buttons: "Join Team" and "Create Team".
 
@@ -861,6 +876,7 @@ flowchart TD
 
 ### Phase 15 — Teams Discovery
 **Goal:** Teams browse page matching Figma.
+**UI Screen Required:** Yes — Teams discovery screen + Team card
 
 > **Figma:** Search bar at top. Horizontal filter chips: All / Frontend / Backend / Mobile / AI / Design. Vertical list of team cards: team avatar, name, member count, skills chips, "Request to Join" button.
 
@@ -888,6 +904,7 @@ flowchart TD
 
 ### Phase 16 — AI Matching
 **Goal:** AI team matching screen matching Figma.
+**UI Screen Required:** Yes — AI matching screen (loading + result states)
 
 > **Figma:** "Find Your Team" heading, "Start Matching" button triggers matching flow. Loading state: animated Lottie + "Finding your perfect team..." text. Result: match score percentage in large circular indicator, team card with "Accept" and "Skip" buttons.
 
@@ -914,6 +931,7 @@ flowchart TD
 
 ### Phase 17 — Join & Create Team
 **Goal:** Join request flow and team creation form matching Figma.
+**UI Screen Required:** Yes — Join request bottom sheet + Create Team form
 
 > **Figma:** "Request to Join" bottom sheet: team info, message field, "Send Request" button. Create Team form: name, category, required skills (multi-select chips), max members count.
 
@@ -940,6 +958,7 @@ flowchart TD
 
 ### Phase 18 — Projects List
 **Goal:** Projects list screen matching Figma.
+**UI Screen Required:** Yes — Projects list screen + Project card
 
 > **Figma:** "My Projects" heading with tab filter: Ongoing / Completed. Project cards: title, team name, progress bar, member avatars row, status chip.
 
@@ -967,6 +986,7 @@ flowchart TD
 
 ### Phase 19 — Task Board
 **Goal:** Task board screen matching Figma.
+**UI Screen Required:** Yes — Task board screen + Task card + Task detail screen
 
 > **Figma:** "Tasks" heading with project name subtitle. Kanban-style or list view. Task cards: title, assignee avatar, priority label chip, due date, status chip. Tap card → task detail page with full description.
 
@@ -993,6 +1013,7 @@ flowchart TD
 
 ### Phase 20 — Create Task & Supervisor Settings
 **Goal:** Task creation form and supervisor settings panel matching Figma.
+**UI Screen Required:** Yes — Create Task bottom sheet + Team Settings screen
 
 > **Figma:** Create Task bottom sheet: title, description, assignee dropdown, priority chips, due date picker, "Add Task" button. Team Settings: member list with "Remove" option, delete project button.
 
@@ -1019,6 +1040,7 @@ flowchart TD
 
 ### Phase 21 — Chat History (REST)
 **Goal:** Chat list and room with REST-loaded message history, matching Figma.
+**UI Screen Required:** Yes — Chat list screen + Chat room screen
 
 > **Figma:** Chat list: room rows with avatar, room name, last message preview, unread badge, timestamp. Chat room: messages grouped by date, sent (right, primary color) vs received (left, surface color) bubbles.
 
@@ -1045,6 +1067,7 @@ flowchart TD
 
 ### Phase 22 — Real-time WebSocket
 **Goal:** Connect chat room to WebSocket for live message delivery.
+**UI Screen Required:** No — logic layer only, extends existing chat room UI from Phase 21
 
 > **Figma:** Sent message appears instantly on right side. Received message appears on left side in real-time without refresh.
 
@@ -1071,6 +1094,7 @@ flowchart TD
 
 ### Phase 23 — Rich Messages
 **Goal:** Support code snippet and file attachment messages in chat, matching Figma.
+**UI Screen Required:** Yes — Code snippet bubble + File attachment bubble
 
 > **Figma:** Code bubble: monospace font block with language tag + copy icon. File bubble: file icon + filename + size + download icon. Image attachment: thumbnail in bubble, tap to open full-screen.
 
@@ -1095,6 +1119,7 @@ flowchart TD
 
 ### Phase 24 — Profile View & Edit
 **Goal:** Profile page matching Figma.
+**UI Screen Required:** Yes — Profile view screen + Edit Profile screen
 
 > **Figma:** Profile header: large avatar, name, role badge, track chip. Stats row: projects count, tasks completed, rating. Skills section: chips grid. "Edit Profile" button. Edit mode: in-place or separate page.
 
@@ -1120,6 +1145,7 @@ flowchart TD
 
 ### Phase 25 — Portfolio
 **Goal:** Portfolio section matching Figma.
+**UI Screen Required:** Yes — Portfolio card + Portfolio detail screen
 
 > **Figma:** Portfolio cards: project name, role, impact metric (e.g. "Reduced load time by 40%"), star rating (peer rating), "Mentor Choice" badge (gold star icon). Detail page expands the card.
 
@@ -1144,6 +1170,7 @@ flowchart TD
 
 ### Phase 26 — Notifications
 **Goal:** Notification center matching Figma.
+**UI Screen Required:** Yes — Notifications list screen + Notification tile
 
 > **Figma:** Grouped list: "Today" / "Earlier" section headers. Notification row: icon by type (team invite = people icon, task = tick icon), title bold, body text, timestamp right-aligned. Unread dot indicator left. Badge count on bottom nav.
 
@@ -1170,6 +1197,7 @@ flowchart TD
 
 ### Phase 27 — Company Role: Talent Discovery
 **Goal:** Company-specific screens matching Figma.
+**UI Screen Required:** Yes — Company dashboard screen + Talent browse screen + Talent card
 
 > **Figma:** Company dashboard: posted projects list, team stats. Talent browse page: filterable list of developer cards — avatar, name, top skills chips, completed projects count. Tap card → read-only profile page.
 
@@ -1197,6 +1225,7 @@ flowchart TD
 
 ### Phase 28 — Core: Pagination Pattern
 **Goal:** Define a reusable, type-safe pagination system in `core/` and apply it to every list screen in the app.
+**UI Screen Required:** No — core utility only; existing screens retrofitted, no new screens
 
 > **Why a separate phase:** Pagination touches the domain, data, and presentation layers of 5 features simultaneously. Defining the pattern once in `core/` and retrofitting all lists ensures consistency and avoids duplicated scroll logic across features.
 
@@ -1271,6 +1300,7 @@ Guard in Bloc handler: if `state.isLoadingMore` is already `true`, ignore `LoadN
 
 ### Phase 29 — Testing
 **Goal:** Write unit tests for all UseCases, Cubits, and Repository implementations using `bloc_test` and `mocktail`.
+**UI Screen Required:** No — test files only
 
 > **Why last:** Tests are written after each feature is stable — this phase documents the conventions and minimum coverage targets. Teams should write tests **during** each phase; Phase 29 is the final verification sweep.
 

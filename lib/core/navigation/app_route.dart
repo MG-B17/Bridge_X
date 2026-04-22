@@ -1,3 +1,6 @@
+import 'package:bridgex/features/auth/login/screen/login_page.dart';
+import 'package:bridgex/features/auth/register/screen/register_page.dart';
+import 'package:bridgex/features/onboarding/screen/onboarding_page.dart';
 import 'package:bridgex/features/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -20,15 +23,15 @@ class AppRoute {
       ),
       GoRoute(
         path: AppRouteConstant.onboarding,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Onboarding Stub'))),
+        builder: (context, state) => const OnboardingPage(),
       ),
       GoRoute(
         path: AppRouteConstant.login,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Login Stub'))),
+        builder: (context, state) => const LoginPage(),
       ),
       GoRoute(
         path: AppRouteConstant.register,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Register Stub'))),
+        builder: (context, state) => const RegisterPage(),
       ),
       GoRoute(
         path: AppRouteConstant.otp,

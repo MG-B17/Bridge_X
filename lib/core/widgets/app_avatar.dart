@@ -23,7 +23,7 @@ class AppAvatar extends StatelessWidget {
 
     return CircleAvatar(
       radius: radius.r,
-      backgroundColor: context.colors.primary.withOpacity(0.1),
+      backgroundColor: context.colors.primary.withValues(alpha: 0.1),
       child: url != null && url!.isNotEmpty
           ? ClipOval(
               child: CachedNetworkImage(

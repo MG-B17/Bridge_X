@@ -647,7 +647,7 @@ flowchart TD
 
 > **Figma:** Full-screen slides with Lottie animation top half, title + subtitle bottom half, dot indicator, "Skip" top-right, "Get Started" / "Next" primary button. Final slide shows "Get Started".
 
-- [ ] `features/auth/presentation/pages/onboarding_page.dart`
+- [x] `features/auth/presentation/pages/onboarding_page.dart`
   - `PageController` with 3 slides
   - Dot indicator matching Figma style
   - "Skip" button navigates directly to `/login`, writes `isFirstLaunch = false`

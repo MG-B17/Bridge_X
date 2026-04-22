@@ -6,6 +6,7 @@ class AppTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String hintText;
   final bool obscureText;
+  final Widget? prefixIcon;
   final Widget? suffixIcon;
   final String? Function(String?)? validator;
   final TextInputType keyboardType;
@@ -15,6 +16,7 @@ class AppTextField extends StatelessWidget {
     this.controller,
     required this.hintText,
     this.obscureText = false,
+    this.prefixIcon,
     this.suffixIcon,
     this.validator,
     this.keyboardType = TextInputType.text,
@@ -34,14 +36,15 @@ class AppTextField extends StatelessWidget {
         filled: true,
         fillColor: context.colors.surface,
         contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+        prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.r),
-          borderSide: BorderSide(color: context.colors.textHint.withOpacity(0.3)),
+          borderSide: BorderSide(color: context.colors.textHint.withValues(alpha: 0.3)),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.r),
-          borderSide: BorderSide(color: context.colors.textHint.withOpacity(0.3)),
+          borderSide: BorderSide(color: context.colors.textHint.withValues(alpha: 0.3)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.r),

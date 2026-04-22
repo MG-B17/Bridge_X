@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
@@ -16,7 +16,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-   // _navigateToNext();
+    _navigateToNext();
   }
 
   Future<void> _navigateToNext() async {
@@ -38,7 +38,7 @@ class _SplashPageState extends State<SplashPage> {
           children: [
             // App logo asset or text fallback
             SvgPicture.asset(
-              'assets/svg/app_logo_s.svg',
+              'assets/svg/Group 1171275954 (1).svg',
               width: 200.w,
               height: 200.w,
               errorBuilder: (context, error, stackTrace) {

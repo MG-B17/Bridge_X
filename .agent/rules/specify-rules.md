@@ -4,6 +4,8 @@ Auto-generated from all feature plans. Last updated: 2026-04-22
 
 ## Active Technologies
 
+- Dart 3.x, Flutter + flutter_screenutil, cached_network_image, google_fonts (006-extensions-theme-widgets)
+- Dart 3.x, Flutter + go_router, get_it, shared_preferences, dio (005-router-di-shell)
 - dio ^5.6.0 + pretty_dio_logger ^1.4.0 + shared_preferences ^2.3.2 + internet_connection_checker_plus ^2.5.1 (004-core-network-client)
 - dartz ^0.10.1 + equatable ^2.0.5 (003-error-handling-usecase)
 - flutter_screenutil ^5.9.3 + google_fonts ^6.2.1 + ThemeExtension (002-design-system-theme)
@@ -69,6 +71,8 @@ flutter run --debug      # Run app on connected device
 
 ## Recent Changes
 
+- 006-extensions-theme-widgets: Added Dart 3.x, Flutter + flutter_screenutil, cached_network_image, google_fonts
+- 005-router-di-shell: Added Dart 3.x, Flutter + go_router, get_it, shared_preferences, dio
 - 004-core-network-client: Added dio + pretty_dio_logger + shared_preferences
 - 003-error-handling-usecase: Added dartz + equatable
 - 002-design-system-theme: Added flutter_screenutil + google_fonts + ThemeExtension

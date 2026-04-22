@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/constant/app_strings.dart';
 import 'core/theme/app_them.dart';
+import 'core/navigation/app_route.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -13,16 +14,15 @@ class App extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(
+        return MaterialApp.router(
           title: AppStrings.appName,
           theme: AppTheme.light,
           darkTheme: AppTheme.dark,
           themeMode: ThemeMode.system,
           debugShowCheckedModeBanner: false,
-          home: child,
+          routerConfig: AppRoute.router,
         );
       },
-      child: const Placeholder(), // Temporary until router is wired
     );
   }
 }

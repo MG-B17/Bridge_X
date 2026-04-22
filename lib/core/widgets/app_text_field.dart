@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bridgex/core/utils/extensions.dart';
 import 'package:bridgex/core/constant/app_spacing.dart';
 
@@ -65,8 +66,8 @@ class _AppTextFieldState extends State<AppTextField> {
               )
             : null,
         contentPadding: EdgeInsets.symmetric(
-          horizontal: AppSpacing.md,
-          vertical: AppSpacing.md,
+          horizontal: 16.w,
+          vertical: 14.h,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSpacing.radiusCard),

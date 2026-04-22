@@ -1,4 +1,6 @@
 class AppRouteConstant {
+  const AppRouteConstant._();
+
   static const String root = '/';
   static const String onboarding = '/onboarding';
   static const String login = '/login';
@@ -7,4 +9,10 @@ class AppRouteConstant {
   static const String forgotPassword = '/forgot-password';
   static const String profileSetup = '/profile-setup';
   static const String home = '/home';
+  static const String teams = '/teams';
+  static const String workspace = '/workspace';
+  static const String chat = '/chat';
+  static const String profile = '/profile';
+  static const String notifications = '/notifications';
+  static const String company = '/company';
 }

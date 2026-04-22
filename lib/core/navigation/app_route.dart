@@ -80,6 +80,30 @@ class AppRoute {
         path: AppRouteConstant.home,
         builder: (context, state) => const Scaffold(body: Center(child: Text('Home Stub'))),
       ),
+      GoRoute(
+        path: AppRouteConstant.teams,
+        builder: (context, state) => const Scaffold(body: Center(child: Text('Teams Stub'))),
+      ),
+      GoRoute(
+        path: AppRouteConstant.workspace,
+        builder: (context, state) => const Scaffold(body: Center(child: Text('Workspace Stub'))),
+      ),
+      GoRoute(
+        path: AppRouteConstant.chat,
+        builder: (context, state) => const Scaffold(body: Center(child: Text('Chat Stub'))),
+      ),
+      GoRoute(
+        path: AppRouteConstant.profile,
+        builder: (context, state) => const Scaffold(body: Center(child: Text('Profile Stub'))),
+      ),
+      GoRoute(
+        path: AppRouteConstant.notifications,
+        builder: (context, state) => const Scaffold(body: Center(child: Text('Notifications Stub'))),
+      ),
+      GoRoute(
+        path: AppRouteConstant.company,
+        builder: (context, state) => const Scaffold(body: Center(child: Text('Company Stub'))),
+      ),
     ],
   );
 }

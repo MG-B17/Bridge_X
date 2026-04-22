@@ -447,9 +447,9 @@ flowchart TD
 **Goal:** Add all packages to pubspec.yaml, verify the project builds.
 **UI Screen Required:** No
 
-- [ ] Add all packages listed above to `pubspec.yaml`
-- [ ] Run `flutter pub get` — zero errors
-- [ ] Verify `assets/images/` and `assets/svg/` sections registered
+- [x] Add all packages listed above to `pubspec.yaml`
+- [x] Run `flutter pub get` — zero errors
+- [x] Verify `assets/images/` and `assets/svg/` sections registered
 
 #### ⚠️ Edge Cases
 | Scenario | Handling |
@@ -467,12 +467,12 @@ flowchart TD
 **Goal:** Fill all empty theme files using Figma tokens exactly as extracted above.
 **UI Screen Required:** No
 
-- [ ] `core/theme/app_color_scheme.dart` — implement `AppColorScheme extends ThemeExtension<AppColorScheme>` with `light` and `dark` static const instances, `copyWith`, and `lerp` overrides (see Design System section for all hex values)
-- [ ] `core/theme/text_style.dart` — Inter font, full hierarchy using `.sp` for all sizes
-- [ ] `core/theme/app_them.dart` — build `ThemeData` with `extensions: [AppColorScheme.light]`; dark theme with `extensions: [AppColorScheme.dark]`; pass both to `MaterialApp.router` with `ThemeMode.system`
-- [ ] `core/constant/app_spacing.dart` — spacing and border radius constants from Figma
-- [ ] `core/constant/app_strings.dart` — fill all string literals used across the app
-- [ ] `app.dart` — `MaterialApp.router` wrapped in `ScreenUtilInit` (design size: `390×844`), theme applied
+- [x] `core/theme/app_color_scheme.dart` — implement `AppColorScheme extends ThemeExtension<AppColorScheme>` with `light` and `dark` static const instances, `copyWith`, and `lerp` overrides (see Design System section for all hex values)
+- [x] `core/theme/text_style.dart` — Inter font, full hierarchy using `.sp` for all sizes
+- [x] `core/theme/app_them.dart` — build `ThemeData` with `extensions: [AppColorScheme.light]`; dark theme with `extensions: [AppColorScheme.dark]`; pass both to `MaterialApp.router` with `ThemeMode.system`
+- [x] `core/constant/app_spacing.dart` — spacing and border radius constants from Figma
+- [x] `core/constant/app_strings.dart` — fill all string literals used across the app
+- [x] `app.dart` — `MaterialApp.router` wrapped in `ScreenUtilInit` (design size: `390×844`), theme applied
 
 #### ⚠️ Edge Cases
 | Scenario | Handling |
@@ -490,10 +490,10 @@ flowchart TD
 **Goal:** Build the error layer and base UseCase contract.
 **UI Screen Required:** No
 
-- [ ] `core/error/exception.dart` — define `ServerException`, `CacheException`, `NetworkException`, `UnauthorizedException` — all with `required named message` parameter and `Equatable` props
-- [ ] `core/error/failure.dart` — define `ServerFailure`, `NetworkFailure`, `CacheFailure`, `UnauthorizedFailure` all extending abstract `Failure extends Equatable`
-- [ ] `core/error/error_strings.dart` — constant error message strings
-- [ ] `core/usecases/usecase.dart` — abstract `UseCase<Type, Params>` with `call({required Params params})` returning `Either<Failure, Type>`; also define `NoParams extends Equatable`
+- [x] `core/error/exception.dart` — define `ServerException`, `CacheException`, `NetworkException`, `UnauthorizedException` — all with `required named message` parameter and `Equatable` props
+- [x] `core/error/failure.dart` — define `ServerFailure`, `NetworkFailure`, `CacheFailure`, `UnauthorizedFailure` all extending abstract `Failure extends Equatable`
+- [x] `core/error/error_strings.dart` — constant error message strings
+- [x] `core/usecases/usecase.dart` — abstract `UseCase<Type, Params>` with `call({required Params params})` returning `Either<Failure, Type>`; also define `NoParams extends Equatable`
 
 #### ⚠️ Edge Cases
 | Scenario | Handling |
@@ -511,14 +511,14 @@ flowchart TD
 **Goal:** Fully configured Dio instance with auth and error interceptors.
 **UI Screen Required:** No
 
-- [ ] `core/network/network_info.dart` — implement using `internet_connection_checker_plus`
-- [ ] `core/network/api_endpoints.dart` — all URL constants as `static const String` (stubs until backend ready)
-- [ ] `core/network/api_client.dart`:
+- [x] `core/network/network_info.dart` — implement using `internet_connection_checker_plus`
+- [x] `core/network/api_endpoints.dart` — all URL constants as `static const String` (stubs until backend ready)
+- [x] `core/network/api_client.dart`:
   - Dio instance with base URL, timeouts (`connectTimeout: 30s`, `receiveTimeout: 30s`)
   - `AuthInterceptor` — reads token from `CacheHelper`, attaches as `Authorization: Bearer <token>`
   - `ErrorInterceptor` — maps HTTP status codes → typed exceptions (`401 → UnauthorizedException`, `5xx → ServerException`)
   - `pretty_dio_logger` added only in debug mode
-- [ ] `core/helper/cache/cache_helper.dart` — `SharedPreferences` wrapper with:
+- [x] `core/helper/cache/cache_helper.dart` — `SharedPreferences` wrapper with:
   - `saveToken(String)`, `getToken()`, `deleteToken()`
   - `saveUserRole(String)`, `getUserRole()`
   - `setFirstLaunch(bool)`, `isFirstLaunch()`
@@ -541,16 +541,16 @@ flowchart TD
 **Goal:** Wire `go_router` and register all core singletons in `get_it`.
 **UI Screen Required:** No
 
-- [ ] `core/navigation/app_route_constant.dart` — all route paths as `static const String`: `/`, `/onboarding`, `/login`, `/register`, `/otp`, `/forgot-password`, `/profile-setup`, `/home`, and all feature routes
-- [ ] `core/navigation/app_route.dart` — `GoRouter` configuration:
+- [x] `core/navigation/app_route_constant.dart` — all route paths as `static const String`: `/`, `/onboarding`, `/login`, `/register`, `/otp`, `/forgot-password`, `/profile-setup`, `/home`, and all feature routes
+- [x] `core/navigation/app_route.dart` — `GoRouter` configuration:
   - `redirect` guard: check token + role → appropriate entry point
   - Stub routes returning empty `Scaffold` for all unbuilt pages
   - `StatefulShellRoute` for bottom navigation shell (added in Phase 13)
-- [ ] `core/di/di.dart` — register core with category comments:
+- [x] `core/di/di.dart` — register core with category comments:
   - `// ─── Local Storage` — `SharedPreferences`, `CacheHelper`
   - `// ─── Network` — `NetworkInfo`, `ApiClient`
   - Feature DI sections follow: `// ─── Data Sources`, `// ─── Repositories`, `// ─── Use Cases`, `// ─── Bloc / Cubit`
-- [ ] `main.dart` — `await initDi()` before `runApp()`
+- [x] `main.dart` — `await initDi()` before `runApp()`
 
 #### ⚠️ Edge Cases
 | Scenario | Handling |
@@ -570,36 +570,36 @@ flowchart TD
 **UI Screen Required:** Yes — shared component screens (AppButton, AppTextField, AppAvatar, AppLoading, AppErrorWidget)
 
 #### 5a — AppColorScheme as ThemeExtension
-- [ ] `core/theme/app_color_scheme.dart` — `AppColorScheme extends ThemeExtension<AppColorScheme>`:
+- [x] `core/theme/app_color_scheme.dart` — `AppColorScheme extends ThemeExtension<AppColorScheme>`:
   - All color fields as `required` named constructor parameters
   - `static const light` — all Figma light-mode hex values
   - `static const dark` — all dark-mode hex values (ready for future)
   - `copyWith` override — all fields nullable, full fallback to `this`
   - `lerp` override — `Color.lerp` on every field for smooth theme transitions
-- [ ] `core/theme/app_them.dart` — `lightTheme` with `extensions: [AppColorScheme.light]`, `darkTheme` with `extensions: [AppColorScheme.dark]`
-- [ ] `app.dart` — `theme: lightTheme`, `darkTheme: darkTheme`, `themeMode: ThemeMode.system`
+- [x] `core/theme/app_them.dart` — `lightTheme` with `extensions: [AppColorScheme.light]`, `darkTheme` with `extensions: [AppColorScheme.dark]`
+- [x] `app.dart` — `theme: lightTheme`, `darkTheme: darkTheme`, `themeMode: ThemeMode.system`
 
 #### 5b — BuildContext Color Extension (API unchanged)
-- [ ] `core/utils/extensions.dart` — `AppColorScheme get colors` on `BuildContext`, reads via `Theme.of(this).extension<AppColorScheme>()!`
+- [x] `core/utils/extensions.dart` — `AppColorScheme get colors` on `BuildContext`, reads via `Theme.of(this).extension<AppColorScheme>()!`
   - **Usage:** `context.colors.primary` — identical API, zero feature code changes when dark mode is toggled
   - Enforced: no feature file imports `AppColorScheme` directly — always via `context.colors.*`
 
 #### 5c — BuildContext Text Style Extension
-- [ ] `core/utils/extensions.dart` — `displayLarge`, `headlineMedium`, `titleLarge`, `bodyLarge`, `bodyMedium`, `labelSmall` getters on `BuildContext`, all reading from `Theme.of(this).textTheme.*!`
+- [x] `core/utils/extensions.dart` — `displayLarge`, `headlineMedium`, `titleLarge`, `bodyLarge`, `bodyMedium`, `labelSmall` getters on `BuildContext`, all reading from `Theme.of(this).textTheme.*!`
   - **Usage:** `context.headlineMedium` — never `AppTextStyles.headlineMedium` directly
 
 #### 5d — Other BuildContext Utilities
-- [ ] `core/utils/extensions.dart` — `showSnackBar(String)`, `screenWidth`, `screenHeight` on `BuildContext`
-- [ ] `core/utils/extensions.dart` — `capitalize` getter on `String`
+- [x] `core/utils/extensions.dart` — `showSnackBar(String)`, `screenWidth`, `screenHeight` on `BuildContext`
+- [x] `core/utils/extensions.dart` — `capitalize` getter on `String`
 
 #### 5e — Shared Widgets (strictly from Figma)
-- [ ] `bridge_app_button.dart` — primary and secondary variants; uses `context.colors.primary`; border radius `12.r`; height `52.h`; loading state replaces label with `CircularProgressIndicator`
-- [ ] `app_text_field.dart` — fill `context.colors.surface`; subtle border; radius `12.r`; padding `16.w`×`14.h`; uses `context.bodyMedium`
-- [ ] `app_loading.dart` — centered `CircularProgressIndicator` using `context.colors.primary`
-- [ ] `app_error_widget.dart` — error icon + message + retry button (from Figma empty/error states)
-- [ ] `app_avatar.dart` — `CachedNetworkImage` in circle; fallback to initials on solid color background
-- [ ] `core/utils/validators.dart` — email, password (min 8 chars, 1 uppercase, 1 number), required field validators
-- [ ] `core/utils/date_formatter.dart` — format timestamps for messages and task due dates
+- [x] `bridge_app_button.dart` — primary and secondary variants; uses `context.colors.primary`; border radius `12.r`; height `52.h`; loading state replaces label with `CircularProgressIndicator`
+- [x] `app_text_field.dart` — fill `context.colors.surface`; subtle border; radius `12.r`; padding `16.w`×`14.h`; uses `context.bodyMedium`
+- [x] `app_loading.dart` — centered `CircularProgressIndicator` using `context.colors.primary`
+- [x] `app_error_widget.dart` — error icon + message + retry button (from Figma empty/error states)
+- [x] `app_avatar.dart` — `CachedNetworkImage` in circle; fallback to initials on solid color background
+- [x] `core/utils/validators.dart` — email, password (min 8 chars, 1 uppercase, 1 number), required field validators
+- [x] `core/utils/date_formatter.dart` — format timestamps for messages and task due dates
 
 > [!IMPORTANT]
 > **Enforcement rule:** Every feature — without exception — accesses colors via `context.colors.*` and text styles via `context.headlineMedium` etc. No feature file may import `AppColors` or `AppTextStyles` directly. All design values flow through `BuildContext` extensions defined in `core/utils/extensions.dart`.

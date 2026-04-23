@@ -33,7 +33,9 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void _submitForm() {
-    if (_formKey.currentState?.validate() ?? false) {}
+    if (_formKey.currentState?.validate() ?? false) {
+      context.go(AppRouteConstant.home);
+    }
   }
 
   @override

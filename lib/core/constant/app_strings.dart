@@ -78,9 +78,11 @@ class AppStrings {
   static const String projectLaunched = "Project Launched";
 
   static const String teamChat = "Team Chat";
+  static const String teamChatSubtitle = "TEAM CHAT • 5 MEMBERS";
   static const String today = "Today";
   static const String typeMessage = "Type a message...";
   static const String noMessages = "No messages yet";
+  static const String noMessagesSubtitle = "Start a conversation with your team to stay synced and collaborative. Real-time updates help everyone move faster.";
   static const String recentConversations = "Recent Conversations";
 
   static const String myProjects = "My Projects";
@@ -115,6 +117,7 @@ class AppStrings {
   static const String pending = "Pending";
 
   static const String search = "Search teams or messages...";
+  static const String chats = "Chats";
   static const String viewAll = "View All";
   static const String details = "Details";
   static const String cancel = "Cancel";

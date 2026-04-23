@@ -1,5 +1,5 @@
 import 'package:bridgex/features/auth/login/screen/login_page.dart';
- import 'package:bridgex/features/auth/register/screen/register_page.dart';
+import 'package:bridgex/features/auth/register/screen/register_page.dart';
 import 'package:bridgex/features/onboarding/screen/onboarding_page.dart';
 import 'package:bridgex/features/splash/splash_page.dart';
 import 'package:bridgex/features/matching/presentation/screens/matching_screen.dart';
@@ -10,6 +10,18 @@ import 'package:bridgex/features/workspace/presentation/screens/workspace_screen
 import 'package:bridgex/features/profile/presentation/screens/profile_screen.dart';
 import 'package:bridgex/features/level/presentation/screens/level_screen.dart';
 import 'package:bridgex/features/teams/presentation/screens/create_team_screen.dart';
+import '../../features/auth/login/screen/login_page.dart';
+import '../../features/auth/register/screen/register_page.dart';
+import '../../features/auth/forget_password/screen/forget_password_page.dart';
+import '../../features/auth/otp_verification/screen/otp_verification_page.dart';
+import '../../features/onboarding/screen/onboarding_page.dart';
+import '../../features/splash/splash_page.dart';
+import '../../features/home/screen/home_page.dart';
+import '../../features/chat/screen/chat_page.dart';
+import '../../features/chat/screen/chat_room_page.dart';
+import '../../features/projects/screen/projects_page.dart';
+import '../../features/profile/screen/profile_page.dart';
+import '../../features/layout/screen/main_layout_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'app_route_constant.dart';
@@ -42,21 +54,60 @@ class AppRoute {
         builder: (context, state) => const RegisterPage(),
       ),
       GoRoute(
-        path: AppRouteConstant.otp,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('OTP Stub'))),
+        path: AppRouteConstant.forgetPassword,
+        builder: (context, state) => const ForgetPasswordPage(),
       ),
       GoRoute(
-        path: AppRouteConstant.forgotPassword,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Forgot Password Stub'))),
+        path: AppRouteConstant.otpVerification,
+        builder: (context, state) => const OtpVerificationPage(),
       ),
-      GoRoute(
-        path: AppRouteConstant.profileSetup,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Profile Setup Stub'))),
+      // Stateful shell route for bottom navigation
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) {
+          return MainLayoutPage(navigationShell: navigationShell);
+        },
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRouteConstant.home,
+                builder: (context, state) => const HomePage(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRouteConstant.chat,
+                builder: (context, state) => const ChatPage(),
+                routes: [
+                  GoRoute(
+                    path: AppRouteConstant.chatRoom,
+                    builder: (context, state) => const ChatRoomPage(),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRouteConstant.projects,
+                builder: (context, state) => const ProjectsPage(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRouteConstant.profile,
+                builder: (context, state) => const ProfilePage(),
+              ),
+            ],
+          ),
+        ],
       ),
-      GoRoute(
-        path: AppRouteConstant.home,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Home Stub'))),
-      ),
+      // Other top-level flat routes
       GoRoute(
         path: AppRouteConstant.teams,
         builder: (context, state) => const RecommendedTeamsScreen(),
@@ -64,10 +115,6 @@ class AppRoute {
       GoRoute(
         path: AppRouteConstant.workspace,
         builder: (context, state) => const WorkspaceScreen(),
-      ),
-      GoRoute(
-        path: AppRouteConstant.chat,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Chat Stub'))),
       ),
       GoRoute(
         path: AppRouteConstant.profile,
@@ -92,10 +139,6 @@ class AppRoute {
       GoRoute(
         path: AppRouteConstant.level,
         builder: (context, state) => const LevelScreen(),
-      ),
-      GoRoute(
-        path: AppRouteConstant.company,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Company Stub'))),
       ),
     ],
   );

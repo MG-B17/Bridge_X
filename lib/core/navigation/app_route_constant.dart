@@ -5,13 +5,17 @@ class AppRouteConstant {
   static const String onboarding = '/onboarding';
   static const String login = '/login';
   static const String register = '/register';
+  static const String forgetPassword = '/forget-password';
+  static const String otpVerification = '/otp-verification';
   static const String otp = '/otp';
   static const String forgotPassword = '/forgot-password';
   static const String profileSetup = '/profile-setup';
   static const String home = '/home';
+  static const String projects = '/projects';
   static const String teams = '/teams';
   static const String workspace = '/workspace';
   static const String chat = '/chat';
+  static const String chatRoom = 'room'; // Sub-route
   static const String profile = '/profile';
   static const String notifications = '/notifications';
   static const String matching = '/matching';

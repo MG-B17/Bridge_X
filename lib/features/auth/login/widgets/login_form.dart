@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import '../../../../core/navigation/app_route_constant.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../widgets/auth_divider.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../constant/app_strings.dart';
-import '../theme/app_color.dart';
+import '../navigation/app_route_constant.dart';
 import '../utils/extensions.dart';
 import 'bridge_dialog.dart';
 
@@ -16,13 +16,16 @@ class BridgeDialogs {
         title: AppStrings.teamCreatedSuccessfully,
         description: AppStrings.teamReadyStartCollaborating,
         primaryButtonLabel: AppStrings.goToTeam,
-        onPrimaryPressed: () => Navigator.pop(context),
+        onPrimaryPressed: () {
+          Navigator.pop(context);
+          context.push(AppRouteConstant.workspace);
+        },
         textLinkLabel: AppStrings.backToHome,
         onTextLinkPressed: () => Navigator.pop(context),
         extraContent: Container(
           padding: EdgeInsets.all(12.w),
           decoration: BoxDecoration(
-            color: const Color(0xFFF3F4F6).withOpacity(0.5),
+            color: const Color(0xFFF3F4F6).withValues(alpha: 0.5),
             borderRadius: BorderRadius.circular(12.r),
           ),
           child: Row(
@@ -61,9 +64,15 @@ class BridgeDialogs {
         title: AppStrings.youreIn,
         description: 'You have successfully joined Global Strategy Group',
         primaryButtonLabel: AppStrings.viewTeam,
-        onPrimaryPressed: () => Navigator.pop(context),
+        onPrimaryPressed: () {
+          Navigator.pop(context);
+          context.push(AppRouteConstant.workspace);
+        },
         secondaryButtonLabel: AppStrings.openChat,
-        onSecondaryPressed: () => Navigator.pop(context),
+        onSecondaryPressed: () {
+          Navigator.pop(context);
+          context.push(AppRouteConstant.chat);
+        },
       ),
     );
   }
@@ -110,7 +119,10 @@ class BridgeDialogs {
         title: AppStrings.logoutTitle,
         description: AppStrings.logoutConfirm,
         primaryButtonLabel: AppStrings.logout,
-        onPrimaryPressed: () => Navigator.pop(context),
+        onPrimaryPressed: () {
+          Navigator.pop(context);
+          context.go(AppRouteConstant.login);
+        },
         textLinkLabel: AppStrings.cancel,
         onTextLinkPressed: () => Navigator.pop(context),
       ),
@@ -133,12 +145,12 @@ class BridgeDialogs {
         extraContent: Container(
           padding: EdgeInsets.all(12.w),
           decoration: BoxDecoration(
-            color: const Color(0xFFF3F4F6).withOpacity(0.5),
+            color: const Color(0xFFF3F4F6).withValues(alpha: 0.5),
             borderRadius: BorderRadius.circular(12.r),
           ),
           child: Row(
             children: [
-              Icon(Icons.verified_outlined, color: context.colors.textHint, size: 20.sp),
+              Icon(Icons.verified_outlined, color: context.colors.textHint.withValues(alpha: 0.5), size: 20.sp),
               SizedBox(width: 12.w),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,7 +189,7 @@ class BridgeDialogs {
         width: 24.w,
         height: 24.w,
         decoration: BoxDecoration(
-          color: color.withOpacity(0.2),
+          color: color.withValues(alpha: 0.2),
           shape: BoxShape.circle,
           border: Border.all(color: Colors.white, width: 1.5.w),
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+export 'package:go_router/go_router.dart';
 import '../theme/app_color_scheme.dart';
 import '../theme/text_style.dart';
 import '../constant/app_spacing.dart';
@@ -17,12 +18,14 @@ extension AppTypography on BuildContext {
 }
 
 class SpacingProxy {
+  double get xxs => 4.0; // Added missing spacing
   double get xs => AppSpacing.xs;
   double get sm => AppSpacing.sm;
   double get md => AppSpacing.md;
   double get lg => AppSpacing.lg;
   double get xl => AppSpacing.xl;
   double get xxl => AppSpacing.xxl;
+  double get radiusXs => 4.0;
   double get radiusCard => AppSpacing.radiusCard;
   double get radiusCardLarge => AppSpacing.radiusCardLarge;
   double get radiusPill => AppSpacing.radiusPill;
@@ -32,3 +35,4 @@ class SpacingProxy {
 extension AppSpacingExt on BuildContext {
   SpacingProxy get spacing => SpacingProxy();
 }
+

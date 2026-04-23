@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/theme/app_color.dart';
-import '../../../../core/theme/text_style.dart';
+import 'tier_card_details.dart';
 import '../../../../core/utils/extensions.dart';
+import '../../../../core/widgets/v_space.dart';
 
 class TierCardWidget extends StatelessWidget {
   final String currentTier;
@@ -20,13 +20,13 @@ class TierCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(24.w),
+      padding: EdgeInsets.all(context.spacing.xl),
       decoration: BoxDecoration(
         color: context.colors.primary,
-        borderRadius: BorderRadius.circular(24.r),
+        borderRadius: BorderRadius.circular(context.spacing.radiusCardLarge),
         boxShadow: [
           BoxShadow(
-            color: context.colors.primary.withOpacity(0.3),
+            color: context.colors.primary.withValues(alpha: 0.3),
             blurRadius: 15,
             offset: const Offset(0, 8),
           ),
@@ -36,85 +36,56 @@ class TierCardWidget extends StatelessWidget {
         children: [
           Positioned(
             right: -10.w,
-            top: -10.h,
+            top: -10.w,
             child: Icon(
               Icons.stars_rounded,
-              size: 100.sp,
-              color: Colors.white.withOpacity(0.1),
+              size: 100.w,
+              color: Colors.white.withValues(alpha: 0.1),
             ),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'CURRENT TIER',
-                style: context.labelSmall.copyWith(
-                  color: Colors.white.withOpacity(0.8),
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.2,
-                ),
-              ),
-              SizedBox(height: 8.h),
-              Text(
-                currentTier,
-                style: context.displayLarge.copyWith(
-                  color: Colors.white,
-                  fontSize: 32.sp,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-              SizedBox(height: 24.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Progress to Gold',
-                    style: context.bodyMedium.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Text(
-                    '${(progress * 100).toInt()}%',
-                    style: context.bodyMedium.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 12.h),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10.r),
-                child: LinearProgressIndicator(
-                  value: progress,
-                  minHeight: 10.h,
-                  backgroundColor: Colors.white.withOpacity(0.2),
-                  valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF83A0E7)),
-                ),
-              ),
-              SizedBox(height: 20.h),
-              Row(
-                children: [
-                  Text(
-                    nextTierInfo,
-                    style: context.labelSmall.copyWith(
-                      color: Colors.white.withOpacity(0.7),
-                      fontSize: 12.sp,
-                    ),
-                  ),
-                  const Spacer(),
-                  Icon(
-                    Icons.flag_outlined,
-                    color: Colors.white.withOpacity(0.7),
-                    size: 16.sp,
-                  ),
-                ],
-              ),
+              _TierHeader(currentTier: currentTier),
+              VSpace(context.spacing.xl),
+              TierProgress(progress: progress),
+              VSpace(context.spacing.lg),
+              TierFooter(nextTierInfo: nextTierInfo),
             ],
           ),
         ],
       ),
+    );
+  }
+}
+
+class _TierHeader extends StatelessWidget {
+  final String currentTier;
+  const _TierHeader({required this.currentTier});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'CURRENT TIER',
+          style: context.labelSmall.copyWith(
+            color: Colors.white.withValues(alpha: 0.8),
+            fontWeight: FontWeight.w900,
+            letterSpacing: 1.2,
+          ),
+        ),
+        VSpace(context.spacing.xs),
+        Text(
+          currentTier,
+          style: context.displayLarge.copyWith(
+            color: Colors.white,
+            fontSize: 28.sp,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+      ],
     );
   }
 }

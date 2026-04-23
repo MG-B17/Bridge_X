@@ -12,6 +12,10 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
   final Color ongoingText;
   final Color completedBg;
   final Color completedText;
+  final Color divider;
+  final Color background;
+  final Color secondary;
+  final Color success;
 
   const AppColorScheme({
     required this.primary,
@@ -25,6 +29,10 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     required this.ongoingText,
     required this.completedBg,
     required this.completedText,
+    required this.divider,
+    required this.background,
+    required this.secondary,
+    required this.success,
   });
 
   @override
@@ -40,6 +48,10 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     Color? ongoingText,
     Color? completedBg,
     Color? completedText,
+    Color? divider,
+    Color? background,
+    Color? secondary,
+    Color? success,
   }) {
     return AppColorScheme(
       primary: primary ?? this.primary,
@@ -53,14 +65,16 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
       ongoingText: ongoingText ?? this.ongoingText,
       completedBg: completedBg ?? this.completedBg,
       completedText: completedText ?? this.completedText,
+      divider: divider ?? this.divider,
+      background: background ?? this.background,
+      secondary: secondary ?? this.secondary,
+      success: success ?? this.success,
     );
   }
 
   @override
   AppColorScheme lerp(ThemeExtension<AppColorScheme>? other, double t) {
-    if (other is! AppColorScheme) {
-      return this;
-    }
+    if (other is! AppColorScheme) return this;
     return AppColorScheme(
       primary: Color.lerp(primary, other.primary, t)!,
       primaryLight: Color.lerp(primaryLight, other.primaryLight, t)!,
@@ -73,6 +87,10 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
       ongoingText: Color.lerp(ongoingText, other.ongoingText, t)!,
       completedBg: Color.lerp(completedBg, other.completedBg, t)!,
       completedText: Color.lerp(completedText, other.completedText, t)!,
+      divider: Color.lerp(divider, other.divider, t)!,
+      background: Color.lerp(background, other.background, t)!,
+      secondary: Color.lerp(secondary, other.secondary, t)!,
+      success: Color.lerp(success, other.success, t)!,
     );
   }
 
@@ -88,6 +106,10 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     ongoingText: Color(0xFF2D4B73),
     completedBg: Color(0xFFE7F7F2),
     completedText: Color(0xFF0E9F6E),
+    divider: Color(0xFFE5E7EB),
+    background: Color(0xFFF9FAFB),
+    secondary: Color(0xFFDBEAFE),
+    success: Color(0xFF10B981),
   );
 
   static const AppColorScheme dark = AppColorScheme(
@@ -102,6 +124,10 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     ongoingText: Color(0xFF4A6CF7),
     completedBg: Color(0xFFE7F7F2),
     completedText: Color(0xFF0E9F6E),
+    divider: Color(0xFF374151),
+    background: Color(0xFF111827),
+    secondary: Color(0xFF1E3A8A),
+    success: Color(0xFF059669),
   );
 
   static const gradient = LinearGradient(

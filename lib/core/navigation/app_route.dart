@@ -1,15 +1,7 @@
-import 'package:bridgex/features/auth/login/screen/login_page.dart';
-import 'package:bridgex/features/auth/register/screen/register_page.dart';
-import 'package:bridgex/features/onboarding/screen/onboarding_page.dart';
-import 'package:bridgex/features/splash/splash_page.dart';
-import 'package:bridgex/features/matching/presentation/screens/matching_screen.dart';
-import 'package:bridgex/features/matching/presentation/screens/recommended_teams_screen.dart';
-import 'package:bridgex/features/matching/presentation/screens/no_teams_screen.dart';
-import 'package:bridgex/features/notifications/presentation/screens/notifications_screen.dart';
-import 'package:bridgex/features/workspace/presentation/screens/workspace_screen.dart';
-import 'package:bridgex/features/profile/presentation/screens/profile_screen.dart';
-import 'package:bridgex/features/level/presentation/screens/level_screen.dart';
-import 'package:bridgex/features/teams/presentation/screens/create_team_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'app_route_constant.dart';
+
 import '../../features/auth/login/screen/login_page.dart';
 import '../../features/auth/register/screen/register_page.dart';
 import '../../features/auth/forget_password/screen/forget_password_page.dart';
@@ -20,11 +12,16 @@ import '../../features/home/screen/home_page.dart';
 import '../../features/chat/screen/chat_page.dart';
 import '../../features/chat/screen/chat_room_page.dart';
 import '../../features/projects/screen/projects_page.dart';
-import '../../features/profile/screen/profile_page.dart';
 import '../../features/layout/screen/main_layout_page.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'app_route_constant.dart';
+
+import '../../features/matching/presentation/screens/matching_screen.dart';
+import '../../features/matching/presentation/screens/recommended_teams_screen.dart';
+import '../../features/matching/presentation/screens/no_teams_screen.dart';
+import '../../features/notifications/presentation/screens/notifications_screen.dart';
+import '../../features/workspace/presentation/screens/workspace_screen.dart';
+import '../../features/profile/presentation/screens/profile_screen.dart';
+import '../../features/level/presentation/screens/level_screen.dart';
+import '../../features/teams/presentation/screens/create_team_screen.dart';
 
 class AppRoute {
   static final GoRouter router = GoRouter(
@@ -32,7 +29,7 @@ class AppRoute {
     errorBuilder: (context, state) {
       return const Scaffold(
         body: Center(
-          child: Text('Page not found'), // Will be branded later
+          child: Text('Page not found'),
         ),
       );
     },
@@ -61,13 +58,13 @@ class AppRoute {
         path: AppRouteConstant.otpVerification,
         builder: (context, state) => const OtpVerificationPage(),
       ),
-      // Stateful shell route for bottom navigation
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return MainLayoutPage(navigationShell: navigationShell);
         },
         branches: [
           StatefulShellBranch(
+            navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'homeNav'),
             routes: [
               GoRoute(
                 path: AppRouteConstant.home,
@@ -76,6 +73,7 @@ class AppRoute {
             ],
           ),
           StatefulShellBranch(
+            navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'chatNav'),
             routes: [
               GoRoute(
                 path: AppRouteConstant.chat,
@@ -90,6 +88,7 @@ class AppRoute {
             ],
           ),
           StatefulShellBranch(
+            navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'projectsNav'),
             routes: [
               GoRoute(
                 path: AppRouteConstant.projects,
@@ -98,16 +97,16 @@ class AppRoute {
             ],
           ),
           StatefulShellBranch(
+            navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'profileNav'),
             routes: [
               GoRoute(
                 path: AppRouteConstant.profile,
-                builder: (context, state) => const ProfilePage(),
+                builder: (context, state) => const ProfileScreen(),
               ),
             ],
           ),
         ],
       ),
-      // Other top-level flat routes
       GoRoute(
         path: AppRouteConstant.teams,
         builder: (context, state) => const RecommendedTeamsScreen(),
@@ -115,10 +114,6 @@ class AppRoute {
       GoRoute(
         path: AppRouteConstant.workspace,
         builder: (context, state) => const WorkspaceScreen(),
-      ),
-      GoRoute(
-        path: AppRouteConstant.profile,
-        builder: (context, state) => const ProfileScreen(),
       ),
       GoRoute(
         path: AppRouteConstant.notifications,

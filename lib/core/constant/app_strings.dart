@@ -96,6 +96,7 @@ class AppStrings {
   static const String teamMembers = "Team Members";
   static const String teamSettings = "Team Settings";
   static const String createTeam = "Create Team";
+  static const String createTeamSubtitle = "Set up your team and project details";
   static const String joinTeam = "Join Team";
   static const String teamName = "Team Name";
   static const String teamInfo = "Team Info";
@@ -106,12 +107,17 @@ class AppStrings {
   static const String privateDesc = "You manually add team members";
   static const String public = "Public";
   static const String publicDesc = "AI matches members & others can request to join";
+  static const String privateTeam = "Private Team";
+  static const String privateTeamDesc = "You manually add team members";
+  static const String publicTeam = "Public Team";
+  static const String publicTeamDesc = "AI matches members & others can request to join";
   static const String githubUrl = "Github URL";
   static const String projectDescription = "Project Description";
   static const String describeProjectHint = "Describe your project goals and what you're looking to build...";
   static const String categorySelection = "Category Selection";
   static const String marketing = "Marketing";
   static const String research = "Research";
+  static const String business = "Business";
   static const String requiredRoles = "Required Roles";
   static const String addMoreHint = "Add more...";
   static const String rolesUsageDisclaimer = "These roles will be used by the AI for matching.";
@@ -216,7 +222,6 @@ class AppStrings {
   static const String backToTeam = "Back to Team";
   static const String submitReportTitle = "Submit report?";
   static const String submitReportDesc = "Are you sure you want to report this user? Our team will review the activity promptly.";
-  static const String projectCompleted = "Project Completed 🎉";
   static const String projectSuccessfullySubmitted = "You have successfully submitted this project";
   static const String reviewPendingByAdmin = "Review pending by administration";
   static const String viewSummary = "View Summary";
@@ -226,9 +231,9 @@ class AppStrings {
   static const String taskCreatedAndAssigned = "Task created & assigned";
   static const String settingsUpdated = "Settings updated";
   static const String viewTask = "VIEW TASK";
-  static const String confirm = "Confirm";
-  static const String cancel = "Cancel";
   static const String logoutTitle = "Log out?";
+  static const String matching = "Matching";
+  static const String matchingSubtitle = "We're finding the best teams for your skills and experience.";
   static const String optimizing = "Optimizing";
   static const String dynamicInsight = "Dynamic Insight";
   static const String dynamicInsightSubtitle = "Analyzing your experience in Frontend Development and Cloud Architecture.";

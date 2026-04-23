@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/theme/app_color.dart';
-import '../../../../core/theme/text_style.dart';
+import '../../../../core/utils/extensions.dart';
 
 class MemberAvatarsWidget extends StatelessWidget {
   final int count;
@@ -19,28 +18,28 @@ class MemberAvatarsWidget extends StatelessWidget {
       children: [
         SizedBox(
           width: 70.w,
-          height: 32.h,
+          height: 32.w,
           child: Stack(
             children: [
-              _buildAvatar(0, Colors.amber),
-              _buildAvatar(1, Colors.blueGrey),
-              _buildAvatar(2, AppColors.primary, isLast: true),
+              _buildAvatar(context, 0, Colors.amber),
+              _buildAvatar(context, 1, Colors.blueGrey),
+              _buildAvatar(context, 2, context.colors.primary, isLast: true),
             ],
           ),
         ),
         SizedBox(width: 8.w),
         Text(
           label,
-          style: AppTextStyles.labelSmall.copyWith(
-            color: AppColors.textPrimary,
-            fontWeight: FontWeight.w500,
+          style: context.labelSmall.copyWith(
+            color: context.colors.textPrimary,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ],
     );
   }
 
-  Widget _buildAvatar(int index, Color color, {bool isLast = false}) {
+  Widget _buildAvatar(BuildContext context, int index, Color color, {bool isLast = false}) {
     return Positioned(
       left: index * 18.w,
       child: Container(

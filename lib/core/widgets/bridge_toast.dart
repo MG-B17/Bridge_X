@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../theme/app_color.dart';
 import '../utils/extensions.dart';
 
 class BridgeToast extends StatelessWidget {
@@ -31,7 +30,7 @@ class BridgeToast extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 15,
               offset: const Offset(0, 5),
             ),
@@ -83,7 +82,7 @@ class BridgeToast extends StatelessWidget {
               SizedBox(width: 8.w),
               Icon(
                 Icons.close_rounded,
-                color: context.colors.textHint.withOpacity(0.5),
+                color: context.colors.textHint.withValues(alpha: 0.5),
                 size: 16.sp,
               ),
             ],

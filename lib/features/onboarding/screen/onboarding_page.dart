@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import '../../../core/navigation/app_route_constant.dart';
 import '../../../core/utils/extensions.dart';
 import '../models/onboarding_slide.dart';

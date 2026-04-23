@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/theme/app_color.dart';
-import '../../../../core/theme/text_style.dart';
 import '../../../../core/utils/extensions.dart';
 
 class SelectionPillWidget extends StatelessWidget {
@@ -21,16 +18,19 @@ class SelectionPillWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+        padding: EdgeInsets.symmetric(
+          horizontal: context.spacing.md,
+          vertical: context.spacing.sm,
+        ),
         decoration: BoxDecoration(
-          color: isSelected ? context.colors.primary : const Color(0xFFE5E7EB).withOpacity(0.5),
-          borderRadius: BorderRadius.circular(20.r),
+          color: isSelected ? context.colors.primary : const Color(0xFFE5E7EB).withValues(alpha: 0.5),
+          borderRadius: BorderRadius.circular(context.spacing.radiusPill),
         ),
         child: Text(
           label,
           style: context.labelSmall.copyWith(
             color: isSelected ? Colors.white : context.colors.textSecondary,
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+            fontWeight: isSelected ? FontWeight.w900 : FontWeight.w600,
           ),
         ),
       ),

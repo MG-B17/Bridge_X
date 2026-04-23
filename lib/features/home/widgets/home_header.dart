@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../core/navigation/app_route_constant.dart';
 import '../../../../core/widgets/v_space.dart';
 import '../../../../core/utils/extensions.dart';
 
@@ -33,10 +34,13 @@ class HomeHeader extends StatelessWidget {
             ),
           ],
         ),
-        Icon(
-          Icons.notifications,
-          color: context.colors.primary,
-          size: 28.w,
+        GestureDetector(
+          onTap: () => context.push(AppRouteConstant.notifications),
+          child: Icon(
+            Icons.notifications,
+            color: context.colors.primary,
+            size: 28.w,
+          ),
         ),
       ],
     );

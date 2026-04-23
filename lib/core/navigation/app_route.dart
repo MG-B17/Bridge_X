@@ -1,3 +1,15 @@
+import 'package:bridgex/features/auth/login/screen/login_page.dart';
+import 'package:bridgex/features/auth/register/screen/register_page.dart';
+import 'package:bridgex/features/onboarding/screen/onboarding_page.dart';
+import 'package:bridgex/features/splash/splash_page.dart';
+import 'package:bridgex/features/matching/presentation/screens/matching_screen.dart';
+import 'package:bridgex/features/matching/presentation/screens/recommended_teams_screen.dart';
+import 'package:bridgex/features/matching/presentation/screens/no_teams_screen.dart';
+import 'package:bridgex/features/notifications/presentation/screens/notifications_screen.dart';
+import 'package:bridgex/features/workspace/presentation/screens/workspace_screen.dart';
+import 'package:bridgex/features/profile/presentation/screens/profile_screen.dart';
+import 'package:bridgex/features/level/presentation/screens/level_screen.dart';
+import 'package:bridgex/features/teams/presentation/screens/create_team_screen.dart';
 import '../../features/auth/login/screen/login_page.dart';
 import '../../features/auth/register/screen/register_page.dart';
 import '../../features/auth/forget_password/screen/forget_password_page.dart';
@@ -98,19 +110,35 @@ class AppRoute {
       // Other top-level flat routes
       GoRoute(
         path: AppRouteConstant.teams,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Teams Stub'))),
+        builder: (context, state) => const RecommendedTeamsScreen(),
       ),
       GoRoute(
         path: AppRouteConstant.workspace,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Workspace Stub'))),
+        builder: (context, state) => const WorkspaceScreen(),
+      ),
+      GoRoute(
+        path: AppRouteConstant.profile,
+        builder: (context, state) => const ProfileScreen(),
       ),
       GoRoute(
         path: AppRouteConstant.notifications,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Notifications Stub'))),
+        builder: (context, state) => const NotificationsScreen(),
       ),
       GoRoute(
-        path: AppRouteConstant.company,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Company Stub'))),
+        path: AppRouteConstant.matching,
+        builder: (context, state) => const MatchingScreen(),
+      ),
+      GoRoute(
+        path: AppRouteConstant.createTeam,
+        builder: (context, state) => const CreateTeamScreen(),
+      ),
+      GoRoute(
+        path: AppRouteConstant.noTeams,
+        builder: (context, state) => const NoTeamsScreen(),
+      ),
+      GoRoute(
+        path: AppRouteConstant.level,
+        builder: (context, state) => const LevelScreen(),
       ),
     ],
   );

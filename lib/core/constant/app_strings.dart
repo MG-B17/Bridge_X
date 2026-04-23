@@ -100,6 +100,22 @@ class AppStrings {
   static const String teamName = "Team Name";
   static const String teamInfo = "Team Info";
   static const String mentorAccess = "Mentor Access";
+  static const String youAreTeamLeader = "You are the Team Leader of this project";
+  static const String teamType = "Team Type";
+  static const String private = "Private";
+  static const String privateDesc = "You manually add team members";
+  static const String public = "Public";
+  static const String publicDesc = "AI matches members & others can request to join";
+  static const String githubUrl = "Github URL";
+  static const String projectDescription = "Project Description";
+  static const String describeProjectHint = "Describe your project goals and what you're looking to build...";
+  static const String categorySelection = "Category Selection";
+  static const String marketing = "Marketing";
+  static const String research = "Research";
+  static const String requiredRoles = "Required Roles";
+  static const String addMoreHint = "Add more...";
+  static const String rolesUsageDisclaimer = "These roles will be used by the AI for matching.";
+  static const String inviteMembersManually = "Invite members manually";
   static const String youAreMentor = "You are the mentor";
 
   static const String createTask = "Create Task";
@@ -138,16 +154,104 @@ class AppStrings {
   static const String addMember = "Add Member";
   static const String manageAll = "Manage All";
   static const String notifications = "Notifications";
+  static const String markAllRead = "Mark all as read";
+  static const String yourLevel = "Your Level";
+  static const String trackGrowth = "Track your growth and performance";
+  static const String currentTier = "CURRENT TIER";
+  static const String beginnerSilver = "Beginner Silver";
+  static const String progressToGold = "Progress to Gold";
+  static const String nextTierRequirement = "Next: Beginner Gold - 100 tasks remaining";
+  static const String averageRating = "Average Rating";
+  static const String top5Percent = "TOP 5%";
+  static const String highActivityConsistency = "High Activity Consistency";
+  static const String performanceCalculatedAI = "Your performance is calculated using AI";
+  static const String levelRoadmap = "Level Roadmap";
+  static const String beginnerTier = "BEGINNER TIER";
+  static const String juniorTier = "JUNIOR TIER";
+  static const String seniorTier = "SENIOR TIER";
+  static const String bronze = "Bronze";
+  static const String silver = "Silver";
+  static const String gold = "Gold";
+  static const String recent = "RECENT";
+  static const String earlier = "EARLIER";
+  static const String newBadge = "NEW";
+  static const String youreIn = "You're in! 🎉";
+  static const String acceptedIntoFrontendGuild = "You’ve been accepted into Frontend Guild";
+  static const String newTaskAssigned = "New Task Assigned";
+  static const String assignedNewTask = "You’ve been assigned a new task: Design Login Screen";
+  static const String newMessageInAlphaCoders = "New message in Alpha Coders chat";
+  static const String taskUpdated = "Task Updated";
+  static const String taskStatusUpdated = "Your task status has been updated to 'In Progress'";
+  static const String requestUpdate = "Request Update";
+  static const String requestToJoinNotApproved = "Your request to join 'Nexus Web' was not approved";
+
   static const String success = "Success";
   static const String error = "Error";
 
-  static const String markAllRead = "Mark all as read";
-  static const String newNotification = "New Message";
-
   static const String joinedTeam = "You’ve successfully joined this team 🎉";
   static const String startCollaboration = "Start collaborating with your team now";
+  static const String yourRole = "YOUR ROLE";
+  static const String uiuxDesigner = "UI/UX Designer";
+  static const String roleDescription = "You are responsible for design tasks in this project";
+  static const String overview = "OVERVIEW";
+  static const String projectOverview = "Building a next-generation design system and component library using React and Tailwind CSS. Focus on accessibility and performance.";
+  static const String members = "MEMBERS";
+  static const String yourTasks = "YOUR TASKS";
+  static const String viewAllTasks = "View All Tasks";
+  static const String openTeamChat = "Open Team Chat";
+  static const String viewProjectDetails = "View Project Details";
+  static const String todo = "TO DO";
+  static const String dueTomorrow = "Due tomorrow";
+  static const String nextSprint = "Next sprint";
 
-  static const String matching = "Matching you with the best teams...";
+  static const String teamCreatedSuccessfully = "Team Created Successfully 🎉";
+  static const String teamReadyStartCollaborating = "Your team is ready to start collaborating. Invite members or jump straight into your workspace to begin building.";
+  static const String quickSetup = "QUICK SETUP";
+  static const String goToTeam = "Go to Team";
+  static const String backToHome = "Back to home";
+  static const String viewTeam = "View Team";
+  static const String openChat = "Open Chat";
+  static const String reportSubmitted = "Report Submitted";
+  static const String reportSubmittedDesc = "Our team will review your report to build trust and clarity. Thank you for helping us maintain a healthy collaboration environment.";
+  static const String backToTeam = "Back to Team";
+  static const String submitReportTitle = "Submit report?";
+  static const String submitReportDesc = "Are you sure you want to report this user? Our team will review the activity promptly.";
+  static const String projectCompleted = "Project Completed 🎉";
+  static const String projectSuccessfullySubmitted = "You have successfully submitted this project";
+  static const String reviewPendingByAdmin = "Review pending by administration";
+  static const String viewSummary = "View Summary";
+  static const String backToProjects = "Back to Projects";
+  static const String reportSubmittedSuccess = "Report submitted successfully";
+  static const String taskAssignedSuccess = "Task assigned successfully";
+  static const String taskCreatedAndAssigned = "Task created & assigned";
+  static const String settingsUpdated = "Settings updated";
+  static const String viewTask = "VIEW TASK";
+  static const String confirm = "Confirm";
+  static const String cancel = "Cancel";
+  static const String logoutTitle = "Log out?";
+  static const String optimizing = "Optimizing";
+  static const String dynamicInsight = "Dynamic Insight";
+  static const String dynamicInsightSubtitle = "Analyzing your experience in Frontend Development and Cloud Architecture.";
+  static const String coreSkillScan = "CORE SKILL SCAN";
+  static const String matchingDot = "Matching...";
+  static const String skillsVerified = "Skills verified successfully";
+  static const String experienceAnalyzed = "Experience analyzed";
+  static const String finalizingShortlist = "Finalizing shortlist";
+
+  static const String reload = "Reload";
+  static const String recommendedForYou = "Recommended for you";
+  static const String requestToJoin = "Request to Join";
+  static const String pendingApproval = "Pending Approval";
+
+  static const String noTeamsFound = "No teams found";
+  static const String noTeamsFoundSubtitle = "Your unique skill set might be just what a new team needs. Start a project today!";
+  static const String retryMatching = "Retry Matching";
+  static const String createYourOwnTeam = "Create Your Own Team";
+
+  static const String home = "Home";
+  static const String chat = "Chat";
+  static const String projects = "Projects";
+  static const String profile = "Profile";
 
   static const String editProfile = "Edit Profile";
   static const String settings = "Settings";
@@ -165,6 +269,13 @@ class AppStrings {
   static const String addSkill = "Add Skill";
 
   static const String logout = "Log Out";
+  static const String edit = "Edit";
+  static const String beginner = "Beginner";
+  static const String completedTasksUpper = "COMPLETED TASKS";
+  static const String teamsUpper = "TEAMS";
+  static const String activeTasksUpper = "ACTIVE TASKS";
+  static const String myTasks = "My Tasks";
+  static const String skillsAndExperience = "Skills & Experience";
   static const String logoutConfirm = "Are you sure you want to sign out?";
 
   static const String noActiveTasks = "You don't have any active tasks right now.";

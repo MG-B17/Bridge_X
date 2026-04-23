@@ -18,5 +18,9 @@ class AppRouteConstant {
   static const String chatRoom = 'room'; // Sub-route
   static const String profile = '/profile';
   static const String notifications = '/notifications';
+  static const String matching = '/matching';
+  static const String createTeam = '/create-team';
+  static const String noTeams = '/no-teams';
+  static const String level = '/level';
   static const String company = '/company';
 }

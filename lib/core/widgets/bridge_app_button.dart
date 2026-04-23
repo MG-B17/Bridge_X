@@ -10,6 +10,7 @@ class AppButton extends StatelessWidget {
   final bool isLoading;
   final bool isSecondary;
   final Widget? trailing;
+  final Widget? leading;
 
   const AppButton({
     super.key,
@@ -18,6 +19,7 @@ class AppButton extends StatelessWidget {
     this.isLoading = false,
     this.isSecondary = false,
     this.trailing,
+    this.leading,
   });
 
   @override
@@ -62,6 +64,10 @@ class AppButton extends StatelessWidget {
             : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  if (leading != null) ...[
+                    leading!,
+                    HSpace(context.spacing.sm),
+                  ],
                   Text(
                     label,
                     style: context.bodyLarge.copyWith(

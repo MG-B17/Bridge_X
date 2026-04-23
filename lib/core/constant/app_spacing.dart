@@ -14,8 +14,9 @@ abstract class AppSpacing {
   static double get radiusPill => 20.r;
 
   static BoxShadow get cardShadow => BoxShadow(
-        color: const Color(0x0D000000),
-        blurRadius: 4.r,
-        offset: Offset(0, 4.h),
+        color: const Color(0x1F000000), 
+        blurRadius: 16.r,
+        spreadRadius: 2.r,
+        offset: Offset(0, 8.h),
       );
 }

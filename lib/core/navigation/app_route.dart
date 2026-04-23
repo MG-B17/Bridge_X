@@ -1,6 +1,8 @@
-import 'package:bridgex/features/auth/login/screen/login_page.dart';
-import 'package:bridgex/features/auth/register/screen/register_page.dart';
-import 'package:bridgex/features/onboarding/screen/onboarding_page.dart';
+import '../../features/auth/login/screen/login_page.dart';
+import '../../features/auth/register/screen/register_page.dart';
+import '../../features/auth/forget_password/screen/forget_password_page.dart';
+import '../../features/auth/otp_verification/screen/otp_verification_page.dart';
+import '../../features/onboarding/screen/onboarding_page.dart';
 import 'package:bridgex/features/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -34,12 +36,12 @@ class AppRoute {
         builder: (context, state) => const RegisterPage(),
       ),
       GoRoute(
-        path: AppRouteConstant.otp,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('OTP Stub'))),
+        path: AppRouteConstant.forgetPassword,
+        builder: (context, state) => const ForgetPasswordPage(),
       ),
       GoRoute(
-        path: AppRouteConstant.forgotPassword,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Forgot Password Stub'))),
+        path: AppRouteConstant.otpVerification,
+        builder: (context, state) => const OtpVerificationPage(),
       ),
       GoRoute(
         path: AppRouteConstant.profileSetup,

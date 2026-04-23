@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/utils/extensions.dart';
-import '../../../../core/widgets/v_space.dart';
+import 'package:flutter_svg/svg.dart';
+import '../../../core/utils/extensions.dart';
+import '../../../core/widgets/v_space.dart';
 
 class SocialLoginButtons extends StatelessWidget {
   const SocialLoginButtons({super.key});
@@ -43,20 +44,14 @@ class SocialLoginButtons extends StatelessWidget {
       children: [
         _buildSocialButton(
           context,
-          icon: Text(
-            'G', // Placeholder for Google Logo
-            style: context.headlineMedium.copyWith(
-              color: Colors.red, // Google typical color proxy
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          icon: SvgPicture.asset("assets/svg/google_icon.svg"),
           label: 'Google',
           onTap: () {},
         ),
         VSpace(context.spacing.md),
         _buildSocialButton(
           context,
-          icon: Icon(Icons.code, size: 24.w, color: context.colors.textPrimary), // GitHub proxy
+          icon: SvgPicture.asset("assets/svg/gitHub_icon.svg"), 
           label: 'GitHub',
           onTap: () {},
         ),

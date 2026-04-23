@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/constant/app_strings.dart';
+import '../../../../core/navigation/app_route_constant.dart';
 import '../../../../core/utils/extensions.dart';
-import '../../../../core/utils/validator.dart';
-import '../../../../core/widgets/app_text_field.dart';
-import '../../../../core/widgets/bridge_app_button.dart';
+import '../../widgets/auth_divider.dart';
+import '../../widgets/auth_footer.dart';
+import '../../widgets/auth_header.dart';
 import '../../../../core/widgets/v_space.dart';
-import 'social_login_buttons.dart';
+import '../../../../core/constant/app_strings.dart';
+import 'login_inputs.dart';
+import '../../widgets/social_login_buttons.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -20,7 +22,7 @@ class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool _obscurePassword = true;
+  bool obscurePassword = true;
   bool _rememberMe = false;
 
   @override
@@ -31,9 +33,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void _submitForm() {
-    if (_formKey.currentState?.validate() ?? false) {
-      // TODO: Handle login
-    }
+    if (_formKey.currentState?.validate() ?? false) {}
   }
 
   @override
@@ -46,7 +46,7 @@ class _LoginFormState extends State<LoginForm> {
           topLeft: Radius.circular(context.spacing.radiusCardLarge),
           bottomLeft: Radius.circular(context.spacing.radiusCardLarge),
           bottomRight: Radius.circular(context.spacing.radiusCardLarge),
-          topRight: Radius.circular(80.r), // Custom large curve
+          topRight: Radius.circular(80.r),
         ),
         boxShadow: [context.spacing.cardShadow],
       ),
@@ -57,7 +57,7 @@ class _LoginFormState extends State<LoginForm> {
           Padding(
             padding: EdgeInsets.fromLTRB(
               context.spacing.xl,
-              48.h, // Top padding
+              48.h,
               context.spacing.xl,
               context.spacing.xxl,
             ),
@@ -67,178 +67,31 @@ class _LoginFormState extends State<LoginForm> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(
-                    child: Text(
-                      AppStrings.welcomeBack,
-                      style: context.displayLarge.copyWith(
-                        color: context.colors.primary,
-                        fontSize: 26.sp,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
+                  const AuthHeader(
+                    title: AppStrings.welcomeBack,
+                    subtitle: 'Please enter your details to sign in',
                   ),
-                  VSpace(context.spacing.sm),
-                  Center(
-                    child: Text(
-                      'Please enter your details to sign in',
-                      style: context.bodyMedium.copyWith(
-                        color: context.colors.textSecondary,
-                        height: 1.5,
-                      ),
-                    ),
-                  ),
-                  VSpace(32.h),
-                  Text(
-                    AppStrings.email,
-                    style: context.bodyMedium.copyWith(
-                      color: context.colors.textPrimary,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  VSpace(context.spacing.sm),
-                  AppTextField(
-                    controller: _emailController,
-                    hintText: AppStrings.companyEmailHint,
-                    keyboardType: TextInputType.emailAddress,
-                    validator: Validator.validateEmail,
-                    prefixIcon: Icon(Icons.mail_outline, color: context.colors.textHint),
-                  ),
-                  VSpace(context.spacing.lg),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        AppStrings.password,
-                        style: context.bodyMedium.copyWith(
-                          color: context.colors.textPrimary,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                          foregroundColor: context.colors.primary,
-                          padding: EdgeInsets.zero,
-                          minimumSize: Size.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                        child: Text(
-                          AppStrings.forgotPassword,
-                          style: context.bodyMedium.copyWith(
-                            color: context.colors.primary,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 12.sp,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  VSpace(context.spacing.sm),
-                  AppTextField(
-                    controller: _passwordController,
-                    hintText: '••••••••',
-                    obscureText: _obscurePassword,
-                    validator: Validator.validatePassword,
-                    prefixIcon: Icon(Icons.lock_outline, color: context.colors.textHint),
-                  ),
-                  VSpace(context.spacing.md),
-                  // Remember me checkbox
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 24.w,
-                        height: 24.w,
-                        child: Checkbox(
-                          value: _rememberMe,
-                          onChanged: (val) {
-                            setState(() {
-                              _rememberMe = val ?? false;
-                            });
-                          },
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.r)),
-                          side: BorderSide(color: context.colors.textHint.withValues(alpha: 0.5)),
-                        ),
-                      ),
-                      SizedBox(width: 8.w),
-                      Text(
-                        'Remember me for 30 days',
-                        style: context.bodyMedium.copyWith(
-                          color: context.colors.textSecondary,
-                          fontSize: 12.sp,
-                        ),
-                      ),
-                    ],
-                  ),
-                  VSpace(context.spacing.xl),
-                  AppButton(
-                    label: AppStrings.login,
-                    onPressed: _submitForm,
-                    trailing: const Icon(Icons.arrow_forward, color: Colors.white, size: 20),
+                  LoginInputs(
+                    emailController: _emailController,
+                    passwordController: _passwordController,
+                    obscurePassword: obscurePassword,
+                    rememberMe: _rememberMe,
+                    onRememberMeChanged: (val) =>
+                        setState(() => _rememberMe = val ?? false),
+                    onSubmit: _submitForm,
                   ),
                   VSpace(context.spacing.xxl),
-                  Row(
-                    children: [
-                      Expanded(child: Divider(color: context.colors.textHint.withValues(alpha: 0.3))),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: context.spacing.md),
-                        child: Text(
-                          AppStrings.continueWith.toUpperCase(),
-                          style: context.labelSmall.copyWith(
-                            color: context.colors.textHint,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      Expanded(child: Divider(color: context.colors.textHint.withValues(alpha: 0.3))),
-                    ],
-                  ),
+                  const AuthDivider(text: AppStrings.continueWith),
                   VSpace(context.spacing.xl),
                   const SocialLoginButtons(),
                 ],
               ),
             ),
           ),
-          // Footer
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(vertical: context.spacing.lg),
-            decoration: BoxDecoration(
-              color: const Color(0xFFF3F4F6), // Light grey footer
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(context.spacing.radiusCardLarge),
-                bottomRight: Radius.circular(context.spacing.radiusCardLarge),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '${AppStrings.noAccount.split('?')[0]}? ',
-                  style: context.bodyMedium.copyWith(
-                    color: context.colors.textSecondary,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    context.push('/register');
-                  },
-                  style: TextButton.styleFrom(
-                    foregroundColor: context.colors.primary,
-                    padding: EdgeInsets.zero,
-                    minimumSize: Size.zero,
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  child: Text(
-                    AppStrings.signUp,
-                    style: context.bodyMedium.copyWith(
-                      color: context.colors.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          AuthFooter(
+            questionText: '${AppStrings.noAccount.split('?')[0]}? ',
+            actionText: AppStrings.signUp,
+            onActionTap: () => context.push(AppRouteConstant.register),
           ),
         ],
       ),

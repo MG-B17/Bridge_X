@@ -23,4 +23,12 @@ class AppRouteConstant {
   static const String noTeams = '/no-teams';
   static const String level = '/level';
   static const String company = '/company';
+  static const String editProfile = '/edit-profile';
+  static const String myTasksScreen = '/my-tasks';
+  static const String taskDetails = '/task-details';
+  static const String skillsExperience = '/skills-experience';
+  static const String privacySecurity = '/privacy-security';
+  static const String changePasswordScreen = '/change-password';
+  static const String aboutUsScreen = '/about-us';
+  static const String logoutScreen = '/logout';
 }

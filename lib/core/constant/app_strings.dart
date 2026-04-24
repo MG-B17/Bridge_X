@@ -96,6 +96,7 @@ class AppStrings {
   static const String teamMembers = "Team Members";
   static const String teamSettings = "Team Settings";
   static const String createTeam = "Create Team";
+  static const String createTeamSubtitle = "Set up your team and project details";
   static const String joinTeam = "Join Team";
   static const String teamName = "Team Name";
   static const String teamInfo = "Team Info";
@@ -106,12 +107,17 @@ class AppStrings {
   static const String privateDesc = "You manually add team members";
   static const String public = "Public";
   static const String publicDesc = "AI matches members & others can request to join";
+  static const String privateTeam = "Private Team";
+  static const String privateTeamDesc = "You manually add team members";
+  static const String publicTeam = "Public Team";
+  static const String publicTeamDesc = "AI matches members & others can request to join";
   static const String githubUrl = "Github URL";
   static const String projectDescription = "Project Description";
   static const String describeProjectHint = "Describe your project goals and what you're looking to build...";
   static const String categorySelection = "Category Selection";
   static const String marketing = "Marketing";
   static const String research = "Research";
+  static const String business = "Business";
   static const String requiredRoles = "Required Roles";
   static const String addMoreHint = "Add more...";
   static const String rolesUsageDisclaimer = "These roles will be used by the AI for matching.";
@@ -216,7 +222,6 @@ class AppStrings {
   static const String backToTeam = "Back to Team";
   static const String submitReportTitle = "Submit report?";
   static const String submitReportDesc = "Are you sure you want to report this user? Our team will review the activity promptly.";
-  static const String projectCompleted = "Project Completed 🎉";
   static const String projectSuccessfullySubmitted = "You have successfully submitted this project";
   static const String reviewPendingByAdmin = "Review pending by administration";
   static const String viewSummary = "View Summary";
@@ -226,9 +231,9 @@ class AppStrings {
   static const String taskCreatedAndAssigned = "Task created & assigned";
   static const String settingsUpdated = "Settings updated";
   static const String viewTask = "VIEW TASK";
-  static const String confirm = "Confirm";
-  static const String cancel = "Cancel";
-  static const String logoutTitle = "Log out?";
+  static const String logoutTitle = "Log out of Bridge X?";
+  static const String matching = "Matching";
+  static const String matchingSubtitle = "We're finding the best teams for your skills and experience.";
   static const String optimizing = "Optimizing";
   static const String dynamicInsight = "Dynamic Insight";
   static const String dynamicInsightSubtitle = "Analyzing your experience in Frontend Development and Cloud Architecture.";
@@ -276,10 +281,68 @@ class AppStrings {
   static const String activeTasksUpper = "ACTIVE TASKS";
   static const String myTasks = "My Tasks";
   static const String skillsAndExperience = "Skills & Experience";
-  static const String logoutConfirm = "Are you sure you want to sign out?";
+  static const String logoutConfirm = "Are you sure you want to sign out? You will need to log back in to access your projects.";
 
   static const String noActiveTasks = "You don't have any active tasks right now.";
   static const String takeBreak = "Take a break or find a new project.";
 
   static const String version = "Version V1.0.0";
+
+  static const String tapToUpdateAvatar = "Tap to update avatar";
+  static const String professionRole = "Profession/Role";
+  static const String available = "Available";
+  static const String bioMaxCharsHint = "Maximum 250 characters. Professional bio recommended.";
+
+  static const String myTasksSubtitle = "Manage your daily workflow and projects";
+  static const String allCaughtUp = "All caught up!";
+  static const String exploreProjects = "Explore Projects";
+
+  static const String active = "Active";
+  static const String nearCompletion = "Near Completion";
+  static const String progress = "Progress";
+
+  static const String totalDone = "Total Done";
+  static const String thisWeek = "This Week";
+  static const String recentlyFinished = "Recently Finished";
+  static const String goalSmashed = "Goal Smashed!";
+  static const String goalSmashedDesc = "You've completed 20% more tasks this month than the previous one. Keep the momentum";
+  static const String viewInsights = "View Insights";
+
+  static const String description = "Description";
+  static const String dueDate = "Due Date";
+  static const String createdBy = "Created By";
+  static const String attachments = "Attachments";
+  static const String updateProgress = "Update Progress";
+  static const String high = "High";
+
+  static const String junior = "Junior";
+  static const String senior = "Senior";
+  static const String experience = "Experience";
+  static const String skills = "Skills";
+  static const String addProject = "+ Add Project";
+  static const String projectName = "Project Name";
+  static const String role = "Role";
+  static const String confirmAdd = "Confirm Add";
+  static const String projectNameHint = "e.g. Portfolio Redesign";
+  static const String roleHint = "e.g. Lead Designer";
+
+  static const String privacyAndSecurity = "Privacy & Security";
+  static const String bridgeXProtection = "Bridge X Protection";
+  static const String bridgeXProtectionDesc = "Manage your digital footprint and secure your collaboration environment.";
+  static const String emailAddress = "Email Address";
+  static const String dangerZone = "Danger Zone";
+  static const String deleteAccount = "Delete Account";
+  static const String privacyDisclaimer = "Bridge X uses end-to-end encryption for all sensitive data transmission. Your personal information is never shared with third-party advertisers without your explicit consent. For more details, view our ";
+  static const String termsOfService = "Terms of Service";
+
+  static const String securityUpdate = "Security Update";
+  static const String securityUpdateDesc = "Manage your Bridge X account security";
+  static const String updatePassword = "Update Password";
+  static const String passwordMinLength = "Password must be at least 8 characters long.";
+
+  static const String aboutUs = "About Us";
+  static const String aboutBridgeXDesc = "A platform that connects developers to collaborate on real projects.";
+  static const String ourMission = "Our Mission";
+  static const String ourMissionDesc = "Bridging the gap between code and community through meaningful collaboration.";
+  static const String madeWithLove = "MADE WITH ❤️ FOR DEVELOPERS";
 }

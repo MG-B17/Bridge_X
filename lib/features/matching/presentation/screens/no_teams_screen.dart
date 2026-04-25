@@ -1,10 +1,9 @@
+import 'package:go_router/go_router.dart';
+import '../../../../core/navigation/app_route_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/constant/app_strings.dart';
-import '../../../../core/theme/app_color.dart';
-import '../../../../core/theme/text_style.dart';
 import '../../../../core/utils/extensions.dart';
-import '../../../../core/widgets/app_bottom_nav_bar.dart';
 import '../../../../core/widgets/bridge_app_button.dart';
 import '../../../../core/widgets/v_space.dart';
 import '../widgets/empty_state_illustration.dart';
@@ -15,7 +14,7 @@ class NoTeamsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.colors.background,
+      backgroundColor: context.colors.scaffoldBg,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -27,8 +26,8 @@ class NoTeamsScreen extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             child: IconButton(
-              icon: Icon(Icons.arrow_back, color: AppColors.primary, size: 20.sp),
-              onPressed: () => Navigator.pop(context),
+              icon: Icon(Icons.arrow_back, color: context.colors.primary, size: 20.sp),
+              onPressed: () => context.pop(),
             ),
           ),
         ),
@@ -90,15 +89,6 @@ class NoTeamsScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: AppBottomNavBar(
-        currentIndex: 0,
-        onTap: (index) {
-          if (index == 0) context.go(AppRouteConstant.matching);
-          if (index == 1) context.go(AppRouteConstant.chat);
-          if (index == 2) context.go(AppRouteConstant.teams);
-          if (index == 3) context.go(AppRouteConstant.profile);
-        },
       ),
     );
   }

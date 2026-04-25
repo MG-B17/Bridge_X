@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/constant/app_strings.dart';
-import '../../../../core/theme/app_color.dart';
-import '../../../../core/theme/text_style.dart';
 import '../../../../core/utils/extensions.dart';
-import '../../../../core/widgets/app_bottom_nav_bar.dart';
 import '../../../../core/widgets/app_text_field.dart';
 import '../../../../core/widgets/bridge_app_button.dart';
 import '../../../../core/widgets/bridge_dialogs.dart';
@@ -27,7 +25,7 @@ class _CreateTeamScreenState extends State<CreateTeamScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.colors.background,
+      backgroundColor: context.colors.scaffoldBg,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -40,7 +38,7 @@ class _CreateTeamScreenState extends State<CreateTeamScreen> {
             ),
             child: IconButton(
               icon: Icon(Icons.arrow_back, color: context.colors.primary, size: 20.sp),
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => context.pop(),
             ),
           ),
         ),
@@ -175,7 +173,7 @@ class _CreateTeamScreenState extends State<CreateTeamScreen> {
             Text(
               AppStrings.rolesUsageDisclaimer,
               style: context.labelSmall.copyWith(
-                color: context.colors.textSecondary.withOpacity(0.8),
+                color: context.colors.textSecondary.withValues(alpha: 0.8),
                 fontSize: 10.sp,
               ),
             ),
@@ -204,15 +202,6 @@ class _CreateTeamScreenState extends State<CreateTeamScreen> {
             VSpace(40.h),
           ],
         ),
-      ),
-      bottomNavigationBar: AppBottomNavBar(
-        currentIndex: 2,
-        onTap: (index) {
-          if (index == 0) context.go(AppRouteConstant.matching);
-          if (index == 1) context.go(AppRouteConstant.chat);
-          if (index == 2) context.go(AppRouteConstant.teams);
-          if (index == 3) context.go(AppRouteConstant.profile);
-        },
       ),
     );
   }

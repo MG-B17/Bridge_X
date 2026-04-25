@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/theme/app_color.dart';
-import '../../../../core/theme/text_style.dart';
 import '../../../../core/utils/extensions.dart';
 
 class StatCardWidget extends StatelessWidget {
@@ -20,7 +18,7 @@ class StatCardWidget extends StatelessWidget {
       width: 100.w,
       padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 8.w),
       decoration: BoxDecoration(
-        color: const Color(0xFFF3F4F6).withOpacity(0.5),
+        color: const Color(0xFFF3F4F6).withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: context.colors.divider, width: 1.w),
       ),

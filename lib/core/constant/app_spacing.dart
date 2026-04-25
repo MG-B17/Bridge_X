@@ -12,6 +12,7 @@ abstract class AppSpacing {
   static double get radiusCard => 12.r;
   static double get radiusCardLarge => 16.r;
   static double get radiusPill => 20.r;
+  static double get radiusXs => 8.r;
 
   static BoxShadow get cardShadow => BoxShadow(
         color: const Color(0x1F000000), 

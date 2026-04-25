@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/widgets/h_space.dart';
 import '../../../../core/utils/extensions.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../core/navigation/app_route_constant.dart';
 
 class HomeActionButtons extends StatelessWidget {
   const HomeActionButtons({super.key});
@@ -12,7 +14,7 @@ class HomeActionButtons extends StatelessWidget {
       children: [
         Expanded(
           child: ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: () => context.push(AppRouteConstant.matching),
             style: ElevatedButton.styleFrom(
               backgroundColor: context.colors.primary,
               foregroundColor: Colors.white,
@@ -35,7 +37,7 @@ class HomeActionButtons extends StatelessWidget {
         HSpace(context.spacing.sm),
         Expanded(
           child: OutlinedButton.icon(
-            onPressed: () {},
+            onPressed: () => context.push(AppRouteConstant.createTeam),
             style: OutlinedButton.styleFrom(
               foregroundColor: context.colors.primary,
               padding: EdgeInsets.symmetric(vertical: 14.h),

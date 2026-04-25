@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/theme/app_color.dart';
-import '../../../../core/theme/text_style.dart';
 import '../../../../core/utils/extensions.dart';
 
 class RoleCardWidget extends StatelessWidget {
@@ -33,7 +31,7 @@ class RoleCardWidget extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF274C9E).withOpacity(0.3),
+            color: const Color(0xFF274C9E).withValues(alpha: 0.3),
             blurRadius: 15,
             offset: const Offset(0, 8),
           ),
@@ -46,14 +44,14 @@ class RoleCardWidget extends StatelessWidget {
             children: [
               Icon(
                 Icons.badge_outlined,
-                color: Colors.white.withOpacity(0.8),
+                color: Colors.white.withValues(alpha: 0.8),
                 size: 20.sp,
               ),
               SizedBox(width: 8.w),
               Text(
                 label,
                 style: context.labelSmall.copyWith(
-                  color: Colors.white.withOpacity(0.8),
+                  color: Colors.white.withValues(alpha: 0.8),
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.2,
                 ),
@@ -73,7 +71,7 @@ class RoleCardWidget extends StatelessWidget {
           Text(
             description,
             style: context.bodyMedium.copyWith(
-              color: Colors.white.withOpacity(0.8),
+              color: Colors.white.withValues(alpha: 0.8),
               height: 1.4,
             ),
           ),

@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/constant/app_strings.dart';
@@ -30,7 +31,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.colors.background,
+      backgroundColor: context.colors.scaffoldBg,
       appBar: _buildAppBar(context),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: context.spacing.xl),
@@ -204,7 +205,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   Widget _buildForgotPasswordLink(BuildContext context) {
     return Center(
       child: GestureDetector(
-        onTap: () => context.push(AppRouteConstant.forgotPassword),
+        onTap: () => context.push(AppRouteConstant.forgetPassword),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

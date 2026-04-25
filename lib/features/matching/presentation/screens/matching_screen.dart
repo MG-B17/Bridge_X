@@ -1,10 +1,9 @@
+import 'package:go_router/go_router.dart';
+import '../../../../core/navigation/app_route_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/constant/app_strings.dart';
-import '../../../../core/theme/app_color.dart';
-import '../../../../core/theme/text_style.dart';
 import '../../../../core/utils/extensions.dart';
-import '../../../../core/widgets/app_bottom_nav_bar.dart';
 import '../../../../core/widgets/v_space.dart';
 import '../widgets/info_card_widget.dart';
 import '../widgets/progress_circle_widget.dart';
@@ -16,7 +15,7 @@ class MatchingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.colors.background,
+      backgroundColor: context.colors.scaffoldBg,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -24,12 +23,12 @@ class MatchingScreen extends StatelessWidget {
           padding: EdgeInsets.all(8.w),
           child: Container(
             decoration: BoxDecoration(
-              color: context.colors.primary.withOpacity(0.1),
+              color: context.colors.primary.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: IconButton(
               icon: Icon(Icons.arrow_back, color: context.colors.primary, size: 20.sp),
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => context.pop(),
             ),
           ),
         ),
@@ -82,7 +81,7 @@ class MatchingScreen extends StatelessWidget {
                   AppStrings.coreSkillScan,
                   style: context.labelSmall.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: context.colors.primary.withOpacity(0.6),
+                    color: context.colors.primary.withValues(alpha: 0.6),
                   ),
                 ),
                 Text(
@@ -100,7 +99,7 @@ class MatchingScreen extends StatelessWidget {
               child: LinearProgressIndicator(
                 value: 0.6,
                 minHeight: 8.h,
-                backgroundColor: context.colors.primary.withOpacity(0.1),
+                backgroundColor: context.colors.primary.withValues(alpha: 0.1),
                 valueColor: AlwaysStoppedAnimation<Color>(context.colors.primary),
               ),
             ),
@@ -120,15 +119,6 @@ class MatchingScreen extends StatelessWidget {
             VSpace(context.spacing.lg),
           ],
         ),
-      ),
-      bottomNavigationBar: AppBottomNavBar(
-        currentIndex: 0,
-        onTap: (index) {
-          if (index == 0) context.go(AppRouteConstant.matching);
-          if (index == 1) context.go(AppRouteConstant.chat);
-          if (index == 2) context.go(AppRouteConstant.teams);
-          if (index == 3) context.go(AppRouteConstant.profile);
-        },
       ),
     );
   }

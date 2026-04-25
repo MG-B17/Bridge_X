@@ -91,7 +91,7 @@ class EditProfileForm extends StatelessWidget {
         child: Text(
           AppStrings.available,
           style: context.labelSmall.copyWith(
-            color: context.colors.success,
+            color: context.colors.completedText,
             fontWeight: FontWeight.w600,
           ),
         ),

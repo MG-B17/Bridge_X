@@ -12,6 +12,8 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
   final Color ongoingText;
   final Color completedBg;
   final Color completedText;
+  final Color secondary;
+  final Color divider;
 
   const AppColorScheme({
     required this.primary,
@@ -25,6 +27,8 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     required this.ongoingText,
     required this.completedBg,
     required this.completedText,
+    required this.secondary,
+    required this.divider,
   });
 
   @override
@@ -40,6 +44,8 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     Color? ongoingText,
     Color? completedBg,
     Color? completedText,
+    Color? secondary,
+    Color? divider,
   }) {
     return AppColorScheme(
       primary: primary ?? this.primary,
@@ -53,6 +59,8 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
       ongoingText: ongoingText ?? this.ongoingText,
       completedBg: completedBg ?? this.completedBg,
       completedText: completedText ?? this.completedText,
+      secondary: secondary ?? this.secondary,
+      divider: divider ?? this.divider,
     );
   }
 
@@ -73,6 +81,8 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
       ongoingText: Color.lerp(ongoingText, other.ongoingText, t)!,
       completedBg: Color.lerp(completedBg, other.completedBg, t)!,
       completedText: Color.lerp(completedText, other.completedText, t)!,
+      secondary: Color.lerp(secondary, other.secondary, t)!,
+      divider: Color.lerp(divider, other.divider, t)!,
     );
   }
 
@@ -88,6 +98,8 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     ongoingText: Color(0xFF2D4B73),
     completedBg: Color(0xFFE7F7F2),
     completedText: Color(0xFF0E9F6E),
+    secondary: Color(0xFF6B7280),
+    divider: Color(0xFFE5E7EB),
   );
 
   static const AppColorScheme dark = AppColorScheme(
@@ -102,6 +114,8 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     ongoingText: Color(0xFF4A6CF7),
     completedBg: Color(0xFFE7F7F2),
     completedText: Color(0xFF0E9F6E),
+    secondary: Color(0xFF9CA3AF),
+    divider: Color(0xFF374151),
   );
 
   static const gradient = LinearGradient(

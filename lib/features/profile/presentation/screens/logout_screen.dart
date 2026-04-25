@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constant/app_strings.dart';
 import '../../../../core/navigation/app_route_constant.dart';
@@ -10,7 +11,7 @@ class LogoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.colors.background,
+      backgroundColor: context.colors.scaffoldBg,
       body: Stack(
         children: [
           Center(

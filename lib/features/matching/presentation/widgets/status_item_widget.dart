@@ -19,7 +19,7 @@ class StatusItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Color iconColor;
     IconData iconData;
-    Color textColor = status == StatusType.pending ? AppColors.textSecondary.withOpacity(0.5) : AppColors.textPrimary;
+    Color textColor = status == StatusType.pending ? AppColors.textSecondary.withValues(alpha: 0.5) : AppColors.textPrimary;
 
     switch (status) {
       case StatusType.success:
@@ -28,7 +28,7 @@ class StatusItemWidget extends StatelessWidget {
         iconData = Icons.check_circle;
         break;
       case StatusType.pending:
-        iconColor = AppColors.success.withOpacity(0.3);
+        iconColor = AppColors.success.withValues(alpha: 0.3);
         iconData = Icons.radio_button_unchecked;
         break;
     }
@@ -43,7 +43,7 @@ class StatusItemWidget extends StatelessWidget {
             ? null
             : [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.02),
+                  color: Colors.black.withValues(alpha: 0.02),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),

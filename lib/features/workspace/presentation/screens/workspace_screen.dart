@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../core/navigation/app_route_constant.dart';
 import '../../../../core/constant/app_strings.dart';
-import '../../../../core/theme/app_color.dart';
-import '../../../../core/theme/text_style.dart';
 import '../../../../core/utils/extensions.dart';
-import '../../../../core/widgets/app_bottom_nav_bar.dart';
 import '../../../../core/widgets/bridge_app_button.dart';
 import '../../../../core/widgets/v_space.dart';
 import '../widgets/member_avatar_widget.dart';
@@ -17,7 +16,7 @@ class WorkspaceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.colors.background,
+      backgroundColor: context.colors.scaffoldBg,
       body: SafeArea(
         child: Column(
           children: [
@@ -34,7 +33,7 @@ class WorkspaceScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: const Color(0xFFDBEAFE),
                         borderRadius: BorderRadius.circular(16.r),
-                        border: Border.all(color: context.colors.primary.withOpacity(0.1), width: 1.w),
+                        border: Border.all(color: context.colors.primary.withValues(alpha: 0.1), width: 1.w),
                       ),
                       child: Row(
                         children: [
@@ -61,7 +60,7 @@ class WorkspaceScreen extends StatelessWidget {
                                 Text(
                                   AppStrings.startCollaboration,
                                   style: context.labelSmall.copyWith(
-                                    color: context.colors.primary.withOpacity(0.8),
+                                    color: context.colors.primary.withValues(alpha: 0.8),
                                   ),
                                 ),
                               ],
@@ -89,13 +88,13 @@ class WorkspaceScreen extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.all(20.w),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFF3F4F6).withOpacity(0.5),
+                        color: const Color(0xFFF3F4F6).withValues(alpha: 0.5),
                         borderRadius: BorderRadius.circular(16.r),
                       ),
                       child: Text(
                         AppStrings.projectOverview,
                         style: context.bodyMedium.copyWith(
-                          color: context.colors.textPrimary.withOpacity(0.8),
+                          color: context.colors.textPrimary.withValues(alpha: 0.8),
                           height: 1.5,
                         ),
                       ),
@@ -195,15 +194,6 @@ class WorkspaceScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: AppBottomNavBar(
-        currentIndex: 2,
-        onTap: (index) {
-          if (index == 0) context.go(AppRouteConstant.matching);
-          if (index == 1) context.go(AppRouteConstant.chat);
-          if (index == 2) context.go(AppRouteConstant.workspace);
-          if (index == 3) context.go(AppRouteConstant.profile);
-        },
       ),
     );
   }

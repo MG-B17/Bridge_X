@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/theme/app_color.dart';
-import '../../../../core/theme/text_style.dart';
 import '../../../../core/utils/extensions.dart';
 
 class TierCardWidget extends StatelessWidget {
@@ -26,7 +24,7 @@ class TierCardWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(24.r),
         boxShadow: [
           BoxShadow(
-            color: context.colors.primary.withOpacity(0.3),
+            color: context.colors.primary.withValues(alpha: 0.3),
             blurRadius: 15,
             offset: const Offset(0, 8),
           ),
@@ -40,7 +38,7 @@ class TierCardWidget extends StatelessWidget {
             child: Icon(
               Icons.stars_rounded,
               size: 100.sp,
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
             ),
           ),
           Column(
@@ -49,7 +47,7 @@ class TierCardWidget extends StatelessWidget {
               Text(
                 'CURRENT TIER',
                 style: context.labelSmall.copyWith(
-                  color: Colors.white.withOpacity(0.8),
+                  color: Colors.white.withValues(alpha: 0.8),
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.2,
                 ),
@@ -89,7 +87,7 @@ class TierCardWidget extends StatelessWidget {
                 child: LinearProgressIndicator(
                   value: progress,
                   minHeight: 10.h,
-                  backgroundColor: Colors.white.withOpacity(0.2),
+                  backgroundColor: Colors.white.withValues(alpha: 0.2),
                   valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF83A0E7)),
                 ),
               ),
@@ -99,14 +97,14 @@ class TierCardWidget extends StatelessWidget {
                   Text(
                     nextTierInfo,
                     style: context.labelSmall.copyWith(
-                      color: Colors.white.withOpacity(0.7),
+                      color: Colors.white.withValues(alpha: 0.7),
                       fontSize: 12.sp,
                     ),
                   ),
                   const Spacer(),
                   Icon(
                     Icons.flag_outlined,
-                    color: Colors.white.withOpacity(0.7),
+                    color: Colors.white.withValues(alpha: 0.7),
                     size: 16.sp,
                   ),
                 ],

@@ -1,10 +1,8 @@
+import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/constant/app_strings.dart';
-import '../../../../core/theme/app_color.dart';
-import '../../../../core/theme/text_style.dart';
 import '../../../../core/utils/extensions.dart';
-import '../../../../core/widgets/app_bottom_nav_bar.dart';
 import '../../../../core/widgets/v_space.dart';
 import '../widgets/notification_item_widget.dart';
 
@@ -14,21 +12,27 @@ class NotificationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.colors.background,
+      backgroundColor: context.colors.scaffoldBg,
       body: SafeArea(
         child: Column(
           children: [
             Padding(
               padding: EdgeInsets.fromLTRB(24.w, 20.h, 24.w, 10.h),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    AppStrings.notifications,
-                    style: context.displayLarge.copyWith(
-                      color: context.colors.primary,
-                      fontSize: 28.sp,
-                      fontWeight: FontWeight.w800,
+                  IconButton(
+                    icon: Icon(Icons.arrow_back, color: context.colors.primary),
+                    onPressed: () => context.pop(),
+                  ),
+                  SizedBox(width: 8.w),
+                  Expanded(
+                    child: Text(
+                      AppStrings.notifications,
+                      style: context.displayLarge.copyWith(
+                        color: context.colors.primary,
+                        fontSize: 28.sp,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                   ),
                   TextButton(
@@ -150,15 +154,6 @@ class NotificationsScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: AppBottomNavBar(
-        currentIndex: 0,
-        onTap: (index) {
-          if (index == 0) context.go(AppRouteConstant.matching);
-          if (index == 1) context.go(AppRouteConstant.chat);
-          if (index == 2) context.go(AppRouteConstant.teams);
-          if (index == 3) context.go(AppRouteConstant.profile);
-        },
       ),
     );
   }

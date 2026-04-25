@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/constant/app_strings.dart';
-import '../../../../core/theme/app_color.dart';
-import '../../../../core/theme/text_style.dart';
 import '../../../../core/utils/extensions.dart';
-import '../../../../core/widgets/app_bottom_nav_bar.dart';
 import '../../../../core/widgets/v_space.dart';
 import '../widgets/level_info_card_widget.dart';
 import '../widgets/roadmap_step_widget.dart';
@@ -16,7 +13,7 @@ class LevelScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.colors.background,
+      backgroundColor: context.colors.scaffoldBg,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -115,7 +112,7 @@ class LevelScreen extends StatelessWidget {
                         Text(
                           AppStrings.performanceCalculatedAI,
                           style: context.labelSmall.copyWith(
-                            color: context.colors.primary.withOpacity(0.7),
+                            color: context.colors.primary.withValues(alpha: 0.7),
                             fontSize: 10.sp,
                           ),
                         ),
@@ -124,7 +121,7 @@ class LevelScreen extends StatelessWidget {
                   ),
                   Icon(
                     Icons.auto_awesome_outlined,
-                    color: context.colors.primary.withOpacity(0.3),
+                    color: context.colors.primary.withValues(alpha: 0.3),
                     size: 24.sp,
                   ),
                 ],
@@ -165,10 +162,6 @@ class LevelScreen extends StatelessWidget {
             VSpace(30.h),
           ],
         ),
-      ),
-      bottomNavigationBar: AppBottomNavBar(
-        currentIndex: 3, // Profile context
-        onTap: (index) {},
       ),
     );
   }

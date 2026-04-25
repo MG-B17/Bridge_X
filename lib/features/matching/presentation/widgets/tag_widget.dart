@@ -13,7 +13,7 @@ class TagWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
       decoration: BoxDecoration(
-        color: AppColors.secondary.withOpacity(0.5),
+        color: AppColors.secondary.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(8.r),
       ),
       child: Text(

@@ -1,4 +1,6 @@
+import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
+import '../../../../core/navigation/app_route_constant.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/constant/app_strings.dart';
 import '../../../../core/utils/extensions.dart';
@@ -11,7 +13,7 @@ class PrivacySecurityScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.colors.background,
+      backgroundColor: context.colors.scaffoldBg,
       appBar: _buildAppBar(context),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: context.spacing.xl),
@@ -22,7 +24,7 @@ class PrivacySecurityScreen extends StatelessWidget {
             VSpace(context.spacing.lg),
             const ProtectionBanner(),
             VSpace(context.spacing.xxl),
-            SecuritySectionHeader(
+            const SecuritySectionHeader(
               label: AppStrings.accountSecurity,
               icon: Icons.shield_outlined,
             ),
@@ -83,7 +85,7 @@ class PrivacySecurityScreen extends StatelessWidget {
             iconColor: const Color(0xFF3B82F6),
             iconBgColor: const Color(0xFFEFF6FF),
             showChevron: true,
-            onTap: () {},
+            onTap: () => context.push(AppRouteConstant.changePasswordScreen),
           ),
           SecurityMenuItem(
             title: AppStrings.emailAddress,

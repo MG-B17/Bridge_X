@@ -1,30 +1,41 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'app_route_constant.dart';
+
 import 'package:bridgex/features/auth/login/screen/login_page.dart';
 import 'package:bridgex/features/auth/register/screen/register_page.dart';
+import 'package:bridgex/features/auth/forget_password/screen/forget_password_page.dart';
+import 'package:bridgex/features/auth/otp_verification/screen/otp_verification_page.dart';
 import 'package:bridgex/features/onboarding/screen/onboarding_page.dart';
 import 'package:bridgex/features/splash/splash_page.dart';
+
+import 'package:bridgex/features/layout/screen/main_layout_page.dart';
+import 'package:bridgex/features/home/screen/home_page.dart';
+import 'package:bridgex/features/chat/screen/chat_page.dart';
+import 'package:bridgex/features/chat/screen/chat_room_page.dart';
+import 'package:bridgex/features/projects/screen/projects_page.dart';
+
+import 'package:bridgex/features/profile/presentation/screens/profile_screen.dart';
+import 'package:bridgex/features/profile/presentation/screens/edit_profile_screen.dart';
+import 'package:bridgex/features/profile/presentation/screens/complete_profile_screen.dart';
+import 'package:bridgex/features/profile/presentation/screens/logout_screen.dart';
+
+import 'package:bridgex/features/settings/presentation/screens/privacy_security_screen.dart';
+import 'package:bridgex/features/settings/presentation/screens/change_password_screen.dart';
+import 'package:bridgex/features/settings/presentation/screens/about_us_screen.dart';
+
+import 'package:bridgex/features/tasks/presentation/screens/my_tasks_screen.dart';
+import 'package:bridgex/features/tasks/presentation/screens/task_details_screen.dart';
+
+import 'package:bridgex/features/skills/presentation/screens/skills_experience_screen.dart';
+
 import 'package:bridgex/features/matching/presentation/screens/matching_screen.dart';
 import 'package:bridgex/features/matching/presentation/screens/recommended_teams_screen.dart';
 import 'package:bridgex/features/matching/presentation/screens/no_teams_screen.dart';
 import 'package:bridgex/features/notifications/presentation/screens/notifications_screen.dart';
 import 'package:bridgex/features/workspace/presentation/screens/workspace_screen.dart';
-import 'package:bridgex/features/profile/presentation/screens/profile_screen.dart';
 import 'package:bridgex/features/level/presentation/screens/level_screen.dart';
 import 'package:bridgex/features/teams/presentation/screens/create_team_screen.dart';
-import '../../features/auth/login/screen/login_page.dart';
-import '../../features/auth/register/screen/register_page.dart';
-import '../../features/auth/forget_password/screen/forget_password_page.dart';
-import '../../features/auth/otp_verification/screen/otp_verification_page.dart';
-import '../../features/onboarding/screen/onboarding_page.dart';
-import '../../features/splash/splash_page.dart';
-import '../../features/home/screen/home_page.dart';
-import '../../features/chat/screen/chat_page.dart';
-import '../../features/chat/screen/chat_room_page.dart';
-import '../../features/projects/screen/projects_page.dart';
-import '../../features/profile/screen/profile_page.dart';
-import '../../features/layout/screen/main_layout_page.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'app_route_constant.dart';
 
 class AppRoute {
   static final GoRouter router = GoRouter(
@@ -60,6 +71,10 @@ class AppRoute {
       GoRoute(
         path: AppRouteConstant.otpVerification,
         builder: (context, state) => const OtpVerificationPage(),
+      ),
+      GoRoute(
+        path: AppRouteConstant.profileSetup,
+        builder: (context, state) => const CompleteProfileScreen(),
       ),
       // Stateful shell route for bottom navigation
       StatefulShellRoute.indexedStack(
@@ -101,7 +116,7 @@ class AppRoute {
             routes: [
               GoRoute(
                 path: AppRouteConstant.profile,
-                builder: (context, state) => const ProfilePage(),
+                builder: (context, state) => const ProfileScreen(),
               ),
             ],
           ),
@@ -115,10 +130,6 @@ class AppRoute {
       GoRoute(
         path: AppRouteConstant.workspace,
         builder: (context, state) => const WorkspaceScreen(),
-      ),
-      GoRoute(
-        path: AppRouteConstant.profile,
-        builder: (context, state) => const ProfileScreen(),
       ),
       GoRoute(
         path: AppRouteConstant.notifications,
@@ -139,6 +150,38 @@ class AppRoute {
       GoRoute(
         path: AppRouteConstant.level,
         builder: (context, state) => const LevelScreen(),
+      ),
+      GoRoute(
+        path: AppRouteConstant.editProfile,
+        builder: (context, state) => const EditProfileScreen(),
+      ),
+      GoRoute(
+        path: AppRouteConstant.myTasksScreen,
+        builder: (context, state) => const MyTasksScreen(),
+      ),
+      GoRoute(
+        path: AppRouteConstant.taskDetails,
+        builder: (context, state) => const TaskDetailsScreen(),
+      ),
+      GoRoute(
+        path: AppRouteConstant.skillsExperience,
+        builder: (context, state) => const SkillsExperienceScreen(),
+      ),
+      GoRoute(
+        path: AppRouteConstant.privacySecurity,
+        builder: (context, state) => const PrivacySecurityScreen(),
+      ),
+      GoRoute(
+        path: AppRouteConstant.changePasswordScreen,
+        builder: (context, state) => const ChangePasswordScreen(),
+      ),
+      GoRoute(
+        path: AppRouteConstant.aboutUsScreen,
+        builder: (context, state) => const AboutUsScreen(),
+      ),
+      GoRoute(
+        path: AppRouteConstant.logoutScreen,
+        builder: (context, state) => const LogoutScreen(),
       ),
     ],
   );

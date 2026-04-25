@@ -1,10 +1,9 @@
+import 'package:go_router/go_router.dart';
+import '../../../../core/navigation/app_route_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/constant/app_strings.dart';
-import '../../../../core/theme/app_color.dart';
-import '../../../../core/theme/text_style.dart';
 import '../../../../core/utils/extensions.dart';
-import '../../../../core/widgets/app_bottom_nav_bar.dart';
 import '../../../../core/widgets/bridge_dialogs.dart';
 import '../../../../core/widgets/v_space.dart';
 import '../widgets/profile_menu_item_widget.dart';
@@ -16,7 +15,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.colors.background,
+      backgroundColor: context.colors.scaffoldBg,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -26,25 +25,28 @@ class ProfileScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF3F4F6),
-                        borderRadius: BorderRadius.circular(10.r),
-                        border: Border.all(color: context.colors.divider, width: 1.w),
-                      ),
-                      child: Row(
-                        children: [
-                          Text(
-                            AppStrings.edit,
-                            style: context.labelSmall.copyWith(
-                              color: context.colors.primary,
-                              fontWeight: FontWeight.bold,
+                    GestureDetector(
+                      onTap: () => context.push(AppRouteConstant.editProfile),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF3F4F6),
+                          borderRadius: BorderRadius.circular(10.r),
+                          border: Border.all(color: context.colors.divider, width: 1.w),
+                        ),
+                        child: Row(
+                          children: [
+                            Text(
+                              AppStrings.edit,
+                              style: context.labelSmall.copyWith(
+                                color: context.colors.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 4.w),
-                          Icon(Icons.edit_outlined, color: context.colors.primary, size: 14.sp),
-                        ],
+                            SizedBox(width: 4.w),
+                            Icon(Icons.edit_outlined, color: context.colors.primary, size: 14.sp),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -59,7 +61,7 @@ class ProfileScreen extends StatelessWidget {
                       padding: EdgeInsets.all(4.w),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        border: Border.all(color: context.colors.textHint.withOpacity(0.3), width: 1.w),
+                        border: Border.all(color: context.colors.textHint.withValues(alpha: 0.3), width: 1.w),
                       ),
                       child: CircleAvatar(
                         radius: 60.r,
@@ -79,7 +81,7 @@ class ProfileScreen extends StatelessWidget {
                             border: Border.all(color: Colors.white, width: 2.w),
                             boxShadow: [
                               BoxShadow(
-                                color: context.colors.primary.withOpacity(0.3),
+                                color: context.colors.primary.withValues(alpha: 0.3),
                                 blurRadius: 10,
                                 offset: const Offset(0, 4),
                               ),
@@ -152,7 +154,7 @@ class ProfileScreen extends StatelessWidget {
                         iconBgColor: const Color(0xFFEFF6FF),
                         iconColor: const Color(0xFF3B82F6),
                         badgeCount: 3,
-                        onTap: () {},
+                        onTap: () => context.push(AppRouteConstant.myTasksScreen),
                       ),
                       ProfileMenuItemWidget(
                         title: AppStrings.myProjects,
@@ -166,14 +168,14 @@ class ProfileScreen extends StatelessWidget {
                         icon: Icons.psychology_outlined,
                         iconBgColor: const Color(0xFFEFF6FF),
                         iconColor: const Color(0xFF3B82F6),
-                        onTap: () {},
+                        onTap: () => context.push(AppRouteConstant.skillsExperience),
                       ),
                       ProfileMenuItemWidget(
                         title: AppStrings.settings,
                         icon: Icons.settings_outlined,
                         iconBgColor: const Color(0xFFF3F4F6),
                         iconColor: const Color(0xFF6B7280),
-                        onTap: () {},
+                        onTap: () => context.push(AppRouteConstant.privacySecurity),
                       ),
                       ProfileMenuItemWidget(
                         title: AppStrings.logout,
@@ -192,15 +194,6 @@ class ProfileScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: AppBottomNavBar(
-        currentIndex: 3, // Profile tab
-        onTap: (index) {
-          if (index == 0) context.go(AppRouteConstant.matching);
-          if (index == 1) context.go(AppRouteConstant.chat);
-          if (index == 2) context.go(AppRouteConstant.teams);
-          if (index == 3) context.go(AppRouteConstant.profile);
-        },
       ),
     );
   }

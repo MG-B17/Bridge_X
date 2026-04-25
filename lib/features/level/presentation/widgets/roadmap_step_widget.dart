@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/theme/app_color.dart';
-import '../../../../core/theme/text_style.dart';
 import '../../../../core/utils/extensions.dart';
 
 class RoadmapStepWidget extends StatelessWidget {
@@ -48,7 +46,7 @@ class RoadmapStepWidget extends StatelessWidget {
                           width: 12.w,
                           height: 12.w,
                           decoration: BoxDecoration(
-                            color: isLocked ? Colors.transparent : context.colors.textHint.withOpacity(0.3),
+                            color: isLocked ? Colors.transparent : context.colors.textHint.withValues(alpha: 0.3),
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -87,11 +85,11 @@ class RoadmapStepWidget extends StatelessWidget {
                         color: isActive
                             ? context.colors.primary
                             : isLocked
-                                ? context.colors.divider.withOpacity(0.5)
-                                : context.colors.divider.withOpacity(0.5),
+                                ? context.colors.divider.withValues(alpha: 0.5)
+                                : context.colors.divider.withValues(alpha: 0.5),
                         borderRadius: BorderRadius.circular(12.r),
                         border: isLocked && !isActive
-                            ? Border.all(color: context.colors.textHint.withOpacity(0.1), width: 1.w)
+                            ? Border.all(color: context.colors.textHint.withValues(alpha: 0.1), width: 1.w)
                             : null,
                       ),
                       child: Text(
@@ -100,8 +98,8 @@ class RoadmapStepWidget extends StatelessWidget {
                           color: isActive
                               ? Colors.white
                               : isLocked
-                                  ? context.colors.textHint.withOpacity(0.5)
-                                  : context.colors.textPrimary.withOpacity(0.5),
+                                  ? context.colors.textHint.withValues(alpha: 0.5)
+                                  : context.colors.textPrimary.withValues(alpha: 0.5),
                           fontWeight: isActive ? FontWeight.bold : FontWeight.w500,
                         ),
                       ),

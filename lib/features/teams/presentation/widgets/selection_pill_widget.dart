@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/theme/app_color.dart';
-import '../../../../core/theme/text_style.dart';
 import '../../../../core/utils/extensions.dart';
 
 class SelectionPillWidget extends StatelessWidget {
@@ -23,7 +21,7 @@ class SelectionPillWidget extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
         decoration: BoxDecoration(
-          color: isSelected ? context.colors.primary : const Color(0xFFE5E7EB).withOpacity(0.5),
+          color: isSelected ? context.colors.primary : const Color(0xFFE5E7EB).withValues(alpha: 0.5),
           borderRadius: BorderRadius.circular(20.r),
         ),
         child: Text(

@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constant/app_strings.dart';
 import '../../../../core/utils/extensions.dart';
@@ -11,7 +12,7 @@ class TaskDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.colors.background,
+      backgroundColor: context.colors.scaffoldBg,
       appBar: _buildAppBar(context),
       body: Column(
         children: [
@@ -108,7 +109,7 @@ class TaskDetailsScreen extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(context.spacing.xl),
       decoration: BoxDecoration(
-        color: context.colors.background,
+        color: context.colors.scaffoldBg,
       ),
       child: SafeArea(
         top: false,

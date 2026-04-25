@@ -20,7 +20,7 @@ class InfoCardWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
-        color: AppColors.secondary.withOpacity(0.4),
+        color: AppColors.secondary.withValues(alpha: 0.4),
         borderRadius: BorderRadius.circular(16.r),
       ),
       child: Row(
@@ -55,7 +55,7 @@ class InfoCardWidget extends StatelessWidget {
                 Text(
                   subtitle,
                   style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.primary.withOpacity(0.8),
+                    color: AppColors.primary.withValues(alpha: 0.8),
                     height: 1.4,
                   ),
                 ),

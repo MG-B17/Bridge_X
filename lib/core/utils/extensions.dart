@@ -26,6 +26,7 @@ class SpacingProxy {
   double get radiusCard => AppSpacing.radiusCard;
   double get radiusCardLarge => AppSpacing.radiusCardLarge;
   double get radiusPill => AppSpacing.radiusPill;
+  double get radiusXs => AppSpacing.radiusXs;
   BoxShadow get cardShadow => AppSpacing.cardShadow;
 }
 

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/theme/app_color.dart';
-import '../../../../core/theme/text_style.dart';
 import '../../../../core/utils/extensions.dart';
 
 class TeamTypeCardWidget extends StatelessWidget {
@@ -28,7 +26,7 @@ class TeamTypeCardWidget extends StatelessWidget {
         margin: EdgeInsets.only(bottom: 16.h),
         padding: EdgeInsets.all(20.w),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFFDBEAFE).withOpacity(0.5) : Colors.white,
+          color: isSelected ? const Color(0xFFDBEAFE).withValues(alpha: 0.5) : Colors.white,
           borderRadius: BorderRadius.circular(16.r),
           border: Border.all(
             color: isSelected ? context.colors.primary : context.colors.divider,

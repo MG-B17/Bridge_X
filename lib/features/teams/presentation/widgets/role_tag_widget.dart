@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/theme/app_color.dart';
-import '../../../../core/theme/text_style.dart';
 import '../../../../core/utils/extensions.dart';
 
 class RoleTagWidget extends StatelessWidget {
@@ -19,7 +17,7 @@ class RoleTagWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
       decoration: BoxDecoration(
-        color: const Color(0xFFDBEAFE).withOpacity(0.8),
+        color: const Color(0xFFDBEAFE).withValues(alpha: 0.8),
         borderRadius: BorderRadius.circular(10.r),
       ),
       child: Row(

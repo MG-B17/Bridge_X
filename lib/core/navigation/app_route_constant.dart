@@ -31,4 +31,7 @@ class AppRouteConstant {
   static const String changePasswordScreen = '/change-password';
   static const String aboutUsScreen = '/about-us';
   static const String logoutScreen = '/logout';
+  static const String projectDetails = '/project-details';
+  static const String mentorProjectDetails = '/mentor-project-details';
+  static const String teamSettings = '/team-settings';
 }

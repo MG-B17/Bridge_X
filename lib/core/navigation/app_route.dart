@@ -37,6 +37,10 @@ import 'package:bridgex/features/workspace/presentation/screens/workspace_screen
 import 'package:bridgex/features/level/presentation/screens/level_screen.dart';
 import 'package:bridgex/features/teams/presentation/screens/create_team_screen.dart';
 
+import 'package:bridgex/features/projects/screen/project_details_page.dart';
+import 'package:bridgex/features/projects/screen/mentor_project_details_page.dart';
+import 'package:bridgex/features/projects/screen/team_settings_page.dart';
+
 class AppRoute {
   static final GoRouter router = GoRouter(
     initialLocation: AppRouteConstant.splash,
@@ -182,6 +186,18 @@ class AppRoute {
       GoRoute(
         path: AppRouteConstant.logoutScreen,
         builder: (context, state) => const LogoutScreen(),
+      ),
+      GoRoute(
+        path: AppRouteConstant.projectDetails,
+        builder: (context, state) => const ProjectDetailsPage(),
+      ),
+      GoRoute(
+        path: AppRouteConstant.mentorProjectDetails,
+        builder: (context, state) => const MentorProjectDetailsPage(),
+      ),
+      GoRoute(
+        path: AppRouteConstant.teamSettings,
+        builder: (context, state) => const TeamSettingsPage(),
       ),
     ],
   );

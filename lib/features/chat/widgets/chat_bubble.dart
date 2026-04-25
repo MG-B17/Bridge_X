@@ -10,6 +10,7 @@ class ChatBubble extends StatelessWidget {
   final String time;
   final bool isMe;
   final Widget? content;
+  final String? avatarUrl;
 
   const ChatBubble({
     super.key,
@@ -18,6 +19,7 @@ class ChatBubble extends StatelessWidget {
     required this.time,
     this.isMe = false,
     this.content,
+    this.avatarUrl,
   });
 
   @override
@@ -27,7 +29,7 @@ class ChatBubble extends StatelessWidget {
       child: Column(
         crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-          if (!isMe && senderName != null) _buildSenderName(context),
+          if (senderName != null || isMe) _buildSenderName(context),
           Row(
             mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -45,9 +47,13 @@ class ChatBubble extends StatelessWidget {
 
   Widget _buildSenderName(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: context.spacing.xs, left: context.spacing.md),
+      padding: EdgeInsets.only(
+        bottom: context.spacing.xs,
+        left: isMe ? 0 : context.spacing.md,
+        right: isMe ? context.spacing.md : 0,
+      ),
       child: Text(
-        senderName!,
+        isMe ? 'You' : senderName!,
         style: context.labelSmall.copyWith(
           fontWeight: FontWeight.bold,
           color: context.colors.textSecondary,
@@ -60,7 +66,8 @@ class ChatBubble extends StatelessWidget {
     return CircleAvatar(
       radius: 14.r,
       backgroundColor: Colors.blue.shade100,
-      backgroundImage: const NetworkImage('https://i.pravatar.cc/150?u=alex'),
+      backgroundImage: avatarUrl != null ? NetworkImage(avatarUrl!) : null,
+      child: avatarUrl == null ? Icon(Icons.person, size: 16.r, color: Colors.blue) : null,
     );
   }
 }
@@ -79,7 +86,7 @@ class _BubbleFooter extends StatelessWidget {
         right: isMe ? context.spacing.sm : 0,
       ),
       child: Text(
-        isMe ? 'You · $time' : time,
+        time,
         style: context.labelSmall.copyWith(
           color: context.colors.textHint,
           fontSize: 10.sp,

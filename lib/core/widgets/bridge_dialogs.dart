@@ -6,7 +6,26 @@ import 'bridge_dialog.dart';
 import 'package:go_router/go_router.dart';
 import '../navigation/app_route_constant.dart';
 
+import 'package:bridgex/features/projects/widgets/report_user_bottom_sheet.dart';
+
 class BridgeDialogs {
+  static Future<bool?> showReportUser(BuildContext context, {
+    required String userName,
+    required String userRole,
+    required String userAvatar,
+  }) {
+    return showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => ReportUserBottomSheet(
+        userName: userName,
+        userRole: userRole,
+        userAvatar: userAvatar,
+      ),
+    );
+  }
+
   static void showTeamCreated(BuildContext context) {
     showDialog(
       context: context,

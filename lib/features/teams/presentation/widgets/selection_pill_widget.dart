@@ -23,7 +23,9 @@ class SelectionPillWidget extends StatelessWidget {
           vertical: context.spacing.sm,
         ),
         decoration: BoxDecoration(
-          color: isSelected ? context.colors.primary : const Color(0xFFE5E7EB).withValues(alpha: 0.5),
+          color: isSelected
+              ? context.colors.primary
+              : const Color(0xFFE5E7EB).withValues(alpha: 0.5),
           borderRadius: BorderRadius.circular(context.spacing.radiusPill),
         ),
         child: Text(

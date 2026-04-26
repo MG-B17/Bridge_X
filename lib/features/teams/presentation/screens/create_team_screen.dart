@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/constant/app_strings.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../../../core/widgets/v_space.dart';
@@ -19,7 +20,25 @@ class _CreateTeamScreenState extends State<CreateTeamScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(context),
+      backgroundColor: context.colors.scaffoldBg,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: Padding(
+          padding: EdgeInsets.all(8.w),
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              icon: Icon(Icons.arrow_back,
+                  color: context.colors.primary, size: 20.sp),
+              onPressed: () => context.pop(),
+            ),
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: context.spacing.xl),
         child: Column(
@@ -27,13 +46,17 @@ class _CreateTeamScreenState extends State<CreateTeamScreen> {
           children: [
             const CreateTeamHeader(),
             VSpace(context.spacing.xxl),
-            TeamTypeSelector(isPrivate: isPrivate, onChanged: (v) => setState(() => isPrivate = v)),
+            TeamTypeSelector(
+                isPrivate: isPrivate,
+                onChanged: (v) => setState(() => isPrivate = v)),
             VSpace(context.spacing.xl),
             const CreateTeamForm(),
             VSpace(context.spacing.xl),
             _buildSectionLabel(context, AppStrings.categorySelection),
             VSpace(context.spacing.md),
-            CategorySelector(selectedCategory: selectedCategory, onChanged: (v) => setState(() => selectedCategory = v)),
+            CategorySelector(
+                selectedCategory: selectedCategory,
+                onChanged: (v) => setState(() => selectedCategory = v)),
             VSpace(context.spacing.xxl),
             _buildSectionLabel(context, AppStrings.requiredRoles),
             VSpace(context.spacing.md),
@@ -46,18 +69,9 @@ class _CreateTeamScreenState extends State<CreateTeamScreen> {
     );
   }
 
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
-    return AppBar(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      leading: IconButton(
-        icon: Icon(Icons.arrow_back, color: context.colors.primary),
-        onPressed: () => Navigator.pop(context),
-      ),
-    );
-  }
-
   Widget _buildSectionLabel(BuildContext context, String text) {
-    return Text(text, style: context.bodyMedium.copyWith(fontWeight: FontWeight.w900, color: context.colors.textPrimary));
+    return Text(text,
+        style: context.bodyMedium
+            .copyWith(fontWeight: FontWeight.w900, color: context.colors.textPrimary));
   }
 }

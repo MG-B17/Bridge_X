@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../../../core/widgets/v_space.dart';
 import '../widgets/empty_state_illustration.dart';
@@ -10,8 +11,24 @@ class NoTeamsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.colors.background,
-      appBar: _buildAppBar(context),
+      backgroundColor: context.colors.scaffoldBg,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: Padding(
+          padding: EdgeInsets.all(8.w),
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              icon: Icon(Icons.arrow_back, color: context.colors.primary, size: 20.sp),
+              onPressed: () => context.pop(),
+            ),
+          ),
+        ),
+      ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: context.spacing.xl),
         child: Column(
@@ -30,17 +47,6 @@ class NoTeamsScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
-    return AppBar(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      leading: IconButton(
-        icon: Icon(Icons.arrow_back, color: context.colors.primary),
-        onPressed: () => Navigator.pop(context),
       ),
     );
   }

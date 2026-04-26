@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
-import '../../../../core/constant/app_strings.dart';
 import '../../../../core/navigation/app_route_constant.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../core/constant/app_strings.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../../../core/widgets/v_space.dart';
 import '../widgets/info_card_widget.dart';
@@ -14,7 +15,25 @@ class MatchingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(context),
+      backgroundColor: context.colors.scaffoldBg,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: Padding(
+          padding: EdgeInsets.all(8.w),
+          child: Container(
+            decoration: BoxDecoration(
+              color: context.colors.primary.withValues(alpha: 0.1),
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              icon: Icon(Icons.arrow_back,
+                  color: context.colors.primary, size: 20.sp),
+              onPressed: () => context.pop(),
+            ),
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: context.spacing.xl),
         child: Column(
@@ -42,17 +61,6 @@ class MatchingScreen extends StatelessWidget {
             VSpace(context.spacing.xxl),
           ],
         ),
-      ),
-    );
-  }
-
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
-    return AppBar(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      leading: IconButton(
-        icon: Icon(Icons.arrow_back, color: context.colors.primary),
-        onPressed: () => Navigator.pop(context),
       ),
     );
   }

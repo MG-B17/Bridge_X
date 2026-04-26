@@ -18,7 +18,9 @@ class StatusItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Color iconColor;
     IconData iconData;
-    Color textColor = status == StatusType.pending ? context.colors.textSecondary.withValues(alpha: 0.5) : context.colors.textPrimary;
+    Color textColor = status == StatusType.pending
+        ? context.colors.textSecondary.withValues(alpha: 0.5)
+        : context.colors.textPrimary;
 
     switch (status) {
       case StatusType.success:
@@ -36,7 +38,9 @@ class StatusItemWidget extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 12.h),
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: status == StatusType.pending ? Colors.transparent : context.colors.surface,
+        color: status == StatusType.pending
+            ? Colors.transparent
+            : context.colors.surface,
         borderRadius: BorderRadius.circular(12.r),
         boxShadow: status == StatusType.pending
             ? null

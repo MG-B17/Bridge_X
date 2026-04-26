@@ -12,9 +12,9 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
   final Color ongoingText;
   final Color completedBg;
   final Color completedText;
+  final Color secondary;
   final Color divider;
   final Color background;
-  final Color secondary;
   final Color success;
 
   const AppColorScheme({
@@ -29,9 +29,9 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     required this.ongoingText,
     required this.completedBg,
     required this.completedText,
+    required this.secondary,
     required this.divider,
     required this.background,
-    required this.secondary,
     required this.success,
   });
 
@@ -48,9 +48,9 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     Color? ongoingText,
     Color? completedBg,
     Color? completedText,
+    Color? secondary,
     Color? divider,
     Color? background,
-    Color? secondary,
     Color? success,
   }) {
     return AppColorScheme(

@@ -35,10 +35,18 @@ class EmptyStateIllustration extends StatelessWidget {
             color: context.colors.primary,
             borderRadius: BorderRadius.circular(16.r),
             boxShadow: [
-              BoxShadow(color: context.colors.primary.withValues(alpha: 0.3), blurRadius: 15, offset: const Offset(0, 8)),
+              BoxShadow(
+                color: context.colors.primary.withValues(alpha: 0.3),
+                blurRadius: 15,
+                offset: const Offset(0, 8),
+              ),
             ],
           ),
-          child: Icon(Icons.search_rounded, color: Colors.white, size: 32.w),
+          child: Icon(
+            Icons.search_rounded,
+            color: Colors.white,
+            size: 32.sp,
+          ),
         ),
       ),
     );

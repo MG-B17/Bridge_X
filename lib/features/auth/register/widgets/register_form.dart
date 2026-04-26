@@ -44,7 +44,7 @@ class _RegisterFormState extends State<RegisterForm> {
         );
         return;
       }
-      context.go(AppRouteConstant.home);
+      context.go(AppRouteConstant.profileSetup);
     }
   }
 

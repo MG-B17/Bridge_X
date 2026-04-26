@@ -13,8 +13,18 @@ abstract class AppTextStyles {
         fontWeight: FontWeight.w600,
       );
 
-  static TextStyle get titleLarge => GoogleFonts.inter(
+  static TextStyle get headlineSmall => GoogleFonts.inter(
         fontSize: 18.sp,
+        fontWeight: FontWeight.w600,
+      );
+
+  static TextStyle get titleLarge => GoogleFonts.inter(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w600,
+      );
+
+  static TextStyle get titleMedium => GoogleFonts.inter(
+        fontSize: 14.sp,
         fontWeight: FontWeight.w600,
       );
 

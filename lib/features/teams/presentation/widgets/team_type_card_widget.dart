@@ -28,7 +28,9 @@ class TeamTypeCardWidget extends StatelessWidget {
         margin: EdgeInsets.only(bottom: context.spacing.md),
         padding: EdgeInsets.all(context.spacing.lg),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFFDBEAFE).withValues(alpha: 0.5) : Colors.white,
+          color: isSelected
+              ? const Color(0xFFDBEAFE).withValues(alpha: 0.5)
+              : Colors.white,
           borderRadius: BorderRadius.circular(context.spacing.radiusCard),
           border: Border.all(
             color: isSelected ? context.colors.primary : context.colors.divider,
@@ -41,7 +43,8 @@ class TeamTypeCardWidget extends StatelessWidget {
             HSpace(context.spacing.md),
             Expanded(child: _buildContent(context)),
             if (isSelected)
-              Icon(Icons.check_circle_rounded, color: context.colors.primary, size: 24.w),
+              Icon(Icons.check_circle_rounded,
+                  color: context.colors.primary, size: 24.w),
           ],
         ),
       ),
@@ -69,12 +72,14 @@ class TeamTypeCardWidget extends StatelessWidget {
       children: [
         Text(
           title,
-          style: context.bodyLarge.copyWith(fontWeight: FontWeight.w900, color: context.colors.textPrimary),
+          style: context.bodyLarge
+              .copyWith(fontWeight: FontWeight.w900, color: context.colors.textPrimary),
         ),
         VSpace(context.spacing.xs),
         Text(
           description,
-          style: context.labelSmall.copyWith(color: context.colors.textSecondary, fontWeight: FontWeight.w500),
+          style: context.labelSmall
+              .copyWith(color: context.colors.textSecondary, fontWeight: FontWeight.w500),
         ),
       ],
     );

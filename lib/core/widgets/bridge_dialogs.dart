@@ -1,11 +1,29 @@
 import 'package:flutter/material.dart';
+import '../utils/extensions.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../constant/app_strings.dart';
 import '../navigation/app_route_constant.dart';
-import '../utils/extensions.dart';
 import 'bridge_dialog.dart';
+import 'package:bridgex/features/projects/widgets/report_user_bottom_sheet.dart';
 
 class BridgeDialogs {
+  static Future<bool?> showReportUser(BuildContext context, {
+    required String userName,
+    required String userRole,
+    required String userAvatar,
+  }) {
+    return showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => ReportUserBottomSheet(
+        userName: userName,
+        userRole: userRole,
+        userAvatar: userAvatar,
+      ),
+    );
+  }
+
   static void showTeamCreated(BuildContext context) {
     showDialog(
       context: context,
@@ -18,10 +36,14 @@ class BridgeDialogs {
         primaryButtonLabel: AppStrings.goToTeam,
         onPrimaryPressed: () {
           Navigator.pop(context);
+          context.push(AppRouteConstant.teams);
           context.push(AppRouteConstant.workspace);
         },
         textLinkLabel: AppStrings.backToHome,
-        onTextLinkPressed: () => Navigator.pop(context),
+        onTextLinkPressed: () {
+          Navigator.pop(context);
+          context.go(AppRouteConstant.home);
+        },
         extraContent: Container(
           padding: EdgeInsets.all(12.w),
           decoration: BoxDecoration(

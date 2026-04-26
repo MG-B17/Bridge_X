@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/constant/app_strings.dart';
 import '../../../../core/navigation/app_route_constant.dart';
+import '../../../../core/constant/app_strings.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../../../core/widgets/bridge_app_button.dart';
 import '../../../../core/widgets/v_space.dart';
@@ -14,7 +14,7 @@ class WorkspaceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.colors.background,
+      backgroundColor: context.colors.scaffoldBg,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: context.spacing.xl),

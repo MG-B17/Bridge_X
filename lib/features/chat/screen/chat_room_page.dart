@@ -26,6 +26,7 @@ class ChatRoomPage extends StatelessWidget {
                 VSpace(context.spacing.xl),
                 const ChatBubble(
                   senderName: 'Alex Rivers',
+                  avatarUrl: 'https://i.pravatar.cc/150?u=alex',
                   message: 'Hey team! I\'ve updated the API documentation for the new authentication flow. Take a look when you can.',
                   time: '10:42 AM',
                 ),
@@ -36,6 +37,7 @@ class ChatRoomPage extends StatelessWidget {
                 ),
                 ChatBubble(
                   senderName: 'Sarah Chen',
+                  avatarUrl: 'https://i.pravatar.cc/150?u=sarah',
                   content: const ChatCodeBlock(
                     fileName: 'auth.ts',
                     language: 'Typescript',

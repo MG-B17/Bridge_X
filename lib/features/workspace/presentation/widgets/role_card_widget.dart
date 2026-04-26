@@ -65,7 +65,8 @@ class RoleCardWidget extends StatelessWidget {
   Widget _buildHeader(BuildContext context) {
     return Row(
       children: [
-        Icon(Icons.badge_outlined, color: Colors.white.withValues(alpha: 0.8), size: 20.w),
+        Icon(Icons.badge_outlined,
+            color: Colors.white.withValues(alpha: 0.8), size: 20.w),
         HSpace(context.spacing.sm),
         Text(
           label.toUpperCase(),

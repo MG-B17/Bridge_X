@@ -11,6 +11,8 @@ class AppButton extends StatelessWidget {
   final bool isSecondary;
   final Widget? trailing;
   final Widget? leading;
+  final Color? backgroundColor;
+  final Gradient? gradient;
 
   const AppButton({
     super.key,
@@ -20,6 +22,8 @@ class AppButton extends StatelessWidget {
     this.isSecondary = false,
     this.trailing,
     this.leading,
+    this.backgroundColor,
+    this.gradient,
   });
 
   @override
@@ -29,11 +33,12 @@ class AppButton extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(context.spacing.radiusCard),
-        gradient: isSecondary ? null : AppColorScheme.gradient,
+        gradient: (isSecondary || backgroundColor != null) ? null : (gradient ?? AppColorScheme.gradient),
+        color: (isSecondary || gradient != null) ? null : backgroundColor,
         border: isSecondary ? Border.all(color: context.colors.primary, width: 1.w) : null,
         boxShadow: isSecondary ? null : [
           BoxShadow(
-            color: context.colors.primary.withValues(alpha: 0.3),
+            color: (backgroundColor ?? context.colors.primary).withValues(alpha: 0.3),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),

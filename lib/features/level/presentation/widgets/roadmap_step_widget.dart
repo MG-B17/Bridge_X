@@ -1,8 +1,8 @@
+import 'package:bridgex/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
-import '../../../../core/utils/extensions.dart';
+import 'roadmap_components.dart';
 import '../../../../core/widgets/h_space.dart';
 import '../../../../core/widgets/v_space.dart';
-import 'roadmap_components.dart';
 
 class RoadmapStepWidget extends StatelessWidget {
   final String title;
@@ -65,11 +65,13 @@ class RoadmapStepWidget extends StatelessWidget {
     return Wrap(
       spacing: context.spacing.sm,
       runSpacing: context.spacing.sm,
-      children: pills.map((pill) => RoadmapPill(
-        label: pill,
-        isActive: pill == activePill,
-        isLocked: isLocked,
-      )).toList(),
+      children: pills
+          .map((pill) => RoadmapPill(
+                label: pill,
+                isActive: pill == activePill,
+                isLocked: isLocked,
+              ))
+          .toList(),
     );
   }
 }

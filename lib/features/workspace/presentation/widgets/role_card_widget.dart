@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/utils/extensions.dart';
+import '../../../../core/widgets/h_space.dart';
+import '../../../../core/widgets/v_space.dart';
 
 class RoleCardWidget extends StatelessWidget {
   final String label;
@@ -18,14 +20,11 @@ class RoleCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(24.w),
+      padding: EdgeInsets.all(context.spacing.xl),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.r),
+        borderRadius: BorderRadius.circular(context.spacing.radiusCard),
         gradient: const LinearGradient(
-          colors: [
-            Color(0xFF274C9E),
-            Color(0xFF83A0E7),
-          ],
+          colors: [Color(0xFF274C9E), Color(0xFF83A0E7)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -40,34 +39,17 @@ class RoleCardWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Icon(
-                Icons.badge_outlined,
-                color: Colors.white.withValues(alpha: 0.8),
-                size: 20.sp,
-              ),
-              SizedBox(width: 8.w),
-              Text(
-                label,
-                style: context.labelSmall.copyWith(
-                  color: Colors.white.withValues(alpha: 0.8),
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.2,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 16.h),
+          _buildHeader(context),
+          VSpace(context.spacing.md),
           Text(
             role,
             style: context.displayLarge.copyWith(
               color: Colors.white,
-              fontSize: 32.sp,
-              fontWeight: FontWeight.w800,
+              fontSize: 28.sp,
+              fontWeight: FontWeight.w900,
             ),
           ),
-          SizedBox(height: 8.h),
+          VSpace(context.spacing.xs),
           Text(
             description,
             style: context.bodyMedium.copyWith(
@@ -77,6 +59,24 @@ class RoleCardWidget extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildHeader(BuildContext context) {
+    return Row(
+      children: [
+        Icon(Icons.badge_outlined,
+            color: Colors.white.withValues(alpha: 0.8), size: 20.w),
+        HSpace(context.spacing.sm),
+        Text(
+          label.toUpperCase(),
+          style: context.labelSmall.copyWith(
+            color: Colors.white.withValues(alpha: 0.8),
+            fontWeight: FontWeight.w900,
+            letterSpacing: 1.2,
+          ),
+        ),
+      ],
     );
   }
 }

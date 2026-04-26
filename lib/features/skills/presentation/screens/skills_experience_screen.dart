@@ -1,4 +1,3 @@
-import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/constant/app_strings.dart';
@@ -192,7 +191,6 @@ class _SkillsExperienceScreenState extends State<SkillsExperienceScreen> {
   }
 
   void _onAddSkill() {
-    // TODO: Show skill picker dialog
   }
 
   void _onRemoveSkill(int index) {
@@ -212,8 +210,7 @@ class _SkillsExperienceScreenState extends State<SkillsExperienceScreen> {
     }
   }
 
-  void _onSave() {
-    // TODO: Persist changes
+  void _onSave() { 
     context.pop();
   }
 }

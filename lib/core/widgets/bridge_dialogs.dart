@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import '../utils/extensions.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../constant/app_strings.dart';
-import 'bridge_dialog.dart';
-import 'package:go_router/go_router.dart';
 import '../navigation/app_route_constant.dart';
-
+import 'bridge_dialog.dart';
 import 'package:bridgex/features/projects/widgets/report_user_bottom_sheet.dart';
 
 class BridgeDialogs {
@@ -39,6 +37,7 @@ class BridgeDialogs {
         onPrimaryPressed: () {
           Navigator.pop(context);
           context.push(AppRouteConstant.teams);
+          context.push(AppRouteConstant.workspace);
         },
         textLinkLabel: AppStrings.backToHome,
         onTextLinkPressed: () {
@@ -87,9 +86,15 @@ class BridgeDialogs {
         title: AppStrings.youreIn,
         description: 'You have successfully joined Global Strategy Group',
         primaryButtonLabel: AppStrings.viewTeam,
-        onPrimaryPressed: () => Navigator.pop(context),
+        onPrimaryPressed: () {
+          Navigator.pop(context);
+          context.push(AppRouteConstant.workspace);
+        },
         secondaryButtonLabel: AppStrings.openChat,
-        onSecondaryPressed: () => Navigator.pop(context),
+        onSecondaryPressed: () {
+          Navigator.pop(context);
+          context.push(AppRouteConstant.chat);
+        },
       ),
     );
   }
@@ -167,7 +172,7 @@ class BridgeDialogs {
           ),
           child: Row(
             children: [
-              Icon(Icons.verified_outlined, color: context.colors.textHint, size: 20.sp),
+              Icon(Icons.verified_outlined, color: context.colors.textHint.withValues(alpha: 0.5), size: 20.sp),
               SizedBox(width: 12.w),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

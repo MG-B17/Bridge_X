@@ -3,6 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/constant/app_strings.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../../../core/widgets/v_space.dart';
+import '../widgets/level_header.dart';
+import '../widgets/level_activity_card.dart';
+import '../widgets/level_roadmap_header.dart';
 import '../widgets/level_info_card_widget.dart';
 import '../widgets/roadmap_step_widget.dart';
 import '../widgets/tier_card_widget.dart';
@@ -32,28 +35,12 @@ class LevelScreen extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 24.w),
+        padding: EdgeInsets.symmetric(horizontal: context.spacing.xl),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            VSpace(10.h),
-            Text(
-              AppStrings.yourLevel,
-              style: context.displayLarge.copyWith(
-                color: context.colors.primary,
-                fontSize: 28.sp,
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-            SizedBox(height: 4.h),
-            Text(
-              AppStrings.trackGrowth,
-              style: context.bodyMedium.copyWith(
-                color: context.colors.textSecondary,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            VSpace(30.h),
+            const LevelHeader(),
+            VSpace(context.spacing.xxl),
             const TierCardWidget(
               currentTier: AppStrings.beginnerSilver,
               nextTierInfo: AppStrings.nextTierRequirement,
@@ -148,6 +135,19 @@ class LevelScreen extends StatelessWidget {
               activePill: AppStrings.silver,
               isCompleted: true,
             ),
+            VSpace(context.spacing.xl),
+            _buildStatsRow(),
+            VSpace(context.spacing.xl),
+            const LevelActivityCard(),
+            VSpace(context.spacing.xxl),
+            const LevelRoadmapHeader(),
+            VSpace(context.spacing.xl),
+            const RoadmapStepWidget(
+              title: AppStrings.beginnerTier,
+              pills: [AppStrings.bronze, AppStrings.silver, AppStrings.gold],
+              activePill: AppStrings.silver,
+              isCompleted: true,
+            ),
             RoadmapStepWidget(
               title: AppStrings.juniorTier,
               pills: const [AppStrings.bronze, AppStrings.silver, AppStrings.gold],
@@ -159,10 +159,31 @@ class LevelScreen extends StatelessWidget {
               isLocked: true,
               showLine: false,
             ),
-            VSpace(30.h),
-          ],
+            VSpace(context.spacing.xxl),
+        ],
         ),
       ),
+    );
+  }
+
+
+
+  Widget _buildStatsRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: const [
+        LevelInfoCardWidget(
+          value: '128',
+          label: 'Completed Tasks',
+          icon: Icons.check_circle_outline_rounded,
+        ),
+        LevelInfoCardWidget(
+          value: '4.8',
+          label: AppStrings.averageRating,
+          icon: Icons.star_outline_rounded,
+          badge: AppStrings.top5Percent,
+        ),
+      ],
     );
   }
 }

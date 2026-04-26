@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/theme/app_color.dart';
-import '../../../../core/theme/text_style.dart';
+import 'package:bridgex/core/utils/extensions.dart';
 
 class InfoCardWidget extends StatelessWidget {
   final String title;
@@ -20,7 +19,7 @@ class InfoCardWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
-        color: AppColors.secondary.withValues(alpha: 0.4),
+        color: context.colors.secondary.withValues(alpha: 0.4),
         borderRadius: BorderRadius.circular(16.r),
       ),
       child: Row(
@@ -29,13 +28,13 @@ class InfoCardWidget extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(10.w),
             decoration: BoxDecoration(
-              color: AppColors.primary,
+              color: context.colors.primary,
               borderRadius: BorderRadius.circular(10.r),
             ),
             child: Icon(
               icon,
               color: Colors.white,
-              size: 20.sp,
+              size: 20.w,
             ),
           ),
           SizedBox(width: 16.w),
@@ -45,17 +44,17 @@ class InfoCardWidget extends StatelessWidget {
               children: [
                 Text(
                   title.toUpperCase(),
-                  style: AppTextStyles.labelSmall.copyWith(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.bold,
+                  style: context.labelSmall.copyWith(
+                    color: context.colors.primary,
+                    fontWeight: FontWeight.w900,
                     letterSpacing: 1.1,
                   ),
                 ),
                 SizedBox(height: 4.h),
                 Text(
                   subtitle,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.primary.withValues(alpha: 0.8),
+                  style: context.bodyMedium.copyWith(
+                    color: context.colors.primary.withValues(alpha: 0.8),
                     height: 1.4,
                   ),
                 ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/theme/app_color.dart';
-import '../../../../core/theme/text_style.dart';
+import '../../../../core/utils/extensions.dart';
 
 class ProgressCircleWidget extends StatelessWidget {
   final double percentage;
@@ -24,8 +23,8 @@ class ProgressCircleWidget extends StatelessWidget {
           child: CircularProgressIndicator(
             value: percentage / 100,
             strokeWidth: 8.w,
-            backgroundColor: AppColors.secondary,
-            valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
+            backgroundColor: context.colors.secondary,
+            valueColor: AlwaysStoppedAnimation<Color>(context.colors.primary),
             strokeCap: StrokeCap.round,
           ),
         ),
@@ -34,16 +33,17 @@ class ProgressCircleWidget extends StatelessWidget {
           children: [
             Text(
               '${percentage.toInt()}%',
-              style: AppTextStyles.displayLarge.copyWith(
-                color: AppColors.primary,
+              style: context.displayLarge.copyWith(
+                color: context.colors.primary,
                 fontSize: 28.sp,
+                fontWeight: FontWeight.w900,
               ),
             ),
             Text(
               statusText.toUpperCase(),
-              style: AppTextStyles.labelSmall.copyWith(
-                color: AppColors.primary,
-                fontWeight: FontWeight.bold,
+              style: context.labelSmall.copyWith(
+                color: context.colors.primary,
+                fontWeight: FontWeight.w900,
                 letterSpacing: 1.2,
               ),
             ),

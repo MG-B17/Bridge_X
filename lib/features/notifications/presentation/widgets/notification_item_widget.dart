@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/utils/extensions.dart';
+import '../../../../core/widgets/h_space.dart';
+import '../../../../core/widgets/v_space.dart';
 
 class NotificationItemWidget extends StatelessWidget {
-  final String category;
-  final String title;
-  final String message;
-  final String time;
+  final String category, title, message, time;
   final IconData icon;
-  final Color iconBgColor;
-  final Color iconColor;
-  final bool isNew;
-  final bool showDivider;
+  final Color iconBgColor, iconColor;
+  final bool isNew, showDivider;
 
   const NotificationItemWidget({
     super.key,
@@ -31,91 +28,57 @@ class NotificationItemWidget extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 16.h),
+          padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: context.spacing.md),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 48.w,
-                height: 48.w,
-                decoration: BoxDecoration(
-                  color: iconBgColor,
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: Icon(
-                  icon,
-                  color: iconColor,
-                  size: 24.sp,
-                ),
-              ),
-              SizedBox(width: 16.w),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          category,
-                          style: context.bodyMedium.copyWith(
-                            color: context.colors.primary,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              time,
-                              style: context.labelSmall.copyWith(
-                                color: context.colors.textSecondary,
-                              ),
-                            ),
-                            if (isNew) ...[
-                              SizedBox(width: 8.w),
-                              Container(
-                                width: 8.w,
-                                height: 8.w,
-                                decoration: BoxDecoration(
-                                  color: context.colors.primary,
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
-                            ],
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 4.h),
-                    Text(
-                      title,
-                      style: context.titleLarge.copyWith(
-                        color: context.colors.textPrimary,
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 4.h),
-                    Text(
-                      message,
-                      style: context.bodyMedium.copyWith(
-                        color: context.colors.textSecondary,
-                        height: 1.4,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              _buildIcon(),
+              HSpace(context.spacing.md),
+              Expanded(child: _buildContent(context)),
             ],
           ),
         ),
-        if (showDivider)
-          Divider(
-            height: 1,
-            color: context.colors.divider,
-            thickness: 1.h,
-          ),
+        if (showDivider) Divider(height: 1, color: context.colors.divider),
+      ],
+    );
+  }
+
+  Widget _buildIcon() {
+    return Container(
+      width: 48.w,
+      height: 48.w,
+      decoration: BoxDecoration(color: iconBgColor, borderRadius: BorderRadius.circular(12.r)),
+      child: Icon(icon, color: iconColor, size: 24.w),
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildHeader(context),
+        VSpace(context.spacing.xxs),
+        Text(title, style: context.titleLarge.copyWith(color: context.colors.textPrimary, fontSize: 16.sp, fontWeight: FontWeight.w900)),
+        VSpace(context.spacing.xxs),
+        Text(message, style: context.bodyMedium.copyWith(color: context.colors.textSecondary, height: 1.4)),
+      ],
+    );
+  }
+
+  Widget _buildHeader(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(category, style: context.bodyMedium.copyWith(color: context.colors.primary, fontWeight: FontWeight.w900, fontSize: 14.sp)),
+        Row(
+          children: [
+            Text(time, style: context.labelSmall.copyWith(color: context.colors.textSecondary)),
+            if (isNew) ...[
+              HSpace(context.spacing.sm),
+              Container(width: 8.w, height: 8.w, decoration: BoxDecoration(color: context.colors.primary, shape: BoxShape.circle)),
+            ],
+          ],
+        ),
       ],
     );
   }

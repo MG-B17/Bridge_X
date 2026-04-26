@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/utils/extensions.dart';
+import '../../../../core/widgets/h_space.dart';
 
 class RoleTagWidget extends StatelessWidget {
   final String label;
@@ -27,16 +28,16 @@ class RoleTagWidget extends StatelessWidget {
             label,
             style: context.labelSmall.copyWith(
               color: context.colors.primary,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w900,
             ),
           ),
-          SizedBox(width: 4.w),
+          HSpace(context.spacing.xs),
           GestureDetector(
             onTap: onRemove,
             child: Icon(
               Icons.close_rounded,
               color: context.colors.primary,
-              size: 14.sp,
+              size: 14.w,
             ),
           ),
         ],

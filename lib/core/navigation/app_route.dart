@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'app_route_constant.dart';
-
 import 'package:bridgex/features/auth/login/screen/login_page.dart';
 import 'package:bridgex/features/auth/register/screen/register_page.dart';
 import 'package:bridgex/features/auth/forget_password/screen/forget_password_page.dart';
@@ -36,10 +35,10 @@ import 'package:bridgex/features/notifications/presentation/screens/notification
 import 'package:bridgex/features/workspace/presentation/screens/workspace_screen.dart';
 import 'package:bridgex/features/level/presentation/screens/level_screen.dart';
 import 'package:bridgex/features/teams/presentation/screens/create_team_screen.dart';
-
 import 'package:bridgex/features/projects/screen/project_details_page.dart';
 import 'package:bridgex/features/projects/screen/mentor_project_details_page.dart';
 import 'package:bridgex/features/projects/screen/team_settings_page.dart';
+
 
 class AppRoute {
   static final GoRouter router = GoRouter(
@@ -47,7 +46,7 @@ class AppRoute {
     errorBuilder: (context, state) {
       return const Scaffold(
         body: Center(
-          child: Text('Page not found'), // Will be branded later
+          child: Text('Page not found'),
         ),
       );
     },
@@ -87,6 +86,7 @@ class AppRoute {
         },
         branches: [
           StatefulShellBranch(
+            navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'homeNav'),
             routes: [
               GoRoute(
                 path: AppRouteConstant.home,
@@ -95,6 +95,7 @@ class AppRoute {
             ],
           ),
           StatefulShellBranch(
+            navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'chatNav'),
             routes: [
               GoRoute(
                 path: AppRouteConstant.chat,
@@ -109,6 +110,7 @@ class AppRoute {
             ],
           ),
           StatefulShellBranch(
+            navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'projectsNav'),
             routes: [
               GoRoute(
                 path: AppRouteConstant.projects,
@@ -117,6 +119,7 @@ class AppRoute {
             ],
           ),
           StatefulShellBranch(
+            navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'profileNav'),
             routes: [
               GoRoute(
                 path: AppRouteConstant.profile,
@@ -126,7 +129,6 @@ class AppRoute {
           ),
         ],
       ),
-      // Other top-level flat routes
       GoRoute(
         path: AppRouteConstant.teams,
         builder: (context, state) => const RecommendedTeamsScreen(),

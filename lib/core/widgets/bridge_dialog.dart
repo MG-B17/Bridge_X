@@ -1,9 +1,8 @@
+import 'package:bridgex/core/utils/extensions.dart';
+import 'package:bridgex/core/widgets/bridge_app_button.dart';
+import 'package:bridgex/core/widgets/v_space.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'v_space.dart';
-import 'bridge_app_button.dart';
-import '../utils/extensions.dart';
-
 
 class BridgeDialog extends StatelessWidget {
   final IconData icon;

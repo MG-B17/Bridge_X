@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/theme/app_color.dart';
-import '../../../../core/theme/text_style.dart';
+import '../../../../core/utils/extensions.dart';
 
 class TagWidget extends StatelessWidget {
   final String label;
@@ -13,14 +12,14 @@ class TagWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
       decoration: BoxDecoration(
-        color: AppColors.secondary.withValues(alpha: 0.5),
+        color: context.colors.secondary.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(8.r),
       ),
       child: Text(
         label,
-        style: AppTextStyles.labelSmall.copyWith(
-          color: AppColors.primary,
-          fontWeight: FontWeight.w500,
+        style: context.labelSmall.copyWith(
+          color: context.colors.primary,
+          fontWeight: FontWeight.w700,
         ),
       ),
     );

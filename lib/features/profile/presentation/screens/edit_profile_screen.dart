@@ -1,4 +1,3 @@
-import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constant/app_strings.dart';
 import '../../../../core/utils/extensions.dart';
@@ -116,11 +115,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   void _onAvatarTap() {
-    // TODO: Implement avatar picker
   }
 
   void _onSave() {
-    // TODO: Implement save logic
     context.pop();
   }
 }

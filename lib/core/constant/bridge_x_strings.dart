@@ -17,7 +17,7 @@ class AppStrings {
     "Learn, collaborate, and improve faster as a team."
   ];
 
-  static const String getStarted = "Get Started";
+  static const String getStarted = "Start";
   static const String skip = "Skip";
   static const String next = "Next";
 

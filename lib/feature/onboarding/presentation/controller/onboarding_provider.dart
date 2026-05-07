@@ -12,6 +12,7 @@ class OnboardingProvider extends ChangeNotifier {
 
   final PageController pageController = PageController();
   int currentPage = 0;
+  bool islastPage = false;
 
   final List<OnboardingContentModel> onboardingContents = [
     OnboardingContentModel(
@@ -33,6 +34,7 @@ class OnboardingProvider extends ChangeNotifier {
 
   void onPageChanged({required int index}) {
     currentPage = index;
+    islastPage = currentPage == onboardingContents.length - 1;
     notifyListeners();
   }
 

@@ -1,6 +1,7 @@
 import 'package:bridge_x/core/di/di.dart';
 import 'package:bridge_x/core/services/chache_service.dart';
 import 'package:bridge_x/feature/onboarding/presentation/controller/onboarding_provider.dart';
+import 'package:bridge_x/feature/onboarding/presentation/widgets/next_button.dart';
 import 'package:bridge_x/feature/onboarding/presentation/widgets/onboarding_app_bar.dart';
 import 'package:bridge_x/feature/onboarding/presentation/widgets/onboarding_background.dart';
 import 'package:bridge_x/feature/onboarding/presentation/widgets/page_view.dart';
@@ -19,8 +20,9 @@ class OnboardingScreen extends StatelessWidget {
         body: Stack(
           children: [
             const Positioned.fill(child: OnboardingBackground()),
-            Positioned(top: 50.h, left: 20.w, right: 20.w, child: const OnboardingAppBar()),
             Positioned.fill(child: PageViewWidget()),
+            Positioned(top: 50.h, left: 20.w, right: 20.w, child: const OnboardingAppBar()),
+            Positioned(bottom: 90.h, right: 8.w, child: const NextButton())
           ],
         ),
       ),

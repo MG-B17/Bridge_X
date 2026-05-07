@@ -26,7 +26,7 @@ class BridgeXApp extends StatelessWidget {
               theme: AppTheme.light,
               darkTheme: AppTheme.dark,
               themeMode: themeMode,
-              routerConfig: AppRouter.router,
+              routerConfig: appRouter,
             ),
           );
         },

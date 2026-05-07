@@ -1,7 +1,10 @@
+import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/core/di/di.dart';
+import 'package:bridge_x/core/navigation/bridge_x_route_constant.dart';
+import 'package:bridge_x/core/services/chache_service.dart';
+import 'package:bridge_x/feature/splash/widgets/splash_content.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:bridge_x/core/navigation/bridge_x_route_constant.dart';
-import 'widgets/index.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -49,10 +52,13 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void _navigateToNext() {
-    Future.delayed(const Duration(seconds: 3), () {
-      if (mounted) {
-        context.go(AppRoute.login);
-      }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(seconds: 3), () {
+        if (!mounted) return;
+        final hasSeenOnboarding =
+            sl<CacheService>().getData(key: AppStrings.onboardingSeenKey) as bool? ?? false;
+        context.go(hasSeenOnboarding ? AppRoute.login : AppRoute.onboarding);
+      });
     });
   }
 

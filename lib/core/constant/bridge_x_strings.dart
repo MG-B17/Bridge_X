@@ -2,6 +2,25 @@ class AppStrings {
 
   static const String appName = "Bridge X";
 
+  // Cache Keys
+  static const String onboardingSeenKey = 'onboarding_seen';
+
+
+  static const List<String> onboardingTitles = [
+    "Find Your Team",
+    "Build Real Projects",
+    "Grow Together"
+  ];
+  static const List<String> onboardingDescriptions = [
+    "Join developers based on your skills and goals. Collaborative building starts here.",
+    "Work on real-world projects to grow your portfolio.",
+    "Learn, collaborate, and improve faster as a team."
+  ];
+
+  static const String getStarted = "Get Started";
+  static const String skip = "Skip";
+  static const String next = "Next";
+
   static const String welcomeBack = "Welcome back";
   static const String createAccount = "Create Account";
   static const String login = "Login";
@@ -51,7 +70,6 @@ class AppStrings {
   static const String devOpsDesc = "AWS, Docker, CI/CD";
   static const String dataDesc = "Pandas, SQL, R";
 
-  static const String next = "Next";
   static const String verify = "Verify";
   static const String continueText = "Continue to Matching";
 
@@ -62,13 +80,7 @@ class AppStrings {
   static const String noAccount = "Don't have an account? Sign up";
   static const String alreadyHaveAccount = "Already have an account? Log in";
 
-  static const String growTogether = "Grow Together";
-  static const String buildProjects = "Build Real Projects";
-  static const String findTeam = "Find Your Team";
 
-  static const String growDesc = "Work on real-world projects to grow your portfolio.";
-  static const String collaborateDesc = "Learn, collaborate, and improve faster as a team.";
-  static const String matchingDesc = "Join developers based on your skills and goals. Collaborative building starts here.";
 
   static const String journeyStart = "Your journey starts here";
   static const String joinCreators = "Join 2,000+ creators building the future.";

@@ -1,3 +1,4 @@
+import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -29,7 +30,7 @@ class SplashContent extends StatelessWidget {
               width: 120.w,
               height: 120.h,
             ),
-            SizedBox(height: AppSpacing.xl),
+            VerticalSpacing(AppSpacing.xl),
 
             // App Name
             SvgPicture.asset(
@@ -37,8 +38,8 @@ class SplashContent extends StatelessWidget {
               width: 150.w,
               height: 60.h,
             ),
-
-            SizedBox(height: AppSpacing.xxl),
+            VerticalSpacing(AppSpacing.xxl),
+            
           ],
         ),
       ),

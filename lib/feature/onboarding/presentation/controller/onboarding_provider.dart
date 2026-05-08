@@ -41,8 +41,8 @@ class OnboardingProvider extends ChangeNotifier {
   Future<void> nextPage({required BuildContext context}) async {
     if (currentPage < onboardingContents.length - 1) {
       pageController.nextPage(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
+        duration: const Duration(milliseconds: 750),
+        curve: Curves.fastEaseInToSlowEaseOut,
       );
     } else {
       await _markOnboardingSeen();

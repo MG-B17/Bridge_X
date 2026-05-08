@@ -1,3 +1,4 @@
+import 'package:bridge_x/feature/auth/presentation/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../feature/onboarding/presentation/screens/onboarding_screen.dart';
@@ -18,7 +19,7 @@ final appRouter = GoRouter(
       ),
       GoRoute(
         path: AppRoute.login,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Login'))),
+        builder: (context, state) => const LoginScreen(),
       ),
       GoRoute(
         path: AppRoute.signUp,

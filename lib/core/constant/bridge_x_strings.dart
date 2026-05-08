@@ -34,6 +34,10 @@ class AppStrings {
 
   static const String emailHint = "name@gmail.com";
   static const String companyEmailHint = "name@company.com";
+  static const String passwordHint = "Enter your password";
+  static const String loginSubtitle = "Please enter your details to sign in";
+  static const String rememberMe = "Remember me for 30 days";
+  static const String noAccountPrefix = "Don't have an account? ";
 
   static const String forgotPassword = "Forgot Password?";
   static const String resetPassword = "Reset Password";
@@ -357,4 +361,13 @@ class AppStrings {
   static const String ourMission = "Our Mission";
   static const String ourMissionDesc = "Bridging the gap between code and community through meaningful collaboration.";
   static const String madeWithLove = "MADE WITH ❤️ FOR DEVELOPERS";
+
+  // ── Validation Messages ────────────────────────────────────────────────
+  static const String requiredField = "This field is required";
+  static const String invalidPhone = "Please enter a valid phone number";
+  static const String invalidEmail = "Please enter a valid email address";
+  static const String invalidPassword = "Password must be at least 8 characters";
+  static const String passwordMismatch = "Passwords do not match";
+  static const String invalidName = "Name must be at least 2 characters";
+  static const String invalidUrl = "Please enter a valid URL";
 }

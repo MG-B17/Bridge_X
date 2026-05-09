@@ -1,4 +1,6 @@
 import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/theme/app_color_schema.dart';
+import 'package:bridge_x/core/theme/bridge_x_colors.dart';
 import 'package:bridge_x/core/widget/horizontal_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,18 +18,9 @@ class BridgeXButton extends StatelessWidget {
   final bool isLoading;
 
 
-  static const _gradient = LinearGradient(
-    colors: [
-      Color(0xFF002753), // deep navy
-      Color(0xFF043A78), // mid navy
-      Color(0xFF1E94DE), // bright blue
-    ],
-    stops: [0.0, 0.35, 1.0],
-    begin: Alignment.centerLeft,
-    end: Alignment.centerRight,
-  );
+  static const _gradient = AppColorScheme.gradient;
 
-  static const _shadowColor = Color(0xFF1E94DE);
+  static const _shadowColor = AppColors.primaryBlue;
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +65,7 @@ class BridgeXButton extends StatelessWidget {
                         fontSize: 17.sp,
                       ),
                     ),
-                    HorizontalSpacing(8.w),
+                    HorizontalSpacing(8),
                     Icon(
                       Icons.arrow_forward_rounded,
                       color: Colors.white,

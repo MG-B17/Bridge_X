@@ -36,7 +36,7 @@ class SplashContent extends StatelessWidget {
             SvgPicture.asset(
               'assets/svgs/Bridge_x_name_icon.svg',
               width: 150.w,
-              height: 60.h,
+              height: 40.h,
             ),
             VerticalSpacing(AppSpacing.xxl),
             

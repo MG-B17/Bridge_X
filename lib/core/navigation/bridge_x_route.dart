@@ -1,4 +1,6 @@
+import 'package:bridge_x/feature/auth/presentation/screens/complete_profile/complete_profile_screen.dart';
 import 'package:bridge_x/feature/auth/presentation/screens/login/login_screen.dart';
+import 'package:bridge_x/feature/auth/presentation/screens/register/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../feature/onboarding/presentation/screens/onboarding_screen.dart';
@@ -23,7 +25,7 @@ final appRouter = GoRouter(
       ),
       GoRoute(
         path: AppRoute.signUp,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Sign Up'))),
+        builder: (context, state) => const RegisterScreen(),
       ),
       GoRoute(
         path: AppRoute.forgotPassword,
@@ -35,7 +37,7 @@ final appRouter = GoRouter(
       ),
       GoRoute(
         path: AppRoute.completeProfile,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Complete Profile'))),
+        builder: (context, state) => const CompleteProfileScreen(),
       ),
       GoRoute(
         path: AppRoute.matching,

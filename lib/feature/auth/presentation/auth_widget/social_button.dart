@@ -21,11 +21,11 @@ class SocialButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: colors.surface,
           borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
-          border: Border.all(color: colors.divider, width: 1.2),
+          border: Border.all(color: colors.secondary, width: 1.2),
           boxShadow: AppSpacing.subtleShadow,
         ),
         child: Center(child: child),
       ),
     );
   }
-}
+}

@@ -35,9 +35,15 @@ class AppStrings {
   static const String emailHint = "name@gmail.com";
   static const String companyEmailHint = "name@company.com";
   static const String passwordHint = "Enter your password";
+  static const String fullNameHint = "Eman tweeg";
   static const String loginSubtitle = "Please enter your details to sign in";
   static const String rememberMe = "Remember me for 30 days";
   static const String noAccountPrefix = "Don't have an account? ";
+  static const String alreadyHaveAccountPrefix = "Already have an account? ";
+  static const String agreeTermsPrefix = "I agree to the ";
+  static const String termsOfService = "Terms of Service";
+  static const String privacyPolicy = "Privacy Policy";
+  static const String andText = " and ";
 
   static const String forgotPassword = "Forgot Password?";
   static const String resetPassword = "Reset Password";
@@ -349,7 +355,6 @@ class AppStrings {
   static const String dangerZone = "Danger Zone";
   static const String deleteAccount = "Delete Account";
   static const String privacyDisclaimer = "Bridge X uses end-to-end encryption for all sensitive data transmission. Your personal information is never shared with third-party advertisers without your explicit consent. For more details, view our ";
-  static const String termsOfService = "Terms of Service";
 
   static const String securityUpdate = "Security Update";
   static const String securityUpdateDesc = "Manage your Bridge X account security";

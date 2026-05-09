@@ -4,15 +4,15 @@ import 'package:bridge_x/feature/auth/presentation/auth_widget/auth_footer.dart'
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class LoginFooter extends StatelessWidget {
-  const LoginFooter({super.key});
+class RegisterFooter extends StatelessWidget {
+  const RegisterFooter({super.key});
 
   @override
   Widget build(BuildContext context) {
     return AuthFooter(
-      prefixText: AppStrings.noAccountPrefix,
-      actionText: AppStrings.signUp,
-      onActionTap: () => context.go(AppRoute.signUp),
+      prefixText: AppStrings.alreadyHaveAccountPrefix,
+      actionText: AppStrings.login,
+      onActionTap: () => context.go(AppRoute.login),
     );
   }
 }

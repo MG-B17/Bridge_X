@@ -1,39 +1,33 @@
-import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/core/constant/app_validation_messages.dart';
 
 class AppValidator {
   const AppValidator._();
 
-  static final _emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+  static final _emailRegex = RegExp(r'^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,}$');
   static final _phoneRegex = RegExp(r'^01[0125][0-9]{8}$');
-  static final _urlRegex = RegExp(r'^https?:\/\/([\w-]+\.)+[\w-]+(\/[\w\-./?%&=]*)?$');
+  static final _urlRegex   = RegExp(r'^https?:\/\/([\w-]+\.)+[\w-]+(\/[\w\-./?%&=]*)?$');
 
   static String? otpDigit(String? value) {
-  if (value == null || value.trim().isEmpty) {
-    return '';
+    if (value == null || value.trim().isEmpty) return '';
+    if (!RegExp(r'^\d$').hasMatch(value.trim())) return '';
+    return null;
   }
-
-  final regex = RegExp(r'^\d$');
-
-  if (!regex.hasMatch(value.trim())) {
-    return '';
-  }
-
-  return null;
-}
 
   static String? required(String? value, [String? fieldName]) {
     if (value == null || value.trim().isEmpty) {
-      return fieldName != null ? '$fieldName is required' : AppStrings.requiredField;
+      return fieldName != null
+          ? '$fieldName is required'
+          : AppValidationMessages.requiredField;
     }
     return null;
   }
 
   static String? email(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return AppStrings.requiredField;
+      return AppValidationMessages.requiredField;
     }
     if (!_emailRegex.hasMatch(value.trim())) {
-      return AppStrings.invalidEmail;
+      return AppValidationMessages.invalidEmail;
     }
     return null;
   }
@@ -41,17 +35,26 @@ class AppValidator {
   static String? emailOptional(String? value) {
     if (value == null || value.trim().isEmpty) return null;
     if (!_emailRegex.hasMatch(value.trim())) {
-      return AppStrings.invalidEmail;
+      return AppValidationMessages.invalidEmail;
     }
     return null;
   }
 
   static String? password(String? value) {
     if (value == null || value.isEmpty) {
-      return AppStrings.requiredField;
+      return AppValidationMessages.requiredField;
     }
     if (value.length < 8) {
-      return AppStrings.invalidPassword;
+      return AppValidationMessages.invalidPassword;
+    }
+    if (!RegExp(r'[A-Z]').hasMatch(value)) {
+      return AppValidationMessages.passwordNeedsUppercase;
+    }
+    if (!RegExp(r'[0-9]').hasMatch(value)) {
+      return AppValidationMessages.passwordNeedsNumber;
+    }
+    if (!RegExp(r'[!@#$&*~%^]').hasMatch(value)) {
+      return AppValidationMessages.passwordNeedsSpecial;
     }
     return null;
   }
@@ -59,10 +62,10 @@ class AppValidator {
   static String? Function(String?) confirmPassword(String password) {
     return (String? value) {
       if (value == null || value.isEmpty) {
-        return AppStrings.requiredField;
+        return AppValidationMessages.requiredField;
       }
       if (value != password) {
-        return AppStrings.passwordMismatch;
+        return AppValidationMessages.passwordMismatch;
       }
       return null;
     };
@@ -70,20 +73,20 @@ class AppValidator {
 
   static String? phone(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return AppStrings.requiredField;
+      return AppValidationMessages.requiredField;
     }
     if (!_phoneRegex.hasMatch(value.trim())) {
-      return AppStrings.invalidPhone;
+      return AppValidationMessages.invalidPhone;
     }
     return null;
   }
 
   static String? name(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return AppStrings.requiredField;
+      return AppValidationMessages.requiredField;
     }
     if (value.trim().length < 2) {
-      return AppStrings.invalidName;
+      return AppValidationMessages.invalidName;
     }
     return null;
   }
@@ -91,7 +94,7 @@ class AppValidator {
   static String? url(String? value) {
     if (value == null || value.trim().isEmpty) return null;
     if (!_urlRegex.hasMatch(value.trim())) {
-      return AppStrings.invalidUrl;
+      return AppValidationMessages.invalidUrl;
     }
     return null;
   }

@@ -2,13 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 abstract class AppSpacing {
-  //Spacing Scale 
-  static double get xs => 4.w;
-  static double get sm => 8.w;
-  static double get md => 16.w;
-  static double get lg => 20.w;
-  static double get xl => 24.w;
+  //Spacing Scale
+  static double get xs  => 4.w;
+  static double get sm  => 8.w;
+  static double get md  => 16.w;
+  static double get lg  => 20.w;
+  static double get xl  => 24.w;
   static double get xxl => 32.w;
+
+  //Component-specific sizes
+  static double get otpCellSize          => 45.w;
+  static double get section              => 40.w;
+  static double get logoWidth            => 135.w;
+  static double get logoHeight           => 88.h;
+  static double get headerTop            => 60.h;
+  static double get onboardingImageHeight => 300.h;
 
   //Border Radius 
   static double get radiusXs => 8.r;
@@ -38,6 +46,20 @@ abstract class AppSpacing {
           color: const Color(0x0F000000),
           blurRadius: 8.r,
           offset: Offset(0, 4.h),
+        ),
+      ];
+
+  static List<BoxShadow> snackBarShadow(Color accentColor) => [
+        BoxShadow(
+          color: const Color(0x2E000000),
+          blurRadius: 24.r,
+          spreadRadius: 2.r,
+          offset: Offset(0, 8.h),
+        ),
+        BoxShadow(
+          color: accentColor.withValues(alpha: 0.10),
+          blurRadius: 12.r,
+          offset: Offset(0, 3.h),
         ),
       ];
 }

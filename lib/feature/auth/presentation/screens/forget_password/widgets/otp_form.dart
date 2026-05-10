@@ -1,3 +1,4 @@
+import 'package:bridge_x/core/constant/app_feedback_messages.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/navigation/bridge_x_route_constant.dart';
@@ -9,6 +10,7 @@ import 'package:bridge_x/feature/auth/presentation/controller/auth_cubit.dart';
 import 'package:bridge_x/feature/auth/presentation/controller/auth_state.dart';
 import 'package:bridge_x/feature/auth/presentation/screens/forget_password/widgets/otp_widget.dart';
 import 'package:bridge_x/core/widget/bridge_x_snackbar.dart';
+import 'package:bridge_x/core/widget/error_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -90,12 +92,17 @@ class _OtpFormState extends State<OtpForm> {
                 if (state.status == AuthStatus.success) {
                   BridgeXSnackBar.showSuccess(
                     context: context,
-                    message: state.message ?? 'Verification successful',
+                    message: state.message ?? AppFeedbackMessages.verificationSuccess,
                   );
                   context.push(AppRoute.changePassword, extra: {
                     'email': widget.email,
                     'code': state.resetToken ?? _code,
                   });
+                } else if (state.status == AuthStatus.error) {
+                  for (final c in _controllers) { c.clear(); }
+                  _focusNodes[0].requestFocus();
+                  setState(() => _code = '');
+                  ErrorSnackBar.show(context, state.message ?? AppFeedbackMessages.invalidOtpMessage);
                 }
               },
               builder: (context, state) => BridgeXButton(

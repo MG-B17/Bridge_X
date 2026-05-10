@@ -1,4 +1,5 @@
 import 'package:bridge_x/core/extensions/theme_extension.dart';
+import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/utils/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -52,8 +53,8 @@ class _OtpWidgetState extends State<OtpWidget> {
       children: List.generate(
         widget.controllers.length,
         (index) => SizedBox(
-          width: 45.w,
-          height: 45.w,
+          width: AppSpacing.otpCellSize,
+          height: AppSpacing.otpCellSize,
           child: Center(
             child: Focus(
               onKeyEvent: (node, event) {
@@ -90,11 +91,11 @@ class _OtpWidgetState extends State<OtpWidget> {
                   filled: true,
                   fillColor: colors.surface,
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12.r),
+                    borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
                     borderSide: BorderSide(color: colors.divider),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12.r),
+                    borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
                     borderSide: BorderSide(color: colors.primary, width: 1.5),
                   ),
                 ),

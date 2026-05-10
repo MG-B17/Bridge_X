@@ -68,9 +68,10 @@ final appRouter = GoRouter(
       GoRoute(
         path: AppRoute.changePassword,
         builder: (context, state) {
-          final extra = state.extra as Map<String, dynamic>? ?? {};
-          final email = extra['email'] as String? ?? '';
-          final code = extra['code'] as String? ?? '';
+          final extra = state.extra as Map<String, dynamic>?;
+          final email = extra?['email'] as String? ?? '';
+          final code  = extra?['code']  as String? ?? '';
+          if (email.isEmpty || code.isEmpty) return const LoginScreen();
           return ResetPasswordScreen(email: email, code: code);
         }
       ),

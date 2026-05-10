@@ -23,6 +23,7 @@ abstract class AuthRepo {
 
   Future<Either<Failure,String>> resetPassword({required ResetPasswordEntity resetPasswordEntity});
 
-  Future<Either<Failure,String>> changePassword({required ChangePasswordEntity changePasswordEntity});
+  Future<Either<Failure, String>> changePassword({required ChangePasswordEntity changePasswordEntity});
 
+  Future<Either<Failure, void>> logout();
 }

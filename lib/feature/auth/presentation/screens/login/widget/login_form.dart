@@ -1,3 +1,4 @@
+import 'package:bridge_x/core/constant/app_feedback_messages.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/navigation/bridge_x_route_constant.dart';
 import 'package:bridge_x/core/services/logger_service.dart';
@@ -51,10 +52,10 @@ class _LoginFormState extends State<LoginForm> {
       listener: (context, state) {
         if (state.status == AuthStatus.error) {
           LoggerService.warning('Login failed: ${state.message}', tag: 'LoginForm');
-          ErrorSnackBar.show(context, state.message ?? 'An error occurred');
+          ErrorSnackBar.show(context, state.message ?? AppFeedbackMessages.genericError);
         } else if (state.status == AuthStatus.success) {
           LoggerService.info('Login successful', tag: 'LoginForm');
-          BridgeXSnackBar.showSuccess(context: context, message: state.message ?? 'Login successful!');
+          BridgeXSnackBar.showSuccess(context: context, message: state.message ?? AppFeedbackMessages.loginSuccess);
         }
       },
       child: Form(
@@ -121,7 +122,7 @@ class _LoginFormState extends State<LoginForm> {
     if (_formKey.currentState?.validate() ?? false) {
       LoggerService.debug('Attempting login for: ${_emailController.text}', tag: 'LoginForm');
       context.read<AuthCubit>().login(
-        email: _emailController.text,
+        email: _emailController.text.trim(),
         password: _passwordController.text,
       );
     } else {

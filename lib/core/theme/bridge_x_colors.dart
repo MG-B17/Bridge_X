@@ -31,6 +31,9 @@ class AppColors {
   static const Color warning = Color(0xFFF59E0B);
   static const Color info = Color(0xFF2563EB);
 
+  // ── Snackbar accent (indigo-500 — always visible on any surface) ───────────
+  static const Color snackbarAccent = Color(0xFF4C6EF5);
+
   // ── Section-Specific Gradients ─────────────────────────────────────────────
 
   /// Dashboard / Auth — Primary Blue

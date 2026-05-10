@@ -1,5 +1,6 @@
 import 'package:bridge_x/core/di/di.dart';
 import 'package:bridge_x/core/services/chache_service.dart';
+import 'package:bridge_x/core/theme/bridge_x_colors.dart';
 import 'package:bridge_x/feature/onboarding/presentation/controller/onboarding_provider.dart';
 import 'package:bridge_x/feature/onboarding/presentation/widgets/next_button.dart';
 import 'package:bridge_x/feature/onboarding/presentation/widgets/onboarding_app_bar.dart';
@@ -17,6 +18,7 @@ class OnboardingScreen extends StatelessWidget {
     return ChangeNotifierProvider<OnboardingProvider>(
       create: (_) => OnboardingProvider(sl<CacheService>()),
       child: Scaffold(
+        backgroundColor: AppColors.white,
         body: Stack(
           children: [
             const Positioned.fill(child: OnboardingBackground()),

@@ -1,3 +1,4 @@
+import 'package:bridge_x/core/constant/app_feedback_messages.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/navigation/bridge_x_route_constant.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
@@ -9,6 +10,7 @@ import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:bridge_x/feature/auth/presentation/controller/auth_cubit.dart';
 import 'package:bridge_x/feature/auth/presentation/controller/auth_state.dart';
 import 'package:bridge_x/core/widget/bridge_x_snackbar.dart';
+import 'package:bridge_x/core/widget/error_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -58,11 +60,11 @@ class _ForgetPasswordFormState extends State<ForgetPasswordForm> {
               if (state.status == AuthStatus.success) {
                 BridgeXSnackBar.showSuccess(
                   context: context,
-                  message: state.message ?? 'Reset email sent',
+                  message: state.message ?? AppFeedbackMessages.resetEmailSent,
                 );
                 context.push(AppRoute.verifyCode, extra: _controller.text);
               } else if (state.status == AuthStatus.error) {
-
+                ErrorSnackBar.show(context, state.message ?? 'Failed to send reset email. Please try again.');
               }
             },
             builder: (context, state) => BridgeXButton(
@@ -70,7 +72,7 @@ class _ForgetPasswordFormState extends State<ForgetPasswordForm> {
               isLoading: state.status == AuthStatus.loading,
               onTap: state.status == AuthStatus.loading ? null : () {
                 if (_formKey.currentState!.validate()) {
-                  context.read<AuthCubit>().forgetPassword(email: _controller.text);
+                  context.read<AuthCubit>().forgetPassword(email: _controller.text.trim());
                 }
               },
             ),

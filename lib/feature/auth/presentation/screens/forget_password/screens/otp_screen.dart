@@ -6,25 +6,20 @@ import 'package:bridge_x/feature/auth/presentation/auth_widget/sub_tittle_text.d
 import 'package:bridge_x/feature/auth/presentation/screens/forget_password/widgets/otp_form.dart';
 import 'package:flutter/material.dart';
 
-class OtpScreen extends StatefulWidget {
+class OtpScreen extends StatelessWidget {
   final String email;
 
   const OtpScreen({super.key, required this.email});
 
   @override
-  State<OtpScreen> createState() => _OtpScreenState();
-}
-
-class _OtpScreenState extends State<OtpScreen> {
-
-  @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppSpacing.xl,vertical: AppSpacing.xxl),
+          padding: EdgeInsets.symmetric(
+            horizontal: AppSpacing.xl,
+            vertical: AppSpacing.xxl,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -33,7 +28,7 @@ class _OtpScreenState extends State<OtpScreen> {
               VerticalSpacing(AppSpacing.lg),
               SubTittleText(text: AppStrings.verifyDescription),
               VerticalSpacing(AppSpacing.xxl),
-              OtpForm(email: widget.email),
+              OtpForm(email: email),
             ],
           ),
         ),

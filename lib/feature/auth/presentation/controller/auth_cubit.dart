@@ -1,3 +1,4 @@
+import 'package:bridge_x/core/constant/app_feedback_messages.dart';
 import 'package:bridge_x/core/utils/enum/auth_enum.dart';
 import 'package:bridge_x/feature/auth/domain/entity/change_password_entity.dart';
 import 'package:bridge_x/feature/auth/domain/entity/forget_password_entity.dart';
@@ -104,5 +105,14 @@ class AuthCubit extends Cubit<AuthState> {
       (success) => emit(state.copyWith(status: AuthStatus.success, message: success)),
     );
   }
-  
+
+  Future<void> logout() async {
+    emit(state.copyWith(status: AuthStatus.loading, action: AuthAction.logout));
+    final result = await verifyPasswordUsecase.authRepo.logout();
+    result.fold(
+      (failure) => emit(state.copyWith(status: AuthStatus.error, message: failure.message)),
+      (_) => emit(state.copyWith(status: AuthStatus.success, message: AppFeedbackMessages.logoutSuccess)),
+    );
+  }
+
 }

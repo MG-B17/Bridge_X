@@ -9,7 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class ExperienceLevelSelector extends StatelessWidget {
   const ExperienceLevelSelector({super.key});
 
-  static const List<String> levels = ['Beginner', 'Junior', 'Senior'];
+  static List<String> get levels => AppStrings.experienceLevels;
 
   @override
   Widget build(BuildContext context) {

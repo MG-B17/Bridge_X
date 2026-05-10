@@ -210,4 +210,30 @@ class AuthRepoImplement extends AuthRepo {
       return Left(NetworkFailure(message: ErrorStrings.checkYouInternetConnection));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> logout() async {
+    if (await networkInfo.isConnected) {
+      try {
+        LoggerService.debug('Logging out', tag: 'AuthRepo');
+        await authRemoteData.logout();
+        await secureStorageService.delete(key: AppKeys.authToken);
+        LoggerService.info('Logout successful, token deleted', tag: 'AuthRepo');
+        return Right(null);
+      } on ServerException catch (e) {
+        // Even if API call fails, delete the local token for security
+        await secureStorageService.delete(key: AppKeys.authToken);
+        LoggerService.error('Logout API failed, local token still deleted', exception: e, tag: 'AuthRepo');
+        return Left(ServerFailure(message: e.message!));
+      } on DioException catch (error) {
+        await secureStorageService.delete(key: AppKeys.authToken);
+        return left(ErrorHandler.handle(error));
+      }
+    } else {
+      // Offline: still delete the local token
+      await secureStorageService.delete(key: AppKeys.authToken);
+      LoggerService.warning('No internet — local token deleted anyway', tag: 'AuthRepo');
+      return Right(null);
+    }
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:bridge_x/core/constant/app_feedback_messages.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
@@ -58,12 +59,12 @@ class _RegisterFormState extends State<RegisterForm> {
       listener: (context, state) {
         if (state.status == AuthStatus.error) {
           LoggerService.warning('Registration failed: ${state.message}', tag: 'RegisterForm');
-          ErrorSnackBar.show(context, state.message ?? 'An error occurred');
+          ErrorSnackBar.show(context, state.message ?? AppFeedbackMessages.genericError);
         } else if (state.status == AuthStatus.success) {
           LoggerService.info('Registration successful', tag: 'RegisterForm');
           BridgeXSnackBar.showSuccess(
             context: context,
-            message: state.message ?? 'Registration successful!',
+            message: state.message ?? AppFeedbackMessages.registrationSuccess,
           );
         }
       },
@@ -190,8 +191,8 @@ class _RegisterFormState extends State<RegisterForm> {
     if (_formKey.currentState?.validate() ?? false) {
       LoggerService.debug('Attempting registration for: ${_emailController.text}', tag: 'RegisterForm');
       context.read<AuthCubit>().register(
-        name: _nameController.text,
-        email: _emailController.text,
+        name: _nameController.text.trim(),
+        email: _emailController.text.trim(),
         password: _passwordController.text,
         passwordConfirmation: _confirmPasswordController.text,
       );

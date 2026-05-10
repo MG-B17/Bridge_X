@@ -17,7 +17,7 @@ class OnboardingSmoothPageIndicator extends StatelessWidget {
         controller: provider.pageController,
         count: provider.onboardingContents.length,
         effect: ExpandingDotsEffect(
-          activeDotColor: colors.primaryLight,
+          activeDotColor: colors.primary,
           dotColor: colors.primary.withValues(alpha: 0.35),
           dotHeight: 8.h,
           dotWidth: 8.w,

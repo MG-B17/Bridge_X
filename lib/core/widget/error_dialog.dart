@@ -1,4 +1,5 @@
 import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/widget/bridge_x_snackbar.dart';
 import 'package:flutter/material.dart';
 
 class ErrorDialog {
@@ -94,30 +95,17 @@ class ErrorDialog {
   }
 }
 
+
 class ErrorSnackBar {
   static void show(
     BuildContext context,
     String message, {
     Duration duration = const Duration(seconds: 4),
   }) {
-    final colors = context.colors;
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Row(
-          children: [
-            Icon(Icons.error_outline, color: Colors.white, size: 20),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(message, style: const TextStyle(color: Colors.white)),
-            ),
-          ],
-        ),
-        backgroundColor: colors.error,
-        duration: duration,
-        behavior: SnackBarBehavior.floating,
-        margin: const EdgeInsets.all(16),
-      ),
+    BridgeXSnackBar.showError(
+      context: context,
+      message: message,
+      duration: duration,
     );
   }
 
@@ -126,22 +114,10 @@ class ErrorSnackBar {
     String message, {
     Duration duration = const Duration(seconds: 3),
   }) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Row(
-          children: [
-            const Icon(Icons.check_circle_outline, color: Colors.white, size: 20),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(message, style: const TextStyle(color: Colors.white)),
-            ),
-          ],
-        ),
-        backgroundColor: Colors.green,
-        duration: duration,
-        behavior: SnackBarBehavior.floating,
-        margin: const EdgeInsets.all(16),
-      ),
+    BridgeXSnackBar.showSuccess(
+      context: context,
+      message: message,
+      duration: duration,
     );
   }
 
@@ -150,24 +126,10 @@ class ErrorSnackBar {
     String message, {
     Duration duration = const Duration(seconds: 4),
   }) {
-    final colors = context.colors;
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Row(
-          children: [
-            Icon(Icons.warning_outlined, color: Colors.white, size: 20),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(message, style: const TextStyle(color: Colors.white)),
-            ),
-          ],
-        ),
-        backgroundColor: colors.warning,
-        duration: duration,
-        behavior: SnackBarBehavior.floating,
-        margin: const EdgeInsets.all(16),
-      ),
+    BridgeXSnackBar.showWarning(
+      context: context,
+      message: message,
+      duration: duration,
     );
   }
 }

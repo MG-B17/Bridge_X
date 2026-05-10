@@ -22,6 +22,7 @@ abstract class AuthRemoteData {
   Future<RestPasswordReponseModel> verifyPassword({required VerifyCodeEntity verifyPasswordEntity});
   Future<String> resetPassword({required ResetPasswordEntity resetPasswordEntity});
   Future<String> changePassword({required ChangePasswordEntity changePasswordEntity});
+  Future<void> logout();
 }
 
 class AuthRemoteDataImpl implements AuthRemoteData {
@@ -145,6 +146,19 @@ class AuthRemoteDataImpl implements AuthRemoteData {
     try {
       final response = await apiClient.post(path: ApiEndpoint.verifyPassword, data: verifyPassword);
       return RestPasswordReponseModel.fromjson(json: response.data);
+    } catch (e) {
+      if (e is DioException) {
+        rethrow;
+      } else {
+        throw ServerException(ErrorStrings.serverError);
+      }
+    }
+  }
+
+  @override
+  Future<void> logout() async {
+    try {
+      await apiClient.post(path: ApiEndpoint.logout, data: {});
     } catch (e) {
       if (e is DioException) {
         rethrow;

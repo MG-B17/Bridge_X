@@ -98,21 +98,21 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
           ),
           VerticalSpacing(AppSpacing.xl),
           BlocConsumer<AuthCubit, AuthState>(
+            listenWhen: (prev, curr) => curr.action == AuthAction.resetPassword && prev.status != curr.status,
+            buildWhen: (prev, curr) => curr.action == AuthAction.resetPassword && prev.status != curr.status,
             listener: (context, state) {
-              if (state.action == AuthAction.resetPassword) {
-                if (state.status == AuthStatus.success) {
-                  BridgeXSnackBar.showSuccess(
-                    context: context,
-                    message: state.message!,
-                  );
-                  context.go(AppRoute.login);
-                } else if (state.status == AuthStatus.error) {
-                  // Error handled via centralized listener or here
-                }
+              if (state.status == AuthStatus.success) {
+                BridgeXSnackBar.showSuccess(
+                  context: context,
+                  message: state.message ?? 'Password reset successfully',
+                );
+                context.go(AppRoute.login);
+              } else if (state.status == AuthStatus.error) {
+                // Error handled via centralized listener or here
               }
             },
             builder: (context, state) {
-              final isLoading = state.status == AuthStatus.loading && state.action == AuthAction.resetPassword;
+              final isLoading = state.status == AuthStatus.loading;
               return BridgeXButton(
                 text: AppStrings.updatePassword,
                 isLoading: isLoading,

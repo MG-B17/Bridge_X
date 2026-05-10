@@ -74,7 +74,7 @@ class _OtpFormState extends State<OtpForm> {
                   context.pop();
                 },
                 child: Text(
-                  'Wrong email?',
+                  AppStrings.wrongEmail,
                   style: text.bodyMedium?.copyWith(
                     color: colors.accent,
                     fontWeight: FontWeight.w600,
@@ -83,22 +83,24 @@ class _OtpFormState extends State<OtpForm> {
               ),
             ),
             const Spacer(),
-            BlocConsumer<AuthCubit,AuthState>(
+            BlocConsumer<AuthCubit, AuthState>(
+              listenWhen: (prev, curr) => curr.action == AuthAction.verifyPassword && prev.status != curr.status,
+              buildWhen: (prev, curr) => curr.action == AuthAction.verifyPassword && prev.status != curr.status,
               listener: (context, state) {
-                if (state.action == AuthAction.verifyPassword && state.status == AuthStatus.success) {
+                if (state.status == AuthStatus.success) {
                   BridgeXSnackBar.showSuccess(
                     context: context,
-                    message: state.message!,
+                    message: state.message ?? 'Verification successful',
                   );
                   context.push(AppRoute.changePassword, extra: {
                     'email': widget.email,
-                    'code': _code,
+                    'code': state.resetToken ?? _code,
                   });
                 }
               },
               builder: (context, state) => BridgeXButton(
                 text: AppStrings.verify,
-                isLoading:state.status == AuthStatus.loading && state.action == AuthAction.verifyPassword,
+                isLoading: state.status == AuthStatus.loading,
                 onTap: _code.length == 6
                     ? () {
                         if (_formKey.currentState!.validate()) {

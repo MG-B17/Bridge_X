@@ -52,11 +52,13 @@ class _ForgetPasswordFormState extends State<ForgetPasswordForm> {
           ),
           VerticalSpacing(AppSpacing.xl),
           BlocConsumer<AuthCubit, AuthState>(
+            listenWhen: (prev, curr) => curr.action == AuthAction.forgetPassword && prev.status != curr.status,
+            buildWhen: (prev, curr) => curr.action == AuthAction.forgetPassword && prev.status != curr.status,
             listener: (context, state) {
-              if (state.status == AuthStatus.success && state.action == AuthAction.forgetPassword) {
+              if (state.status == AuthStatus.success) {
                 BridgeXSnackBar.showSuccess(
                   context: context,
-                  message: state.message!,
+                  message: state.message ?? 'Reset email sent',
                 );
                 context.push(AppRoute.verifyCode, extra: _controller.text);
               } else if (state.status == AuthStatus.error) {
@@ -66,7 +68,7 @@ class _ForgetPasswordFormState extends State<ForgetPasswordForm> {
             builder: (context, state) => BridgeXButton(
               text: AppStrings.send,
               isLoading: state.status == AuthStatus.loading,
-              onTap: state.status == AuthStatus.loading && state.action == AuthAction.forgetPassword ? null : () {
+              onTap: state.status == AuthStatus.loading ? null : () {
                 if (_formKey.currentState!.validate()) {
                   context.read<AuthCubit>().forgetPassword(email: _controller.text);
                 }

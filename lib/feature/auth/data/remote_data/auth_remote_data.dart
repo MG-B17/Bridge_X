@@ -30,12 +30,7 @@ class AuthRemoteDataImpl implements AuthRemoteData {
   AuthRemoteDataImpl({required this.apiClient});
   @override
   Future<String> register({required RegisterEntity registerEntity}) async {
-    final register = RegisterModel(
-      email: registerEntity.email,
-      name: registerEntity.name,
-      password: registerEntity.password,
-      passwordConfirmation: registerEntity.passwordConfirmation,
-    ).toJson();
+    final register = RegisterModel.fromEntity(registerEntity).toJson();
     try {
       final response = await apiClient.post(path: ApiEndpoint.register, data: register);
       return response.data['message'];

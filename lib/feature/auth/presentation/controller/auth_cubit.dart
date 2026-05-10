@@ -78,7 +78,11 @@ class AuthCubit extends Cubit<AuthState> {
     final result = await verifyPasswordUsecase(verifyPasswordEntity: VerifyCodeEntity(email: email, code: code));
     result.fold(
       (failure) => emit(state.copyWith(status: AuthStatus.error, message: failure.message)),
-      (success) => emit(state.copyWith(status: AuthStatus.success, message: success.message)),
+      (entity) => emit(state.copyWith(
+        status: AuthStatus.success,
+        message: entity.message,
+        resetToken: entity.resetToken,
+      )),
     );
   }
 

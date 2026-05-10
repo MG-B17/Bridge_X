@@ -54,18 +54,17 @@ class _RegisterFormState extends State<RegisterForm> {
     final colors = context.colors;
 
     return BlocListener<AuthCubit, AuthState>(
+      listenWhen: (prev, curr) => curr.action == AuthAction.register && prev.status != curr.status,
       listener: (context, state) {
-        if (state.action == AuthAction.register) {
-          if (state.status == AuthStatus.error ) {
-            LoggerService.warning('Registration failed: ${state.message}', tag: 'RegisterForm');
-            ErrorSnackBar.show(context, state.message ?? 'An error occurred');
-          } else if (state.status == AuthStatus.success) {
-            LoggerService.info('Registration successful', tag: 'RegisterForm');
-            BridgeXSnackBar.showSuccess(
-              context: context,
-              message: state.message!,
-            );
-          }
+        if (state.status == AuthStatus.error) {
+          LoggerService.warning('Registration failed: ${state.message}', tag: 'RegisterForm');
+          ErrorSnackBar.show(context, state.message ?? 'An error occurred');
+        } else if (state.status == AuthStatus.success) {
+          LoggerService.info('Registration successful', tag: 'RegisterForm');
+          BridgeXSnackBar.showSuccess(
+            context: context,
+            message: state.message ?? 'Registration successful!',
+          );
         }
       },
       child: Form(

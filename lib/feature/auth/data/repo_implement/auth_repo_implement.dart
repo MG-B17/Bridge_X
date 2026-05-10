@@ -6,7 +6,6 @@ import 'package:bridge_x/core/error/failure.dart';
 import 'package:bridge_x/core/network/network_info.dart';
 import 'package:bridge_x/core/services/secure_storage_service.dart';
 import 'package:bridge_x/core/services/logger_service.dart';
-import 'package:bridge_x/feature/auth/data/models/rest_password_reponse_model.dart';
 import 'package:bridge_x/feature/auth/data/remote_data/auth_remote_data.dart';
 import 'package:bridge_x/feature/auth/domain/entity/change_password_entity.dart';
 import 'package:bridge_x/feature/auth/domain/entity/forget_password_entity.dart';
@@ -14,6 +13,7 @@ import 'package:bridge_x/feature/auth/domain/entity/login_entity.dart';
 import 'package:bridge_x/feature/auth/domain/entity/register_entity.dart';
 import 'package:bridge_x/feature/auth/domain/entity/reset_password_entity.dart';
 import 'package:bridge_x/feature/auth/domain/entity/verify_code_entity.dart';
+import 'package:bridge_x/feature/auth/domain/entity/verify_password_result_entity.dart';
 import 'package:bridge_x/feature/auth/domain/repo/auth_repo.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
@@ -41,15 +41,15 @@ class AuthRepoImplement extends AuthRepo {
         );
         LoggerService.info('Password changed successfully', tag: 'AuthRepo');
         return Right(result);
-      } on ServerException catch(e){
-        LoggerService.error('Password change failed', exception: e, tag: 'AuthRepo');
-        return Left(ServerFailure(message:e.message!));
-      }on DioException catch (error){
+      } on ServerException catch (e) {
+        LoggerService.error('Change password failed', exception: e, tag: 'AuthRepo');
+        return Left(ServerFailure(message: e.message!));
+      } on DioException catch (error) {
         return left(ErrorHandler.handle(error));
       }
     } else {
       LoggerService.warning('No internet connection', tag: 'AuthRepo');
-      return Left(NetworkFailure(message:ErrorStrings.checkYouInternetConnection));
+      return Left(NetworkFailure(message: ErrorStrings.checkYouInternetConnection));
     }
   }
 
@@ -59,21 +59,21 @@ class AuthRepoImplement extends AuthRepo {
   }) async {
     if (await networkInfo.isConnected) {
       try {
-        LoggerService.debug('Requesting password reset', tag: 'AuthRepo');
+        LoggerService.debug('Requesting password reset for: ${forgetPasswordEntity.email}', tag: 'AuthRepo');
         final result = await authRemoteData.forgetPassword(
           forgetPasswordEntity: forgetPasswordEntity,
         );
-        LoggerService.info('Password reset requested', tag: 'AuthRepo');
+        LoggerService.info('Password reset email sent', tag: 'AuthRepo');
         return Right(result);
-      } on ServerException catch(e){
-        LoggerService.error('Password change failed', exception: e, tag: 'AuthRepo');
-        return Left(ServerFailure(message:e.message!));
-      }on DioException catch (error){
+      } on ServerException catch (e) {
+        LoggerService.error('Forget password request failed', exception: e, tag: 'AuthRepo');
+        return Left(ServerFailure(message: e.message!));
+      } on DioException catch (error) {
         return left(ErrorHandler.handle(error));
       }
     } else {
       LoggerService.warning('No internet connection', tag: 'AuthRepo');
-      return Left(NetworkFailure(message:ErrorStrings.checkYouInternetConnection));
+      return Left(NetworkFailure(message: ErrorStrings.checkYouInternetConnection));
     }
   }
 
@@ -86,15 +86,15 @@ class AuthRepoImplement extends AuthRepo {
         await secureStorageService.write(key: AppKeys.authToken, value: result);
         LoggerService.info('Login successful for: ${loginEntity.email}', tag: 'AuthRepo');
         return Right(result);
-      } on ServerException catch(e){
-        LoggerService.error('Password change failed', exception: e, tag: 'AuthRepo');
-        return Left(ServerFailure(message:e.message!));
-      }on DioException catch (error){
+      } on ServerException catch (e) {
+        LoggerService.error('Login failed for: ${loginEntity.email}', exception: e, tag: 'AuthRepo');
+        return Left(ServerFailure(message: e.message!));
+      } on DioException catch (error) {
         return left(ErrorHandler.handle(error));
       }
     } else {
       LoggerService.warning('No internet connection', tag: 'AuthRepo');
-      return Left(NetworkFailure(message:ErrorStrings.checkYouInternetConnection));
+      return Left(NetworkFailure(message: ErrorStrings.checkYouInternetConnection));
     }
   }
 
@@ -109,15 +109,15 @@ class AuthRepoImplement extends AuthRepo {
         final result = await authRemoteData.register(registerEntity: registerEntity);
         LoggerService.info('Registration successful for: ${registerEntity.email}', tag: 'AuthRepo');
         return Right(result);
-      } on ServerException catch(e){
-        LoggerService.error('Password change failed', exception: e, tag: 'AuthRepo');
-        return Left(ServerFailure(message:e.message!));
-      }on DioException catch (error){
+      } on ServerException catch (e) {
+        LoggerService.error('Registration failed for: ${registerEntity.email}', exception: e, tag: 'AuthRepo');
+        return Left(ServerFailure(message: e.message!));
+      } on DioException catch (error) {
         return left(ErrorHandler.handle(error));
       }
     } else {
       LoggerService.warning('No internet connection', tag: 'AuthRepo');
-      return Left(NetworkFailure(message:ErrorStrings.checkYouInternetConnection));
+      return Left(NetworkFailure(message: ErrorStrings.checkYouInternetConnection));
     }
   }
 
@@ -129,15 +129,15 @@ class AuthRepoImplement extends AuthRepo {
         final result = await authRemoteData.resendVerify(email: email);
         LoggerService.info('Verification email resent to: $email', tag: 'AuthRepo');
         return Right(result);
-      } on ServerException catch(e){
-        LoggerService.error('Password change failed', exception: e, tag: 'AuthRepo');
-        return Left(ServerFailure(message:e.message!));
-      }on DioException catch (error){
+      } on ServerException catch (e) {
+        LoggerService.error('Resend verify failed for: $email', exception: e, tag: 'AuthRepo');
+        return Left(ServerFailure(message: e.message!));
+      } on DioException catch (error) {
         return left(ErrorHandler.handle(error));
       }
     } else {
       LoggerService.warning('No internet connection', tag: 'AuthRepo');
-      return Left(NetworkFailure(message:ErrorStrings.checkYouInternetConnection));
+      return Left(NetworkFailure(message: ErrorStrings.checkYouInternetConnection));
     }
   }
 
@@ -150,15 +150,15 @@ class AuthRepoImplement extends AuthRepo {
         final result = await authRemoteData.resetPassword(resetPasswordEntity: resetPasswordEntity);
         LoggerService.info('Password reset successful', tag: 'AuthRepo');
         return Right(result);
-      } on ServerException catch(e){
+      } on ServerException catch (e) {
         LoggerService.error('Password change failed', exception: e, tag: 'AuthRepo');
-        return Left(ServerFailure(message:e.message!));
-      }on DioException catch (error){
+        return Left(ServerFailure(message: e.message!));
+      } on DioException catch (error) {
         return left(ErrorHandler.handle(error));
       }
     } else {
       LoggerService.warning('No internet connection', tag: 'AuthRepo');
-      return Left(NetworkFailure(message:ErrorStrings.checkYouInternetConnection));
+      return Left(NetworkFailure(message: ErrorStrings.checkYouInternetConnection));
     }
   }
 
@@ -170,39 +170,44 @@ class AuthRepoImplement extends AuthRepo {
        final result = await authRemoteData.verifyEmail(verifyCodeEntity: verifyCodeEntity);
         LoggerService.info('Email verified successfully', tag: 'AuthRepo');
         return Right(result);
-      } on ServerException catch(e){
-        LoggerService.error('Password change failed', exception: e, tag: 'AuthRepo');
-        return Left(ServerFailure(message:e.message!));
-      }on DioException catch (error){
+      } on ServerException catch (e) {
+        LoggerService.error('Email verification failed', exception: e, tag: 'AuthRepo');
+        return Left(ServerFailure(message: e.message!));
+      } on DioException catch (error) {
         return left(ErrorHandler.handle(error));
       }
     } else {
       LoggerService.warning('No internet connection', tag: 'AuthRepo');
-      return Left(NetworkFailure(message:ErrorStrings.checkYouInternetConnection));
+      return Left(NetworkFailure(message: ErrorStrings.checkYouInternetConnection));
     }
   }
 
   @override
-  Future<Either<Failure, RestPasswordReponseModel>> verifyPassword({
+  Future<Either<Failure, VerifyPasswordResultEntity>> verifyPassword({
     required VerifyCodeEntity verifyPasswordEntity,
   }) async {
     if (await networkInfo.isConnected) {
       try {
-        LoggerService.debug('Verifying password ', tag: 'AuthRepo');
+        LoggerService.debug('Verifying password reset code', tag: 'AuthRepo');
         final result = await authRemoteData.verifyPassword(
           verifyPasswordEntity: verifyPasswordEntity,
         );
-        LoggerService.info('password verified successfully', tag: 'AuthRepo');
-        return Right(result);
-      } on ServerException catch(e){
-        LoggerService.error('Password change failed', exception: e, tag: 'AuthRepo');
-        return Left(ServerFailure(message:e.message!));
-      }on DioException catch (error){
+        LoggerService.info('Password reset code verified successfully', tag: 'AuthRepo');
+        // Map Data model → Domain entity at the boundary
+        return Right(VerifyPasswordResultEntity(
+          resetToken: result.token,
+          message: result.message,
+          expiresAt: result.expiresAt,
+        ));
+      } on ServerException catch (e) {
+        LoggerService.error('Password verification failed', exception: e, tag: 'AuthRepo');
+        return Left(ServerFailure(message: e.message!));
+      } on DioException catch (error) {
         return left(ErrorHandler.handle(error));
       }
     } else {
       LoggerService.warning('No internet connection', tag: 'AuthRepo');
-      return Left(NetworkFailure(message:ErrorStrings.checkYouInternetConnection));
+      return Left(NetworkFailure(message: ErrorStrings.checkYouInternetConnection));
     }
   }
 }

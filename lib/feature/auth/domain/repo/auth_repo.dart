@@ -1,11 +1,11 @@
 import 'package:bridge_x/core/error/failure.dart';
-import 'package:bridge_x/feature/auth/data/models/rest_password_reponse_model.dart';
 import 'package:bridge_x/feature/auth/domain/entity/change_password_entity.dart';
 import 'package:bridge_x/feature/auth/domain/entity/forget_password_entity.dart';
 import 'package:bridge_x/feature/auth/domain/entity/login_entity.dart';
 import 'package:bridge_x/feature/auth/domain/entity/register_entity.dart';
 import 'package:bridge_x/feature/auth/domain/entity/reset_password_entity.dart';
 import 'package:bridge_x/feature/auth/domain/entity/verify_code_entity.dart';
+import 'package:bridge_x/feature/auth/domain/entity/verify_password_result_entity.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class AuthRepo {
@@ -19,7 +19,7 @@ abstract class AuthRepo {
 
   Future<Either<Failure,String>> forgetPassword({required ForgetPasswordEntity forgetPasswordEntity});
 
-  Future<Either<Failure,RestPasswordReponseModel>> verifyPassword ({required VerifyCodeEntity verifyPasswordEntity});
+  Future<Either<Failure, VerifyPasswordResultEntity>> verifyPassword({required VerifyCodeEntity verifyPasswordEntity});
 
   Future<Either<Failure,String>> resetPassword({required ResetPasswordEntity resetPasswordEntity});
 

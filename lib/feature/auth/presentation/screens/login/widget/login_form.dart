@@ -47,13 +47,14 @@ class _LoginFormState extends State<LoginForm> {
 
 
     return BlocListener<AuthCubit, AuthState>(
+      listenWhen: (prev, curr) => curr.action == AuthAction.login && prev.status != curr.status,
       listener: (context, state) {
-        if (state.status == AuthStatus.error && state.action == AuthAction.login) {
+        if (state.status == AuthStatus.error) {
           LoggerService.warning('Login failed: ${state.message}', tag: 'LoginForm');
           ErrorSnackBar.show(context, state.message ?? 'An error occurred');
-        } else if (state.status == AuthStatus.success && state.action == AuthAction.login) {
+        } else if (state.status == AuthStatus.success) {
           LoggerService.info('Login successful', tag: 'LoginForm');
-          BridgeXSnackBar.showSuccess(context: context, message: state.message!);
+          BridgeXSnackBar.showSuccess(context: context, message: state.message ?? 'Login successful!');
         }
       },
       child: Form(

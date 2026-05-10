@@ -1,5 +1,4 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
-import 'package:bridge_x/core/navigation/bridge_x_route_constant.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:bridge_x/feature/auth/presentation/auth_widget/auth_container.dart';
@@ -11,7 +10,6 @@ import 'package:bridge_x/feature/auth/presentation/screens/login/widget/login_fo
 import 'package:bridge_x/feature/auth/presentation/screens/login/widget/login_header.dart';
 import 'package:bridge_x/feature/auth/presentation/screens/login/widget/login_social_row.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -24,10 +22,7 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              InkWell(
-                onTap: () => context.go(AppRoute.completeProfile),
-                child: const LoginHeader(),
-              ),
+              const LoginHeader(),
               AuthContainer(
                 child: Column(
                   children: [

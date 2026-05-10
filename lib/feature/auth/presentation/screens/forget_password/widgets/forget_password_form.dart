@@ -5,12 +5,14 @@ import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/utils/enum/auth_enum.dart';
 import 'package:bridge_x/core/utils/validator.dart';
 import 'package:bridge_x/core/widget/bridge_x_button.dart';
+import 'package:bridge_x/core/widget/bridge_x_snackbar.dart';
 import 'package:bridge_x/core/widget/bridge_x_text_form_field.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:bridge_x/feature/auth/presentation/controller/auth_cubit.dart';
 import 'package:bridge_x/feature/auth/presentation/controller/auth_state.dart';
-import 'package:bridge_x/core/widget/bridge_x_snackbar.dart';
+
 import 'package:bridge_x/core/widget/error_dialog.dart';
+import 'package:bridge_x/core/navigation/screens_args/otp_args.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -54,27 +56,38 @@ class _ForgetPasswordFormState extends State<ForgetPasswordForm> {
           ),
           VerticalSpacing(AppSpacing.xl),
           BlocConsumer<AuthCubit, AuthState>(
-            listenWhen: (prev, curr) => curr.action == AuthAction.forgetPassword && prev.status != curr.status,
-            buildWhen: (prev, curr) => curr.action == AuthAction.forgetPassword && prev.status != curr.status,
+            listenWhen: (prev, curr) =>
+                curr.action == AuthAction.forgetPassword && prev.status != curr.status,
+            buildWhen: (prev, curr) =>
+                curr.action == AuthAction.forgetPassword && prev.status != curr.status,
             listener: (context, state) {
               if (state.status == AuthStatus.success) {
                 BridgeXSnackBar.showSuccess(
                   context: context,
                   message: state.message ?? AppFeedbackMessages.resetEmailSent,
                 );
-                context.push(AppRoute.verifyCode, extra: _controller.text);
+                context.push(
+                  AppRoute.verifyCode,
+                  extra: OtpArgs(email: _controller.text, verifyAction: AuthAction.verifyPassword),
+                );
               } else if (state.status == AuthStatus.error) {
-                ErrorSnackBar.show(context, state.message ?? 'Failed to send reset email. Please try again.');
+                ErrorDialog.show(
+                  context: context,
+                  title: AppStrings.requestFailed,
+                  message: state.message ?? AppFeedbackMessages.genericError,
+                );
               }
             },
             builder: (context, state) => BridgeXButton(
               text: AppStrings.send,
               isLoading: state.status == AuthStatus.loading,
-              onTap: state.status == AuthStatus.loading ? null : () {
-                if (_formKey.currentState!.validate()) {
-                  context.read<AuthCubit>().forgetPassword(email: _controller.text.trim());
-                }
-              },
+              onTap: state.status == AuthStatus.loading
+                  ? null
+                  : () {
+                      if (_formKey.currentState!.validate()) {
+                        context.read<AuthCubit>().forgetPassword(email: _controller.text.trim());
+                      }
+                    },
             ),
           ),
         ],

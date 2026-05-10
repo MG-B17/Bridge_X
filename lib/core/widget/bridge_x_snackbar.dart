@@ -77,16 +77,10 @@ class BridgeXSnackBar {
       behavior: SnackBarBehavior.floating,
       backgroundColor: Colors.transparent,
       padding: EdgeInsets.zero,
-      margin: EdgeInsets.only(
-        left: AppSpacing.md,
-        right: AppSpacing.md,
-        top: AppSpacing.sm,
-        bottom: MediaQuery.of(context).size.height - 130.h,
-      ),
+      margin: EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
       duration: duration,
       content: Container(
         decoration: BoxDecoration(
-          // Uses the theme's card surface — solid color from AppColorScheme
           color: colors.surface,
           borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
           border: Border(
@@ -113,15 +107,8 @@ class BridgeXSnackBar {
                   // Inner filled circle + icon
                   child: Container(
                     padding: EdgeInsets.all(AppSpacing.xs + 1),
-                    decoration: BoxDecoration(
-                      color: accentColor,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      iconData,
-                      color: AppColors.white,
-                      size: 13.sp,
-                    ),
+                    decoration: BoxDecoration(color: accentColor, shape: BoxShape.circle),
+                    child: Icon(iconData, color: AppColors.white, size: 13.sp),
                   ),
                 ),
                 HorizontalSpacing(AppSpacing.sm + AppSpacing.xs),
@@ -141,10 +128,7 @@ class BridgeXSnackBar {
                       SizedBox(height: 2.h),
                       Text(
                         message,
-                        style: text.bodySmall?.copyWith(
-                          color: colors.textSecondary,
-                          height: 1.4,
-                        ),
+                        style: text.bodySmall?.copyWith(color: colors.textSecondary, height: 1.4),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -155,11 +139,7 @@ class BridgeXSnackBar {
                 // Dismiss ×
                 GestureDetector(
                   onTap: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
-                  child: Icon(
-                    Icons.close,
-                    color: colors.textSecondary,
-                    size: 17.sp,
-                  ),
+                  child: Icon(Icons.close, color: colors.textSecondary, size: 17.sp),
                 ),
               ],
             ),

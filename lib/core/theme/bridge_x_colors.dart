@@ -33,6 +33,7 @@ class AppColors {
 
   // ── Snackbar accent (indigo-500 — always visible on any surface) ───────────
   static const Color snackbarAccent = Color(0xFF4C6EF5);
+  static const Color errorDialogBg = Color(0xFFCBDAFD);
 
   // ── Section-Specific Gradients ─────────────────────────────────────────────
 

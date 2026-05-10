@@ -3,13 +3,14 @@ import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:bridge_x/feature/auth/presentation/auth_widget/screen_name_text.dart';
 import 'package:bridge_x/feature/auth/presentation/auth_widget/sub_tittle_text.dart';
-import 'package:bridge_x/feature/auth/presentation/screens/forget_password/widgets/otp_form.dart';
+import 'package:bridge_x/core/navigation/screens_args/otp_args.dart';
+import 'package:bridge_x/feature/auth/presentation/screens/verfiy_code/widget/otp_form.dart';
 import 'package:flutter/material.dart';
 
 class OtpScreen extends StatelessWidget {
-  final String email;
+final OtpArgs otpArgs;
 
-  const OtpScreen({super.key, required this.email});
+  const OtpScreen({super.key, required this.otpArgs});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class OtpScreen extends StatelessWidget {
               VerticalSpacing(AppSpacing.lg),
               SubTittleText(text: AppStrings.verifyDescription),
               VerticalSpacing(AppSpacing.xxl),
-              OtpForm(email: email),
+              OtpForm(email:otpArgs.email,verifyAction:otpArgs.verifyAction,),
             ],
           ),
         ),

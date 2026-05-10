@@ -8,17 +8,18 @@ import 'package:flutter/material.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
   final String email;
-  final String code;
+  final String token;
 
   const ResetPasswordScreen({
     super.key,
     required this.email,
-    required this.code,
+    required this.token,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -33,7 +34,7 @@ class ResetPasswordScreen extends StatelessWidget {
                 VerticalSpacing(AppSpacing.xxl),
                 ResetPasswordForm(
                   email: email,
-                  code: code,
+                  code: token,
                 ),
               ],
             ),

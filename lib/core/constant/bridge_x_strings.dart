@@ -357,4 +357,10 @@ class AppStrings {
   static const String design      = 'Design';
   static const String success     = 'Success';
   static const String error       = 'Error';
+
+  // ── Error Dialog Titles ───────────────────────────────────────────────────
+  static const String loginFailed        = 'Login Failed';
+  static const String registrationFailed = 'Registration Failed';
+  static const String verificationFailed = 'Verification Failed';
+  static const String requestFailed      = 'Request Failed';
 }

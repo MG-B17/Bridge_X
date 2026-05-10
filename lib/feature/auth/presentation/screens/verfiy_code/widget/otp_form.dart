@@ -4,21 +4,24 @@ import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/navigation/bridge_x_route_constant.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/utils/enum/auth_enum.dart';
+import 'package:bridge_x/core/navigation/screens_args/reset_password_args.dart';
 import 'package:bridge_x/core/widget/bridge_x_button.dart';
+import 'package:bridge_x/core/widget/bridge_x_snackbar.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:bridge_x/feature/auth/presentation/controller/auth_cubit.dart';
 import 'package:bridge_x/feature/auth/presentation/controller/auth_state.dart';
-import 'package:bridge_x/feature/auth/presentation/screens/forget_password/widgets/otp_widget.dart';
-import 'package:bridge_x/core/widget/bridge_x_snackbar.dart';
+
 import 'package:bridge_x/core/widget/error_dialog.dart';
+import 'package:bridge_x/feature/auth/presentation/screens/verfiy_code/widget/otp_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class OtpForm extends StatefulWidget {
   final String email;
+  final AuthAction verifyAction;
 
-  const OtpForm({super.key, required this.email});
+  const OtpForm({super.key, required this.email, required this.verifyAction});
 
   @override
   State<OtpForm> createState() => _OtpFormState();
@@ -70,39 +73,52 @@ class _OtpFormState extends State<OtpForm> {
             ),
             VerticalSpacing(AppSpacing.xxl),
             VerticalSpacing(AppSpacing.md),
-            Center(
-              child: GestureDetector(
-                onTap: () {
-                  context.pop();
-                },
-                child: Text(
-                  AppStrings.wrongEmail,
-                  style: text.bodyMedium?.copyWith(
-                    color: colors.accent,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
+            widget.verifyAction == AuthAction.verifyPassword
+                ? Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        context.pop();
+                      },
+                      child: Text(
+                        AppStrings.wrongEmail,
+                        style: text.bodyMedium?.copyWith(
+                          color: colors.accent,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  )
+                : SizedBox.shrink(),
             const Spacer(),
             BlocConsumer<AuthCubit, AuthState>(
-              listenWhen: (prev, curr) => curr.action == AuthAction.verifyPassword && prev.status != curr.status,
-              buildWhen: (prev, curr) => curr.action == AuthAction.verifyPassword && prev.status != curr.status,
+              listenWhen: (prev, curr) =>
+                  curr.action == widget.verifyAction && prev.status != curr.status,
+              buildWhen: (prev, curr) =>
+                  curr.action == widget.verifyAction && prev.status != curr.status,
               listener: (context, state) {
                 if (state.status == AuthStatus.success) {
                   BridgeXSnackBar.showSuccess(
                     context: context,
                     message: state.message ?? AppFeedbackMessages.verificationSuccess,
                   );
-                  context.push(AppRoute.changePassword, extra: {
-                    'email': widget.email,
-                    'code': state.resetToken ?? _code,
-                  });
+                  widget.verifyAction == AuthAction.verifyPassword?
+                  context.push(
+                    AppRoute.changePassword,
+                    extra: ResetPasswordArgs(email: widget.email, token: state.resetToken!),
+                  ):context.push(
+                    AppRoute.login,
+                  );
                 } else if (state.status == AuthStatus.error) {
-                  for (final c in _controllers) { c.clear(); }
+                  for (final c in _controllers) {
+                    c.clear();
+                  }
                   _focusNodes[0].requestFocus();
                   setState(() => _code = '');
-                  ErrorSnackBar.show(context, state.message ?? AppFeedbackMessages.invalidOtpMessage);
+                  ErrorDialog.show(
+                    context: context,
+                    title: AppStrings.verificationFailed,
+                    message: state.message ?? AppFeedbackMessages.invalidOtpMessage,
+                  );
                 }
               },
               builder: (context, state) => BridgeXButton(
@@ -111,10 +127,7 @@ class _OtpFormState extends State<OtpForm> {
                 onTap: _code.length == 6
                     ? () {
                         if (_formKey.currentState!.validate()) {
-                          context.read<AuthCubit>().verifyPassword(
-                            email: widget.email,
-                            code: _code,
-                          );
+                          _buttonAction(context: context, verifyAction: widget.verifyAction);
                         }
                       }
                     : null,
@@ -124,5 +137,20 @@ class _OtpFormState extends State<OtpForm> {
         ),
       ),
     );
+  }
+
+  void _buttonAction({required BuildContext context, required AuthAction verifyAction}) {
+    switch (verifyAction) {
+      case AuthAction.verifyPassword:
+        context.read<AuthCubit>().verifyPassword(email: widget.email, code: _code);
+        break;
+
+      case AuthAction.verifyEmail:
+        context.read<AuthCubit>().verifyEmail(email: widget.email, code: _code);
+        break;
+
+      default:
+        break;
+    }
   }
 }

@@ -5,6 +5,7 @@ import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/utils/validator.dart';
 import 'package:bridge_x/core/widget/bridge_x_button.dart';
+import 'package:bridge_x/core/widget/bridge_x_snackbar.dart';
 import 'package:bridge_x/core/widget/bridge_x_text_form_field.dart';
 import 'package:bridge_x/core/widget/horizontal_spacing.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
@@ -16,7 +17,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bridge_x/core/navigation/bridge_x_route_constant.dart';
-import 'package:bridge_x/core/widget/bridge_x_snackbar.dart';
+
 import 'package:bridge_x/core/widget/error_dialog.dart';
 
 class ResetPasswordForm extends StatefulWidget {
@@ -111,7 +112,11 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                 );
                 context.go(AppRoute.login);
               } else if (state.status == AuthStatus.error) {
-                ErrorSnackBar.show(context, state.message ?? 'Failed to reset password. Please try again.');
+                ErrorDialog.show(
+                  context: context,
+                  title: AppStrings.requestFailed,
+                  message: state.message ?? AppFeedbackMessages.genericError,
+                );
               }
             },
             builder: (context, state) {

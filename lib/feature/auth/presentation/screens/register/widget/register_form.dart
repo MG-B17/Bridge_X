@@ -1,21 +1,25 @@
 import 'package:bridge_x/core/constant/app_feedback_messages.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/navigation/bridge_x_route_constant.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/utils/validator.dart';
 import 'package:bridge_x/core/widget/bridge_x_button.dart';
+import 'package:bridge_x/core/widget/bridge_x_snackbar.dart';
 import 'package:bridge_x/core/widget/bridge_x_text_form_field.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:bridge_x/core/services/logger_service.dart';
 import 'package:bridge_x/core/widget/error_dialog.dart';
-import 'package:bridge_x/core/widget/bridge_x_snackbar.dart';
+
 import 'package:bridge_x/feature/auth/presentation/controller/auth_cubit.dart';
 import 'package:bridge_x/feature/auth/presentation/controller/auth_state.dart';
 import 'package:bridge_x/core/utils/enum/auth_enum.dart';
+import 'package:bridge_x/core/navigation/screens_args/otp_args.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
@@ -59,9 +63,14 @@ class _RegisterFormState extends State<RegisterForm> {
       listener: (context, state) {
         if (state.status == AuthStatus.error) {
           LoggerService.warning('Registration failed: ${state.message}', tag: 'RegisterForm');
-          ErrorSnackBar.show(context, state.message ?? AppFeedbackMessages.genericError);
+          ErrorDialog.show(
+            context: context,
+            title: AppStrings.registrationFailed,
+            message: state.message ?? AppFeedbackMessages.genericError,
+          );
         } else if (state.status == AuthStatus.success) {
           LoggerService.info('Registration successful', tag: 'RegisterForm');
+          context.push(AppRoute.verifyCode, extra:OtpArgs(email: _emailController.text, verifyAction: AuthAction.verifyEmail));
           BridgeXSnackBar.showSuccess(
             context: context,
             message: state.message ?? AppFeedbackMessages.registrationSuccess,

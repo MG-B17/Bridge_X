@@ -5,9 +5,10 @@ import 'package:bridge_x/core/services/logger_service.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/utils/validator.dart';
 import 'package:bridge_x/core/widget/bridge_x_button.dart';
+import 'package:bridge_x/core/widget/bridge_x_snackbar.dart';
 import 'package:bridge_x/core/widget/bridge_x_text_form_field.dart';
 import 'package:bridge_x/core/widget/error_dialog.dart';
-import 'package:bridge_x/core/widget/bridge_x_snackbar.dart';
+
 import 'package:bridge_x/core/widget/text_button.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:bridge_x/feature/auth/presentation/controller/auth_cubit.dart';
@@ -52,7 +53,11 @@ class _LoginFormState extends State<LoginForm> {
       listener: (context, state) {
         if (state.status == AuthStatus.error) {
           LoggerService.warning('Login failed: ${state.message}', tag: 'LoginForm');
-          ErrorSnackBar.show(context, state.message ?? AppFeedbackMessages.genericError);
+          ErrorDialog.show(
+            context: context,
+            title: AppStrings.loginFailed,
+            message: state.message ?? AppFeedbackMessages.genericError,
+          );
         } else if (state.status == AuthStatus.success) {
           LoggerService.info('Login successful', tag: 'LoginForm');
           BridgeXSnackBar.showSuccess(context: context, message: state.message ?? AppFeedbackMessages.loginSuccess);

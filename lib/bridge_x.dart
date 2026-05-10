@@ -1,4 +1,5 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/feature/auth/presentation/controller/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,8 +13,13 @@ class BridgeXApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => di.sl<ThemeCubit>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ThemeCubit>(
+          create: (_) => di.sl<ThemeCubit>(),
+        ),
+        BlocProvider(create: (_) => di.sl<AuthCubit>()),
+      ],
       child: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, themeMode) {
           return ScreenUtilInit(

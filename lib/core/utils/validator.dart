@@ -3,20 +3,27 @@ import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 class AppValidator {
   const AppValidator._();
 
-
   static final _emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
   static final _phoneRegex = RegExp(r'^01[0125][0-9]{8}$');
-  static final _urlRegex = RegExp(
-    r'^https?:\/\/([\w-]+\.)+[\w-]+(\/[\w\-./?%&=]*)?$',
-  );
+  static final _urlRegex = RegExp(r'^https?:\/\/([\w-]+\.)+[\w-]+(\/[\w\-./?%&=]*)?$');
 
+  static String? otpDigit(String? value) {
+  if (value == null || value.trim().isEmpty) {
+    return '';
+  }
 
+  final regex = RegExp(r'^\d$');
+
+  if (!regex.hasMatch(value.trim())) {
+    return '';
+  }
+
+  return null;
+}
 
   static String? required(String? value, [String? fieldName]) {
     if (value == null || value.trim().isEmpty) {
-      return fieldName != null
-          ? '$fieldName is required'
-          : AppStrings.requiredField;
+      return fieldName != null ? '$fieldName is required' : AppStrings.requiredField;
     }
     return null;
   }

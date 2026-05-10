@@ -1,4 +1,4 @@
-import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/core/constant/app_keys.dart';
 import 'package:bridge_x/core/di/di.dart';
 import 'package:bridge_x/core/navigation/bridge_x_route_constant.dart';
 import 'package:bridge_x/core/services/chache_service.dart';
@@ -56,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen>
       Future.delayed(const Duration(seconds: 3), () {
         if (!mounted) return;
         final hasSeenOnboarding =
-            sl<CacheService>().getData(key: AppStrings.onboardingSeenKey) as bool? ?? false;
+            sl<CacheService>().getData(key: AppKeys.onboardingSeenKey) as bool? ?? false;
         context.go(hasSeenOnboarding ? AppRoute.login : AppRoute.onboarding);
       });
     });

@@ -5,8 +5,15 @@ import 'package:bridge_x/core/utils/validator.dart';
 import 'package:bridge_x/core/widget/bridge_x_button.dart';
 import 'package:bridge_x/core/widget/bridge_x_text_form_field.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
+import 'package:bridge_x/core/services/logger_service.dart';
+import 'package:bridge_x/core/widget/error_dialog.dart';
+import 'package:bridge_x/core/widget/bridge_x_snackbar.dart';
+import 'package:bridge_x/feature/auth/presentation/controller/auth_cubit.dart';
+import 'package:bridge_x/feature/auth/presentation/controller/auth_state.dart';
+import 'package:bridge_x/core/utils/enum/auth_enum.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RegisterForm extends StatefulWidget {
@@ -46,10 +53,25 @@ class _RegisterFormState extends State<RegisterForm> {
   Widget build(BuildContext context) {
     final colors = context.colors;
 
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: [
+    return BlocListener<AuthCubit, AuthState>(
+      listener: (context, state) {
+        if (state.action == AuthAction.register) {
+          if (state.status == AuthStatus.error ) {
+            LoggerService.warning('Registration failed: ${state.message}', tag: 'RegisterForm');
+            ErrorSnackBar.show(context, state.message ?? 'An error occurred');
+          } else if (state.status == AuthStatus.success) {
+            LoggerService.info('Registration successful', tag: 'RegisterForm');
+            BridgeXSnackBar.showSuccess(
+              context: context,
+              message: state.message!,
+            );
+          }
+        }
+      },
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
           BridgeXTextFormField(
             label: AppStrings.fullName,
             hint: AppStrings.fullNameHint,
@@ -94,13 +116,19 @@ class _RegisterFormState extends State<RegisterForm> {
           VerticalSpacing(AppSpacing.md),
           _buildTermsRow(colors),
           VerticalSpacing(AppSpacing.lg),
-          BridgeXButton(
-            text: AppStrings.createAccount,
-            onTap: _agreeTerms ? _onRegisterTapped : null,
+          BlocBuilder<AuthCubit, AuthState>(
+            builder: (context, state) {
+              final isLoading = state.status == AuthStatus.loading && state.action == AuthAction.register;
+              return BridgeXButton(
+                text: AppStrings.createAccount,
+                isLoading: isLoading,
+                onTap: _agreeTerms && !isLoading ? _onRegisterTapped : null,
+              );
+            },
           ),
         ],
       ),
-    );
+    ));
   }
 
   Widget _buildTermsRow(dynamic colors) {
@@ -161,6 +189,15 @@ class _RegisterFormState extends State<RegisterForm> {
 
   void _onRegisterTapped() {
     if (_formKey.currentState?.validate() ?? false) {
+      LoggerService.debug('Attempting registration for: ${_emailController.text}', tag: 'RegisterForm');
+      context.read<AuthCubit>().register(
+        name: _nameController.text,
+        email: _emailController.text,
+        password: _passwordController.text,
+        passwordConfirmation: _confirmPasswordController.text,
+      );
+    } else {
+      LoggerService.warning('Register form validation failed', tag: 'RegisterForm');
     }
   }
 }

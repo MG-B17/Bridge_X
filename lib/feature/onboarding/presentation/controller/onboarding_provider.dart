@@ -1,3 +1,4 @@
+import 'package:bridge_x/core/constant/app_keys.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/navigation/bridge_x_route_constant.dart';
 import 'package:bridge_x/core/services/chache_service.dart';
@@ -57,7 +58,7 @@ class OnboardingProvider extends ChangeNotifier {
 
   Future<void> _markOnboardingSeen() async {
     await _cacheService.saveData(
-      key: AppStrings.onboardingSeenKey,
+      key: AppKeys.onboardingSeenKey,
       value: true,
     );
   }

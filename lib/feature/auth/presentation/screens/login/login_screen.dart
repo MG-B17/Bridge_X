@@ -18,8 +18,6 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -28,27 +26,20 @@ class LoginScreen extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () => context.go(AppRoute.completeProfile),
-                child: const LoginHeader()),
+                child: const LoginHeader(),
+              ),
               AuthContainer(
                 child: Column(
                   children: [
-                    ScreenNameText(text:  AppStrings.welcomeBack),
+                    ScreenNameText(text: AppStrings.welcomeBack),
                     VerticalSpacing(AppSpacing.sm),
                     SubTittleText(text: AppStrings.loginSubtitle),
-                    
-
                     VerticalSpacing(AppSpacing.xxl),
                     const LoginForm(),
-                
-                    
                     VerticalSpacing(AppSpacing.lg),
                     const LoginDivider(),
-                
-                    
                     VerticalSpacing(AppSpacing.md),
                     const LoginSocialRow(),
-                
-                    
                     VerticalSpacing(AppSpacing.md),
                     const LoginFooter(),
                   ],

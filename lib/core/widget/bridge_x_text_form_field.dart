@@ -1,4 +1,5 @@
 import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -47,7 +48,7 @@ class BridgeXTextFormField extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        SizedBox(height: 6.h),
+        VerticalSpacing(6.h),
         TextFormField(
           controller: controller,
           keyboardType: keyboardType,

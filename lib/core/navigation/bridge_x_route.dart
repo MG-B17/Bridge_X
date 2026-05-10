@@ -1,4 +1,7 @@
 import 'package:bridge_x/feature/auth/presentation/screens/complete_profile/complete_profile_screen.dart';
+import 'package:bridge_x/feature/auth/presentation/screens/forget_password/screens/forget_password_screen.dart';
+import 'package:bridge_x/feature/auth/presentation/screens/forget_password/screens/otp_screen.dart';
+import 'package:bridge_x/feature/auth/presentation/screens/forget_password/screens/reset_password_screen.dart';
 import 'package:bridge_x/feature/auth/presentation/screens/login/login_screen.dart';
 import 'package:bridge_x/feature/auth/presentation/screens/register/register_screen.dart';
 import 'package:flutter/material.dart';
@@ -29,11 +32,14 @@ final appRouter = GoRouter(
       ),
       GoRoute(
         path: AppRoute.forgotPassword,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Forgot Password'))),
+        builder: (context, state) => const ForgetPasswordScreen(),
       ),
       GoRoute(
         path: AppRoute.verifyCode,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Verify Code'))),
+        builder: (context, state) {
+          final email = state.extra as String? ?? '';
+          return OtpScreen(email: email);
+        }
       ),
       GoRoute(
         path: AppRoute.completeProfile,
@@ -61,7 +67,12 @@ final appRouter = GoRouter(
       ),
       GoRoute(
         path: AppRoute.changePassword,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Change Password'))),
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>? ?? {};
+          final email = extra['email'] as String? ?? '';
+          final code = extra['code'] as String? ?? '';
+          return ResetPasswordScreen(email: email, code: code);
+        }
       ),
       GoRoute(
         path: AppRoute.privacySecurity,

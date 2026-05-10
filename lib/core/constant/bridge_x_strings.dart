@@ -1,11 +1,7 @@
 class AppStrings {
 
   static const String appName = "Bridge X";
-
-  // Cache Keys
-  static const String onboardingSeenKey = 'onboarding_seen';
-
-
+  
   static const List<String> onboardingTitles = [
     "Find Your Team",
     "Build Real Projects",
@@ -20,6 +16,7 @@ class AppStrings {
   static const String getStarted = "Start";
   static const String skip = "Skip";
   static const String next = "Next";
+  static const String send = "Send";
 
   static const String welcomeBack = "Welcome back";
   static const String createAccount = "Create Account";
@@ -51,7 +48,7 @@ class AppStrings {
   static const String resetDescription = "Enter your email address and we'll send you a link to reset your password.";
 
   static const String verifyCode = "Verify Code";
-  static const String verifyDescription = "Enter the 4-digit code sent to your email";
+  static const String verifyDescription = "Enter the 6-digit code sent to your email";
   static const String invalidCode = "Invalid code. Please try again.";
   static const String resendCode = "Resend code in 00:30";
   static const String wrongEmail = "Wrong email?";
@@ -375,4 +372,5 @@ class AppStrings {
   static const String passwordMismatch = "Passwords do not match";
   static const String invalidName = "Name must be at least 2 characters";
   static const String invalidUrl = "Please enter a valid URL";
+  static const invalidOtp = 'Invalid OTP code';
 }

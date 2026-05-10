@@ -9,6 +9,7 @@ class SubTittleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      textAlign: TextAlign.center,
       style: context.textTheme.bodyMedium?.copyWith(color: context.colors.textSecondary),
     );
   }

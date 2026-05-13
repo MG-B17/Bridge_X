@@ -9,8 +9,7 @@ void main() async {
 
   LoggerService.info('🚀 Starting BridgeX Application');
 
-  // Initialize dependencies
-  
+
     await di.init();
 
   runApp(const BridgeXApp());

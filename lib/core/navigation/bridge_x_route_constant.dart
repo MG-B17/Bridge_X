@@ -22,4 +22,8 @@ class AppRoute {
   static const String changePassword = '/change-password';
   static const String privacySecurity = '/privacy-security';
   static const String aboutUs = '/about-us';
+  static const String createTeam = '/create-team';
+  static const String matchingProcess = '/matching-process';
+  static const String noTeamsFound = '/no-teams-found';
+  static const String recommendedTeams = '/recommended-teams';
 }

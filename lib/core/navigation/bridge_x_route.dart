@@ -6,6 +6,12 @@ import 'package:bridge_x/feature/auth/presentation/screens/login/login_screen.da
 import 'package:bridge_x/feature/auth/presentation/screens/register/register_screen.dart';
 import 'package:bridge_x/core/navigation/screens_args/otp_args.dart';
 import 'package:bridge_x/feature/auth/presentation/screens/verfiy_code/screen/otp_screen.dart';
+import 'package:bridge_x/feature/home/presentation/screens/home_screen.dart';
+import 'package:bridge_x/feature/create_team/presentation/screens/create_team_screen.dart';
+import 'package:bridge_x/feature/matching/presentation/screens/matching_process_screen.dart';
+import 'package:bridge_x/feature/matching/presentation/screens/no_teams_found_screen.dart';
+import 'package:bridge_x/feature/matching/presentation/screens/recommended_teams_screen.dart';
+import 'package:bridge_x/feature/layout/layout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../feature/onboarding/presentation/screens/onboarding_screen.dart';
@@ -49,11 +55,27 @@ final appRouter = GoRouter(
       ),
       GoRoute(
         path: AppRoute.matching,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Matching'))),
+        builder: (context, state) => const MatchingProcessScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.matchingProcess,
+        builder: (context, state) => const MatchingProcessScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.noTeamsFound,
+        builder: (context, state) => const NoTeamsFoundScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.recommendedTeams,
+        builder: (context, state) => const RecommendedTeamsScreen(),
       ),
       GoRoute(
         path: AppRoute.layout,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Layout'))),
+        builder: (context, state) => const LayoutScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.home,
+        builder: (context, state) => const HomeScreen(),
       ),
       GoRoute(
         path: AppRoute.notifications,
@@ -81,6 +103,10 @@ final appRouter = GoRouter(
       GoRoute(
         path: AppRoute.aboutUs,
         builder: (context, state) => const Scaffold(body: Center(child: Text('About Us'))),
+      ),
+      GoRoute(
+        path: AppRoute.createTeam,
+        builder: (context, state) => const CreateTeamScreen(),
       ),
     ],
 );

@@ -112,6 +112,13 @@ class AppStrings {
   // ── Home / Dashboard ─────────────────────────────────────────────────────
   static const String journeyStart  = 'Your journey starts here';
   static const String joinCreators  = 'Join 2,000+ creators building the future.';
+  static const String hiGreeting    = 'Hi, Ahmed 👋';
+  static const String greetingSubtitle = "Let's build something great today";
+  static const String tipBanner     = 'Tip: Join a team to start building real projects';
+  static const String basedOnCompleted = 'Based on completed tasks';
+  static const String aiInsights    = 'AI Insights';
+  static const String insightProductivity = 'You completed 30% more tasks this week compared to your average.';
+  static const String insightPeakTime = 'You are most productive in the evening (6 PM - 9 PM).';
   static const String home          = 'Home';
   static const String chat          = 'Chat';
   static const String projects      = 'Projects';
@@ -144,6 +151,7 @@ class AppStrings {
   static const String submitProject   = 'Submit Project';
   static const String projectCompleted = 'Project Completed 🎉';
   static const String githubUrl       = 'Github URL';
+  static const String urlHint         = 'URL';
   static const String projectDescription = 'Project Description';
   static const String describeProjectHint = "Describe your project goals and what you're looking to build...";
   static const String categorySelection = 'Category Selection';
@@ -162,6 +170,10 @@ class AppStrings {
   static const String addProject     = '+ Add Project';
   static const String projectName    = 'Project Name';
   static const String projectNameHint = 'e.g. Portfolio Redesign';
+  static const String myProjectsSubtitle = 'Manage and track your collaboration progress';
+  static const String all               = 'All';
+  static const String developmentPhase  = 'Development Phase';
+  static const String yourTeam          = 'Your Team';
 
   // ── Teams ─────────────────────────────────────────────────────────────────
   static const String teamMembers    = 'Team Members';
@@ -170,6 +182,7 @@ class AppStrings {
   static const String createTeamSubtitle = 'Set up your team and project details';
   static const String joinTeam       = 'Join Team';
   static const String teamName       = 'Team Name';
+  static const String teamNameHint   = 'e.g. Project Phoenix';
   static const String teamInfo       = 'Team Info';
   static const String mentorAccess   = 'Mentor Access';
   static const String youAreTeamLeader = 'You are the Team Leader of this project';
@@ -183,6 +196,7 @@ class AppStrings {
   static const String publicTeam     = 'Public Team';
   static const String publicTeamDesc  = 'AI matches members & others can request to join';
   static const String addMember      = 'Add Member';
+  static const String addMembers     = 'Add Members';
   static const String manageAll      = 'Manage All';
   static const String teamCreatedSuccessfully = 'Team Created Successfully 🎉';
   static const String teamReadyStartCollaborating = 'Your team is ready to start collaborating. Invite members or jump straight into your workspace to begin building.';
@@ -334,6 +348,15 @@ class AppStrings {
   static const String skillsVerified        = 'Skills verified successfully';
   static const String experienceAnalyzed    = 'Experience analyzed';
   static const String finalizingShortlist   = 'Finalizing shortlist';
+  static const String selectCategory        = 'Select Category';
+  static const String categorySheetSubtitle = 'Choose the type of team you want to join';
+  static const String multiCategoryHint     = 'You can select multiple categories. This helps our algorithm find the best squad match for your specific skill set.';
+  static const String startMatching         = 'Start Matching';
+  static const String matchingTitle         = 'Matching you with the best teams...';
+  static const String matchingSubtitleFull  = 'Analyzing your skills and experience to find the perfect professional environment.';
+  static const String aiData                = 'AI / Data';
+  static const String tryAgain              = 'Try Again';
+  static const String membersLabel          = 'Members';
 
   // ── Settings / Privacy ────────────────────────────────────────────────────
   static const String privacyAndSecurity    = 'Privacy & Security';

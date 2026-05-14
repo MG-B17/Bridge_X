@@ -1,0 +1,139 @@
+import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
+import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/widget/vertical_spacing.dart';
+import 'package:bridge_x/feature/projects/presentation/widgets/project_status_badge.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+/// Card for a completed project showing status badge, title, star rating,
+/// description, action link, and date.
+class CompletedProjectCard extends StatelessWidget {
+  const CompletedProjectCard({
+    super.key,
+    required this.title,
+    required this.rating,
+    required this.description,
+    required this.actionLabel,
+    required this.date,
+    this.onActionTap,
+  });
+
+  final String title;
+  final double rating;
+  final String description;
+  final String actionLabel;
+  final String date;
+  final VoidCallback? onActionTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: colors.surface,
+        borderRadius: BorderRadius.circular(AppSpacing.radiusCardLarge),
+        border: Border.all(
+          color: colors.divider.withValues(alpha: 0.3),
+        ),
+        boxShadow: AppSpacing.subtleShadow,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // ── Status badge ──
+          ProjectStatusBadge(
+            label: AppStrings.completed,
+            isCompleted: true,
+            showIcon: true,
+          ),
+          VerticalSpacing(AppSpacing.sm),
+
+          // ── Title row with star rating ──
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Text(
+                  title,
+                  style: AppTextStyles.headlineSmall.copyWith(
+                    color: colors.textPrimary,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              SizedBox(width: 8.w),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.star_rounded,
+                    color: colors.gold,
+                    size: 18.sp,
+                  ),
+                  SizedBox(width: 3.w),
+                  Text(
+                    rating.toStringAsFixed(1),
+                    style: AppTextStyles.titleMedium.copyWith(
+                      color: colors.textPrimary,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          VerticalSpacing(AppSpacing.sm),
+
+          // ── Description ──
+          Text(
+            description,
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: colors.textSecondary,
+              height: 1.5,
+            ),
+          ),
+          VerticalSpacing(AppSpacing.md),
+
+          // ── Action link + date ──
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              GestureDetector(
+                onTap: onActionTap,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      actionLabel,
+                      style: AppTextStyles.titleMedium.copyWith(
+                        color: colors.primary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(width: 4.w),
+                    Icon(
+                      Icons.arrow_forward,
+                      color: colors.primary,
+                      size: 16.sp,
+                    ),
+                  ],
+                ),
+              ),
+              Text(
+                date,
+                style: AppTextStyles.labelSmall.copyWith(
+                  color: colors.textHint,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}

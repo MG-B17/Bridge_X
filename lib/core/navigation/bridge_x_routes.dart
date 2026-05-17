@@ -16,7 +16,7 @@ import 'package:bridge_x/feature/onboarding/presentation/screens/onboarding_scre
 import 'package:bridge_x/feature/splash/splash_screen.dart';
 import 'package:go_router/go_router.dart';
 
-/// Main app router - handles all navigation
+
 final appRouter = GoRouter(
   initialLocation: BridgeXRoutePaths.splash,
   redirect: (context, state) {
@@ -26,28 +26,29 @@ final appRouter = GoRouter(
   },
   refreshListenable: sl<AppState>(),
   routes: [
-    // Splash screen
+
     GoRoute(
       path: BridgeXRoutePaths.splash,
       name: BridegeXRouteNames.splash,
       builder: (context, state) => const SplashScreen(),
     ),
-    // Login and signup
+
     loginRoute,
     singupRoute,
-    // Onboarding
+
     GoRoute(
       path: BridgeXRoutePaths.onboarding,
       name: BridegeXRouteNames.onboarding,
       builder: (context, state) => const OnboardingScreen(),
     ),
+    
     GoRoute(
       path: BridgeXRoutePaths.completeProfile,
       name: BridegeXRouteNames.completeProfile,
       builder: (context, state) => const CompleteProfileScreen(),
     ),
     matchingRoute,
-    // Main app (home, chat, projects, profile)
+
     StatefulShellRoute.indexedStack(
       builder: (context, state, statefulNavigationShell) =>
           LayoutScreen(navigationShell: statefulNavigationShell),

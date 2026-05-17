@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
-/// Stores app state: is user logged in? Did they see onboarding? Is app ready?
 class AppState extends ChangeNotifier {
+  
   bool _isReady = false;
   bool _isLoggedIn = false;
   bool _hasSeenOnboarding = false;

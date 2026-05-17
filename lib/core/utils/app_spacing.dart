@@ -17,9 +17,12 @@ abstract class AppSpacing {
   static double get logoHeight           => 88.h;
   static double get headerTop            => 60.h;
   static double get onboardingImageHeight => 300.h;
+  static double get iconBoxSize          => 44.w;
 
   //Border Radius 
   static double get radiusXs => 8.r;
+  static double get radiusLg => 24.r;
+  static double get radiusXl => 32.r;
   static double get radiusCard => 12.r;
   static double get radiusCardLarge => 16.r;
   static double get radiusPill => 20.r;

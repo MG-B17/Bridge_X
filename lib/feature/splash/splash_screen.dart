@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   @override
   void initState() {
     super.initState();
-    _appState = sl<AppState>(); // Single lookup
+    _appState = sl<AppState>();
     _initializeAnimations();
     _initApp();
   }
@@ -31,21 +31,13 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
   void _initApp() async {
     try {
-      // Run data loading and minimum splash delay in parallel
-      await Future.wait([
-        _loadAppData(),
-        Future.delayed(_minSplashDuration),
-      ]);
-
-      // Only mark ready AFTER both finish (data is loaded + splash has shown)
+      await Future.wait([_loadAppData(), Future.delayed(_minSplashDuration)]);
       _markAppReady();
     } catch (e) {
-      // Even on error, mark ready so the app doesn't get stuck on splash
       _markAppReady();
     }
   }
 
-  /// Load authentication and onboarding data from storage
   Future<void> _loadAppData() async {
     try {
       final result = await sl<AppInitializer>().init();
@@ -53,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       _appState.isLoggedIn = result.isLoggedIn;
       _appState.hasSeenOnboarding = result.hasSeenOnboarding;
     } catch (e) {
-     // print('Error loading app data: $e');
+      // print('Error loading app data: $e');
       rethrow;
     }
   }

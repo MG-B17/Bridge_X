@@ -47,7 +47,7 @@ class LayoutScreen extends StatelessWidget {
                   label: AppStrings.home,
                   isSelected: navigationShell.currentIndex == 0,
                   onTap: () {
-                    navigationShell.goBranch(0, initialLocation: true);
+                    navigationShell.goBranch(0);
                   },
                   selectedColor: selectedColor,
                   unselectedColor: unselectedColor,

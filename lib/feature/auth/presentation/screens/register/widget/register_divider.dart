@@ -1,5 +1,6 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/widget/bridge_x_divider.dart';
 import 'package:flutter/material.dart';
 
 class RegisterDivider extends StatelessWidget {
@@ -11,7 +12,7 @@ class RegisterDivider extends StatelessWidget {
 
     return Row(
       children: [
-        Expanded(child: Divider(color: colors.divider)),
+        Expanded(child: BridgeXDivider(color: colors.divider)),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Text(
@@ -23,7 +24,7 @@ class RegisterDivider extends StatelessWidget {
             ),
           ),
         ),
-        Expanded(child: Divider(color: colors.divider)),
+        Expanded(child: BridgeXDivider(color: colors.divider)),
       ],
     );
   }

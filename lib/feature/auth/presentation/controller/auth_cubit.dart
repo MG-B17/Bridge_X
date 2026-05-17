@@ -46,7 +46,6 @@ class AuthCubit extends Cubit<AuthState> {
     result.fold(
       (failure) => emit(state.copyWith(status: AuthStatus.error, message: failure.message)),
       (success) {
-        // Update AppState → GoRouter refreshListenable fires → auto-navigates to home
         appState.isLoggedIn = true;
         emit(state.copyWith(status: AuthStatus.success, message: success));
       },

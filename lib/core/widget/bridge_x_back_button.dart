@@ -8,9 +8,18 @@ import 'package:go_router/go_router.dart';
 ///
 /// By default it calls `context.pop()`. Pass [onTap] to override.
 class BridgeXBackButton extends StatelessWidget {
-  const BridgeXBackButton({super.key, this.onTap});
+  const BridgeXBackButton({
+    super.key,
+    this.onTap,
+    this.backgroundColor,
+    this.iconColor,
+    this.boxShadow,
+  });
 
   final VoidCallback? onTap;
+  final Color? backgroundColor;
+  final Color? iconColor;
+  final List<BoxShadow>? boxShadow;
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +31,13 @@ class BridgeXBackButton extends StatelessWidget {
         width: 40.w,
         height: 40.w,
         decoration: BoxDecoration(
-          color: colors.surface,
+          color: backgroundColor ?? colors.surface,
           shape: BoxShape.circle,
-          boxShadow: AppSpacing.subtleShadow,
+          boxShadow: boxShadow ?? AppSpacing.subtleShadow,
         ),
         child: Icon(
           Icons.arrow_back,
-          color: colors.textPrimary,
+          color: iconColor ?? colors.indigo,
           size: 20.sp,
         ),
       ),

@@ -1,0 +1,50 @@
+import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/widget/bridge_x_background_gears.dart';
+import 'package:bridge_x/core/widget/bridge_x_screen_header.dart';
+import 'package:bridge_x/core/widget/vertical_spacing.dart';
+import 'package:flutter/material.dart';
+
+import '../widgets/about_screen_widgets/about_app_info.dart';
+import '../widgets/about_screen_widgets/about_footer.dart';
+import '../widgets/about_screen_widgets/about_mission_card.dart';
+
+class AboutScreen extends StatelessWidget {
+  const AboutScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: context.colors.scaffoldBg,
+      body: Stack(
+        children: [
+          const BridgeXBackgroundGears(),
+          SafeArea(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(
+                horizontal: AppSpacing.md,
+                vertical: AppSpacing.md,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const BridgeXScreenHeader(
+                    title: AppStrings.aboutUs,
+                  ),
+                  VerticalSpacing(AppSpacing.section),
+                  const AboutAppInfo(),
+                  VerticalSpacing(AppSpacing.section),
+                  const AboutMissionCard(),
+                  VerticalSpacing(AppSpacing.section * 2),
+                  const AboutFooter(),
+                  VerticalSpacing(AppSpacing.xl),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

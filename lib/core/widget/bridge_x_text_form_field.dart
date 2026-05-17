@@ -18,6 +18,8 @@ class BridgeXTextFormField extends StatelessWidget {
     this.enabled = true,
     this.textInputAction,
     this.autofillHints,
+    this.maxLines = 1,
+    this.maxLength,
   });
 
   final String label;
@@ -32,6 +34,8 @@ class BridgeXTextFormField extends StatelessWidget {
   final bool enabled;
   final TextInputAction? textInputAction;
   final Iterable<String>? autofillHints;
+  final int? maxLines;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +60,8 @@ class BridgeXTextFormField extends StatelessWidget {
           enabled: enabled,
           validator: validator,
           onChanged: onChanged,
+          maxLines: maxLines,
+          maxLength: maxLength,
           textInputAction: textInputAction,
           autofillHints: autofillHints,
           style: text.bodyMedium?.copyWith(color: colors.textPrimary),

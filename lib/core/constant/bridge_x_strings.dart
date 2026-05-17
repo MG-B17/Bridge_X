@@ -54,8 +54,15 @@ class AppStrings {
   static const String newPassword = 'New Password';
   static const String confirmNewPassword = 'Confirm New Password';
   static const String currentPassword = 'Current Password';
+  static const String currentPasswordHint = 'Enter current password';
+  static const String newPasswordLabel = 'New Password';
+  static const String newPasswordHint = 'Enter new password';
+  static const String confirmNewPasswordHint = 'Confirm new password';
+  static const String passwordMinLength = 'Password must be at least 8 characters long.';
   static const String username = 'Username';
+  static const String usernameHint = 'Enter username';
   static const String bio = 'Bio';
+  static const String bioHint = 'Tell us about yourself...';
 
   // ── Auth — Hints ──────────────────────────────────────────────────────────
   static const String emailHint = 'name@gmail.com';
@@ -290,9 +297,9 @@ class AppStrings {
 
   // ── Profile ───────────────────────────────────────────────────────────────
   static const String editProfile = 'Edit Profile';
-  static const String settings = 'Settings';
+  static const String accountSecurity = 'ACCOUNT SECURITY';
   static const String changePassword = 'Change Password';
-  static const String accountSecurity = 'Account Security';
+  static const String settings = 'Settings';
   static const String tapToUpdateAvatar = 'Tap to update avatar';
   static const String professionRole = 'Profession/Role';
   static const String available = 'Available';
@@ -378,6 +385,7 @@ class AppStrings {
 
   // ── Settings / Privacy ────────────────────────────────────────────────────
   static const String privacyAndSecurity = 'Privacy & Security';
+  static const String bridgeXVersion = 'Bridge X VERSION 1.0.0';
   static const String bridgeXProtection = 'Bridge X Protection';
   static const String bridgeXProtectionDesc =
       'Manage your digital footprint and secure your collaboration environment.';
@@ -396,6 +404,16 @@ class AppStrings {
   static const String ourMissionDesc =
       'Bridging the gap between code and community through meaningful collaboration.';
   static const String madeWithLove = 'MADE WITH ❤️ FOR DEVELOPERS';
+
+  // ── Notification Settings ─────────────────────────────────────────────────
+  static const String pushNotifications = 'Push Notifications';
+  static const String pushNotificationsDesc = 'Receive alerts on your device';
+  static const String teamUpdates = 'Team Updates';
+  static const String teamUpdatesDesc = 'Notify when a team project changes';
+  static const String newMessages = 'New Messages';
+  static const String newMessagesDesc = 'Alerts for new chat messages';
+  static const String taskUpdates = 'Task Updates';
+  static const String taskUpdatesDesc = 'Notify when a task is assigned or updated';
 
   // ── Misc / Common Labels ──────────────────────────────────────────────────
   static const String development = 'Development';

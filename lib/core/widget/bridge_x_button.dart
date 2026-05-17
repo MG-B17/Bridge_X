@@ -10,13 +10,16 @@ class BridgeXButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.onTap,
+    this.prefixicon,
+    this.suffixicon,
     this.isLoading = false,
   });
 
   final String text;
   final VoidCallback? onTap;
   final bool isLoading;
-
+  final IconData? prefixicon;
+  final IconData? suffixicon;
 
   static const _gradient = AppColorScheme.gradient;
 
@@ -30,9 +33,9 @@ class BridgeXButton extends StatelessWidget {
         opacity: (isLoading || onTap == null) ? 0.65 : 1.0,
         child: Container(
           width: double.infinity,
-          height: 56.h,
+          height: 50.h,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14.r),
+            borderRadius: BorderRadius.circular(20.r),
             gradient: _gradient,
             boxShadow: [
               BoxShadow(
@@ -47,15 +50,14 @@ class BridgeXButton extends StatelessWidget {
                   child: SizedBox(
                     height: 22,
                     width: 22,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2.5,
-                      color: Colors.white,
-                    ),
+                    child: CircularProgressIndicator(strokeWidth: 2.5, color: Colors.white),
                   ),
                 )
               : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 5.w,
                   children: [
+                    prefixicon != null? Icon(prefixicon, color: context.colors.surface, size: 20.sp) :SizedBox.shrink(),
                     Text(
                       text,
                       style: context.textTheme.titleMedium?.copyWith(
@@ -66,11 +68,7 @@ class BridgeXButton extends StatelessWidget {
                       ),
                     ),
                     HorizontalSpacing(8),
-                    Icon(
-                      Icons.arrow_forward_rounded,
-                      color: Colors.white,
-                      size: 18.sp,
-                    ),
+                    suffixicon != null? Icon(suffixicon, color: context.colors.surface, size: 20.sp) :SizedBox.shrink(),
                   ],
                 ),
         ),

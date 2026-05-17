@@ -4,6 +4,7 @@ import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_colors.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/widget/horizontal_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -126,7 +127,7 @@ class _FloatingTag extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, size: 14.sp, color: iconColor),
-          SizedBox(width: 6.w),
+          HorizontalSpacing(AppSpacing.xs),
           Text(
             label,
             style: AppTextStyles.labelSmall.copyWith(

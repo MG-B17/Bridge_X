@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/di/di.dart' as di;
-import 'core/navigation/bridge_x_route.dart';
+import 'core/navigation/bridge_x_routes.dart';
 import 'core/theme/bridge_x_theme.dart';
 import 'core/theme/theme_controller.dart';
 

@@ -1,4 +1,6 @@
 import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/widget/horizontal_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -68,7 +70,7 @@ class AvatarStack extends StatelessWidget {
 
           // ── Overflow badge ──
           if (overflow > 0) ...[
-            SizedBox(width: 4.w),
+            HorizontalSpacing(AppSpacing.xs),
             Container(
               padding: EdgeInsets.symmetric(
                 horizontal: 8.w,

@@ -6,6 +6,8 @@ import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'role_chip.dart';
+
 class RequiredRolesSection extends StatefulWidget {
   const RequiredRolesSection({
     super.key,
@@ -66,7 +68,7 @@ class _RequiredRolesSectionState extends State<RequiredRolesSection> {
             runSpacing: 8.h,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              ...widget.roles.map((role) => _RoleChip(
+              ...widget.roles.map((role) => RoleChip(
                     label: role,
                     onRemove: () => widget.onRoleRemoved(role),
                   )),
@@ -98,38 +100,6 @@ class _RequiredRolesSectionState extends State<RequiredRolesSection> {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _RoleChip extends StatelessWidget {
-  const _RoleChip({required this.label, required this.onRemove});
-  final String label;
-  final VoidCallback onRemove;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
-      decoration: BoxDecoration(
-        color: colors.primaryLight.withValues(alpha: 0.45),
-        borderRadius: BorderRadius.circular(AppSpacing.radiusPill),
-        border: Border.all(color: colors.primary.withValues(alpha: 0.20)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(label, style: AppTextStyles.labelSmall.copyWith(
-            color: colors.primary, fontWeight: FontWeight.w600,
-          )),
-          SizedBox(width: 4.w),
-          GestureDetector(
-            onTap: onRemove,
-            child: Icon(Icons.close_rounded, size: 14.sp, color: colors.primary),
-          ),
-        ],
-      ),
     );
   }
 }

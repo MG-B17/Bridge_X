@@ -1,6 +1,6 @@
 import 'package:bridge_x/core/constant/app_feedback_messages.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
-import 'package:bridge_x/core/navigation/bridge_x_route_constant.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/utils/enum/auth_enum.dart';
 import 'package:bridge_x/core/utils/validator.dart';
@@ -66,9 +66,9 @@ class _ForgetPasswordFormState extends State<ForgetPasswordForm> {
                   context: context,
                   message: state.message ?? AppFeedbackMessages.resetEmailSent,
                 );
-                context.push(
-                  AppRoute.verifyCode,
-                  extra: OtpArgs(email: _controller.text, verifyAction: AuthAction.verifyPassword),
+                context.pushNamed(
+                  BridegeXRouteNames.verifyPasswordCode,
+                  extra: OtpArgs(email: _controller.text,),
                 );
               } else if (state.status == AuthStatus.error) {
                 ErrorDialog.show(

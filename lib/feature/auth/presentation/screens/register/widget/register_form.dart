@@ -1,7 +1,7 @@
 import 'package:bridge_x/core/constant/app_feedback_messages.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
-import 'package:bridge_x/core/navigation/bridge_x_route_constant.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/utils/validator.dart';
 import 'package:bridge_x/core/widget/bridge_x_button.dart';
@@ -10,7 +10,6 @@ import 'package:bridge_x/core/widget/bridge_x_text_form_field.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:bridge_x/core/services/logger_service.dart';
 import 'package:bridge_x/core/widget/error_dialog.dart';
-
 import 'package:bridge_x/feature/auth/presentation/controller/auth_cubit.dart';
 import 'package:bridge_x/feature/auth/presentation/controller/auth_state.dart';
 import 'package:bridge_x/core/utils/enum/auth_enum.dart';
@@ -70,7 +69,10 @@ class _RegisterFormState extends State<RegisterForm> {
           );
         } else if (state.status == AuthStatus.success) {
           LoggerService.info('Registration successful', tag: 'RegisterForm');
-          context.push(AppRoute.verifyCode, extra:OtpArgs(email: _emailController.text, verifyAction: AuthAction.verifyEmail));
+          context.pushNamed(
+            BridegeXRouteNames.verifyEmailCode,
+            extra: OtpArgs(email: _emailController.text,),
+          );
           BridgeXSnackBar.showSuccess(
             context: context,
             message: state.message ?? AppFeedbackMessages.registrationSuccess,
@@ -81,63 +83,65 @@ class _RegisterFormState extends State<RegisterForm> {
         key: _formKey,
         child: Column(
           children: [
-          BridgeXTextFormField(
-            label: AppStrings.fullName,
-            hint: AppStrings.fullNameHint,
-            controller: _nameController,
-            keyboardType: TextInputType.name,
-            prefixIcon: Icons.person_outline,
-            validator: AppValidator.name,
-            textInputAction: TextInputAction.next,
-          ),
-          VerticalSpacing(AppSpacing.md),
-          BridgeXTextFormField(
-            label: AppStrings.email,
-            hint: AppStrings.emailHint,
-            controller: _emailController,
-            keyboardType: TextInputType.emailAddress,
-            prefixIcon: Icons.email_outlined,
-            validator: AppValidator.email,
-            textInputAction: TextInputAction.next,
-          ),
-          VerticalSpacing(AppSpacing.md),
-          BridgeXTextFormField(
-            label: AppStrings.password,
-            hint: AppStrings.passwordHint,
-            controller: _passwordController,
-            keyboardType: TextInputType.visiblePassword,
-            obscureText: true,
-            prefixIcon: Icons.lock_outline,
-            validator: AppValidator.password,
-            textInputAction: TextInputAction.next,
-          ),
-          VerticalSpacing(AppSpacing.md),
-          BridgeXTextFormField(
-            label: AppStrings.confirmPassword,
-            hint: AppStrings.passwordHint,
-            controller: _confirmPasswordController,
-            keyboardType: TextInputType.visiblePassword,
-            obscureText: true,
-            prefixIcon: Icons.security_outlined,
-            validator: (val) => AppValidator.confirmPassword(_passwordController.text)(val),
-            textInputAction: TextInputAction.done,
-          ),
-          VerticalSpacing(AppSpacing.md),
-          _buildTermsRow(colors),
-          VerticalSpacing(AppSpacing.lg),
-          BlocBuilder<AuthCubit, AuthState>(
-            builder: (context, state) {
-              final isLoading = state.status == AuthStatus.loading && state.action == AuthAction.register;
-              return BridgeXButton(
-                text: AppStrings.createAccount,
-                isLoading: isLoading,
-                onTap: _agreeTerms && !isLoading ? _onRegisterTapped : null,
-              );
-            },
-          ),
-        ],
+            BridgeXTextFormField(
+              label: AppStrings.fullName,
+              hint: AppStrings.fullNameHint,
+              controller: _nameController,
+              keyboardType: TextInputType.name,
+              prefixIcon: Icons.person_outline,
+              validator: AppValidator.name,
+              textInputAction: TextInputAction.next,
+            ),
+            VerticalSpacing(AppSpacing.md),
+            BridgeXTextFormField(
+              label: AppStrings.email,
+              hint: AppStrings.emailHint,
+              controller: _emailController,
+              keyboardType: TextInputType.emailAddress,
+              prefixIcon: Icons.email_outlined,
+              validator: AppValidator.email,
+              textInputAction: TextInputAction.next,
+            ),
+            VerticalSpacing(AppSpacing.md),
+            BridgeXTextFormField(
+              label: AppStrings.password,
+              hint: AppStrings.passwordHint,
+              controller: _passwordController,
+              keyboardType: TextInputType.visiblePassword,
+              obscureText: true,
+              prefixIcon: Icons.lock_outline,
+              validator: AppValidator.password,
+              textInputAction: TextInputAction.next,
+            ),
+            VerticalSpacing(AppSpacing.md),
+            BridgeXTextFormField(
+              label: AppStrings.confirmPassword,
+              hint: AppStrings.passwordHint,
+              controller: _confirmPasswordController,
+              keyboardType: TextInputType.visiblePassword,
+              obscureText: true,
+              prefixIcon: Icons.security_outlined,
+              validator: (val) => AppValidator.confirmPassword(_passwordController.text)(val),
+              textInputAction: TextInputAction.done,
+            ),
+            VerticalSpacing(AppSpacing.md),
+            _buildTermsRow(colors),
+            VerticalSpacing(AppSpacing.lg),
+            BlocBuilder<AuthCubit, AuthState>(
+              builder: (context, state) {
+                final isLoading =
+                    state.status == AuthStatus.loading && state.action == AuthAction.register;
+                return BridgeXButton(
+                  text: AppStrings.createAccount,
+                  isLoading: isLoading,
+                  onTap: _agreeTerms && !isLoading ? _onRegisterTapped : null,
+                );
+              },
+            ),
+          ],
+        ),
       ),
-    ));
+    );
   }
 
   Widget _buildTermsRow(dynamic colors) {
@@ -162,9 +166,7 @@ class _RegisterFormState extends State<RegisterForm> {
           child: RichText(
             text: TextSpan(
               text: AppStrings.agreeTermsPrefix,
-              style: context.textTheme.bodySmall?.copyWith(
-                color: colors.textSecondary,
-              ),
+              style: context.textTheme.bodySmall?.copyWith(color: colors.textSecondary),
               children: [
                 TextSpan(
                   text: AppStrings.termsOfService,
@@ -176,9 +178,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 ),
                 TextSpan(
                   text: AppStrings.andText,
-                  style: context.textTheme.bodySmall?.copyWith(
-                    color: colors.textSecondary,
-                  ),
+                  style: context.textTheme.bodySmall?.copyWith(color: colors.textSecondary),
                 ),
                 TextSpan(
                   text: AppStrings.privacyPolicy,
@@ -198,7 +198,10 @@ class _RegisterFormState extends State<RegisterForm> {
 
   void _onRegisterTapped() {
     if (_formKey.currentState?.validate() ?? false) {
-      LoggerService.debug('Attempting registration for: ${_emailController.text}', tag: 'RegisterForm');
+      LoggerService.debug(
+        'Attempting registration for: ${_emailController.text}',
+        tag: 'RegisterForm',
+      );
       context.read<AuthCubit>().register(
         name: _nameController.text.trim(),
         email: _emailController.text.trim(),

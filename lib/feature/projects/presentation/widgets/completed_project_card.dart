@@ -4,6 +4,7 @@ import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:bridge_x/feature/projects/presentation/widgets/project_status_badge.dart';
+import 'package:bridge_x/core/widget/horizontal_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -66,7 +67,7 @@ class CompletedProjectCard extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(width: 8.w),
+              HorizontalSpacing(AppSpacing.sm),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -75,7 +76,7 @@ class CompletedProjectCard extends StatelessWidget {
                     color: colors.gold,
                     size: 18.sp,
                   ),
-                  SizedBox(width: 3.w),
+                  HorizontalSpacing(AppSpacing.xs),
                   Text(
                     rating.toStringAsFixed(1),
                     style: AppTextStyles.titleMedium.copyWith(
@@ -115,7 +116,7 @@ class CompletedProjectCard extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    SizedBox(width: 4.w),
+                    HorizontalSpacing(AppSpacing.xs),
                     Icon(
                       Icons.arrow_forward,
                       color: colors.primary,

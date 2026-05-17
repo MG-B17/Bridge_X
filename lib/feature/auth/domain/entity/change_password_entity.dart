@@ -12,8 +12,8 @@ class ChangePasswordEntity {
   Map<String, dynamic> toJson() {
     return {
       'current_password': currentPassword,
-      'old_password': oldPassword,
-      'new_password': newPassword,
+      'password': oldPassword,
+      'password_confirmation': newPassword,
     };
   }
 }

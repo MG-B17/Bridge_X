@@ -2,6 +2,7 @@ import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/widget/horizontal_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -17,7 +18,7 @@ class TipBanner extends StatelessWidget {
         vertical: 14.h,
       ),
       decoration: BoxDecoration(
-        color: context.colors.primaryLight.withValues(alpha: 0.5),
+        color: context.colors.indigo.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
         border: Border.all(
           color: context.colors.primary.withValues(alpha: 0.12),
@@ -26,13 +27,13 @@ class TipBanner extends StatelessWidget {
       child: Row(
         children: [
           Text('💡', style: TextStyle(fontSize: 18.sp)),
-          SizedBox(width: 10.w),
+          HorizontalSpacing(10.w),
           Expanded(
             child: Text(
               AppStrings.tipBanner,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: context.colors.textPrimary,
-                fontWeight: FontWeight.w500,
+                color: context.colors.secondary,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),

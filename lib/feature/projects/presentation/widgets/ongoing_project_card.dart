@@ -6,6 +6,7 @@ import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:bridge_x/feature/projects/presentation/widgets/avatar_stack.dart';
 import 'package:bridge_x/feature/projects/presentation/widgets/project_progress_bar.dart';
 import 'package:bridge_x/feature/projects/presentation/widgets/project_status_badge.dart';
+import 'package:bridge_x/core/widget/horizontal_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -96,7 +97,7 @@ class OngoingProjectCard extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    SizedBox(width: 2.w),
+                    HorizontalSpacing(AppSpacing.xs),
                     Icon(
                       Icons.chevron_right_rounded,
                       color: colors.textSecondary,

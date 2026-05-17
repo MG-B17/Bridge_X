@@ -1,7 +1,7 @@
 import 'package:bridge_x/core/constant/app_feedback_messages.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
-import 'package:bridge_x/core/navigation/bridge_x_route_constant.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/utils/enum/auth_enum.dart';
 import 'package:bridge_x/core/navigation/screens_args/reset_password_args.dart';
@@ -101,13 +101,12 @@ class _OtpFormState extends State<OtpForm> {
                     context: context,
                     message: state.message ?? AppFeedbackMessages.verificationSuccess,
                   );
-                  widget.verifyAction == AuthAction.verifyPassword?
-                  context.push(
-                    AppRoute.changePassword,
-                    extra: ResetPasswordArgs(email: widget.email, token: state.resetToken!),
-                  ):context.push(
-                    AppRoute.login,
-                  );
+                  widget.verifyAction == AuthAction.verifyPassword
+                      ? context.pushNamed(
+                          BridegeXRouteNames.resetPassword,
+                          extra: ResetPasswordArgs(email: widget.email, token: state.resetToken!),
+                        )
+                      : context.pushNamed(BridegeXRouteNames.login);
                 } else if (state.status == AuthStatus.error) {
                   for (final c in _controllers) {
                     c.clear();

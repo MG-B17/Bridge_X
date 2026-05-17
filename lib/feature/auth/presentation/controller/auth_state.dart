@@ -1,7 +1,6 @@
 import 'package:bridge_x/core/utils/enum/auth_enum.dart';
 import 'package:equatable/equatable.dart';
 
-// Sentinel to distinguish "not provided" from explicit null
 const Object _undefined = Object();
 
 class AuthState extends Equatable {

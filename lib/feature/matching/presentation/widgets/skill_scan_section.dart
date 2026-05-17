@@ -2,6 +2,7 @@ import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/widget/horizontal_spacing.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,7 +39,7 @@ class SkillScanSection extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 8.h),
+        VerticalSpacing(AppSpacing.sm),
 
         // ── Scan progress bar ──
         ClipRRect(
@@ -118,7 +119,7 @@ class _VerificationStep extends StatelessWidget {
               ? Icon(Icons.check, color: Colors.white, size: 14.sp)
               : null,
         ),
-        SizedBox(width: 12.w),
+        HorizontalSpacing(AppSpacing.md),
         Expanded(
           child: Text(
             label,

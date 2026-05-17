@@ -1,3 +1,5 @@
+import 'package:bridge_x/core/init/app_state.dart';
+import 'package:bridge_x/core/init/init_app.dart';
 import 'package:bridge_x/core/network/api/api_client.dart';
 import 'package:bridge_x/core/network/api/dio_factory.dart';
 import 'package:bridge_x/core/network/network_info.dart';
@@ -21,13 +23,12 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
-
 final sl = GetIt.instance;
 
 Future<void> init() async {
   // state management
   sl.registerLazySingleton<ThemeCubit>(() => ThemeCubit(sl()));
-  sl.registerLazySingleton<OnboardingProvider>(() => OnboardingProvider(sl()));
+  sl.registerLazySingleton<OnboardingProvider>(() => OnboardingProvider(sl(), sl()));
   sl.registerLazySingleton<AuthCubit>(
     () => AuthCubit(
       loginUsecase: sl(),
@@ -37,21 +38,23 @@ Future<void> init() async {
       forgetPasswordUsecase: sl(),
       verifyPasswordUsecase: sl(),
       changePasswordUsecase: sl(),
+      appState: sl(),
     ),
   );
 
-  // usecases 
+  // usecases
   sl.registerLazySingleton<LoginUsecase>(() => LoginUsecase(authRepo: sl()));
   sl.registerLazySingleton<RegisterUsecase>(() => RegisterUsecase(authRepo: sl()));
   sl.registerLazySingleton<ResetPasswordUsecase>(() => ResetPasswordUsecase(authRepo: sl()));
   sl.registerLazySingleton<VerifyEmailUsecase>(() => VerifyEmailUsecase(authRepo: sl()));
   sl.registerLazySingleton<ForgetPasswordUsecase>(() => ForgetPasswordUsecase(authRepo: sl()));
   sl.registerLazySingleton<ChangePasswordUsecase>(() => ChangePasswordUsecase(authRepo: sl()));
-  sl.registerLazySingleton<VerifyPasswordUsecase>(()=>VerifyPasswordUsecase(authRepo: sl()));
+  sl.registerLazySingleton<VerifyPasswordUsecase>(() => VerifyPasswordUsecase(authRepo: sl()));
 
   // repositories
-  sl.registerLazySingleton<AuthRepo>(() => AuthRepoImplement(authRemoteData: sl(), networkInfo: sl(), secureStorageService: sl()));
-
+  sl.registerLazySingleton<AuthRepo>(
+    () => AuthRepoImplement(authRemoteData: sl(), networkInfo: sl(), secureStorageService: sl()),
+  );
 
   // data sources
   sl.registerLazySingleton<AuthRemoteData>(() => AuthRemoteDataImpl(apiClient: sl()));
@@ -61,9 +64,13 @@ Future<void> init() async {
   sl.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
   sl.registerLazySingleton<CacheService>(() => CacheServiceImpl(sl()));
   sl.registerLazySingleton<SecureStorageService>(
-    () => SecureStorageService(secureStorage: FlutterSecureStorage()),
+    () => SecureStorageService(
+      secureStorage: const FlutterSecureStorage(
+        aOptions: AndroidOptions(resetOnError: true),
+        iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
+      ),
+    ),
   );
-  
 
   // network
   sl.registerLazySingleton(() => InternetConnection());
@@ -71,4 +78,8 @@ Future<void> init() async {
   sl.registerLazySingleton<DioFactory>(() => DioFactory());
   sl.registerLazySingleton<ApiClient>(() => ApiClient(DioFactory.createBase()));
 
+
+  // other 
+  sl.registerLazySingleton<AppInitializer>(()=>AppInitializer());
+  sl.registerLazySingleton<AppState>(()=>AppState());
 }

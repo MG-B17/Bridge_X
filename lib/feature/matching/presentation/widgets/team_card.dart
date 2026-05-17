@@ -3,6 +3,7 @@ import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/app_color_schema.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/widget/horizontal_spacing.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -68,7 +69,7 @@ class TeamCard extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(width: 12.w),
+              HorizontalSpacing(AppSpacing.md),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +81,7 @@ class TeamCard extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    SizedBox(height: 2.h),
+                    VerticalSpacing(AppSpacing.xs),
                     Text(
                       category,
                       style: AppTextStyles.labelSmall.copyWith(
@@ -119,7 +120,7 @@ class TeamCard extends StatelessWidget {
             children: [
               // Mini avatar stack
               _MiniAvatarStack(count: currentMembers),
-              SizedBox(width: 8.w),
+              HorizontalSpacing(AppSpacing.sm),
               Text(
                 '$currentMembers/$maxMembers ${AppStrings.membersLabel}',
                 style: AppTextStyles.labelSmall.copyWith(

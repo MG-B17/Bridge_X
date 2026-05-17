@@ -2,6 +2,7 @@ import 'package:bridge_x/core/constant/app_feedback_messages.dart';
 import 'package:bridge_x/core/constant/app_validation_messages.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/utils/validator.dart';
 import 'package:bridge_x/core/widget/bridge_x_button.dart';
@@ -16,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:bridge_x/core/navigation/bridge_x_route_constant.dart';
 
 import 'package:bridge_x/core/widget/error_dialog.dart';
 
@@ -24,11 +24,7 @@ class ResetPasswordForm extends StatefulWidget {
   final String email;
   final String code;
 
-  const ResetPasswordForm({
-    super.key,
-    required this.email,
-    required this.code,
-  });
+  const ResetPasswordForm({super.key, required this.email, required this.code});
 
   @override
   State<ResetPasswordForm> createState() => _ResetPasswordFormState();
@@ -84,33 +80,29 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(
-                Icons.info_outline,
-                color: colors.textSecondary,
-                size: 16.sp,
-              ),
+              Icon(Icons.info_outline, color: colors.textSecondary, size: 16.sp),
               HorizontalSpacing(AppSpacing.xs),
               Expanded(
                 child: Text(
                   AppValidationMessages.passwordMinLength,
-                  style: text.bodySmall?.copyWith(
-                    color: colors.textSecondary,
-                  ),
+                  style: text.bodySmall?.copyWith(color: colors.textSecondary),
                 ),
               ),
             ],
           ),
           VerticalSpacing(AppSpacing.xl),
           BlocConsumer<AuthCubit, AuthState>(
-            listenWhen: (prev, curr) => curr.action == AuthAction.resetPassword && prev.status != curr.status,
-            buildWhen: (prev, curr) => curr.action == AuthAction.resetPassword && prev.status != curr.status,
+            listenWhen: (prev, curr) =>
+                curr.action == AuthAction.resetPassword && prev.status != curr.status,
+            buildWhen: (prev, curr) =>
+                curr.action == AuthAction.resetPassword && prev.status != curr.status,
             listener: (context, state) {
               if (state.status == AuthStatus.success) {
                 BridgeXSnackBar.showSuccess(
                   context: context,
                   message: state.message ?? AppFeedbackMessages.passwordResetSuccess,
                 );
-                context.go(AppRoute.login);
+                context.goNamed(BridegeXRouteNames.login);
               } else if (state.status == AuthStatus.error) {
                 ErrorDialog.show(
                   context: context,

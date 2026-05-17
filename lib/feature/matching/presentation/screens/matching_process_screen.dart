@@ -1,14 +1,14 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
-import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/widget/bridge_x_back_button.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:bridge_x/feature/matching/presentation/widgets/dynamic_insight_card.dart';
 import 'package:bridge_x/feature/matching/presentation/widgets/matching_progress_ring.dart';
 import 'package:bridge_x/feature/matching/presentation/widgets/skill_scan_section.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
+
+import '../widgets/matching_process_title.dart';
 
 class MatchingProcessScreen extends StatelessWidget {
   const MatchingProcessScreen({super.key});
@@ -29,46 +29,14 @@ class MatchingProcessScreen extends StatelessWidget {
           child: Column(
             children: [
               // ── Back button ──
-              Align(
+              const Align(
                 alignment: Alignment.centerLeft,
-                child: GestureDetector(
-                  onTap: () => context.pop(),
-                  child: Container(
-                    width: 40.w,
-                    height: 40.w,
-                    decoration: BoxDecoration(
-                      color: colors.surface,
-                      shape: BoxShape.circle,
-                      boxShadow: AppSpacing.subtleShadow,
-                    ),
-                    child: Icon(
-                      Icons.arrow_back,
-                      color: colors.textPrimary,
-                      size: 20.sp,
-                    ),
-                  ),
-                ),
+                child: BridgeXBackButton(),
               ),
               VerticalSpacing(AppSpacing.xl),
 
               // ── Title ──
-              Text(
-                AppStrings.matchingTitle,
-                style: AppTextStyles.displayLarge.copyWith(
-                  color: colors.textPrimary,
-                  fontWeight: FontWeight.w800,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 8.h),
-              Text(
-                AppStrings.matchingSubtitleFull,
-                style: AppTextStyles.bodyMedium.copyWith(
-                  color: colors.textSecondary,
-                  height: 1.5,
-                ),
-                textAlign: TextAlign.center,
-              ),
+              const MatchingProcessTitle(),
               VerticalSpacing(AppSpacing.xxl),
 
               // ── Progress ring ──
@@ -84,7 +52,7 @@ class MatchingProcessScreen extends StatelessWidget {
 
               // ── Skill scan ──
               const SkillScanSection(),
-              SizedBox(height: 40.h),
+              VerticalSpacing(AppSpacing.section),
             ],
           ),
         ),

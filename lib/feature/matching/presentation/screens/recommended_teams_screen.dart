@@ -1,10 +1,12 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/bridge_x_back_button.dart';
 import 'package:bridge_x/core/widget/section_header.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../widgets/team_cards_list.dart';
 import '../widgets/try_again_button.dart';
@@ -21,10 +23,7 @@ class RecommendedTeamsScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(
-            horizontal: AppSpacing.md,
-            vertical: AppSpacing.md,
-          ),
+          padding: EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.md),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -35,7 +34,7 @@ class RecommendedTeamsScreen extends StatelessWidget {
               // ── Try Again ──
               TryAgainButton(
                 onTap: () {
-                  // TODO: Retry matching
+                  context.pushReplacementNamed(BridegeXRouteNames.matchingProcess);
                 },
               ),
               VerticalSpacing(AppSpacing.xl),

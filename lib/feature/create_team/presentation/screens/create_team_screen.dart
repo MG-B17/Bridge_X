@@ -1,6 +1,7 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/widget/bridge_x_back_button.dart';
 import 'package:bridge_x/core/widget/bridge_x_button.dart';
 import 'package:bridge_x/core/widget/bridge_x_text_form_field.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
@@ -12,7 +13,7 @@ import 'package:bridge_x/feature/create_team/presentation/widgets/team_members_s
 import 'package:bridge_x/feature/create_team/presentation/widgets/team_type_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
+
 
 class CreateTeamScreen extends StatefulWidget {
   const CreateTeamScreen({super.key});
@@ -57,7 +58,7 @@ class _CreateTeamScreenState extends State<CreateTeamScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // ── Back button ──
-                    _BackButton(onTap: () => context.pop()),
+                    const BridgeXBackButton(),
                     VerticalSpacing(AppSpacing.sm),
 
                     // ── Leader banner ──
@@ -154,24 +155,3 @@ class _CreateTeamScreenState extends State<CreateTeamScreen> {
   }
 }
 
-// ── Back button ─────────────────────────────────────────────────────────────
-class _BackButton extends StatelessWidget {
-  const _BackButton({required this.onTap});
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Padding(
-        padding: EdgeInsets.only(top: 4.h, bottom: 4.h),
-        child: Icon(
-          Icons.arrow_back,
-          color: context.colors.textPrimary,
-          size: 24.sp,
-        ),
-      ),
-    );
-  }
-}

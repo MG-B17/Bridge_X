@@ -1,6 +1,6 @@
 import 'package:bridge_x/core/constant/app_feedback_messages.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
-import 'package:bridge_x/core/navigation/bridge_x_route_constant.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/services/logger_service.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/utils/validator.dart';
@@ -8,7 +8,6 @@ import 'package:bridge_x/core/widget/bridge_x_button.dart';
 import 'package:bridge_x/core/widget/bridge_x_snackbar.dart';
 import 'package:bridge_x/core/widget/bridge_x_text_form_field.dart';
 import 'package:bridge_x/core/widget/error_dialog.dart';
-
 import 'package:bridge_x/core/widget/text_button.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:bridge_x/feature/auth/presentation/controller/auth_cubit.dart';
@@ -46,8 +45,6 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return BlocListener<AuthCubit, AuthState>(
       listenWhen: (prev, curr) => curr.action == AuthAction.login && prev.status != curr.status,
       listener: (context, state) {
@@ -60,7 +57,11 @@ class _LoginFormState extends State<LoginForm> {
           );
         } else if (state.status == AuthStatus.success) {
           LoggerService.info('Login successful', tag: 'LoginForm');
-          BridgeXSnackBar.showSuccess(context: context, message: state.message ?? AppFeedbackMessages.loginSuccess);
+          BridgeXSnackBar.showSuccess(
+            context: context,
+            message: state.message ?? AppFeedbackMessages.loginSuccess,
+          );
+          context.goNamed(BridegeXRouteNames.home);
         }
       },
       child: Form(
@@ -95,7 +96,8 @@ class _LoginFormState extends State<LoginForm> {
             VerticalSpacing(AppSpacing.sm),
             BlocBuilder<AuthCubit, AuthState>(
               builder: (context, state) {
-                final isLoading = state.status == AuthStatus.loading && state.action == AuthAction.login;
+                final isLoading =
+                    state.status == AuthStatus.loading && state.action == AuthAction.login;
                 return BridgeXButton(
                   text: AppStrings.login,
                   isLoading: isLoading,
@@ -116,7 +118,7 @@ class _LoginFormState extends State<LoginForm> {
         BridgeXTextButton(
           text: AppStrings.forgotPassword,
           onTap: () {
-            context.push(AppRoute.forgotPassword);
+            context.pushNamed(BridegeXRouteNames.forgotPassword);
           },
         ),
       ],

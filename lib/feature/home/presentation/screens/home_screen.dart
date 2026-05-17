@@ -1,9 +1,6 @@
-import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../widgets/ai_insights_card.dart';
 import '../widgets/greeting_header.dart';
 import '../widgets/productivity_section.dart';
@@ -18,13 +15,12 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.colors.scaffoldBg,
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           padding: EdgeInsets.symmetric(
-            horizontal: AppSpacing.md,
-            vertical: AppSpacing.md,
+            horizontal: AppSpacing.lg,
+            vertical: AppSpacing.lg,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,7 +30,7 @@ class HomeScreen extends StatelessWidget {
               const TipBanner(),
               VerticalSpacing(AppSpacing.md),
               const TeamActionButtons(),
-              VerticalSpacing(AppSpacing.md),
+              VerticalSpacing(AppSpacing.xl),
               const StatsRow(),
               VerticalSpacing(AppSpacing.xl),
               const ProductivitySection(),
@@ -42,7 +38,6 @@ class HomeScreen extends StatelessWidget {
               const ProjectBarsCard(),
               VerticalSpacing(AppSpacing.md),
               const AiInsightsCard(),
-              SizedBox(height: 24.h),
             ],
           ),
         ),

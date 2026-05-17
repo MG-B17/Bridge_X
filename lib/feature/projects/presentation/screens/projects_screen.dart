@@ -1,9 +1,9 @@
 import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:go_router/go_router.dart';
 import '../widgets/project_filter_tabs.dart';
 import '../widgets/projects_empty_state.dart';
 import '../widgets/projects_header.dart';
@@ -28,10 +28,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(
-            horizontal: AppSpacing.md,
-            vertical: AppSpacing.md,
-          ),
+          padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -52,11 +49,11 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                     // TODO: Navigate to explore public teams
                   },
                   onCreateTeam: () {
-                    // TODO: Navigate to create team
+                    context.pushNamed(BridegeXRouteNames.createTeam);
                   },
                 ),
 
-              SizedBox(height: 24.h),
+              VerticalSpacing(AppSpacing.xxl),
             ],
           ),
         ),

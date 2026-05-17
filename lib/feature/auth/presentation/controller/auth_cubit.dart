@@ -1,4 +1,5 @@
 import 'package:bridge_x/core/constant/app_feedback_messages.dart';
+import 'package:bridge_x/core/init/app_state.dart';
 import 'package:bridge_x/core/utils/enum/auth_enum.dart';
 import 'package:bridge_x/feature/auth/domain/entity/change_password_entity.dart';
 import 'package:bridge_x/feature/auth/domain/entity/forget_password_entity.dart';
@@ -24,7 +25,8 @@ class AuthCubit extends Cubit<AuthState> {
     required this.verifyEmailUsecase,
     required this.forgetPasswordUsecase,
     required this.changePasswordUsecase,
-    required this.verifyPasswordUsecase
+    required this.verifyPasswordUsecase,
+    required this.appState,
   }) : super(AuthState());
 
   final LoginUsecase loginUsecase;
@@ -34,6 +36,7 @@ class AuthCubit extends Cubit<AuthState> {
   final ForgetPasswordUsecase forgetPasswordUsecase;
   final ChangePasswordUsecase changePasswordUsecase;
   final VerifyPasswordUsecase verifyPasswordUsecase;
+  final AppState appState;
 
   Future<void> login({required String email, required String password}) async {
     emit(state.copyWith(status: AuthStatus.loading, action: AuthAction.login));
@@ -42,13 +45,29 @@ class AuthCubit extends Cubit<AuthState> {
     );
     result.fold(
       (failure) => emit(state.copyWith(status: AuthStatus.error, message: failure.message)),
-      (success) => emit(state.copyWith(status: AuthStatus.success, message: success)),
+      (success) {
+        // Update AppState → GoRouter refreshListenable fires → auto-navigates to home
+        appState.isLoggedIn = true;
+        emit(state.copyWith(status: AuthStatus.success, message: success));
+      },
     );
   }
 
-  Future<void> register({required String name, required String email, required String password, required String passwordConfirmation}) async {
+  Future<void> register({
+    required String name,
+    required String email,
+    required String password,
+    required String passwordConfirmation,
+  }) async {
     emit(state.copyWith(status: AuthStatus.loading, action: AuthAction.register));
-    final result = await registerUsecase(registerEntity: RegisterEntity(name: name, email: email, password: password, passwordConfirmation: passwordConfirmation));
+    final result = await registerUsecase(
+      registerEntity: RegisterEntity(
+        name: name,
+        email: email,
+        password: password,
+        passwordConfirmation: passwordConfirmation,
+      ),
+    );
     result.fold(
       (failure) => emit(state.copyWith(status: AuthStatus.error, message: failure.message)),
       (success) => emit(state.copyWith(status: AuthStatus.success, message: success)),
@@ -57,17 +76,20 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> verifyEmail({required String email, required String code}) async {
     emit(state.copyWith(status: AuthStatus.loading, action: AuthAction.verifyEmail));
-    final result = await verifyEmailUsecase(verifyCodeEntity: VerifyCodeEntity(email: email, code: code));
+    final result = await verifyEmailUsecase(
+      verifyCodeEntity: VerifyCodeEntity(email: email, code: code),
+    );
     result.fold(
       (failure) => emit(state.copyWith(status: AuthStatus.error, message: failure.message)),
       (success) => emit(state.copyWith(status: AuthStatus.success, message: success)),
     );
   }
 
-
   Future<void> forgetPassword({required String email}) async {
     emit(state.copyWith(status: AuthStatus.loading, action: AuthAction.forgetPassword));
-    final result = await forgetPasswordUsecase(forgetPasswordEntity: ForgetPasswordEntity(email: email));
+    final result = await forgetPasswordUsecase(
+      forgetPasswordEntity: ForgetPasswordEntity(email: email),
+    );
     result.fold(
       (failure) => emit(state.copyWith(status: AuthStatus.error, message: failure.message)),
       (success) => emit(state.copyWith(status: AuthStatus.success, message: success)),
@@ -76,30 +98,55 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> verifyPassword({required String email, required String code}) async {
     emit(state.copyWith(status: AuthStatus.loading, action: AuthAction.verifyPassword));
-    final result = await verifyPasswordUsecase(verifyPasswordEntity: VerifyCodeEntity(email: email, code: code));
+    final result = await verifyPasswordUsecase(
+      verifyPasswordEntity: VerifyCodeEntity(email: email, code: code),
+    );
     result.fold(
       (failure) => emit(state.copyWith(status: AuthStatus.error, message: failure.message)),
-      (entity) => emit(state.copyWith(
-        status: AuthStatus.success,
-        message: entity.message,
-        resetToken: entity.resetToken,
-      )),
+      (entity) => emit(
+        state.copyWith(
+          status: AuthStatus.success,
+          message: entity.message,
+          resetToken: entity.resetToken,
+        ),
+      ),
     );
   }
 
-
-  Future<void> resetPassword({required String email, required String code, required String newPassword, required String passwordConfirmation}) async {
+  Future<void> resetPassword({
+    required String email,
+    required String code,
+    required String newPassword,
+    required String passwordConfirmation,
+  }) async {
     emit(state.copyWith(status: AuthStatus.loading, action: AuthAction.resetPassword));
-    final result = await resetPasswordUsecase(resetPasswordEntity: ResetPasswordEntity(email: email, password: newPassword, confirmPassword: passwordConfirmation,resetToken: code));
+    final result = await resetPasswordUsecase(
+      resetPasswordEntity: ResetPasswordEntity(
+        email: email,
+        password: newPassword,
+        confirmPassword: passwordConfirmation,
+        resetToken: code,
+      ),
+    );
     result.fold(
       (failure) => emit(state.copyWith(status: AuthStatus.error, message: failure.message)),
       (success) => emit(state.copyWith(status: AuthStatus.success, message: success)),
     );
   }
 
-  Future<void> changePassword({required String currentPassword, required String newPassword, required String passwordConfirmation}) async {
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+    required String passwordConfirmation,
+  }) async {
     emit(state.copyWith(status: AuthStatus.loading, action: AuthAction.changePassword));
-    final result = await changePasswordUsecase(changePasswordEntity: ChangePasswordEntity(currentPassword: currentPassword, newPassword: newPassword, oldPassword: passwordConfirmation));
+    final result = await changePasswordUsecase(
+      changePasswordEntity: ChangePasswordEntity(
+        currentPassword: currentPassword,
+        newPassword: newPassword,
+        oldPassword: passwordConfirmation,
+      ),
+    );
     result.fold(
       (failure) => emit(state.copyWith(status: AuthStatus.error, message: failure.message)),
       (success) => emit(state.copyWith(status: AuthStatus.success, message: success)),
@@ -111,8 +158,11 @@ class AuthCubit extends Cubit<AuthState> {
     final result = await verifyPasswordUsecase.authRepo.logout();
     result.fold(
       (failure) => emit(state.copyWith(status: AuthStatus.error, message: failure.message)),
-      (_) => emit(state.copyWith(status: AuthStatus.success, message: AppFeedbackMessages.logoutSuccess)),
+      (_) {
+        // Reset AppState → GoRouter fires → auto-navigates back to login
+        appState.reset();
+        emit(state.copyWith(status: AuthStatus.success, message: AppFeedbackMessages.logoutSuccess));
+      },
     );
   }
-
 }

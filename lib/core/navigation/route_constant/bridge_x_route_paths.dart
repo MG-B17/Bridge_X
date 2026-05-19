@@ -26,6 +26,7 @@ class BridgeXRoutePaths {
 
   // chat root 
   static const String chat = '/chat';
+  static const String chatDetails = 'chat-details';
 
   // project root 
   static const String projects = '/projects';

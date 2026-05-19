@@ -230,15 +230,35 @@ class AppStrings {
   static const String startCollaboration = 'Start collaborating with your team now';
 
   // ── Chat ──────────────────────────────────────────────────────────────────
-  static const String teamChat = 'Team Chat';
-  static const String teamChatSubtitle = 'TEAM CHAT • 5 MEMBERS';
-  static const String today = 'Today';
-  static const String typeMessage = 'Type a message...';
-  static const String noMessages = 'No messages yet';
-  static const String noMessagesSubtitle =
+
+  // Chat List
+  static const String searchTeamsOrMessages =
+      'Search teams or messages...';
+  static const String recentConversations =
+      'RECENT CONVERSATIONS';
+
+  // Empty Chat
+  static const String noMessagesYet = 'No messages yet';
+
+  static const String noMessagesDescription =
       'Start a conversation with your team to stay synced and collaborative. Real-time updates help everyone move faster.';
-  static const String recentConversations = 'Recent Conversations';
-  static const String openTeamChat = 'Open Team Chat';
+
+  // Chat Details
+  static const String today = 'TODAY';
+  static const String teamAlpha = 'Team Alpha';
+  static const String membersOnline = '5 members online';
+  static const String typeYourMessage =
+      'Type your message...';
+
+  // Dummy Messages
+  static const String msgBackendComplete =
+      "Hey team! Quick update — the backend API integration is complete 🎉";
+
+  static const String msgUiReply =
+      "Amazing! I'll connect the UI with it now.";
+
+  static const String msgAuthTest =
+      "Please test authentication endpoints too.";
 
   // ── Tasks ─────────────────────────────────────────────────────────────────
   static const String createTask = 'Create Task';

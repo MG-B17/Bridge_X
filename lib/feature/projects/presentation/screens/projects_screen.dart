@@ -39,8 +39,6 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                 onChanged: (i) => setState(() => _selectedFilter = i),
               ),
               VerticalSpacing(AppSpacing.md),
-
-              // ── Content: empty state vs project cards ──
               if (_hasProjects)
                 ProjectsListContent(selectedFilter: _selectedFilter)
               else

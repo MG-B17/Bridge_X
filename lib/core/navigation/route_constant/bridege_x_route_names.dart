@@ -13,6 +13,7 @@ class BridegeXRouteNames {
   static const String matching = '/matching';
   static const String home = 'home';
   static const String chat = 'chat';
+  static const String chatDetails = 'chat-details';
   static const String projects = 'projects';
   static const String profile = 'profile';
   static const String notifications = 'notifications';

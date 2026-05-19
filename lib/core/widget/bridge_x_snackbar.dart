@@ -1,3 +1,4 @@
+import 'package:bridge_x/core/utils/app_shadow.dart';
 import 'package:bridge_x/core/constant/app_feedback_messages.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_colors.dart';
@@ -86,7 +87,7 @@ class BridgeXSnackBar {
           border: Border(
             left: BorderSide(color: accentColor, width: AppSpacing.xs),
           ),
-          boxShadow: AppSpacing.snackBarShadow(accentColor),
+          boxShadow: AppShadow.snackBar(accentColor),
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
@@ -153,3 +154,4 @@ class BridgeXSnackBar {
       ..showSnackBar(snackBar);
   }
 }
+

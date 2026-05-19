@@ -80,7 +80,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
               child: Row(
                 children: [
                   Icon(Icons.add, color: context.colors.primary, size: 18.sp),
-                  HorizontalSpacing(4.w),
+                  HorizontalSpacing(AppSpacing.spacing4),
                   Text(
                     AppStrings.addProject,
                     style: context.textTheme.bodyMedium?.copyWith(
@@ -93,13 +93,13 @@ class _ProjectsSectionState extends State<ProjectsSection> {
             ),
           ],
         ),
-        VerticalSpacing(AppSpacing.sm),
+        VerticalSpacing(AppSpacing.spacing8),
 
         ListView.separated(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: _projects.length,
-          separatorBuilder: (context, index) => VerticalSpacing(AppSpacing.sm),
+          separatorBuilder: (context, index) => VerticalSpacing(AppSpacing.spacing8),
           itemBuilder: (context, index) {
             final project = _projects[index];
             return ProjectCard(
@@ -110,7 +110,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
         ),
 
         if (_isAddingProject) ...[
-          VerticalSpacing(AppSpacing.sm),
+          VerticalSpacing(AppSpacing.spacing8),
           AddProjectForm(
             projectNameController: _projectNameController,
             roleController: _roleController,

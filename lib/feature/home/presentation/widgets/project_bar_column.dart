@@ -1,5 +1,10 @@
+import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/theme/bridge_x_colors.dart';
+import 'package:bridge_x/core/utils/app_gradient.dart';
+import 'package:bridge_x/core/utils/app_shadow.dart';
+import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProjectBarColumn extends StatelessWidget {
   const ProjectBarColumn({
@@ -13,78 +18,58 @@ class ProjectBarColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final barHeight = 100.h;
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Text(
           '${(percentage * 100).toInt()}%',
           style: TextStyle(
-            color: const Color(0xFF0A3470),
+            color: context.colors.textPrimary,
             fontWeight: FontWeight.w800,
-            fontSize:14.sp,
+            fontSize: AppSpacing.fontSize14,
           ),
         ),
 
-        SizedBox(height: 16.h),
+        VerticalSpacing(AppSpacing.height16),
 
         SizedBox(
-          height: barHeight,
-          width: 15.w,
+          height: AppSpacing.barHeight,
+          width: AppSpacing.barColumnWidth,
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: [
-              // ── Track ──
               Container(
-                width: 28.w,
-                height: barHeight,
+                width: AppSpacing.barWidth,
+                height: AppSpacing.barHeight,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFD9D9DD),
-                  borderRadius: BorderRadius.circular(20.r),
+                  color: AppColors.barTrack,
+                  borderRadius: BorderRadius.circular(AppSpacing.radius20),
                 ),
               ),
 
-              // ── Filled bar ──
               AnimatedContainer(
-                duration: const Duration(milliseconds: 700),
+                duration: AppSpacing.animationSlow,
                 curve: Curves.easeOutCubic,
-                width: 28.w,
-                height: barHeight * percentage,
+                width: AppSpacing.barWidth,
+                height: AppSpacing.barHeight * percentage,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.r),
-
-                  gradient: const LinearGradient(
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    colors: [
-                      Color(0xFF5B2392),
-                      Color(0xFF133E87),
-                      Color(0xFF3BC7E8),
-                    ],
-                  ),
-
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0xFF3BC7E8),
-                      blurRadius: 10,
-                      spreadRadius: -2,
-                    ),
-                  ],
+                  borderRadius: BorderRadius.circular(AppSpacing.radius20),
+                  gradient: AppGradient.barFill,
+                  boxShadow: AppShadow.barGlow,
                 ),
               ),
             ],
           ),
         ),
 
-        SizedBox(height: 18.h),
+        VerticalSpacing(AppSpacing.height10),
 
         Text(
           name,
           style: TextStyle(
-            color: const Color(0xFF747A87),
+            color: context.colors.textSecondary,
             fontWeight: FontWeight.w700,
-            fontSize: 12.sp,
+            fontSize: AppSpacing.fontSize12,
           ),
         ),
       ],

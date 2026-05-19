@@ -1,9 +1,9 @@
+import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/horizontal_spacing.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:bridge_x/feature/my_tasks/data/model/task_model.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 
 class TaskDetailsHeaderCard extends StatelessWidget {
@@ -15,10 +15,10 @@ class TaskDetailsHeaderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(AppSpacing.md),
+      padding: EdgeInsets.all(AppSpacing.spacing16),
       decoration: BoxDecoration(
         color: context.colors.surface,
-        borderRadius: BorderRadius.circular(AppSpacing.radiusCardLarge),
+        borderRadius: BorderRadius.circular(AppSpacing.radius16),
         border: Border.all(color: context.colors.divider),
       ),
       child: Column(
@@ -28,20 +28,20 @@ class TaskDetailsHeaderCard extends StatelessWidget {
             children: [
               _buildTag(
                 context,
-                'IN PROGRESS',
+                AppStrings.inProgress.toUpperCase(),
                 context.colors.primary,
                 context.colors.primary.withValues(alpha: 0.1),
               ),
-              HorizontalSpacing(AppSpacing.xs),
+              HorizontalSpacing(AppSpacing.spacing4),
               _buildTag(
                 context,
-                'HIGH',
+                AppStrings.high.toUpperCase(),
                 context.colors.error,
                 context.colors.error.withValues(alpha: 0.1),
               ),
             ],
           ),
-          VerticalSpacing(AppSpacing.md),
+          VerticalSpacing(AppSpacing.spacing16),
           Text(
             task.project.toUpperCase(),
             style: context.textTheme.labelSmall?.copyWith(
@@ -50,7 +50,7 @@ class TaskDetailsHeaderCard extends StatelessWidget {
               letterSpacing: 1.0,
             ),
           ),
-          VerticalSpacing(AppSpacing.xs),
+          VerticalSpacing(AppSpacing.spacing4),
           Text(
             task.title,
             style: context.textTheme.headlineSmall?.copyWith(
@@ -65,17 +65,20 @@ class TaskDetailsHeaderCard extends StatelessWidget {
 
   Widget _buildTag(BuildContext context, String text, Color color, Color bgColor) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+      padding: EdgeInsets.symmetric(
+        horizontal: AppSpacing.spacing10,
+        vertical: AppSpacing.spacing4,
+      ),
       decoration: BoxDecoration(
         color: bgColor,
-        borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+        borderRadius: BorderRadius.circular(AppSpacing.radius32),
       ),
       child: Text(
         text,
         style: context.textTheme.labelSmall?.copyWith(
           color: color,
           fontWeight: FontWeight.bold,
-          fontSize: 10.sp,
+          fontSize: AppSpacing.fontSize10,
         ),
       ),
     );

@@ -15,7 +15,6 @@ class GreetingHeader extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // ── Left: Greeting text ──
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,7 +25,7 @@ class GreetingHeader extends StatelessWidget {
                   color: context.colors.textPrimary,
                 ),
               ),
-              VerticalSpacing(AppSpacing.xs),
+              VerticalSpacing(AppSpacing.spacing4),
               Text(
                 AppStrings.greetingSubtitle,
                 style: AppTextStyles.bodyMedium.copyWith(
@@ -37,7 +36,7 @@ class GreetingHeader extends StatelessWidget {
           ),
         ),
 
-        // ── Right: Notification bell ──
+        
         const NotificationBellButton(),
       ],
     );

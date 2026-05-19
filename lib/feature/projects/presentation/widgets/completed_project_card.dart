@@ -1,3 +1,4 @@
+import 'package:bridge_x/core/utils/app_shadow.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
@@ -41,7 +42,7 @@ class CompletedProjectCard extends StatelessWidget {
         border: Border.all(
           color: colors.divider.withValues(alpha: 0.3),
         ),
-        boxShadow: AppSpacing.subtleShadow,
+        boxShadow: AppShadow.subtle,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,3 +139,4 @@ class CompletedProjectCard extends StatelessWidget {
     );
   }
 }
+

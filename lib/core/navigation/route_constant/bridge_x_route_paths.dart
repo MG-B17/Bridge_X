@@ -6,7 +6,7 @@ class BridgeXRoutePaths {
 
   // login root 
   static const String login = '/login';
-  static const String forgotPassword = 'forgot-password';
+  static const String forgotPassword = '/forgot-password';
   static const String verifyPasswordCode = 'verify-password-code';
   static const String resetPassword = 'reset-password';
 

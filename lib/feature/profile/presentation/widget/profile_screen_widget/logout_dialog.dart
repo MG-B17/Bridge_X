@@ -1,5 +1,8 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/core/di/di.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/init/app_state.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -27,7 +30,9 @@ class LogoutDialog {
           ),
           TextButton(
             onPressed: () {
-              context.pop(context);
+              AppState appState = sl<AppState>();
+              appState.isLoggedIn = false;
+              context.goNamed(BridegeXRouteNames.login);
             },
             child: Text(
               AppStrings.logout,

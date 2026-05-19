@@ -19,7 +19,7 @@ class ProductivitySection extends StatelessWidget {
           AppStrings.yourProductivity,
           style: AppTextStyles.headlineSmall.copyWith(color: context.colors.textPrimary),
         ),
-        VerticalSpacing(AppSpacing.md),
+        VerticalSpacing(AppSpacing.spacing16),
         const ProductivityChart(),
       ],
     );

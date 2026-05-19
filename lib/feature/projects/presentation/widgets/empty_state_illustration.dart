@@ -1,3 +1,4 @@
+import 'package:bridge_x/core/utils/app_shadow.dart';
 import 'dart:math';
 
 import 'package:bridge_x/core/extensions/context_extension.dart';
@@ -121,7 +122,7 @@ class _FloatingTag extends StatelessWidget {
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(AppSpacing.radiusPill),
-        boxShadow: AppSpacing.subtleShadow,
+        boxShadow: AppShadow.subtle,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -182,3 +183,4 @@ class _DashedCirclePainter extends CustomPainter {
   bool shouldRepaint(covariant _DashedCirclePainter old) =>
       old.color != color || old.strokeWidth != strokeWidth;
 }
+

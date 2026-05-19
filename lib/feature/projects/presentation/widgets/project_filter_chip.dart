@@ -1,3 +1,4 @@
+import 'package:bridge_x/core/utils/app_shadow.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
@@ -35,7 +36,7 @@ class ProjectFilterChip extends StatelessWidget {
             color: isSelected ? colors.primary : colors.divider,
             width: 1.2,
           ),
-          boxShadow: isSelected ? AppSpacing.subtleShadow : null,
+          boxShadow: isSelected ? AppShadow.subtle : null,
         ),
         child: Text(
           label,
@@ -49,3 +50,4 @@ class ProjectFilterChip extends StatelessWidget {
     );
   }
 }
+

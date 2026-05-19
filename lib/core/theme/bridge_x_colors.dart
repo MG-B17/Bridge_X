@@ -36,6 +36,31 @@ class AppColors {
   static const Color errorDialogBg = Color(0xFFCBDAFD);
   static const Color today = Color(0xFFE2D9FF);
 
+  // ── Home / Chart card palette ──────────────────────────────────────────────
+  static const Color cardSurfaceMid    = Color(0xFFF7FBFF);
+  static const Color cardSurfaceEnd    = Color(0xFFEAF6FF);
+  static const Color cardBorderTint    = Color(0xFFC3D6E2);
+  static const Color glowBlue          = Color(0xFF80BBFF);
+
+  // ── Bar chart gradient ─────────────────────────────────────────────────────
+  static const Color barGradientBottom = Color(0xFF5B2392);
+  static const Color barGradientMid    = Color(0xFF133E87);
+  static const Color barGradientTop    = Color(0xFF3BC7E8);
+  static const Color barGlow           = Color(0xFF3BC7E8);
+  static const Color barTrack          = Color(0xFFD9D9DD);
+
+  // ── Project bars card palette ──────────────────────────────────────────────
+  static const Color cardBgStart       = Color(0xFFF8FBFF);
+  static const Color cardBgMid         = Color(0xFFF4FAFF);
+  static const Color cardBgEnd         = Color(0xFFEFF8FF);
+  static const Color cardBorderBlue    = Color(0xFF8BAFFF);
+  static const Color particleCyan      = Color(0xFF9CEBFF);
+
+  static const Color shadowDark        = Color(0x1F000000);
+  static const Color shadowSubtle      = Color(0x0F000000);
+  static const Color shadowStrong      = Color(0x2E000000);
+  static const Color shadowLight       = Color(0x0A000000);
+
 
   // ── Section-Specific Gradients ─────────────────────────────────────────────
 

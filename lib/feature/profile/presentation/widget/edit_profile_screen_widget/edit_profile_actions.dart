@@ -24,7 +24,11 @@ class EditProfileActions extends StatelessWidget {
 
         
         GestureDetector(
-          onTap: () => context.pop(),
+          onTap: () {
+            if (context.mounted) {
+              context.pop();
+            }
+          },
           child: Container(
             width: double.infinity,
             height: 50.h,

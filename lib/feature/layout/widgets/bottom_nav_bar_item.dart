@@ -1,3 +1,4 @@
+import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -16,7 +17,7 @@ Widget bottomNavItem({
       mainAxisSize: MainAxisSize.min,
       children: [
         Icon(icon, color: isSelected ? selectedColor : unselectedColor, size: 22.sp),
-        const SizedBox(height: 4),
+        VerticalSpacing(4),
         Text(
           label,
           style: TextStyle(

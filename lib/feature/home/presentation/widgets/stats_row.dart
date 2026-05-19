@@ -4,7 +4,6 @@ import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class StatsRow extends StatelessWidget {
   const StatsRow({super.key});
@@ -19,8 +18,8 @@ class StatsRow extends StatelessWidget {
           backgroundColor: context.colors.textHint.withValues(alpha: .4),
           valueColor: context.colors.textPrimary,
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(AppSpacing.radiusCard),
-            bottomLeft: Radius.circular(AppSpacing.radiusCard),
+            topLeft: Radius.circular(AppSpacing.radius12),
+            bottomLeft: Radius.circular(AppSpacing.radius12),
           ),
         ),
         _VerticalDivider(color: context.colors.divider),
@@ -38,8 +37,8 @@ class StatsRow extends StatelessWidget {
           backgroundColor: context.colors.info.withValues(alpha: .3),
           valueColor: context.colors.ongoingText,
           borderRadius: BorderRadius.only(
-            topRight: Radius.circular(AppSpacing.radiusCard),
-            bottomRight: Radius.circular(AppSpacing.radiusCard),
+            topRight: Radius.circular(AppSpacing.radius12),
+            bottomRight: Radius.circular(AppSpacing.radius12),
           ),
         ),
       ],
@@ -67,7 +66,10 @@ class _StatItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: AppSpacing.sm, horizontal: AppSpacing.sm),
+        padding: EdgeInsets.symmetric(
+          vertical: AppSpacing.spacing8,
+          horizontal: AppSpacing.spacing8,
+        ),
         decoration: BoxDecoration(color: backgroundColor, borderRadius: borderRadius),
         child: Column(
           children: [
@@ -76,17 +78,17 @@ class _StatItem extends StatelessWidget {
               style: AppTextStyles.displayLarge.copyWith(
                 color: valueColor,
                 fontWeight: FontWeight.w800,
-                fontSize: 26.sp,
+                fontSize: AppSpacing.fontSize26,
               ),
             ),
-            VerticalSpacing(4.h),
+            VerticalSpacing(AppSpacing.height4),
             Text(
               label,
               style: AppTextStyles.labelSmall.copyWith(
                 color: context.colors.textPrimary,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 0.5,
-                fontSize: 10.sp,
+                fontSize: AppSpacing.fontSize10,
               ),
             ),
           ],
@@ -104,6 +106,10 @@ class _VerticalDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(width: 1, height: 40.h, color: color.withValues(alpha: 0.4));
+    return Container(
+      width: 1,
+      height: AppSpacing.height40,
+      color: color.withValues(alpha: 0.4),
+    );
   }
 }

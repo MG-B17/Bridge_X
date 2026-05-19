@@ -24,7 +24,7 @@ class TeamActionButtons extends StatelessWidget {
             },
           ),
         ),
-        HorizontalSpacing(AppSpacing.sm),
+        HorizontalSpacing(AppSpacing.spacing8),
         Expanded(
           child: BridgeXOutlineButton(
             text: AppStrings.createTeam,

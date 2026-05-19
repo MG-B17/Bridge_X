@@ -1,6 +1,7 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/widget/bridge_x_back_button.dart';
 import 'package:bridge_x/core/widget/bridge_x_background_gears.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
@@ -117,6 +118,7 @@ class _MyTasksScreenState extends State<MyTasksScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const BridgeXBackButton(),
                       Text(
                         AppStrings.myTasks,
                         style: context.textTheme.headlineMedium?.copyWith(

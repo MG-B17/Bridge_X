@@ -1,12 +1,11 @@
+import 'package:bridge_x/core/utils/app_shadow.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
-import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-/// Circular back-arrow button used across multiple screens.
-///
-/// By default it calls `context.pop()`. Pass [onTap] to override.
+
+
 class BridgeXBackButton extends StatelessWidget {
   const BridgeXBackButton({
     super.key,
@@ -33,7 +32,7 @@ class BridgeXBackButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: backgroundColor ?? colors.surface,
           shape: BoxShape.circle,
-          boxShadow: boxShadow ?? AppSpacing.subtleShadow,
+          boxShadow: boxShadow ?? AppShadow.subtle,
         ),
         child: Icon(
           Icons.arrow_back,
@@ -44,3 +43,4 @@ class BridgeXBackButton extends StatelessWidget {
     );
   }
 }
+

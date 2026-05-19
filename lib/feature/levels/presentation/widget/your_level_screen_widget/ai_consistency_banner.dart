@@ -1,3 +1,4 @@
+import 'package:bridge_x/core/utils/app_shadow.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
@@ -30,7 +31,7 @@ class AiConsistencyBanner extends StatelessWidget {
             decoration: BoxDecoration(
               color: context.colors.surface,
               shape: BoxShape.circle,
-              boxShadow: AppSpacing.subtleShadow,
+              boxShadow: AppShadow.subtle,
             ),
             child: Icon(
               Icons.bolt,
@@ -70,3 +71,4 @@ class AiConsistencyBanner extends StatelessWidget {
     );
   }
 }
+

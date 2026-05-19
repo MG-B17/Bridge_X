@@ -5,9 +5,13 @@ import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dar
 class NavigationGuard {
   
   static const publicRoutes = [
-    BridgeXRoutePaths.login,
-    BridgeXRoutePaths.signUp,
-  ];
+  BridgeXRoutePaths.login,
+  BridgeXRoutePaths.signUp,
+  BridgeXRoutePaths.forgotPassword,
+  BridgeXRoutePaths.verifyPasswordCode,
+  BridgeXRoutePaths.verifyEmailCode,
+  BridgeXRoutePaths.resetPassword,
+];
 
  
   static const onboardingRoutes = [

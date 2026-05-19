@@ -1,3 +1,4 @@
+import 'package:bridge_x/core/utils/app_shadow.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
@@ -17,7 +18,7 @@ class CurrentTierCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: context.colors.secondary, 
         borderRadius: BorderRadius.circular(AppSpacing.radiusCardLarge),
-        boxShadow: AppSpacing.subtleShadow,
+        boxShadow: AppShadow.subtle,
       ),
       child: Stack(
         children: [
@@ -106,3 +107,4 @@ class CurrentTierCard extends StatelessWidget {
     );
   }
 }
+

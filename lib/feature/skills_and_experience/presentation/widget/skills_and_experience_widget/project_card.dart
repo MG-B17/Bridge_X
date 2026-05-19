@@ -2,7 +2,6 @@ import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:bridge_x/feature/skills_and_experience/data/model/project_model.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 
 class ProjectCard extends StatelessWidget {
@@ -18,10 +17,10 @@ class ProjectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(AppSpacing.md),
+      padding: EdgeInsets.all(AppSpacing.spacing16),
       decoration: BoxDecoration(
         color: context.colors.surface,
-        borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
+        borderRadius: BorderRadius.circular(AppSpacing.radius12),
         border: Border.all(color: context.colors.divider),
       ),
       child: Row(
@@ -37,7 +36,7 @@ class ProjectCard extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                VerticalSpacing(2.h),
+                VerticalSpacing(AppSpacing.height2),
                 Text(
                   project.role,
                   style: context.textTheme.bodyMedium?.copyWith(

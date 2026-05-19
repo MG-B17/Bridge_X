@@ -1,3 +1,4 @@
+import 'package:bridge_x/core/utils/app_shadow.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/app_color_schema.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
@@ -24,7 +25,7 @@ class NoTeamsIllustration extends StatelessWidget {
           decoration: BoxDecoration(
             color: colors.surface,
             borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
-            boxShadow: AppSpacing.subtleShadow,
+            boxShadow: AppShadow.subtle,
           ),
           child: Stack(
             alignment: Alignment.center,
@@ -74,3 +75,4 @@ class NoTeamsIllustration extends StatelessWidget {
     );
   }
 }
+

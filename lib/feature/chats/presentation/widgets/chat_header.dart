@@ -2,6 +2,7 @@ import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/theme/bridge_x_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/bridge_x_text_styles.dart';
 
@@ -20,7 +21,7 @@ class ChatHeader extends StatelessWidget {
         child: Row(
           children: [
             IconButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => context.pop(),
               icon: const Icon(Icons.arrow_back),
             ),
 

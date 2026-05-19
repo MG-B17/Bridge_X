@@ -1,3 +1,4 @@
+import 'package:bridge_x/core/utils/app_shadow.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:flutter/material.dart';
@@ -22,10 +23,11 @@ class SocialButton extends StatelessWidget {
           color: colors.surface,
           borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
           border: Border.all(color: colors.secondary, width: 1.2),
-          boxShadow: AppSpacing.subtleShadow,
+          boxShadow: AppShadow.subtle,
         ),
         child: Center(child: child),
       ),
     );
   }
 }
+

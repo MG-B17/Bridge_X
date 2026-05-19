@@ -2,7 +2,6 @@ import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/theme/bridge_x_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../core/utils/app_spacing.dart';
 import '../../../../core/widget/vertical_spacing.dart';
 import '../../data/mocks/messege_list.dart';
@@ -37,13 +36,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
 
     setState(() {
       chatMessages.add(
-        MessageModel(
-          senderName: 'You',
-          message: text,
-          time: 'Now',
-          avatar: '',
-          isMe: true,
-        ),
+        MessageModel(senderName: 'You', message: text, time: 'Now', avatar: '', isMe: true),
       );
     });
 
@@ -96,10 +89,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
 
             SafeArea(
               top: false,
-              child: ChatInputBar(
-                controller: messageController,
-                onSend: sendMessage,
-              ),
+              child: ChatInputBar(controller: messageController, onSend: sendMessage),
             ),
           ],
         ),

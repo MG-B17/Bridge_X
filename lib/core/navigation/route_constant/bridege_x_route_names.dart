@@ -10,7 +10,7 @@ class BridegeXRouteNames {
   static const String completeProfile = 'complete-profile';
 
   static const String layout = 'layout';
-  static const String matching = '/matching';
+  static const String matching = 'matching';
   static const String home = 'home';
   static const String chat = 'chat';
   static const String chatDetails = 'chat-details';

@@ -1,10 +1,12 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
+import 'package:bridge_x/core/utils/app_gradient.dart';
+import 'package:bridge_x/core/utils/app_shadow.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/widget/horizontal_spacing.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AiInsightsCard extends StatelessWidget {
   const AiInsightsCard({super.key});
@@ -13,17 +15,13 @@ class AiInsightsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(AppSpacing.lg),
+      padding: EdgeInsets.all(AppSpacing.spacing20),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            context.colors.primaryLight.withValues(alpha: 0.35),
-            context.colors.indigo.withValues(alpha: 0.08),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+        gradient: AppGradient.aiInsightsCard(
+          primaryLight: context.colors.primaryLight,
+          indigo: context.colors.indigo,
         ),
-        borderRadius: BorderRadius.circular(AppSpacing.radiusCardLarge),
+        borderRadius: BorderRadius.circular(AppSpacing.radius16),
         border: Border.all(
           color: context.colors.primary.withValues(alpha: 0.15),
         ),
@@ -34,8 +32,8 @@ class AiInsightsCard extends StatelessWidget {
           // ── Title row ──
           Row(
             children: [
-              Text('✨', style: TextStyle(fontSize: 20.sp)),
-              SizedBox(width: 8.w),
+              Text('✨', style: TextStyle(fontSize: AppSpacing.spacing20)),
+              HorizontalSpacing(AppSpacing.spacing8),
               Text(
                 AppStrings.aiInsights,
                 style: AppTextStyles.titleLarge.copyWith(
@@ -45,14 +43,13 @@ class AiInsightsCard extends StatelessWidget {
               ),
             ],
           ),
-          VerticalSpacing(AppSpacing.md),
-          // ── Insight items ──
+          VerticalSpacing(AppSpacing.spacing16),
           _InsightItem(
             icon: Icons.trending_up_rounded,
             iconColor: context.colors.teal,
             text: AppStrings.insightProductivity,
           ),
-          SizedBox(height: 14.h),
+          VerticalSpacing(AppSpacing.height14),
           _InsightItem(
             icon: Icons.access_time_rounded,
             iconColor: context.colors.amber,
@@ -82,15 +79,16 @@ class _InsightItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          width: 30.w,
-          height: 30.w,
+          width: AppSpacing.spacing30,
+          height: AppSpacing.spacing30,
           decoration: BoxDecoration(
             color: iconColor.withValues(alpha: 0.12),
             shape: BoxShape.circle,
+            boxShadow: AppShadow.floating(iconColor),
           ),
-          child: Icon(icon, color: iconColor, size: 16.sp),
+          child: Icon(icon, color: iconColor, size: AppSpacing.spacing16),
         ),
-        SizedBox(width: 12.w),
+        HorizontalSpacing(AppSpacing.spacing12),
         Expanded(
           child: Text(
             text,

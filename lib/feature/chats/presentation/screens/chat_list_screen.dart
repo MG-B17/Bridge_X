@@ -1,9 +1,7 @@
-
 import 'package:bridge_x/core/theme/bridge_x_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../../core/constant/bridge_x_strings.dart';
 import '../../../../core/navigation/route_constant/bridege_x_route_names.dart';
 import '../../../../core/theme/bridge_x_text_styles.dart';
@@ -13,7 +11,6 @@ import '../../data/mocks/chat_list.dart';
 import '../widgets/chat_search_bar.dart';
 import '../widgets/chat_tile.dart';
 import '../widgets/recent_conversations_title.dart';
-import 'chat_details_screen.dart';
 
 class ChatListScreen extends StatelessWidget {
   const ChatListScreen({super.key});
@@ -31,9 +28,7 @@ class ChatListScreen extends StatelessWidget {
               VerticalSpacing(AppSpacing.xl),
               Text(
                 AppStrings.chats,
-                style: AppTextStyles.displayLarge.copyWith(
-                  color: AppColors.black,
-                ),
+                style: AppTextStyles.displayLarge.copyWith(color: AppColors.black),
               ),
 
               VerticalSpacing(AppSpacing.xl),
@@ -59,18 +54,17 @@ class ChatListScreen extends StatelessWidget {
                         isSelected: index == 0,
                         onTap: () {
                           try {
-                            context.push('/chat/chat-details');
+                            context.pushNamed(BridegeXRouteNames.chatDetails);
                           } catch (e) {
                             debugPrint(e.toString());
-                          }                  },
-                      )
+                          }
+                        },
+                      ),
                     );
-                  },        separatorBuilder: (context, index) => VerticalSpacing(
-                    AppSpacing.md),
-
+                  },
+                  separatorBuilder: (context, index) => VerticalSpacing(AppSpacing.md),
                 ),
               ),
-
             ],
           ),
         ),

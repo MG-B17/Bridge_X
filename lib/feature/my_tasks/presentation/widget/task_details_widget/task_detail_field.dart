@@ -1,6 +1,5 @@
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 
 class TaskDetailField extends StatelessWidget {
@@ -19,7 +18,7 @@ class TaskDetailField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.only(bottom: 8.h, left: 4.w),
+          padding: EdgeInsets.only(bottom: AppSpacing.spacing8, left: AppSpacing.spacing4),
           child: Text(
             label.toUpperCase(),
             style: context.textTheme.labelSmall?.copyWith(
@@ -31,10 +30,10 @@ class TaskDetailField extends StatelessWidget {
         ),
         Container(
           width: double.infinity,
-          padding: EdgeInsets.all(AppSpacing.md),
+          padding: EdgeInsets.all(AppSpacing.spacing16),
           decoration: BoxDecoration(
             color: context.colors.surface,
-            borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
+            borderRadius: BorderRadius.circular(AppSpacing.radius12),
             border: Border.all(color: context.colors.divider),
           ),
           child: child,

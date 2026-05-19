@@ -27,15 +27,7 @@ class ProfileMenu extends StatelessWidget {
             icon: Icons.task_alt_outlined,
             badgeCount: 3,
             onTap: () {
-              // Handle navigation
-            },
-          ),
-          BridgeXDivider(height: 16, indent: 24, endIndent: 24, color: context.colors.divider),
-          ProfileMenuItem(
-            label: AppStrings.myProjects,
-            icon: Icons.schema_outlined,
-            onTap: () {
-              // Handle navigation
+              context.goNamed(BridegeXRouteNames.myTasks);
             },
           ),
           BridgeXDivider(height: 16, indent: 24, endIndent: 24, color: context.colors.divider),
@@ -43,7 +35,7 @@ class ProfileMenu extends StatelessWidget {
             label: AppStrings.skillsAndExperience,
             icon: Icons.psychology_outlined,
             onTap: () {
-              // Handle navigation
+              context.goNamed(BridegeXRouteNames.skillsAndExperience);
             },
           ),
           BridgeXDivider(height: 16, indent: 24, endIndent: 24, color: context.colors.divider),

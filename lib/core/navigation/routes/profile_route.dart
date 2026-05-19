@@ -1,13 +1,17 @@
 import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dart';
-import 'package:bridge_x/feature/about_us/presentation/screens/about_screen.dart';
+import 'package:bridge_x/feature/settings/presentation/screen/about_screen.dart';
 import 'package:bridge_x/feature/levels/presentation/screen/your_level_screens.dart';
 import 'package:bridge_x/feature/notifications/presentation/screens/notification_settings_screen.dart';
-import 'package:bridge_x/feature/privacy_security/presentation/screen/privacy_security_screen.dart';
+import 'package:bridge_x/feature/settings/presentation/screen/privacy_security_screen.dart';
 import 'package:bridge_x/feature/profile/presentation/screen/edit_profile.dart';
 import 'package:bridge_x/feature/profile/presentation/screen/profile_screen.dart';
 import 'package:bridge_x/feature/settings/presentation/screen/settings_screen.dart';
 import 'package:bridge_x/feature/settings/presentation/screen/change_password_screen.dart';
+import 'package:bridge_x/feature/skills_and_experience/presentation/screen/skills_and_experience_screen.dart';
+import 'package:bridge_x/feature/my_tasks/presentation/screen/my_tasks_screen.dart';
+import 'package:bridge_x/feature/my_tasks/presentation/screen/task_details_screen.dart';
+import 'package:bridge_x/feature/my_tasks/presentation/widget/my_tasks_widget/task_card.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -58,13 +62,13 @@ StatefulShellBranch profileRoute = StatefulShellBranch(
         GoRoute(
           path: BridgeXRoutePaths.myTasks,
           name: BridegeXRouteNames.myTasks,
-          builder: (context, state) => const Scaffold(body: Center(child: Text('myTasks'))),
+          builder: (context, state) => const MyTasksScreen(),
           routes: [
             GoRoute(
               path: BridgeXRoutePaths.myTasksDetails,
               name: BridegeXRouteNames.myTasksDetails,
               builder: (context, state) =>
-                  const Scaffold(body: Center(child: Text('myTasksDetails'))),
+                  TaskDetailsScreen(task: state.extra as TaskItem?),
             ),
           ],
         ),
@@ -82,7 +86,7 @@ StatefulShellBranch profileRoute = StatefulShellBranch(
           path: BridgeXRoutePaths.skillsAndExperience,
           name: BridegeXRouteNames.skillsAndExperience,
           builder: (context, state) =>
-              const Scaffold(body: Center(child: Text('skillsAndExperience'))),
+              const SkillsAndExperienceScreen(),
         ),
       ],
     ),

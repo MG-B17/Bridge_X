@@ -7,8 +7,8 @@ import 'package:bridge_x/core/widget/bridge_x_screen_header.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
 
-import '../widget/change_password_widgets/change_password_form.dart';
-import '../widget/change_password_widgets/change_password_security_icon.dart';
+import '../widget/change_password_widget/change_password_form.dart';
+import '../widget/change_password_widget/change_password_security_icon.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});

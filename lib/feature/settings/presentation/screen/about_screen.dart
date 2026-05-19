@@ -5,10 +5,9 @@ import 'package:bridge_x/core/widget/bridge_x_background_gears.dart';
 import 'package:bridge_x/core/widget/bridge_x_screen_header.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
-
-import '../widgets/about_screen_widgets/about_app_info.dart';
-import '../widgets/about_screen_widgets/about_footer.dart';
-import '../widgets/about_screen_widgets/about_mission_card.dart';
+import '../widget/about_widget/about_app_info.dart';
+import '../widget/about_widget/about_footer.dart';
+import '../widget/about_widget/about_mission_card.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});

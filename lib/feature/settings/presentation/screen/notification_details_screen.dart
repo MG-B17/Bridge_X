@@ -3,8 +3,8 @@ import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/bridge_x_back_button.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
-import 'package:bridge_x/feature/notifications/presentation/widgets/notification_details_actions.dart';
-import 'package:bridge_x/feature/notifications/presentation/widgets/notification_details_header.dart';
+import '../widget/notification_details_widget/notification_details_actions.dart';
+import '../widget/notification_details_widget/notification_details_header.dart';
 import 'package:flutter/material.dart';
 
 class NotificationDetailsScreen extends StatelessWidget {

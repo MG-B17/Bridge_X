@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:bridge_x/core/widget/bridge_x_screen_header.dart';
 import 'package:bridge_x/core/widget/bridge_x_background_gears.dart';
 import 'package:go_router/go_router.dart';
-import '../widget/settings_menu_item.dart';
-import '../widget/settings_version_text.dart';
+import '../widget/settings_widget/settings_menu_item.dart';
+import '../widget/settings_widget/settings_version_text.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});

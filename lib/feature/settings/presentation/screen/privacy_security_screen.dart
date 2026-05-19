@@ -6,10 +6,10 @@ import 'package:bridge_x/core/widget/bridge_x_screen_header.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
 
-import '../widget/account_security_section.dart';
-import '../widget/danger_zone_section.dart';
-import '../widget/privacy_disclaimer.dart';
-import '../widget/protection_card.dart';
+import '../widget/privacy_and_security_widget/account_security_section.dart';
+import '../widget/privacy_and_security_widget/danger_zone_section.dart';
+import '../widget/privacy_and_security_widget/privacy_disclaimer.dart';
+import '../widget/privacy_and_security_widget/protection_card.dart';
 
 class PrivacySecurityScreen extends StatelessWidget {
   const PrivacySecurityScreen({super.key});

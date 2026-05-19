@@ -320,6 +320,8 @@ class AppStrings {
   static const String teamsUpper = 'TEAMS';
   static const String activeTasksUpper = 'ACTIVE TASKS';
   static const String experience = 'Experience';
+  static const String experienceDesc =
+      "Experienced mobile developer with a focus on creating performant, beautiful cross-platform applications. I have spent the last 3 years mastering Flutter and React, contributing to several high-profile fintech and social networking projects. I'm passionate about clean architecture and pixel-perfect UI implementation.";
   static const String skills = 'Skills';
 
   // ── Levels & Badges ───────────────────────────────────────────────────────

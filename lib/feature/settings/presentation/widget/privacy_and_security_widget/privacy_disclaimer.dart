@@ -11,10 +11,10 @@ class PrivacyDisclaimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(AppSpacing.lg),
+      padding: EdgeInsets.all(AppSpacing.spacing20),
       decoration: BoxDecoration(
         color: context.colors.surface.withValues(alpha: 0.5),
-        borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
+        borderRadius: BorderRadius.circular(AppSpacing.radius12),
         border: Border.all(
           color: context.colors.divider,
         ), 
@@ -27,7 +27,7 @@ class PrivacyDisclaimer extends StatelessWidget {
             size: 22,
             color: context.colors.textPrimary,
           ),
-          HorizontalSpacing(AppSpacing.md),
+          HorizontalSpacing(AppSpacing.spacing16),
           Expanded(
             child: Text.rich(
               TextSpan(

@@ -22,8 +22,8 @@ class AboutScreen extends StatelessWidget {
           SafeArea(
             child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(
-                horizontal: AppSpacing.md,
-                vertical: AppSpacing.md,
+                horizontal: AppSpacing.spacing16,
+                vertical: AppSpacing.spacing16,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -31,13 +31,13 @@ class AboutScreen extends StatelessWidget {
                   const BridgeXScreenHeader(
                     title: AppStrings.aboutUs,
                   ),
-                  VerticalSpacing(AppSpacing.section),
+                  VerticalSpacing(AppSpacing.height40),
                   const AboutAppInfo(),
-                  VerticalSpacing(AppSpacing.section),
+                  VerticalSpacing(AppSpacing.height40),
                   const AboutMissionCard(),
-                  VerticalSpacing(AppSpacing.section * 2),
+                  VerticalSpacing(AppSpacing.height80),
                   const AboutFooter(),
-                  VerticalSpacing(AppSpacing.xl),
+                  VerticalSpacing(AppSpacing.spacing24),
                 ],
               ),
             ),

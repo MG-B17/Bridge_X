@@ -3,36 +3,60 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BridgeXBackgroundGears extends StatelessWidget {
-  const BridgeXBackgroundGears({super.key});
+  const BridgeXBackgroundGears({super.key, this.icon = Icons.settings});
+
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
     return IgnorePointer(
       child: Stack(
         children: [
-          _buildGear(context, top: 40.h, left: 30.w, size: 60.w),
-          _buildGear(context, top: 60.h, right: 80.w, size: 80.w),
-          _buildGear(context, top: 200.h, left: 100.w, size: 120.w),
-          _buildGear(context, top: 320.h, right: 50.w, size: 90.w),
-          _buildGear(context, top: 450.h, left: 180.w, size: 100.w),
-          _buildGear(context, top: 580.h, left: 40.w, size: 70.w),
-          _buildGear(context, top: 700.h, right: 120.w, size: 110.w),
-          _buildGear(context, bottom: 50.h, left: 60.w, size: 140.w),
+          _buildGear(context, top: 20.h, left: 20.w, size: 55.w),
+
+          _buildGear(context, top: 18.h, right: 18.w, size: 50.w),
+
+          _buildGear(context, top: 120.h, left: 28.w, size: 48.w),
+
+          _buildGear(context, top: 70.h, left: 170.w, size: 42.w),
+
+          _buildGear(context, top: 240.h, left: 8.w, size: 58.w),
+
+          _buildGear(context, top: 210.h, right: 10.w, size: 60.w),
+
+          _buildGear(context, top: 360.h, right: 40.w, size: 54.w),
+
+          _buildGear(context, top: 430.h, left: 130.w, size: 52.w),
+
+          _buildGear(context, top: 560.h, left: 15.w, size: 50.w),
+
+          _buildGear(context, top: 620.h, right: 28.w, size: 46.w),
+
+          _buildGear(context, top: 760.h, left: 22.w, size: 55.w),
+
+          _buildGear(context, top: 840.h, right: 20.w, size: 58.w),
         ],
       ),
     );
   }
 
-  Widget _buildGear(BuildContext context, {double? top, double? left, double? right, double? bottom, required double size}) {
+  Widget _buildGear(
+    BuildContext context, {
+    double? top,
+    double? left,
+    double? right,
+    double? bottom,
+    required double size,
+  }) {
     return Positioned(
       top: top,
       left: left,
       right: right,
       bottom: bottom,
       child: Icon(
-        Icons.settings,
+        icon,
         size: size,
-        color: context.colors.primary.withValues(alpha: 0.03), // Very faint
+        color: context.colors.secondary.withValues(alpha: 0.06), // Very faint
       ),
     );
   }

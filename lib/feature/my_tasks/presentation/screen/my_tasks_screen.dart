@@ -1,3 +1,4 @@
+import 'package:bridge_x/core/animation/bottom_nav_bar_animation/widget/scroller_listener.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
@@ -96,6 +97,7 @@ class _MyTasksScreenState extends State<MyTasksScreen> {
   ];
 
   List<TaskItem> _simulatedActiveTasks = [];
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -104,67 +106,81 @@ class _MyTasksScreenState extends State<MyTasksScreen> {
   }
 
   @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: context.colors.scaffoldBg,
-      body: Stack(
-        children: [
-          const BridgeXBackgroundGears(),
-          SafeArea(
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(AppSpacing.lg),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const BridgeXBackButton(),
-                      Text(
-                        AppStrings.myTasks,
-                        style: context.textTheme.headlineMedium?.copyWith(
-                          color: context.colors.textPrimary,
-                          fontWeight: FontWeight.bold,
+    return ScrollNavListener(
+      controller: _scrollController,
+      child: Scaffold(
+        backgroundColor: context.colors.scaffoldBg,
+        body: Stack(
+          children: [
+            const BridgeXBackgroundGears(),
+            SafeArea(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(AppSpacing.spacing20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const BridgeXBackButton(),
+                        Text(
+                          AppStrings.myTasks,
+                          style: context.textTheme.headlineMedium?.copyWith(
+                            color: context.colors.textPrimary,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      VerticalSpacing(AppSpacing.xs),
-                      Text(
-                        AppStrings.myTasksSubtitle,
-                        style: context.textTheme.bodyMedium?.copyWith(
-                          color: context.colors.textSecondary,
+                        VerticalSpacing(AppSpacing.spacing4),
+                        Text(
+                          AppStrings.myTasksSubtitle,
+                          style: context.textTheme.bodyMedium?.copyWith(
+                            color: context.colors.textSecondary,
+                          ),
                         ),
-                      ),
-                      VerticalSpacing(AppSpacing.lg),
+                        VerticalSpacing(AppSpacing.spacing20),
 
-                      MyTasksTabSelector(
-                        isActiveTab: _isActiveTab,
-                        onTabChanged: (val) {
-                          setState(() => _isActiveTab = val);
-                        },
-                      ),
-                    ],
+                        MyTasksTabSelector(
+                          isActiveTab: _isActiveTab,
+                          onTabChanged: (val) {
+                            setState(() => _isActiveTab = val);
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
 
-                Expanded(
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg),
-                    child: _isActiveTab
-                        ? ActiveTasksTab(
-                            tasks: _simulatedActiveTasks,
-                            onSimulateEmptyTap: () {
-                              setState(() {
-                                _simulatedActiveTasks.clear();
-                              });
-                            },
-                          )
-                        : CompletedTasksTab(tasks: _completedTasks),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      controller: _scrollController,
+                      physics: const BouncingScrollPhysics(),
+                      padding: EdgeInsets.only(
+                        left: AppSpacing.spacing20,
+                        right: AppSpacing.spacing20,
+                        bottom: AppSpacing.spacing20,
+                      ),
+                      child: _isActiveTab
+                          ? ActiveTasksTab(
+                              tasks: _simulatedActiveTasks,
+                              onSimulateEmptyTap: () {
+                                setState(() {
+                                  _simulatedActiveTasks.clear();
+                                });
+                              },
+                            )
+                          : CompletedTasksTab(tasks: _completedTasks),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -12,10 +12,10 @@ class ProtectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(AppSpacing.xl),
+      padding: EdgeInsets.all(AppSpacing.spacing24),
       decoration: BoxDecoration(
         color: context.colors.secondary, // deepBlue
-        borderRadius: BorderRadius.circular(AppSpacing.radiusCardLarge),
+        borderRadius: BorderRadius.circular(AppSpacing.radius16),
       ),
       child: Stack(
         clipBehavior: Clip.none,
@@ -39,7 +39,7 @@ class ProtectionCard extends StatelessWidget {
                   fontWeight: FontWeight.w800,
                 ),
               ),
-              VerticalSpacing(AppSpacing.sm),
+              VerticalSpacing(AppSpacing.spacing8),
               Padding(
                 padding: const EdgeInsets.only(right: 60),
                 child: Text(

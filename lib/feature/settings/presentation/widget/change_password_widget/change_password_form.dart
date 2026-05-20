@@ -51,7 +51,7 @@ class ChangePasswordForm extends StatelessWidget {
             onTap: onCurrentPasswordVisibilityToggle,
           ),
         ),
-        VerticalSpacing(AppSpacing.lg),
+        VerticalSpacing(AppSpacing.spacing20),
 
         // ── New Password ──
         BridgeXTextFormField(
@@ -65,7 +65,7 @@ class ChangePasswordForm extends StatelessWidget {
             onTap: onNewPasswordVisibilityToggle,
           ),
         ),
-        VerticalSpacing(AppSpacing.lg),
+        VerticalSpacing(AppSpacing.spacing20),
 
         // ── Confirm Password ──
         BridgeXTextFormField(
@@ -79,11 +79,11 @@ class ChangePasswordForm extends StatelessWidget {
             onTap: onConfirmPasswordVisibilityToggle,
           ),
         ),
-        VerticalSpacing(AppSpacing.lg),
+        VerticalSpacing(AppSpacing.spacing20),
 
         // ── Password Requirements ──
         const PasswordRequirements(),
-        VerticalSpacing(AppSpacing.xxl),
+        VerticalSpacing(AppSpacing.spacing32),
 
         // ── Submit Button ──
         BridgeXButton(
@@ -108,7 +108,7 @@ class _VisibilityToggle extends StatelessWidget {
       child: Icon(
         isVisible ? Icons.visibility_off_outlined : Icons.visibility_outlined,
         color: context.colors.textHint,
-        size: AppSpacing.lg,
+        size: AppSpacing.spacing20,
       ),
     );
   }

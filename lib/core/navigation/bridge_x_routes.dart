@@ -5,7 +5,6 @@ import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dar
 import 'package:bridge_x/core/navigation/routes/chat_route.dart';
 import 'package:bridge_x/core/navigation/routes/home_route.dart';
 import 'package:bridge_x/core/navigation/routes/forget_password_route.dart';
-import 'package:bridge_x/core/navigation/routes/matching_route.dart';
 import 'package:bridge_x/core/navigation/routes/profile_route.dart';
 import 'package:bridge_x/core/navigation/routes/project_route.dart';
 import 'package:bridge_x/core/navigation/routes/singup_route.dart';
@@ -49,8 +48,6 @@ final appRouter = GoRouter(
       name: BridegeXRouteNames.completeProfile,
       builder: (context, state) => const CompleteProfileScreen(),
     ),
-    matchingRoute,
-
     StatefulShellRoute.indexedStack(
       builder: (context, state, statefulNavigationShell) =>
           LayoutScreen(navigationShell: statefulNavigationShell),

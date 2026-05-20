@@ -1,3 +1,4 @@
+import 'package:bridge_x/core/animation/bottom_nav_bar_animation/widget/scroller_listener.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
@@ -21,6 +22,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   late final TextEditingController _currentPasswordController;
   late final TextEditingController _newPasswordController;
   late final TextEditingController _confirmPasswordController;
+  final ScrollController _scrollController = ScrollController();
 
   bool _showCurrentPassword = false;
   bool _showNewPassword = false;
@@ -39,6 +41,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     _currentPasswordController.dispose();
     _newPasswordController.dispose();
     _confirmPasswordController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -66,53 +69,59 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: context.colors.scaffoldBg,
-      body: Stack(
-        children: [
-          const BridgeXBackgroundGears(),
-          SafeArea(
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.symmetric(
-                horizontal: AppSpacing.md,
-                vertical: AppSpacing.md,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  BridgeXScreenHeader(
-                    title: AppStrings.changePassword,
-                    titleStyle: AppTextStyles.headlineMedium.copyWith(
-                      color: context.colors.textPrimary,
-                      fontWeight: FontWeight.bold,
+    return ScrollNavListener(
+      controller: _scrollController,
+      child: Scaffold(
+        backgroundColor: context.colors.scaffoldBg,
+        body: Stack(
+          children: [
+            const BridgeXBackgroundGears(),
+            SafeArea(
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.only(
+                  left: AppSpacing.spacing16,
+                  right: AppSpacing.spacing16,
+                  top: AppSpacing.spacing16,
+                  bottom: AppSpacing.spacing16 + AppSpacing.spacing20,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    BridgeXScreenHeader(
+                      title: AppStrings.changePassword,
+                      titleStyle: AppTextStyles.headlineMedium.copyWith(
+                        color: context.colors.textPrimary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      spacing: AppSpacing.spacing20,
                     ),
-                    spacing: AppSpacing.lg,
-                  ),
-                  VerticalSpacing(AppSpacing.xl),
-                  const ChangePasswordSecurityIcon(),
-                  VerticalSpacing(AppSpacing.xl),
-                  ChangePasswordForm(
-                    currentPasswordController: _currentPasswordController,
-                    newPasswordController: _newPasswordController,
-                    confirmPasswordController: _confirmPasswordController,
-                    showCurrentPassword: _showCurrentPassword,
-                    showNewPassword: _showNewPassword,
-                    showConfirmPassword: _showConfirmPassword,
-                    onCurrentPasswordVisibilityToggle: () =>
-                        setState(() => _showCurrentPassword = !_showCurrentPassword),
-                    onNewPasswordVisibilityToggle: () =>
-                        setState(() => _showNewPassword = !_showNewPassword),
-                    onConfirmPasswordVisibilityToggle: () =>
-                        setState(() => _showConfirmPassword = !_showConfirmPassword),
-                    onUpdatePassword: _handleUpdatePassword,
-                  ),
-                  VerticalSpacing(AppSpacing.xl),
-                ],
+                    VerticalSpacing(AppSpacing.spacing24),
+                    const ChangePasswordSecurityIcon(),
+                    VerticalSpacing(AppSpacing.spacing24),
+                    ChangePasswordForm(
+                      currentPasswordController: _currentPasswordController,
+                      newPasswordController: _newPasswordController,
+                      confirmPasswordController: _confirmPasswordController,
+                      showCurrentPassword: _showCurrentPassword,
+                      showNewPassword: _showNewPassword,
+                      showConfirmPassword: _showConfirmPassword,
+                      onCurrentPasswordVisibilityToggle: () =>
+                          setState(() => _showCurrentPassword = !_showCurrentPassword),
+                      onNewPasswordVisibilityToggle: () =>
+                          setState(() => _showNewPassword = !_showNewPassword),
+                      onConfirmPasswordVisibilityToggle: () =>
+                          setState(() => _showConfirmPassword = !_showConfirmPassword),
+                      onUpdatePassword: _handleUpdatePassword,
+                    ),
+                    VerticalSpacing(AppSpacing.spacing24),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

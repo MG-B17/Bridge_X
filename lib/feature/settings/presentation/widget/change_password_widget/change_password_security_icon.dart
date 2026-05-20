@@ -13,12 +13,12 @@ class ChangePasswordSecurityIcon extends StatelessWidget {
         height: AppSpacing.iconBoxSize * 1.8,
         decoration: BoxDecoration(
           color: context.colors.primary.withValues(alpha: 0.12),
-          borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
+          borderRadius: BorderRadius.circular(AppSpacing.radius12),
         ),
         child: Icon(
           Icons.lock_clock_outlined,
           color: context.colors.primary,
-          size: AppSpacing.xxl + AppSpacing.sm,
+          size: AppSpacing.spacing40,
         ),
       ),
     );

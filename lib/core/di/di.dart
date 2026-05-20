@@ -1,3 +1,4 @@
+import 'package:bridge_x/core/animation/bottom_nav_bar_animation/controller/scroll_cubit.dart';
 import 'package:bridge_x/core/init/app_state.dart';
 import 'package:bridge_x/core/init/init_app.dart';
 import 'package:bridge_x/core/network/api/api_client.dart';
@@ -41,6 +42,7 @@ Future<void> init() async {
       appState: sl(),
     ),
   );
+  sl.registerLazySingleton<ScrollCubit>(()=>ScrollCubit());
 
   // usecases
   sl.registerLazySingleton<LoginUsecase>(() => LoginUsecase(authRepo: sl()));

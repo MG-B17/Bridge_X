@@ -5,7 +5,6 @@ import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/horizontal_spacing.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DangerZoneSection extends StatelessWidget {
   const DangerZoneSection({super.key});
@@ -19,10 +18,10 @@ class DangerZoneSection extends StatelessWidget {
           children: [
             Icon(
               Icons.warning_amber_rounded,
-              size: 18.sp,
+              size: AppSpacing.fontSize18,
               color: context.colors.error,
             ),
-            HorizontalSpacing(AppSpacing.xs),
+            HorizontalSpacing(AppSpacing.spacing4),
             Text(
               AppStrings.dangerZone.toUpperCase(),
               style: AppTextStyles.labelSmall.copyWith(
@@ -33,20 +32,23 @@ class DangerZoneSection extends StatelessWidget {
             ),
           ],
         ),
-        VerticalSpacing(AppSpacing.md),
+        VerticalSpacing(AppSpacing.spacing16),
         Container(
           decoration: BoxDecoration(
             color: context.colors.error.withValues(alpha: 0.05),
-            borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
+            borderRadius: BorderRadius.circular(AppSpacing.radius12),
             border: Border.all(color: context.colors.error.withValues(alpha: 0.3)),
           ),
           child: ListTile(
-            contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.xs),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: AppSpacing.spacing20,
+              vertical: AppSpacing.spacing4,
+            ),
             leading: Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: context.colors.error.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(AppSpacing.radiusXs),
+                borderRadius: BorderRadius.circular(AppSpacing.radius8),
               ),
               child: Icon(Icons.delete_outline, color: context.colors.error, size: 22),
             ),

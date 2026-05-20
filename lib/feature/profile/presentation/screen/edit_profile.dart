@@ -1,3 +1,4 @@
+import 'package:bridge_x/core/animation/bottom_nav_bar_animation/widget/scroller_listener.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   late TextEditingController _emailController;
   late TextEditingController _bioController;
   late TextEditingController _professionController;
+  final ScrollController _scrollController = ScrollController();
 
   String _selectedProfession = 'Product Designer';
 
@@ -55,57 +57,67 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _emailController.dispose();
     _bioController.dispose();
     _professionController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              BridgeXScreenHeader(
-                title: AppStrings.editProfile,
-                titleStyle: AppTextStyles.headlineMedium.copyWith(
-                  color: context.colors.textPrimary,
-                  fontWeight: FontWeight.bold,
+    return ScrollNavListener(
+      controller: _scrollController,
+      child: Scaffold(
+        body: SafeArea(
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            physics: const BouncingScrollPhysics(),
+            padding: EdgeInsets.only(
+              left: AppSpacing.lg,
+              right: AppSpacing.lg,
+              top: AppSpacing.md,
+              bottom: AppSpacing.md + AppSpacing.spacing20,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                BridgeXScreenHeader(
+                  title: AppStrings.editProfile,
+                  titleStyle: AppTextStyles.headlineMedium.copyWith(
+                    color: context.colors.textPrimary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  spacing: AppSpacing.lg,
                 ),
-                spacing: AppSpacing.lg,
-              ),
-              VerticalSpacing(AppSpacing.xl),
-              const Center(child: EditProfileAvatar()),
-              VerticalSpacing(AppSpacing.xl),
-              EditProfileFormFields(
-                fullNameController: _fullNameController,
-                usernameController: _usernameController,
-                emailController: _emailController,
-                bioController: _bioController,
-                professionController: _professionController,
-                selectedProfession: _selectedProfession,
-                professions: _professions,
-                onProfessionChanged: (value) {
-                  setState(() {
-                    _selectedProfession = value;
-                    _professionController.text = value;
-                  });
-                },
-              ),
-              VerticalSpacing(AppSpacing.xxl),
-              EditProfileActions(
-                onSave: () {
-                  // TODO: Implement save logic here
-                  if (context.mounted) {
-                    context.pop();
-                  }
-                },
-              ),
-              VerticalSpacing(AppSpacing.xl),
-            ],
+                VerticalSpacing(AppSpacing.xl),
+                const Center(child: EditProfileAvatar()),
+                VerticalSpacing(AppSpacing.xl),
+                EditProfileFormFields(
+                  fullNameController: _fullNameController,
+                  usernameController: _usernameController,
+                  emailController: _emailController,
+                  bioController: _bioController,
+                  professionController: _professionController,
+                  selectedProfession: _selectedProfession,
+                  professions: _professions,
+                  onProfessionChanged: (value) {
+                    setState(() {
+                      _selectedProfession = value;
+                      _professionController.text = value;
+                    });
+                  },
+                ),
+                VerticalSpacing(AppSpacing.xxl),
+                EditProfileActions(
+                  onSave: () {
+                    // TODO: Implement save logic here
+                    if (context.mounted) {
+                      context.pop();
+                    }
+                  },
+                ),
+                VerticalSpacing(AppSpacing.xl),
+              ],
+            ),
           ),
         ),
       ),

@@ -4,7 +4,6 @@ import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AboutAppInfo extends StatelessWidget {
   const AboutAppInfo({super.key});
@@ -16,15 +15,15 @@ class AboutAppInfo extends StatelessWidget {
         Text(
           AppStrings.appName,
           style: AppTextStyles.displayLarge.copyWith(
-            fontSize: 30.sp,
+            fontSize: AppSpacing.fontSize30,
             color: context.colors.ongoingText,
             fontWeight: FontWeight.w900,
           ),
           textAlign: TextAlign.center,
         ),
-        VerticalSpacing(AppSpacing.sm),
+        VerticalSpacing(AppSpacing.spacing8),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppSpacing.xl),
+          padding: EdgeInsets.symmetric(horizontal: AppSpacing.spacing24),
           child: Text(
             AppStrings.aboutBridgeXDesc,
             style: AppTextStyles.bodyLarge.copyWith(
@@ -34,15 +33,15 @@ class AboutAppInfo extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ),
-        VerticalSpacing(AppSpacing.xl),
+        VerticalSpacing(AppSpacing.spacing24),
         Container(
           padding: EdgeInsets.symmetric(
-            horizontal: AppSpacing.lg,
-            vertical: AppSpacing.sm,
+            horizontal: AppSpacing.spacing20,
+            vertical: AppSpacing.spacing8,
           ),
           decoration: BoxDecoration(
             color: context.colors.ongoingText.withValues(alpha: 0.15),
-            borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+            borderRadius: BorderRadius.circular(AppSpacing.radius32),
           ),
           child: Text(
             AppStrings.version,

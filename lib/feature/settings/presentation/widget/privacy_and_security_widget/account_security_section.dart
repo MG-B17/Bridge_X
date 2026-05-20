@@ -6,7 +6,6 @@ import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/horizontal_spacing.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class AccountSecuritySection extends StatelessWidget {
@@ -21,10 +20,10 @@ class AccountSecuritySection extends StatelessWidget {
           children: [
             Icon(
               Icons.shield_outlined,
-              size: 18.sp,
+              size: AppSpacing.fontSize18,
               color: context.colors.textSecondary,
             ),
-            HorizontalSpacing(AppSpacing.xs),
+            HorizontalSpacing(AppSpacing.spacing4),
             Text(
               AppStrings.accountSecurity,
               style: AppTextStyles.labelSmall.copyWith(
@@ -35,17 +34,20 @@ class AccountSecuritySection extends StatelessWidget {
             ),
           ],
         ),
-        VerticalSpacing(AppSpacing.md),
+        VerticalSpacing(AppSpacing.spacing16),
         Container(
           decoration: BoxDecoration(
             color: context.colors.primary.withValues(alpha: 0.05),
-            borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
+            borderRadius: BorderRadius.circular(AppSpacing.radius12),
             border: Border.all(color: context.colors.divider),
           ),
           child: Column(
             children: [
               ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.xs),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: AppSpacing.spacing20,
+                  vertical: AppSpacing.spacing4,
+                ),
                 leading: Icon(Icons.key_outlined, color: context.colors.textPrimary),
                 title: Text(
                   AppStrings.changePassword,
@@ -59,9 +61,18 @@ class AccountSecuritySection extends StatelessWidget {
                   context.goNamed(BridegeXRouteNames.changePassword);
                 },
               ),
-              Divider(height: 1, thickness: 1, color: context.colors.divider, indent: AppSpacing.lg, endIndent: AppSpacing.lg),
+              Divider(
+                height: 1,
+                thickness: 1,
+                color: context.colors.divider,
+                indent: AppSpacing.spacing20,
+                endIndent: AppSpacing.spacing20,
+              ),
               ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.xs),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: AppSpacing.spacing20,
+                  vertical: AppSpacing.spacing4,
+                ),
                 leading: Icon(Icons.alternate_email, color: context.colors.textPrimary),
                 title: Text(
                   AppStrings.email,

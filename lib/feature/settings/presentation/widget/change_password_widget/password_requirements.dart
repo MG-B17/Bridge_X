@@ -11,16 +11,19 @@ class PasswordRequirements extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+      padding: EdgeInsets.symmetric(
+        horizontal: AppSpacing.spacing16,
+        vertical: AppSpacing.spacing8,
+      ),
       decoration: BoxDecoration(
         color: context.colors.info.withValues(alpha: 0.06),
-        borderRadius: BorderRadius.circular(AppSpacing.radiusXs),
+        borderRadius: BorderRadius.circular(AppSpacing.radius8),
         border: Border.all(color: context.colors.info.withValues(alpha: 0.2)),
       ),
       child: Row(
         children: [
-          Icon(Icons.info_outlined, color: context.colors.info, size: AppSpacing.lg),
-          HorizontalSpacing(AppSpacing.md),
+          Icon(Icons.info_outlined, color: context.colors.info, size: AppSpacing.spacing20),
+          HorizontalSpacing(AppSpacing.spacing16),
           Expanded(
             child: Text(
               AppStrings.passwordMinLength,

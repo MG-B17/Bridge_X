@@ -3,7 +3,6 @@ import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/horizontal_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SettingsMenuItem extends StatelessWidget {
   const SettingsMenuItem({
@@ -24,35 +23,35 @@ class SettingsMenuItem extends StatelessWidget {
       child: Container(
         width: double.infinity,
         padding: EdgeInsets.symmetric(
-          horizontal: AppSpacing.lg,
-          vertical: AppSpacing.xl,
+          horizontal: AppSpacing.spacing20,
+          vertical: AppSpacing.spacing24,
         ),
         decoration: BoxDecoration(
           color: context.colors.primary.withValues(alpha: 0.04),
-          borderRadius: BorderRadius.circular(AppSpacing.radiusCardLarge),
+          borderRadius: BorderRadius.circular(AppSpacing.radius16),
         ),
         child: Row(
           children: [
             Icon(
               icon,
               color: context.colors.indigo,
-              size: 24.w,
+              size: AppSpacing.fontSize24,
             ),
-            HorizontalSpacing(AppSpacing.md),
+            HorizontalSpacing(AppSpacing.spacing16),
             Expanded(
               child: Text(
                 label,
                 style: AppTextStyles.titleMedium.copyWith(
                   color: context.colors.textPrimary,
                   fontWeight: FontWeight.w600,
-                  fontSize: 16.sp,
+                  fontSize: AppSpacing.fontSize16,
                 ),
               ),
             ),
             Icon(
               Icons.chevron_right,
               color: context.colors.textSecondary,
-              size: 20.w,
+              size: AppSpacing.fontSize20,
             ),
           ],
         ),

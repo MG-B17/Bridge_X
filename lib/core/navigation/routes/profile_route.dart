@@ -1,8 +1,9 @@
+import 'package:bridge_x/core/animation/screen_transtion_animation/transitions/slide_right_trnasition.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dart';
 import 'package:bridge_x/feature/settings/presentation/screen/about_screen.dart';
 import 'package:bridge_x/feature/levels/presentation/screen/your_level_screens.dart';
-import 'package:bridge_x/feature/notifications/presentation/screens/notification_settings_screen.dart';
+import 'package:bridge_x/feature/settings/presentation/screen/notification_settings_screen.dart';
 import 'package:bridge_x/feature/settings/presentation/screen/privacy_security_screen.dart';
 import 'package:bridge_x/feature/profile/presentation/screen/edit_profile.dart';
 import 'package:bridge_x/feature/profile/presentation/screen/profile_screen.dart';
@@ -15,6 +16,8 @@ import 'package:bridge_x/feature/my_tasks/presentation/widget/my_tasks_widget/ta
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+final SlideRightTransitionPage slideRightTransitionPage = SlideRightTransitionPage();
+
 StatefulShellBranch profileRoute = StatefulShellBranch(
   routes: [
     GoRoute(
@@ -25,68 +28,96 @@ StatefulShellBranch profileRoute = StatefulShellBranch(
         GoRoute(
           path: BridgeXRoutePaths.editProfile,
           name: BridegeXRouteNames.editProfile,
-          builder: (context, state) => const EditProfileScreen(),
+          pageBuilder: (context, state) => slideRightTransitionPage.build(
+            child: const EditProfileScreen(),
+            state: state,
+          ),
         ),
         GoRoute(
           path: BridgeXRoutePaths.settings,
           name: BridegeXRouteNames.settings,
-          builder: (context, state) => const SettingsScreen(),
+          pageBuilder: (context, state) => slideRightTransitionPage.build(
+            child: const SettingsScreen(),
+            state: state,
+          ),
           routes: [
             GoRoute(
               path: BridgeXRoutePaths.notificationsSettings,
               name: BridegeXRouteNames.notificationsSettings,
-              builder: (context, state) =>
-                  const NotificationSettingsScreen(),
+              pageBuilder: (context, state) => slideRightTransitionPage.build(
+                child: const NotificationSettingsScreen(),
+                state: state,
+              ),
             ),
             GoRoute(
               path: BridgeXRoutePaths.privacySecurity,
               name: BridegeXRouteNames.privacySecurity,
-              builder: (context, state) =>
-                  const PrivacySecurityScreen(),
+              pageBuilder: (context, state) => slideRightTransitionPage.build(
+                child: const PrivacySecurityScreen(),
+                state: state,
+              ),
               routes: [
                 GoRoute(
                   path: BridgeXRoutePaths.changePassword,
                   name: BridegeXRouteNames.changePassword,
-                  builder: (context, state) =>
-                      const ChangePasswordScreen(),
+                  pageBuilder: (context, state) => slideRightTransitionPage.build(
+                    child: const ChangePasswordScreen(),
+                    state: state,
+                  ),
                 ),
               ],
             ),
             GoRoute(
               path: BridgeXRoutePaths.aboutUs,
               name: BridegeXRouteNames.aboutUs,
-              builder: (context, state) => const AboutScreen(),
+              pageBuilder: (context, state) => slideRightTransitionPage.build(
+                child: const AboutScreen(),
+                state: state,
+              ),
             ),
           ],
         ),
         GoRoute(
           path: BridgeXRoutePaths.myTasks,
           name: BridegeXRouteNames.myTasks,
-          builder: (context, state) => const MyTasksScreen(),
+          pageBuilder: (context, state) => slideRightTransitionPage.build(
+            child: const MyTasksScreen(),
+            state: state,
+          ),
           routes: [
             GoRoute(
               path: BridgeXRoutePaths.myTasksDetails,
               name: BridegeXRouteNames.myTasksDetails,
-              builder: (context, state) =>
-                  TaskDetailsScreen(task: state.extra as TaskItem?),
+              pageBuilder: (context, state) => slideRightTransitionPage.build(
+                child: TaskDetailsScreen(task: state.extra as TaskItem?),
+                state: state,
+              ),
             ),
           ],
         ),
         GoRoute(
           path: BridgeXRoutePaths.myProjects,
           name: BridegeXRouteNames.myProjects,
-          builder: (context, state) => const Scaffold(body: Center(child: Text('myProjects'))),
+          pageBuilder: (context, state) => slideRightTransitionPage.build(
+            child: const Scaffold(body: Center(child: Text('myProjects'))),
+            state: state,
+          ),
         ),
         GoRoute(
           path: BridgeXRoutePaths.level,
           name: BridegeXRouteNames.level,
-          builder: (context, state) => const YourLevelScreen(),
+          pageBuilder: (context, state) => slideRightTransitionPage.build(
+            child: const YourLevelScreen(),
+            state: state,
+          ),
         ),
         GoRoute(
           path: BridgeXRoutePaths.skillsAndExperience,
           name: BridegeXRouteNames.skillsAndExperience,
-          builder: (context, state) =>
-              const SkillsAndExperienceScreen(),
+          pageBuilder: (context, state) => slideRightTransitionPage.build(
+            child: const SkillsAndExperienceScreen(),
+            state: state,
+          ),
         ),
       ],
     ),

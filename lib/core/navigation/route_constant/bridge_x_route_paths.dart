@@ -21,6 +21,7 @@ class BridgeXRoutePaths {
 
   //home root
   static const String home = '/home';
+  static const String selectCategory = 'select-category';
   static const String notifications = 'notifications';
   static const String notificationsDetails = 'notificationsDetails';
 

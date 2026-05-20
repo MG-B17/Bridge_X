@@ -12,10 +12,10 @@ class AboutMissionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(AppSpacing.xl),
+      padding: EdgeInsets.all(AppSpacing.spacing24),
       decoration: BoxDecoration(
         color: context.colors.primary.withValues(alpha: 0.05),
-        borderRadius: BorderRadius.circular(AppSpacing.radiusCardLarge),
+        borderRadius: BorderRadius.circular(AppSpacing.radius16),
         border: Border.all(color: context.colors.divider),
       ),
       child: Column(
@@ -24,9 +24,9 @@ class AboutMissionCard extends StatelessWidget {
           Icon(
             Icons.rocket_launch_outlined,
             color: context.colors.ongoingText,
-            size: AppSpacing.xxl,
+            size: AppSpacing.spacing32,
           ),
-          VerticalSpacing(AppSpacing.md),
+          VerticalSpacing(AppSpacing.spacing16),
           Text(
             AppStrings.ourMission,
             style: AppTextStyles.titleMedium.copyWith(
@@ -34,7 +34,7 @@ class AboutMissionCard extends StatelessWidget {
               fontWeight: FontWeight.w800,
             ),
           ),
-          VerticalSpacing(AppSpacing.xs),
+          VerticalSpacing(AppSpacing.spacing4),
           Text(
             AppStrings.ourMissionDesc,
             style: AppTextStyles.bodyMedium.copyWith(

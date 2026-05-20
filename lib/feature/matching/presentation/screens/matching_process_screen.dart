@@ -23,36 +23,27 @@ class MatchingProcessScreen extends StatelessWidget {
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           padding: EdgeInsets.symmetric(
-            horizontal: AppSpacing.xl,
-            vertical: AppSpacing.md,
+            horizontal: AppSpacing.spacing24,
+            vertical: AppSpacing.spacing16,
           ),
           child: Column(
             children: [
-              // ── Back button ──
               const Align(
                 alignment: Alignment.centerLeft,
                 child: BridgeXBackButton(),
               ),
-              VerticalSpacing(AppSpacing.xl),
-
-              // ── Title ──
+              VerticalSpacing(AppSpacing.spacing24),
               const MatchingProcessTitle(),
-              VerticalSpacing(AppSpacing.xxl),
-
-              // ── Progress ring ──
+              VerticalSpacing(AppSpacing.spacing32),
               const MatchingProgressRing(
                 percentage: 45,
                 label: AppStrings.optimizing,
               ),
-              VerticalSpacing(AppSpacing.xxl),
-
-              // ── Dynamic insight card ──
+              VerticalSpacing(AppSpacing.spacing32),
               const DynamicInsightCard(),
-              VerticalSpacing(AppSpacing.xl),
-
-              // ── Skill scan ──
+              VerticalSpacing(AppSpacing.spacing24),
               const SkillScanSection(),
-              VerticalSpacing(AppSpacing.section),
+              VerticalSpacing(AppSpacing.spacing40),
             ],
           ),
         ),

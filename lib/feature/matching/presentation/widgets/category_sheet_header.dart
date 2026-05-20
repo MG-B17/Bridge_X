@@ -4,7 +4,6 @@ import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CategorySheetHeader extends StatelessWidget {
   const CategorySheetHeader({super.key});
@@ -30,12 +29,12 @@ class CategorySheetHeader extends StatelessWidget {
               child: Icon(
                 Icons.close,
                 color: colors.textSecondary,
-                size: 22.sp,
+                size: AppSpacing.fontSize22,
               ),
             ),
           ],
         ),
-        VerticalSpacing(AppSpacing.xs),
+        VerticalSpacing(AppSpacing.spacing4),
         Text(
           AppStrings.categorySheetSubtitle,
           style: AppTextStyles.bodyMedium.copyWith(

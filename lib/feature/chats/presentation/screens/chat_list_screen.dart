@@ -1,6 +1,5 @@
-import 'package:bridge_x/core/theme/bridge_x_colors.dart';
+import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/constant/bridge_x_strings.dart';
 import '../../../../core/navigation/route_constant/bridege_x_route_names.dart';
@@ -18,29 +17,22 @@ class ChatListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          padding: EdgeInsets.symmetric(horizontal: AppSpacing.spacing24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              VerticalSpacing(AppSpacing.xl),
+              VerticalSpacing(AppSpacing.spacing24),
               Text(
                 AppStrings.chats,
-                style: AppTextStyles.displayLarge.copyWith(color: AppColors.black),
+                style: AppTextStyles.displayLarge.copyWith(color: context.colors.textPrimary),
               ),
-
-              VerticalSpacing(AppSpacing.xl),
-
+              VerticalSpacing(AppSpacing.spacing24),
               const ChatSearchBar(),
-
-              VerticalSpacing(AppSpacing.xl),
-
+              VerticalSpacing(AppSpacing.spacing24),
               const RecentConversationsTitle(),
-
-              VerticalSpacing(AppSpacing.xl),
-
+              VerticalSpacing(AppSpacing.spacing24),
               Expanded(
                 child: ListView.separated(
                   itemCount: chats.length,
@@ -62,7 +54,7 @@ class ChatListScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  separatorBuilder: (context, index) => VerticalSpacing(AppSpacing.md),
+                  separatorBuilder: (context, index) => VerticalSpacing(AppSpacing.spacing16),
                 ),
               ),
             ],

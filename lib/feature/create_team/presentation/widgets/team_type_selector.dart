@@ -28,7 +28,7 @@ class TeamTypeSelector extends StatelessWidget {
             color: context.colors.textPrimary,
           ),
         ),
-        VerticalSpacing(AppSpacing.sm),
+        VerticalSpacing(AppSpacing.spacing8),
         TeamTypeCard(
           icon: Icons.lock_rounded,
           title: AppStrings.private,
@@ -36,7 +36,7 @@ class TeamTypeSelector extends StatelessWidget {
           isSelected: selectedIndex == 0,
           onTap: () => onChanged(0),
         ),
-        VerticalSpacing(AppSpacing.sm),
+        VerticalSpacing(AppSpacing.spacing8),
         TeamTypeCard(
           icon: Icons.public_rounded,
           title: AppStrings.public,

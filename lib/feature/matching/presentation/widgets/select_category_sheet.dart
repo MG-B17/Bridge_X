@@ -6,7 +6,6 @@ import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/bridge_x_button.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import 'category_chip.dart';
@@ -14,7 +13,7 @@ import 'category_sheet_header.dart';
 import 'drag_handle.dart';
 import 'multi_category_info_banner.dart';
 
-/// Shows the "Select Category" bottom sheet and returns the selected categories.
+
 Future<List<String>?> showSelectCategorySheet(BuildContext context) {
   return showModalBottomSheet<List<String>>(
     context: context,
@@ -32,7 +31,7 @@ class _SelectCategorySheet extends StatefulWidget {
 }
 
 class _SelectCategorySheetState extends State<_SelectCategorySheet> {
-  final Set<int> _selected = {0, 2}; // Development, Marketing pre-selected
+  final Set<int> _selected = {0, 2}; 
 
   static const _categories = [
     AppStrings.development,
@@ -50,27 +49,27 @@ class _SelectCategorySheetState extends State<_SelectCategorySheet> {
     return Container(
       decoration: BoxDecoration(
         color: colors.surface,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(AppSpacing.radiusPill)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(AppSpacing.radius30)),
       ),
-      padding: EdgeInsets.fromLTRB(AppSpacing.xl, 12.h, AppSpacing.xl, AppSpacing.xl),
+      padding: EdgeInsets.fromLTRB(
+        AppSpacing.spacing24,
+        AppSpacing.height12,
+        AppSpacing.spacing24,
+        AppSpacing.spacing24,
+      ),
       child: SafeArea(
         top: false,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ── Drag handle ──
             const DragHandle(),
-            VerticalSpacing(AppSpacing.lg),
-
-            // ── Title row ──
+            VerticalSpacing(AppSpacing.spacing24),
             const CategorySheetHeader(),
-            VerticalSpacing(AppSpacing.xl),
-
-            // ── Category chips ──
+            VerticalSpacing(AppSpacing.spacing24),
             Wrap(
-              spacing: 10.w,
-              runSpacing: 12.h,
+              spacing: AppSpacing.spacing10,
+              runSpacing: AppSpacing.height12,
               children: List.generate(_categories.length, (i) {
                 final isSelected = _selected.contains(i);
                 return CategoryChip(
@@ -82,25 +81,21 @@ class _SelectCategorySheetState extends State<_SelectCategorySheet> {
                 );
               }),
             ),
-            VerticalSpacing(AppSpacing.xl),
-
-            // ── Info banner ──
+            VerticalSpacing(AppSpacing.spacing24),
             const MultiCategoryInfoBanner(),
-            VerticalSpacing(AppSpacing.xl),
-
-            // ── Start Matching button ──
+            VerticalSpacing(AppSpacing.spacing24),
             BridgeXButton(
               text: AppStrings.startMatching,
-              onTap: _selected.isNotEmpty ? () => context.pushNamed(BridegeXRouteNames.matching) : null,
+              onTap: _selected.isNotEmpty
+                  ? () => context.pushNamed(BridegeXRouteNames.matching)
+                  : null,
             ),
-            VerticalSpacing(AppSpacing.md),
-
-            // ── Cancel ──
+            VerticalSpacing(AppSpacing.spacing16),
             Center(
               child: GestureDetector(
                 onTap: () => Navigator.pop(context),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.h),
+                  padding: EdgeInsets.symmetric(vertical: AppSpacing.height8),
                   child: Text(
                     AppStrings.cancel,
                     style: AppTextStyles.titleMedium.copyWith(color: colors.textPrimary),

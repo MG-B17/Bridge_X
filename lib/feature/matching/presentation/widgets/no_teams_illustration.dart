@@ -3,7 +3,6 @@ import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/app_color_schema.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NoTeamsIllustration extends StatelessWidget {
   const NoTeamsIllustration({super.key});
@@ -12,59 +11,56 @@ class NoTeamsIllustration extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     return Container(
-      width: 220.w,
-      height: 140.h,
+      width: AppSpacing.width220,
+      height: AppSpacing.height140,
       decoration: BoxDecoration(
         color: colors.primaryLight.withValues(alpha: 0.3),
-        borderRadius: BorderRadius.circular(AppSpacing.radiusCardLarge),
+        borderRadius: BorderRadius.circular(AppSpacing.radius20),
       ),
       child: Center(
         child: Container(
-          width: 160.w,
-          height: 100.h,
+          width: AppSpacing.width160,
+          height: AppSpacing.height100,
           decoration: BoxDecoration(
             color: colors.surface,
-            borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
+            borderRadius: BorderRadius.circular(AppSpacing.radius12),
             boxShadow: AppShadow.subtle,
           ),
           child: Stack(
             alignment: Alignment.center,
             children: [
-              // Background circles
               Positioned(
-                left: 30.w,
+                left: AppSpacing.spacing30,
                 child: CircleAvatar(
-                  radius: 14.r,
+                  radius: AppSpacing.radius14,
                   backgroundColor: colors.divider.withValues(alpha: 0.4),
                 ),
               ),
               Positioned(
-                right: 30.w,
+                right: AppSpacing.spacing30,
                 child: CircleAvatar(
-                  radius: 14.r,
+                  radius: AppSpacing.radius14,
                   backgroundColor: colors.divider.withValues(alpha: 0.4),
                 ),
               ),
-              // Search icon
               Container(
-                width: 44.w,
-                height: 44.w,
+                width: AppSpacing.iconBoxSize,
+                height: AppSpacing.iconBoxSize,
                 decoration: BoxDecoration(
                   gradient: AppColorScheme.matching,
-                  borderRadius: BorderRadius.circular(AppSpacing.radiusXs),
+                  borderRadius: BorderRadius.circular(AppSpacing.radius6),
                 ),
                 child: Icon(
                   Icons.manage_search_rounded,
                   color: Colors.white,
-                  size: 24.sp,
+                  size: AppSpacing.fontSize24,
                 ),
               ),
-              // Orange dot
               Positioned(
-                top: 20.h,
-                right: 40.w,
+                top: AppSpacing.height20,
+                right: AppSpacing.spacing40,
                 child: CircleAvatar(
-                  radius: 5.r,
+                  radius: AppSpacing.radius5,
                   backgroundColor: colors.amber,
                 ),
               ),
@@ -75,4 +71,3 @@ class NoTeamsIllustration extends StatelessWidget {
     );
   }
 }
-

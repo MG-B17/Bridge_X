@@ -4,7 +4,6 @@ import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/horizontal_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MultiCategoryInfoBanner extends StatelessWidget {
   const MultiCategoryInfoBanner({super.key});
@@ -13,17 +12,17 @@ class MultiCategoryInfoBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     return Container(
-      padding: EdgeInsets.all(AppSpacing.md),
+      padding: EdgeInsets.all(AppSpacing.spacing16),
       decoration: BoxDecoration(
         color: colors.primaryLight.withValues(alpha: 0.35),
-        borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
+        borderRadius: BorderRadius.circular(AppSpacing.radius12),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 28.w,
-            height: 28.w,
+            width: AppSpacing.spacing28,
+            height: AppSpacing.spacing28,
             decoration: BoxDecoration(
               color: colors.error.withValues(alpha: 0.12),
               shape: BoxShape.circle,
@@ -31,10 +30,10 @@ class MultiCategoryInfoBanner extends StatelessWidget {
             child: Icon(
               Icons.info_outline_rounded,
               color: colors.error,
-              size: 16.sp,
+              size: AppSpacing.fontSize16,
             ),
           ),
-          HorizontalSpacing(AppSpacing.sm),
+          HorizontalSpacing(AppSpacing.spacing8),
           Expanded(
             child: Text(
               AppStrings.multiCategoryHint,

@@ -23,23 +23,21 @@ class RecommendedTeamsScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.md),
+          padding: EdgeInsets.symmetric(
+            horizontal: AppSpacing.spacing16,
+            vertical: AppSpacing.spacing16,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ── Back button ──
               const BridgeXBackButton(),
-              VerticalSpacing(AppSpacing.md),
-
-              // ── Try Again ──
+              VerticalSpacing(AppSpacing.spacing16),
               TryAgainButton(
                 onTap: () {
                   context.pushReplacementNamed(BridegeXRouteNames.matchingProcess);
                 },
               ),
-              VerticalSpacing(AppSpacing.xl),
-
-              // ── Section header ──
+              VerticalSpacing(AppSpacing.spacing24),
               SectionHeader(
                 title: AppStrings.recommendedForYou,
                 actionLabel: AppStrings.viewAll,
@@ -47,9 +45,7 @@ class RecommendedTeamsScreen extends StatelessWidget {
                   // TODO: View all
                 },
               ),
-              VerticalSpacing(AppSpacing.md),
-
-              // ── Team cards ──
+              VerticalSpacing(AppSpacing.spacing16),
               const TeamCardsList(),
             ],
           ),

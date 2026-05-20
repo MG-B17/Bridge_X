@@ -7,7 +7,8 @@ import '../widgets/productivity_section.dart';
 import '../widgets/project_bars_card.dart';
 import '../widgets/stats_row.dart';
 import '../widgets/team_action_buttons.dart';
-import '../widgets/tip_banner.dart';
+import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/core/widget/bridge_x_tip_banner.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -27,7 +28,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               const GreetingHeader(),
               VerticalSpacing(AppSpacing.spacing16),
-              const TipBanner(),
+              const BridgeXTipBanner(message: AppStrings.tipBanner),
               VerticalSpacing(AppSpacing.spacing16),
               const TeamActionButtons(),
               VerticalSpacing(AppSpacing.spacing24),

@@ -7,9 +7,8 @@ import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/horizontal_spacing.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// A single team recommendation card.
+
 class TeamCard extends StatelessWidget {
   const TeamCard({
     super.key,
@@ -40,25 +39,24 @@ class TeamCard extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(AppSpacing.md),
+      padding: EdgeInsets.all(AppSpacing.spacing16),
       decoration: BoxDecoration(
         color: colors.surface,
-        borderRadius: BorderRadius.circular(AppSpacing.radiusCardLarge),
+        borderRadius: BorderRadius.circular(AppSpacing.radius20),
         border: Border.all(color: colors.divider.withValues(alpha: 0.3)),
         boxShadow: AppShadow.subtle,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ── Avatar + name/category ──
           Row(
             children: [
               Container(
-                width: 42.w,
-                height: 42.w,
+                width: AppSpacing.spacing42,
+                height: AppSpacing.spacing42,
                 decoration: BoxDecoration(
                   color: avatarColor ?? colors.primary,
-                  borderRadius: BorderRadius.circular(AppSpacing.radiusXs),
+                  borderRadius: BorderRadius.circular(AppSpacing.radius6),
                 ),
                 child: Center(
                   child: Text(
@@ -70,7 +68,7 @@ class TeamCard extends StatelessWidget {
                   ),
                 ),
               ),
-              HorizontalSpacing(AppSpacing.md),
+              HorizontalSpacing(AppSpacing.spacing16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +80,7 @@ class TeamCard extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    VerticalSpacing(AppSpacing.xs),
+                    VerticalSpacing(AppSpacing.spacing4),
                     Text(
                       category,
                       style: AppTextStyles.labelSmall.copyWith(
@@ -94,9 +92,7 @@ class TeamCard extends StatelessWidget {
               ),
             ],
           ),
-          VerticalSpacing(AppSpacing.sm),
-
-          // ── Description ──
+          VerticalSpacing(AppSpacing.spacing8),
           Text(
             description,
             style: AppTextStyles.bodyMedium.copyWith(
@@ -106,22 +102,17 @@ class TeamCard extends StatelessWidget {
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
           ),
-          VerticalSpacing(AppSpacing.sm),
-
-          // ── Tags ──
+          VerticalSpacing(AppSpacing.spacing8),
           Wrap(
-            spacing: 6.w,
-            runSpacing: 6.h,
+            spacing: AppSpacing.spacing6,
+            runSpacing: AppSpacing.height6,
             children: tags.map((tag) => _TagChip(label: tag)).toList(),
           ),
-          VerticalSpacing(AppSpacing.md),
-
-          // ── Footer: avatars + member count + request button ──
+          VerticalSpacing(AppSpacing.spacing16),
           Row(
             children: [
-              // Mini avatar stack
               _MiniAvatarStack(count: currentMembers),
-              HorizontalSpacing(AppSpacing.sm),
+              HorizontalSpacing(AppSpacing.spacing8),
               Text(
                 '$currentMembers/$maxMembers ${AppStrings.membersLabel}',
                 style: AppTextStyles.labelSmall.copyWith(
@@ -134,13 +125,13 @@ class TeamCard extends StatelessWidget {
                 onTap: onRequestJoin,
                 child: Container(
                   padding: EdgeInsets.symmetric(
-                    horizontal: 14.w,
-                    vertical: 8.h,
+                    horizontal: AppSpacing.spacing14,
+                    vertical: AppSpacing.height8,
                   ),
                   decoration: BoxDecoration(
                     gradient: AppColorScheme.gradient,
                     borderRadius:
-                        BorderRadius.circular(AppSpacing.radiusPill),
+                        BorderRadius.circular(AppSpacing.radius30),
                   ),
                   child: Text(
                     AppStrings.requestToJoin,
@@ -159,7 +150,6 @@ class TeamCard extends StatelessWidget {
   }
 }
 
-// ── Tag chip ────────────────────────────────────────────────────────────────
 class _TagChip extends StatelessWidget {
   const _TagChip({required this.label});
   final String label;
@@ -168,10 +158,13 @@ class _TagChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+      padding: EdgeInsets.symmetric(
+        horizontal: AppSpacing.spacing10,
+        vertical: AppSpacing.height5,
+      ),
       decoration: BoxDecoration(
         color: colors.background,
-        borderRadius: BorderRadius.circular(AppSpacing.radiusPill),
+        borderRadius: BorderRadius.circular(AppSpacing.radius30),
         border: Border.all(
           color: colors.divider.withValues(alpha: 0.4),
         ),
@@ -181,33 +174,33 @@ class _TagChip extends StatelessWidget {
         style: AppTextStyles.labelSmall.copyWith(
           color: colors.textPrimary,
           fontWeight: FontWeight.w500,
-          fontSize: 11.sp,
+          fontSize: AppSpacing.fontSize11,
         ),
       ),
     );
   }
 }
 
-// ── Mini avatar stack ───────────────────────────────────────────────────────
 class _MiniAvatarStack extends StatelessWidget {
   const _MiniAvatarStack({required this.count});
   final int count;
 
-  static const _colors = [
-    Color(0xFF8B5CF6),
-    Color(0xFFF59E0B),
-    Color(0xFF06B6D4),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+    final themeColors = [
+      colors.primary,
+      colors.amber,
+      colors.teal,
+    ];
+
     final visible = count.clamp(0, 3);
     final overflow = count - visible;
-    final size = 24.w;
+    final size = AppSpacing.spacing24;
 
     return SizedBox(
       height: size,
-      width: (size * 0.65) * visible + (overflow > 0 ? 18.w : 0),
+      width: (size * 0.65) * visible + (overflow > 0 ? AppSpacing.spacing18 : 0),
       child: Stack(
         children: [
           ...List.generate(visible, (i) {
@@ -217,7 +210,7 @@ class _MiniAvatarStack extends StatelessWidget {
                 width: size,
                 height: size,
                 decoration: BoxDecoration(
-                  color: _colors[i % _colors.length],
+                  color: themeColors[i % themeColors.length],
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: Theme.of(context)
@@ -229,7 +222,7 @@ class _MiniAvatarStack extends StatelessWidget {
                 child: Icon(
                   Icons.person,
                   color: Colors.white,
-                  size: 12.sp,
+                  size: AppSpacing.fontSize12,
                 ),
               ),
             );
@@ -241,7 +234,7 @@ class _MiniAvatarStack extends StatelessWidget {
                 width: size,
                 height: size,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF1F2937),
+                  color: colors.textPrimary,
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: Theme.of(context)
@@ -254,8 +247,8 @@ class _MiniAvatarStack extends StatelessWidget {
                   child: Text(
                     '+$overflow',
                     style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 8.sp,
+                      color: colors.surface,
+                      fontSize: AppSpacing.fontSize8,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -267,4 +260,3 @@ class _MiniAvatarStack extends StatelessWidget {
     );
   }
 }
-

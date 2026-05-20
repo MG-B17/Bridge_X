@@ -228,6 +228,7 @@ class AppStrings {
   static const String pendingApproval = 'Pending Approval';
   static const String joinedTeam = "You've successfully joined this team 🎉";
   static const String startCollaboration = 'Start collaborating with your team now';
+  static const String createTeamTip = 'Tip: Define clear roles to help others request to join your team';
 
   // ── Chat ──────────────────────────────────────────────────────────────────
 

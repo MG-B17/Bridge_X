@@ -21,9 +21,9 @@ class NoTeamsTitle extends StatelessWidget {
           ),
           textAlign: TextAlign.center,
         ),
-        VerticalSpacing(AppSpacing.sm),
+        VerticalSpacing(AppSpacing.spacing8),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppSpacing.md),
+          padding: EdgeInsets.symmetric(horizontal: AppSpacing.spacing16),
           child: Text(
             AppStrings.noTeamsFoundSubtitle,
             style: AppTextStyles.bodyMedium.copyWith(

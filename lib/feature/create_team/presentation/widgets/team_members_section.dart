@@ -22,14 +22,14 @@ class TeamMembersSection extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        VerticalSpacing(AppSpacing.xs),
+        VerticalSpacing(AppSpacing.spacing4),
         Text(
           AppStrings.inviteMembersManually,
           style: AppTextStyles.labelSmall.copyWith(
             color: colors.textSecondary,
           ),
         ),
-        VerticalSpacing(AppSpacing.sm),
+        VerticalSpacing(AppSpacing.spacing8),
         BridgeXOutlineButton(
           text: AppStrings.addMembers,
           prefixicon: Icons.group_add_outlined,

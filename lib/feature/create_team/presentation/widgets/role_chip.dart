@@ -3,7 +3,6 @@ import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/horizontal_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RoleChip extends StatelessWidget {
   const RoleChip({super.key, required this.label, required this.onRemove});
@@ -14,22 +13,32 @@ class RoleChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
+      padding: EdgeInsets.symmetric(
+        horizontal: AppSpacing.spacing10,
+        vertical: AppSpacing.height6,
+      ),
       decoration: BoxDecoration(
-        color: colors.primaryLight.withValues(alpha: 0.45),
-        borderRadius: BorderRadius.circular(AppSpacing.radiusPill),
-        border: Border.all(color: colors.primary.withValues(alpha: 0.20)),
+        color: colors.teal.withValues(alpha: 0.2),
+        borderRadius: BorderRadius.circular(AppSpacing.radius12),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(label, style: AppTextStyles.labelSmall.copyWith(
-            color: colors.primary, fontWeight: FontWeight.w600,
-          )),
-          HorizontalSpacing(AppSpacing.xs),
+          Text(
+            label,
+            style: AppTextStyles.labelSmall.copyWith(
+              color: colors.ongoingText,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          HorizontalSpacing(AppSpacing.spacing4),
           GestureDetector(
             onTap: onRemove,
-            child: Icon(Icons.close_rounded, size: 14.sp, color: colors.primary),
+            child: Icon(
+              Icons.close_rounded,
+              size: AppSpacing.fontSize14,
+              color: colors.secondary,
+            ),
           ),
         ],
       ),

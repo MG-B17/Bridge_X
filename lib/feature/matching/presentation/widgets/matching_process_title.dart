@@ -21,7 +21,7 @@ class MatchingProcessTitle extends StatelessWidget {
           ),
           textAlign: TextAlign.center,
         ),
-        VerticalSpacing(AppSpacing.sm),
+        VerticalSpacing(AppSpacing.spacing8),
         Text(
           AppStrings.matchingSubtitleFull,
           style: AppTextStyles.bodyMedium.copyWith(

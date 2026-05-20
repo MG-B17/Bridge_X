@@ -1,6 +1,6 @@
+import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Widget bottomNavItem({
   required IconData icon,
@@ -16,14 +16,18 @@ Widget bottomNavItem({
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: isSelected ? selectedColor : unselectedColor, size: 22.sp),
-        VerticalSpacing(4),
+        Icon(
+          icon,
+          color: isSelected ? selectedColor : unselectedColor,
+          size: AppSpacing.fontSize22,
+        ),
+        VerticalSpacing(AppSpacing.height4),
         Text(
           label,
           style: TextStyle(
             color: isSelected ? selectedColor : unselectedColor,
             fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-            fontSize: 11.sp,
+            fontSize: AppSpacing.fontSize11,
           ),
         ),
       ],

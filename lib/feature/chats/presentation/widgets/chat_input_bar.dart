@@ -1,9 +1,11 @@
+import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/theme/bridge_x_colors.dart';
+import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
+import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/widget/bridge_x_text_form_field.dart';
+import 'package:bridge_x/core/widget/horizontal_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../core/constant/bridge_x_strings.dart';
-import '../../../../core/theme/bridge_x_colors.dart';
-import '../../../../core/theme/bridge_x_text_styles.dart';
 
 class ChatInputBar extends StatelessWidget {
   final TextEditingController controller;
@@ -19,60 +21,67 @@ class ChatInputBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: 20.w,
-        vertical: 12.h,
+        horizontal: AppSpacing.spacing20,
+        vertical: AppSpacing.height12,
       ),
       child: Container(
         width: double.infinity,
         constraints: BoxConstraints(
-          minHeight: 58.h,
-          maxHeight: 72.h,
+          minHeight: AppSpacing.height58,
+          maxHeight: AppSpacing.height160,
         ),
         padding: EdgeInsets.symmetric(
-          horizontal: 14.w,
-          vertical: 6.h,
+          horizontal: AppSpacing.spacing14,
+          vertical: AppSpacing.height6,
         ),
         decoration: BoxDecoration(
-          color: AppColors.lightBlue,
-          borderRadius: BorderRadius.circular(30.r),
+          color: context.colors.primaryLight,
+          borderRadius: BorderRadius.circular(AppSpacing.radius30),
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Icon(
-              Icons.attach_file,
-              size: 22.sp,
-              color: AppColors.gray,
+            Padding(
+              padding: EdgeInsets.only(bottom: AppSpacing.height12),
+              child: Icon(
+                Icons.attach_file,
+                size: AppSpacing.fontSize22,
+                color: context.colors.textSecondary,
+              ),
             ),
-
-            SizedBox(width: 12.w),
-
+            HorizontalSpacing(AppSpacing.spacing12),
             Expanded(
-              child: TextField(
+              child: BridgeXTextFormField(
                 controller: controller,
-                decoration: InputDecoration(
-                  hintText: AppStrings.typeYourMessage,
-                  hintStyle: AppTextStyles.bodyMedium.copyWith(
-                    fontSize: 15.sp,
-                    color: AppColors.gray,
-                  ),
-                  border: InputBorder.none,
+                hint: AppStrings.typeYourMessage,
+                fillColor: Colors.transparent,
+                isDense: true,
+                minLines: 1,
+                maxLines: 5,
+                keyboardType: TextInputType.multiline,
+                contentPadding: EdgeInsets.symmetric(vertical: AppSpacing.height12),
+                border: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                hintStyle: AppTextStyles.bodyMedium.copyWith(
+                  fontSize: AppSpacing.fontSize15,
+                  color: context.colors.textSecondary,
                 ),
               ),
             ),
-
             InkWell(
               onTap: onSend,
               child: Container(
-                width: 48.w,
-                height: 48.w,
+                width: AppSpacing.spacing48,
+                height: AppSpacing.spacing48,
                 decoration: BoxDecoration(
-                  color: AppColors.primaryBlue,
-                  borderRadius: BorderRadius.circular(16.r),
+                  color: context.colors.primary,
+                  borderRadius: BorderRadius.circular(AppSpacing.radius16),
                 ),
                 child: Icon(
                   Icons.send,
                   color: AppColors.white,
-                  size: 22.sp,
+                  size: AppSpacing.fontSize22,
                 ),
               ),
             ),

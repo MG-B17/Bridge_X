@@ -82,4 +82,13 @@ abstract class AppShadow {
       offset: Offset(0, AppSpacing.height3),
     ),
   ];
+
+  static List<BoxShadow> bottomNavBar(Color color) => [
+        BoxShadow(
+          color: color,
+          blurRadius: AppSpacing.radius20,
+          spreadRadius: AppSpacing.radius2,
+          offset: Offset(0, -AppSpacing.height4),
+        ),
+      ];
 }

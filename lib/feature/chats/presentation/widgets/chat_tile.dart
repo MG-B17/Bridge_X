@@ -1,7 +1,10 @@
+import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_colors.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
+import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/widget/horizontal_spacing.dart';
+import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../data/models/chat_model.dart';
 
@@ -21,14 +24,14 @@ class ChatTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(20.r),
+      borderRadius: BorderRadius.circular(AppSpacing.radius20),
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 10.h),
+        padding: EdgeInsets.symmetric(horizontal: AppSpacing.spacing2, vertical: AppSpacing.height10),
         decoration: BoxDecoration(
-          border: Border.all(color: AppColors.lightBlue, width: 1.w),
-          color: isSelected ? const Color(0xFFEFF4FF) : AppColors.white,
-          borderRadius: BorderRadius.circular(18.r),
+          border: Border.all(color: context.colors.primaryLight, width: 1),
+          color: isSelected ? context.colors.primaryLight : context.colors.surface,
+          borderRadius: BorderRadius.circular(AppSpacing.radius18),
         ),
         child: Column(
           children: [
@@ -39,32 +42,29 @@ class ChatTile extends StatelessWidget {
                   clipBehavior: Clip.none,
                   children: [
                     CircleAvatar(
-                      radius: 20.r,
+                      radius: AppSpacing.radius20,
                       backgroundImage: NetworkImage(chat.image),
                     ),
-
                     if (chat.isOnline)
                       Positioned(
                         bottom: 0,
                         right: -1,
                         child: Container(
-                          width: 12.w,
-                          height: 12.w,
+                          width: AppSpacing.spacing12,
+                          height: AppSpacing.spacing12,
                           decoration: BoxDecoration(
-                            color: AppColors.success,
+                            color: context.colors.success,
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: AppColors.white,
-                              width: 2,
+                              color: context.colors.surface,
+                              width: AppSpacing.spacing2,
                             ),
                           ),
                         ),
                       ),
                   ],
                 ),
-
-                SizedBox(width: 10.w),
-
+                HorizontalSpacing(AppSpacing.spacing10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,29 +75,25 @@ class ChatTile extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.bodyMedium.copyWith(
-                          fontSize: 14.sp,
+                          fontSize: AppSpacing.fontSize14,
                           fontWeight: FontWeight.w700,
-                          color: AppColors.black,
+                          color: context.colors.textPrimary,
                         ),
                       ),
-
-                      SizedBox(height: 3.h),
-
+                      VerticalSpacing(AppSpacing.height3),
                       Text(
                         chat.message,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.bodyMedium.copyWith(
-                          fontSize: 12.sp,
-                          color: AppColors.gray,
+                          fontSize: AppSpacing.fontSize12,
+                          color: context.colors.textSecondary,
                         ),
                       ),
                     ],
                   ),
                 ),
-
-                SizedBox(width: 10.w),
-
+                HorizontalSpacing(AppSpacing.spacing10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -105,27 +101,25 @@ class ChatTile extends StatelessWidget {
                     Text(
                       chat.time,
                       style: AppTextStyles.bodyMedium.copyWith(
-                        fontSize: 11.sp,
+                        fontSize: AppSpacing.fontSize11,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.black,
+                        color: context.colors.textPrimary,
                       ),
                     ),
-
-                    SizedBox(height: 10.h),
-
+                    VerticalSpacing(AppSpacing.height10),
                     if (chat.unreadCount != null && chat.unreadCount! > 0)
                       Container(
-                        width: 24.w,
-                        height: 24.w,
+                        width: AppSpacing.spacing24,
+                        height: AppSpacing.spacing24,
                         alignment: Alignment.center,
-                        decoration: const BoxDecoration(
-                          color: AppColors.success,
+                        decoration: BoxDecoration(
+                          color: context.colors.success,
                           shape: BoxShape.circle,
                         ),
                         child: Text(
                           '${chat.unreadCount}',
                           style: AppTextStyles.bodyMedium.copyWith(
-                            fontSize: 11.sp,
+                            fontSize: AppSpacing.fontSize11,
                             fontWeight: FontWeight.w700,
                             color: AppColors.white,
                           ),
@@ -135,9 +129,8 @@ class ChatTile extends StatelessWidget {
                 ),
               ],
             ),
-
             if (!isSelected) ...[
-              SizedBox(height: 10.h),
+              VerticalSpacing(AppSpacing.height10),
             ],
           ],
         ),

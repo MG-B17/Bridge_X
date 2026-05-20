@@ -1,7 +1,10 @@
+import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_colors.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
+import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/widget/horizontal_spacing.dart';
+import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../data/models/message_model.dart';
 
@@ -24,28 +27,26 @@ class MessageBubble extends StatelessWidget {
           Text(
             'You',
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.gray,
+              color: context.colors.textSecondary,
               fontWeight: FontWeight.w600,
             ),
           ),
-
-          SizedBox(height: 8.h),
-
+          VerticalSpacing(AppSpacing.height8),
           Container(
             constraints: BoxConstraints(
-              maxWidth: 260.w,
+              maxWidth: AppSpacing.spacing260,
             ),
             padding: EdgeInsets.symmetric(
-              horizontal: 18.w,
-              vertical: 16.h,
+              horizontal: AppSpacing.spacing18,
+              vertical: AppSpacing.height16,
             ),
             decoration: BoxDecoration(
-              color: AppColors.primaryBlue,
+              color: context.colors.primary,
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(28.r),
-                topRight: Radius.circular(28.r),
-                bottomLeft: Radius.circular(28.r),
-                bottomRight: Radius.circular(8.r),
+                topLeft: Radius.circular(AppSpacing.radius28),
+                topRight: Radius.circular(AppSpacing.radius28),
+                bottomLeft: Radius.circular(AppSpacing.radius28),
+                bottomRight: Radius.circular(AppSpacing.radius8),
               ),
             ),
             child: Text(
@@ -56,14 +57,12 @@ class MessageBubble extends StatelessWidget {
               ),
             ),
           ),
-
-          SizedBox(height: 8.h),
-
+          VerticalSpacing(AppSpacing.height8),
           Text(
             messageModel.time,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.gray,
-              fontSize: 12.sp,
+              color: context.colors.textSecondary,
+              fontSize: AppSpacing.fontSize12,
             ),
           ),
         ],
@@ -76,66 +75,60 @@ class MessageBubble extends StatelessWidget {
         Text(
           messageModel.senderName,
           style: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.gray,
+            color: context.colors.textSecondary,
             fontWeight: FontWeight.w700,
           ),
         ),
-
-        SizedBox(height: 10.h),
-
+        VerticalSpacing(AppSpacing.height10),
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             CircleAvatar(
-              radius: 18.r,
+              radius: AppSpacing.radius18,
               backgroundImage: AssetImage(messageModel.avatar),
             ),
-
-            SizedBox(width: 10.w),
-
+            HorizontalSpacing(AppSpacing.spacing10),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     constraints: BoxConstraints(
-                      maxWidth: 260.w,
+                      maxWidth: AppSpacing.spacing260,
                     ),
                     padding: EdgeInsets.symmetric(
-                      horizontal: 16.w,
-                      vertical: 16.h,
+                      horizontal: AppSpacing.spacing16,
+                      vertical: AppSpacing.height16,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.white,
+                      color: context.colors.surface,
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(8.r),
-                        topRight: Radius.circular(28.r),
-                        bottomLeft: Radius.circular(28.r),
-                        bottomRight: Radius.circular(28.r),
+                        topLeft: Radius.circular(AppSpacing.radius8),
+                        topRight: Radius.circular(AppSpacing.radius28),
+                        bottomLeft: Radius.circular(AppSpacing.radius28),
+                        bottomRight: Radius.circular(AppSpacing.radius28),
                       ),
                       border: Border.all(
-                        color: AppColors.lightGray,
+                        color: context.colors.divider,
                       ),
                     ),
                     child: customContent ??
                         Text(
                           messageModel.message,
                           style: AppTextStyles.bodyMedium.copyWith(
-                            color: AppColors.black,
+                            color: context.colors.textPrimary,
                             height: 1.6,
                           ),
                         ),
                   ),
-
-                  SizedBox(height: 8.h),
-
+                  VerticalSpacing(AppSpacing.height8),
                   Padding(
-                    padding: EdgeInsets.only(left: 4.w),
+                    padding: EdgeInsets.only(left: AppSpacing.spacing4),
                     child: Text(
                       messageModel.time,
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.gray,
-                        fontSize: 12.sp,
+                        color: context.colors.textSecondary,
+                        fontSize: AppSpacing.fontSize12,
                       ),
                     ),
                   ),

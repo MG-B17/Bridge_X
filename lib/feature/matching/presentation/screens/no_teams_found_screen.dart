@@ -22,21 +22,20 @@ class NoTeamsFoundScreen extends StatelessWidget {
       backgroundColor: colors.scaffoldBg,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppSpacing.xl, vertical: AppSpacing.md),
+          padding: EdgeInsets.symmetric(
+            horizontal: AppSpacing.spacing24,
+            vertical: AppSpacing.spacing16,
+          ),
           child: Column(
             children: [
-              // ── Back button ──
-              const Align(alignment: Alignment.centerLeft, child: BridgeXBackButton()),
-
-              // ── Illustration placeholder ──
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: BridgeXBackButton(),
+              ),
               const NoTeamsIllustration(),
-              VerticalSpacing(AppSpacing.xxl),
-
-              // ── Title ──
+              VerticalSpacing(AppSpacing.spacing32),
               const NoTeamsTitle(),
               const Spacer(flex: 1),
-
-              // ── Retry Matching (filled) ──
               BridgeXButton(
                 text: AppStrings.retryMatching,
                 prefixicon: Icons.refresh_rounded,
@@ -44,16 +43,14 @@ class NoTeamsFoundScreen extends StatelessWidget {
                   context.pushReplacementNamed(BridegeXRouteNames.matchingProcess);
                 },
               ),
-              VerticalSpacing(AppSpacing.md),
-
-              // ── Create Your Own Team (outlined) ──
+              VerticalSpacing(AppSpacing.spacing16),
               BridgeXOutlineButton(
                 text: AppStrings.createYourOwnTeam,
                 onTap: () {
                   context.pushNamed(BridegeXRouteNames.createTeam);
                 },
               ),
-              VerticalSpacing(AppSpacing.xxl),
+              VerticalSpacing(AppSpacing.spacing32),
             ],
           ),
         ),

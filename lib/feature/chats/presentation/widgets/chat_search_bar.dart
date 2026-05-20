@@ -1,6 +1,8 @@
+import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/utils/app_shadow.dart';
+import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/widget/bridge_x_text_form_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../core/constant/bridge_x_strings.dart';
 import '../../../../core/theme/bridge_x_text_styles.dart';
 
@@ -10,36 +12,30 @@ class ChatSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50.h,
       decoration: BoxDecoration(
-        color: const Color(0xFFF4F5FA),
-        borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: const Color(0xFFE3E6EF), width: 1),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.03),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
+        color: context.colors.background,
+        borderRadius: BorderRadius.circular(AppSpacing.radius16),
+        border: Border.all(color: context.colors.divider, width: 1),
+        boxShadow: AppShadow.subtle,
       ),
-      child: TextField(
-        decoration: InputDecoration(
-          hintText: AppStrings.searchTeamsOrMessages,
-          hintStyle: AppTextStyles.bodyMedium.copyWith(
-            color: const Color(0xFF9CA3AF),
-          ),
-          prefixIcon: Padding(
-            padding: EdgeInsets.only(left: 15.w, right: 15.w),
+      child: Center(
+        child: BridgeXTextFormField(
+          hint: AppStrings.searchTeamsOrMessages,
+          fillColor: Colors.transparent,
+          isDense: true,
+          contentPadding: EdgeInsets.symmetric(vertical: AppSpacing.height10),
+          border: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          hintStyle: AppTextStyles.bodyMedium.copyWith(color: context.colors.textHint),
+          prefixIconWidget: Padding(
+            padding: EdgeInsets.only(left: AppSpacing.spacing15, right: AppSpacing.spacing15),
             child: Icon(
               Icons.search,
-              size: 20.sp,
-              color: const Color(0xFF7C8495),
+              size: AppSpacing.fontSize20,
+              color: context.colors.textSecondary,
             ),
           ),
-          prefixIconConstraints: BoxConstraints(minWidth: 20.w),
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.symmetric(vertical: 10.h),
         ),
       ),
     );

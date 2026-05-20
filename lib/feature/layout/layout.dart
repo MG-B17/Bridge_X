@@ -1,8 +1,9 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
-import 'package:bridge_x/core/extensions/theme_extension.dart';
+import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/utils/app_shadow.dart';
+import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/feature/layout/widgets/bottom_nav_bar_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class LayoutScreen extends StatelessWidget {
@@ -17,28 +18,21 @@ class LayoutScreen extends StatelessWidget {
       body: navigationShell,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: context.colors.textPrimary.withValues(alpha: .1),
-              blurRadius: 20,
-              spreadRadius: 2,
-              offset: const Offset(0, -4),
-            ),
-          ],
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(24),
-            topRight: Radius.circular(24),
+          boxShadow: AppShadow.bottomNavBar(context.colors.textPrimary.withValues(alpha: .1)),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(AppSpacing.radius24),
+            topRight: Radius.circular(AppSpacing.radius24),
           ),
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30.r),
-            topRight: Radius.circular(30.r),
+            topLeft: Radius.circular(AppSpacing.radius30),
+            topRight: Radius.circular(AppSpacing.radius30),
           ),
           child: BottomAppBar(
             color: context.colors.surface,
             notchMargin: 0,
-            height: 75.h,
+            height: AppSpacing.bottomNavBarHeight,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [

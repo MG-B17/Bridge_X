@@ -5,7 +5,6 @@ import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/horizontal_spacing.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// Skill scan progress bar + verification step list.
 class SkillScanSection extends StatelessWidget {
@@ -18,7 +17,6 @@ class SkillScanSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // ── CORE SKILL SCAN label + Matching... ──
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -39,13 +37,11 @@ class SkillScanSection extends StatelessWidget {
             ),
           ],
         ),
-        VerticalSpacing(AppSpacing.sm),
-
-        // ── Scan progress bar ──
+        VerticalSpacing(AppSpacing.spacing8),
         ClipRRect(
-          borderRadius: BorderRadius.circular(AppSpacing.radiusPill),
+          borderRadius: BorderRadius.circular(AppSpacing.radius30),
           child: SizedBox(
-            height: 6.h,
+            height: AppSpacing.height6,
             child: Stack(
               children: [
                 Container(
@@ -60,7 +56,7 @@ class SkillScanSection extends StatelessWidget {
                         colors: [colors.teal, colors.primary],
                       ),
                       borderRadius:
-                          BorderRadius.circular(AppSpacing.radiusPill),
+                          BorderRadius.circular(AppSpacing.radius30),
                     ),
                   ),
                 ),
@@ -68,20 +64,18 @@ class SkillScanSection extends StatelessWidget {
             ),
           ),
         ),
-        VerticalSpacing(AppSpacing.xl),
-
-        // ── Verification steps ──
-        _VerificationStep(
+        VerticalSpacing(AppSpacing.spacing24),
+        const _VerificationStep(
           label: AppStrings.skillsVerified,
           isCompleted: true,
         ),
-        VerticalSpacing(AppSpacing.md),
-        _VerificationStep(
+        VerticalSpacing(AppSpacing.spacing16),
+        const _VerificationStep(
           label: AppStrings.experienceAnalyzed,
           isCompleted: true,
         ),
-        VerticalSpacing(AppSpacing.md),
-        _VerificationStep(
+        VerticalSpacing(AppSpacing.spacing16),
+        const _VerificationStep(
           label: AppStrings.finalizingShortlist,
           isCompleted: false,
         ),
@@ -90,7 +84,6 @@ class SkillScanSection extends StatelessWidget {
   }
 }
 
-// ── Single verification step row ────────────────────────────────────────────
 class _VerificationStep extends StatelessWidget {
   const _VerificationStep({
     required this.label,
@@ -107,8 +100,8 @@ class _VerificationStep extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 24.w,
-          height: 24.w,
+          width: AppSpacing.spacing24,
+          height: AppSpacing.spacing24,
           decoration: BoxDecoration(
             color: isCompleted
                 ? colors.success
@@ -116,10 +109,14 @@ class _VerificationStep extends StatelessWidget {
             shape: BoxShape.circle,
           ),
           child: isCompleted
-              ? Icon(Icons.check, color: Colors.white, size: 14.sp)
+              ? Icon(
+                  Icons.check,
+                  color: Colors.white,
+                  size: AppSpacing.fontSize14,
+                )
               : null,
         ),
-        HorizontalSpacing(AppSpacing.md),
+        HorizontalSpacing(AppSpacing.spacing16),
         Expanded(
           child: Text(
             label,

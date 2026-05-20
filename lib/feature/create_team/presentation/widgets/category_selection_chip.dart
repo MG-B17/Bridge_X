@@ -24,14 +24,14 @@ class CategorySelectionChip extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 180),
         padding: EdgeInsets.symmetric(
-          horizontal: AppSpacing.md,
-          vertical: AppSpacing.sm,
+          horizontal: AppSpacing.spacing16,
+          vertical: AppSpacing.spacing8,
         ),
         decoration: BoxDecoration(
-          color: isSelected ? colors.primary : colors.surface,
-          borderRadius: BorderRadius.circular(AppSpacing.radiusPill),
+          color: isSelected ? colors.secondary : colors.divider,
+          borderRadius: BorderRadius.circular(AppSpacing.radius30),
           border: Border.all(
-            color: isSelected ? colors.primary : colors.divider,
+            color: isSelected ? colors.secondary : colors.divider,
             width: 1.2,
           ),
         ),

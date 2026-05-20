@@ -3,7 +3,6 @@ import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TeamTypeCard extends StatelessWidget {
   const TeamTypeCard({
@@ -30,15 +29,15 @@ class TeamTypeCard extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         width: double.infinity,
-        padding: EdgeInsets.all(AppSpacing.md),
+        padding: EdgeInsets.all(AppSpacing.spacing16),
         decoration: BoxDecoration(
           color: isSelected
-              ? colors.primaryLight.withValues(alpha: 0.35)
+              ? colors.primary.withValues(alpha: 0.1)
               : colors.surface,
-          borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
+          borderRadius: BorderRadius.circular(AppSpacing.radius12),
           border: Border.all(
             color: isSelected
-                ? colors.primary
+                ? colors.secondary
                 : colors.divider,
             width: isSelected ? 1.8 : 1.2,
           ),
@@ -46,28 +45,26 @@ class TeamTypeCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ── Icon ──
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    width: 36.w,
-                    height: 36.w,
+                    width: AppSpacing.spacing36,
+                    height: AppSpacing.spacing36,
                     decoration: BoxDecoration(
                       color: isSelected
                           ? colors.primary.withValues(alpha: 0.12)
                           : colors.background,
-                      borderRadius:
-                          BorderRadius.circular(AppSpacing.radiusXs),
+                      borderRadius: BorderRadius.circular(AppSpacing.radius6),
                     ),
                     child: Icon(
                       icon,
                       color: isSelected ? colors.primary : colors.textSecondary,
-                      size: 20.sp,
+                      size: AppSpacing.fontSize20,
                     ),
                   ),
-                  VerticalSpacing(AppSpacing.sm),
+                  VerticalSpacing(AppSpacing.spacing8),
                   Text(
                     title,
                     style: AppTextStyles.titleMedium.copyWith(
@@ -75,7 +72,7 @@ class TeamTypeCard extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  VerticalSpacing(AppSpacing.xs),
+                  VerticalSpacing(AppSpacing.spacing4),
                   Text(
                     subtitle,
                     style: AppTextStyles.labelSmall.copyWith(
@@ -85,12 +82,10 @@ class TeamTypeCard extends StatelessWidget {
                 ],
               ),
             ),
-
-            // ── Checkmark ──
             if (isSelected)
               Container(
-                width: 24.w,
-                height: 24.w,
+                width: AppSpacing.spacing24,
+                height: AppSpacing.spacing24,
                 decoration: BoxDecoration(
                   color: colors.primary,
                   shape: BoxShape.circle,
@@ -98,7 +93,7 @@ class TeamTypeCard extends StatelessWidget {
                 child: Icon(
                   Icons.check_rounded,
                   color: Colors.white,
-                  size: 16.sp,
+                  size: AppSpacing.fontSize16,
                 ),
               ),
           ],

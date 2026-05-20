@@ -1,5 +1,8 @@
+import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/utils/app_gradient.dart';
+import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EmptyChatView extends StatelessWidget {
   const EmptyChatView({super.key});
@@ -10,50 +13,43 @@ class EmptyChatView extends StatelessWidget {
       child: Center(
         child: Column(
           children: [
-            SizedBox(height: 80.h),
-
+            VerticalSpacing(AppSpacing.height80),
             Container(
-              width: 280.w,
-              height: 280.h,
+              width: AppSpacing.spacing280,
+              height: AppSpacing.height280,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(32.r),
-                gradient: const LinearGradient(
-                  colors: [
-                    Color(0xffF9F4FF),
-                    Color(0xffF5FAFF),
-                  ],
+                borderRadius: BorderRadius.circular(AppSpacing.radius32),
+                gradient: AppGradient.tinted(
+                  from: context.colors.primaryLight.withValues(alpha: 0.5),
+                  to: context.colors.background,
                 ),
               ),
               child: Center(
                 child: Icon(
                   Icons.smart_toy,
-                  size: 90.sp,
-                  color: Color(0xff0A377F),
+                  size: AppSpacing.fontSize90,
+                  color: context.colors.primary,
                 ),
               ),
             ),
-
-            SizedBox(height: 40.h),
-
+            VerticalSpacing(AppSpacing.height40),
             Text(
               'No messages yet',
               style: TextStyle(
-                fontSize: 30.sp,
+                fontSize: AppSpacing.fontSize30,
                 fontWeight: FontWeight.bold,
-                color: const Color(0xff6C2BB7),
+                color: context.colors.secondary,
               ),
             ),
-
-            SizedBox(height: 20.h),
-
+            VerticalSpacing(AppSpacing.height20),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40.w),
+              padding: EdgeInsets.symmetric(horizontal: AppSpacing.spacing40),
               child: Text(
                 'Start a conversation with your team to stay synced and collaborative. Real-time updates help everyone move faster.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 18.sp,
-                  color: Colors.black54,
+                  fontSize: AppSpacing.fontSize18,
+                  color: context.colors.textSecondary,
                   height: 1.6,
                 ),
               ),

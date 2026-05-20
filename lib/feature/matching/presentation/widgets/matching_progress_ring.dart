@@ -1,10 +1,11 @@
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
+import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:math' as math;
 
-/// Circular percentage indicator with gradient arc used on the matching screen.
+
 class MatchingProgressRing extends StatelessWidget {
   const MatchingProgressRing({
     super.key,
@@ -18,7 +19,7 @@ class MatchingProgressRing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final size = 180.w;
+    final size = AppSpacing.width180;
 
     return SizedBox(
       width: size,
@@ -33,7 +34,7 @@ class MatchingProgressRing extends StatelessWidget {
               progress: percentage / 100,
               trackColor: colors.divider.withValues(alpha: 0.3),
               gradientColors: [colors.teal, colors.primary],
-              strokeWidth: 10.w,
+              strokeWidth: AppSpacing.spacing10,
             ),
           ),
 
@@ -45,18 +46,18 @@ class MatchingProgressRing extends StatelessWidget {
                 '${percentage.toInt()}%',
                 style: AppTextStyles.displayLarge.copyWith(
                   color: colors.textPrimary,
-                  fontSize: 32.sp,
+                  fontSize: AppSpacing.fontSize32,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              SizedBox(height: 2.h),
+              VerticalSpacing(AppSpacing.height2),
               Text(
                 label.toUpperCase(),
                 style: AppTextStyles.labelSmall.copyWith(
                   color: colors.textSecondary,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 1.2,
-                  fontSize: 10.sp,
+                  fontSize: AppSpacing.fontSize10,
                 ),
               ),
             ],

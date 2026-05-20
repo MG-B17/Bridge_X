@@ -5,9 +5,8 @@ import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/horizontal_spacing.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// The "Dynamic Insight" card shown on the matching screen.
+
 class DynamicInsightCard extends StatelessWidget {
   const DynamicInsightCard({super.key});
 
@@ -17,31 +16,28 @@ class DynamicInsightCard extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(AppSpacing.md),
+      padding: EdgeInsets.all(AppSpacing.spacing16),
       decoration: BoxDecoration(
         color: colors.primaryLight.withValues(alpha: 0.35),
-        borderRadius: BorderRadius.circular(AppSpacing.radiusCardLarge),
+        borderRadius: BorderRadius.circular(AppSpacing.radius20),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ── Icon ──
           Container(
-            width: 36.w,
-            height: 36.w,
+            width: AppSpacing.spacing36,
+            height: AppSpacing.spacing36,
             decoration: BoxDecoration(
               color: colors.primary.withValues(alpha: 0.12),
-              borderRadius: BorderRadius.circular(AppSpacing.radiusXs),
+              borderRadius: BorderRadius.circular(AppSpacing.radius6),
             ),
             child: Icon(
               Icons.psychology_rounded,
               color: colors.primary,
-              size: 20.sp,
+              size: AppSpacing.fontSize20,
             ),
           ),
-          HorizontalSpacing(AppSpacing.md),
-
-          // ── Text ──
+          HorizontalSpacing(AppSpacing.spacing16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,10 +48,10 @@ class DynamicInsightCard extends StatelessWidget {
                     color: colors.primary,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 0.8,
-                    fontSize: 11.sp,
+                    fontSize: AppSpacing.fontSize11,
                   ),
                 ),
-                VerticalSpacing(AppSpacing.xs),
+                VerticalSpacing(AppSpacing.spacing4),
                 Text(
                   AppStrings.dynamicInsightSubtitle,
                   style: AppTextStyles.bodyMedium.copyWith(

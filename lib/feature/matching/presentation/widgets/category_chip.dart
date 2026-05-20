@@ -3,7 +3,6 @@ import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/horizontal_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CategoryChip extends StatelessWidget {
   const CategoryChip({
@@ -25,12 +24,15 @@ class CategoryChip extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 180),
-        padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
+        padding: EdgeInsets.symmetric(
+          horizontal: AppSpacing.spacing18,
+          vertical: AppSpacing.height12,
+        ),
         decoration: BoxDecoration(
           color: isSelected
               ? colors.primaryLight.withValues(alpha: 0.3)
               : colors.surface,
-          borderRadius: BorderRadius.circular(AppSpacing.radiusPill + 4.r),
+          borderRadius: BorderRadius.circular(AppSpacing.radius32),
           border: Border.all(
             color: isSelected ? colors.primary : colors.divider,
             width: isSelected ? 1.6 : 1.2,
@@ -40,8 +42,12 @@ class CategoryChip extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (isSelected) ...[
-              Icon(Icons.check, color: colors.primary, size: 16.sp),
-              HorizontalSpacing(AppSpacing.xs),
+              Icon(
+                Icons.check,
+                color: colors.primary,
+                size: AppSpacing.fontSize16,
+              ),
+              HorizontalSpacing(AppSpacing.spacing4),
             ],
             Text(
               label,

@@ -6,8 +6,14 @@ import 'package:bridge_x/core/services/secure_storage_service.dart';
 
 class AppInitializer {
   Future<AppInitializerResult> init() async {
-    final token =
+    var token =
         await sl<SecureStorageService>().read(key: AppKeys.authToken);
+
+    // Safeguard: Clear legacy invalid token stored due to the previous login bug
+    if (token != null && (token == 'Login successful.' || !token.contains('|'))) {
+      await sl<SecureStorageService>().delete(key: AppKeys.authToken);
+      token = null;
+    }
 
     final hasSeenOnboarding =
         sl<CacheService>().getData(key: AppKeys.onboardingSeenKey) as bool? ??

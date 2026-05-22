@@ -1,8 +1,8 @@
 import 'package:bridge_x/core/extensions/context_extension.dart';
-import 'package:bridge_x/core/theme/bridge_x_colors.dart';
 import 'package:bridge_x/core/utils/app_gradient.dart';
 import 'package:bridge_x/core/utils/app_shadow.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/utils/extensions.dart';
 import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
 
@@ -24,13 +24,13 @@ class ProjectBarColumn extends StatelessWidget {
         Text(
           '${(percentage * 100).toInt()}%',
           style: TextStyle(
-            color: context.colors.textPrimary,
+            color: context.colors.secondary,
             fontWeight: FontWeight.w800,
-            fontSize: AppSpacing.fontSize14,
+            fontSize: AppSpacing.fontSize16,
           ),
         ),
 
-        VerticalSpacing(AppSpacing.height16),
+        VerticalSpacing(AppSpacing.height8),
 
         SizedBox(
           height: AppSpacing.barHeight,
@@ -42,7 +42,7 @@ class ProjectBarColumn extends StatelessWidget {
                 width: AppSpacing.barWidth,
                 height: AppSpacing.barHeight,
                 decoration: BoxDecoration(
-                  color: AppColors.barTrack,
+                  color: context.appColors.textSecondary,
                   borderRadius: BorderRadius.circular(AppSpacing.radius20),
                 ),
               ),
@@ -67,9 +67,9 @@ class ProjectBarColumn extends StatelessWidget {
         Text(
           name,
           style: TextStyle(
-            color: context.colors.textSecondary,
+            color: context.colors.textPrimary,
             fontWeight: FontWeight.w700,
-            fontSize: AppSpacing.fontSize12,
+            fontSize: AppSpacing.fontSize14,
           ),
         ),
       ],

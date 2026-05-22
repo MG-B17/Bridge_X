@@ -82,10 +82,10 @@ class AuthRepoImplement extends AuthRepo {
     if (await networkInfo.isConnected) {
       try {
         LoggerService.debug('Attempting login for: ${loginEntity.email}', tag: 'AuthRepo');
-        final result = await authRemoteData.login(loginEntity: loginEntity);
-        await secureStorageService.write(key: AppKeys.authToken, value: result);
+        final token = await authRemoteData.login(loginEntity: loginEntity);
+        await secureStorageService.write(key: AppKeys.authToken, value: token);
         LoggerService.info('Login successful for: ${loginEntity.email}', tag: 'AuthRepo');
-        return Right(result);
+        return const Right('Login successful!');
       } on ServerException catch (e) {
         LoggerService.error('Login failed for: ${loginEntity.email}', exception: e, tag: 'AuthRepo');
         return Left(ServerFailure(message: e.message!));

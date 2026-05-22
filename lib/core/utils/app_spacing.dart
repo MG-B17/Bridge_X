@@ -43,6 +43,7 @@ abstract class AppSpacing {
   static double get height72 => 72.h;
   static double get height80 => 80.h;
   static double get height160 => 160.h;
+  static double get height250 => 250.h;
   static double get height280 => 280.h;
 
   static double get fontSize8 => 8.sp;
@@ -82,9 +83,9 @@ abstract class AppSpacing {
   static double get headerTop => 60.h;
   static double get onboardingImageHeight => 300.h;
   static double get iconBoxSize => 44.w;
-  static double get barColumnWidth => 15.w;
+  static double get barColumnWidth => 10.w;
   static double get barWidth => 28.w;
-  static double get barHeight => 100.h;
+  static double get barHeight => 110.h;
   static double get width120 => 120.w;
   static double get height32 => 32.h;
   static double get fontSize11 => 11.sp;

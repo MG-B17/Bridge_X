@@ -72,6 +72,7 @@ class BridgeXSnackBar {
   }) {
     final colors = context.colors;
     final text = context.textTheme;
+    final messenger = ScaffoldMessenger.of(context);
 
     final snackBar = SnackBar(
       elevation: 0,
@@ -139,7 +140,7 @@ class BridgeXSnackBar {
                 HorizontalSpacing(AppSpacing.sm),
                 // Dismiss ×
                 GestureDetector(
-                  onTap: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+                  onTap: () => messenger.hideCurrentSnackBar(),
                   child: Icon(Icons.close, color: colors.textSecondary, size: 17.sp),
                 ),
               ],
@@ -149,9 +150,8 @@ class BridgeXSnackBar {
       ),
     );
 
-    ScaffoldMessenger.of(context)
+    messenger
       ..hideCurrentSnackBar()
       ..showSnackBar(snackBar);
   }
 }
-

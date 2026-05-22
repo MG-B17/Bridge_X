@@ -13,26 +13,30 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'legend_item.dart';
 
 class ProductivityChart extends StatelessWidget {
-  const ProductivityChart({super.key});
+  const ProductivityChart({super.key, this.completionRate});
 
-  static const double _chartPercentage = 0.65;
-  static const String _chartLabel      = '65%';
+  final double? completionRate;
 
   @override
   Widget build(BuildContext context) {
     final double donutSize = 110.w;
+    final double percentage = (completionRate ?? 0.0) / 100;
+    final String label = '${(completionRate ?? 0.0).toInt()}%';
 
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(AppSpacing.spacing20),
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppSpacing.radius16),
-        gradient: AppGradient.productivityCardFull(surface: context.colors.surface),
-        border: Border.all(
-          color: context.colors.divider.withValues(alpha: 0.20),
+        gradient: AppGradient.productivityCard(
+          primaryLight: context.colors.primaryLight,
+          teal: context.colors.teal,
         ),
-        boxShadow: AppShadow.chartCard,
+        borderRadius: BorderRadius.circular(AppSpacing.radius16),
+        border: Border.all(
+          color: context.colors.divider,
+        ),
+        boxShadow:AppShadow.card,
       ),
       child: Row(
         children: [
@@ -42,13 +46,13 @@ class ProductivityChart extends StatelessWidget {
             height: donutSize,
             child: CustomPaint(
               painter: _DonutPainter(
-                percentage: _chartPercentage,
+                percentage: percentage,
                 activeColor: context.colors.primary,
-                inactiveColor: context.colors.divider.withValues(alpha: 0.3),
+                inactiveColor: context.colors.divider,
               ),
               child: Center(
                 child: Text(
-                  _chartLabel,
+                  label,
                   style: AppTextStyles.headlineSmall.copyWith(
                     color: context.colors.textPrimary,
                     fontWeight: FontWeight.w700,
@@ -63,7 +67,7 @@ class ProductivityChart extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                LegendItem(color: context.colors.primary, label: AppStrings.completedTasks),
+                LegendItem(color: context.colors.secondary, label: AppStrings.completedTasks),
                 VerticalSpacing(AppSpacing.spacing8),
                 LegendItem(color: context.colors.divider, label: AppStrings.activeTasks),
               ],

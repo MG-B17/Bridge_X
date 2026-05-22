@@ -8,7 +8,9 @@ import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'notification_bell_button.dart';
 
 class GreetingHeader extends StatelessWidget {
-  const GreetingHeader({super.key});
+  const GreetingHeader({super.key, this.programmerName});
+
+  final String? programmerName;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,9 @@ class GreetingHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                AppStrings.hiGreeting,
+                programmerName != null && programmerName!.isNotEmpty
+                    ? 'Hi, $programmerName 👋'
+                    : 'Hi,           👋',
                 style: AppTextStyles.displayLarge.copyWith(
                   color: context.colors.textPrimary,
                 ),

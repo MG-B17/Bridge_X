@@ -79,7 +79,11 @@ class AuthRemoteDataImpl implements AuthRemoteData {
     final login = loginEntity.toJson();
     try {
       final response = await apiClient.post(path: ApiEndpoint.login, data: login);
-      return response.data['message'];
+      final token = response.data['token'];
+      if (token == null) {
+        throw ServerException('Token not found in login response');
+      }
+      return token;
     } catch (e) {
       if (e is DioException) {
         rethrow;

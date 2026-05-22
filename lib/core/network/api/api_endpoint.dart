@@ -15,4 +15,10 @@ class ApiEndpoint {
   static const String googleCallback = "/api/auth/google/callback";
   static const String facebookRedirect = "/api/auth/facebook/redirect";
   static const String gitHubRedirect = "/api/auth/github/redirect"; 
+
+
+  //dashboard
+  static const String dashboard = "/api/my/statistics"; 
+
+  
 }

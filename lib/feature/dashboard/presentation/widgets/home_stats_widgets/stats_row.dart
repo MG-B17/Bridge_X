@@ -6,14 +6,23 @@ import 'package:bridge_x/core/widget/vertical_spacing.dart';
 import 'package:flutter/material.dart';
 
 class StatsRow extends StatelessWidget {
-  const StatsRow({super.key});
+  const StatsRow({
+    super.key,
+    this.totalTasks,
+    this.completedTasks,
+    this.projectsCount,
+  });
+
+  final int? totalTasks;
+  final int? completedTasks;
+  final int? projectsCount;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         _StatItem(
-          value: '24',
+          value: totalTasks?.toString() ?? '0',
           label: AppStrings.totalTasks.toUpperCase(),
           backgroundColor: context.colors.textHint.withValues(alpha: .4),
           valueColor: context.colors.textPrimary,
@@ -24,7 +33,7 @@ class StatsRow extends StatelessWidget {
         ),
         _VerticalDivider(color: context.colors.divider),
         _StatItem(
-          value: '18',
+          value: completedTasks?.toString() ?? '0',
           label: AppStrings.completed.toUpperCase(),
           backgroundColor: context.colors.indigo.withValues(alpha: 0.15),
           valueColor: context.colors.indigo.withValues(alpha: 0.9),
@@ -32,7 +41,9 @@ class StatsRow extends StatelessWidget {
         ),
         _VerticalDivider(color: context.colors.divider),
         _StatItem(
-          value: '04',
+          value: projectsCount != null
+              ? (projectsCount! < 10 ? '0$projectsCount' : '$projectsCount')
+              : '00',
           label: AppStrings.projects.toUpperCase(),
           backgroundColor: context.colors.info.withValues(alpha: .3),
           valueColor: context.colors.ongoingText,

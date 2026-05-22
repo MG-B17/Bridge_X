@@ -14,9 +14,13 @@ import 'package:bridge_x/feature/auth/presentation/screens/login/login_screen.da
 import 'package:bridge_x/feature/layout/layout.dart';
 import 'package:bridge_x/feature/onboarding/presentation/screens/onboarding_screen.dart';
 import 'package:bridge_x/feature/splash/splash_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
+
 final appRouter = GoRouter(
+  navigatorKey: rootNavigatorKey,
   initialLocation: BridgeXRoutePaths.splash,
   redirect: (context, state) {
     final appState = sl<AppState>();

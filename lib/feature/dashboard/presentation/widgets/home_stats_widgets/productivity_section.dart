@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 import 'productivity_chart.dart';
 
 class ProductivitySection extends StatelessWidget {
-  const ProductivitySection({super.key});
+  const ProductivitySection({super.key, this.completionRate});
+
+  final double? completionRate;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class ProductivitySection extends StatelessWidget {
           style: AppTextStyles.headlineSmall.copyWith(color: context.colors.textPrimary),
         ),
         VerticalSpacing(AppSpacing.spacing16),
-        const ProductivityChart(),
+        ProductivityChart(completionRate: completionRate),
       ],
     );
   }

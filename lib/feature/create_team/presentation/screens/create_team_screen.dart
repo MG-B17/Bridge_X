@@ -1,11 +1,11 @@
-import 'package:bridge_x/core/animation/bottom_nav_bar_animation/widget/scroller_listener.dart';
+﻿import 'package:bridge_x/core/animation/bottom_nav_bar_animation/widget/scroller_listener.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
-import 'package:bridge_x/core/widget/bridge_x_back_button.dart';
-import 'package:bridge_x/core/widget/bridge_x_button.dart';
-import 'package:bridge_x/core/widget/bridge_x_text_form_field.dart';
-import 'package:bridge_x/core/widget/bridge_x_tip_banner.dart';
-import 'package:bridge_x/core/widget/vertical_spacing.dart';
+import 'package:bridge_x/core/widget/buttons/bridge_x_back_button.dart';
+import 'package:bridge_x/core/widget/buttons/bridge_x_button.dart';
+import 'package:bridge_x/core/widget/inputs/bridge_x_text_form_field.dart';
+import 'package:bridge_x/core/widget/feedback/bridge_x_tip_banner.dart';
+import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:bridge_x/feature/create_team/presentation/widgets/create_team_widgets/category_selection_section.dart';
 import 'package:bridge_x/feature/create_team/presentation/widgets/create_team_widgets/project_description_field.dart';
 import 'package:bridge_x/feature/create_team/presentation/widgets/create_team_widgets/required_roles_section.dart';

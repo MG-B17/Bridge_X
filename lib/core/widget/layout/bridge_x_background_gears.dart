@@ -1,9 +1,8 @@
 import 'package:bridge_x/core/extensions/context_extension.dart';
-import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+
 
 class BridgeXBackgroundGears extends StatelessWidget {
   const BridgeXBackgroundGears({

@@ -1,8 +1,8 @@
-import 'package:bridge_x/core/extensions/context_extension.dart';
+﻿import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
-import 'package:bridge_x/core/widget/horizontal_spacing.dart';
-import 'package:bridge_x/core/widget/vertical_spacing.dart';
+import 'package:bridge_x/core/widget/layout/horizontal_spacing.dart';
+import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

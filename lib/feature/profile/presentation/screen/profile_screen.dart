@@ -1,6 +1,6 @@
-import 'package:bridge_x/core/animation/bottom_nav_bar_animation/widget/scroller_listener.dart';
+﻿import 'package:bridge_x/core/animation/bottom_nav_bar_animation/widget/scroller_listener.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
-import 'package:bridge_x/core/widget/vertical_spacing.dart';
+import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:flutter/material.dart';
 import '../widget/profile_screen_widget/profile_header.dart';
 import '../widget/profile_screen_widget/profile_stats.dart';

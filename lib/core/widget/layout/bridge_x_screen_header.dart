@@ -1,8 +1,8 @@
-import 'package:bridge_x/core/extensions/context_extension.dart';
+﻿import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
-import 'package:bridge_x/core/widget/bridge_x_back_button.dart';
-import 'package:bridge_x/core/widget/horizontal_spacing.dart';
+import 'package:bridge_x/core/widget/buttons/bridge_x_back_button.dart';
+import 'package:bridge_x/core/widget/layout/horizontal_spacing.dart';
 import 'package:flutter/material.dart';
 
 class BridgeXScreenHeader extends StatelessWidget {

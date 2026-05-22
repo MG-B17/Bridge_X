@@ -1,7 +1,7 @@
-import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+﻿import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
-import 'package:bridge_x/core/widget/bridge_x_button.dart';
-import 'package:bridge_x/core/widget/vertical_spacing.dart';
+import 'package:bridge_x/core/widget/buttons/bridge_x_button.dart';
+import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:bridge_x/feature/auth/presentation/screens/complete_profile/cubit/complete_profile_cubit.dart';
 import 'package:bridge_x/feature/auth/presentation/screens/complete_profile/widget/experience_level_selector.dart';
 import 'package:bridge_x/feature/auth/presentation/screens/complete_profile/widget/profile_quote.dart';

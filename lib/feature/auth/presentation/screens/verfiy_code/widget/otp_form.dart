@@ -1,17 +1,17 @@
-import 'package:bridge_x/core/constant/app_feedback_messages.dart';
+﻿import 'package:bridge_x/core/constant/app_feedback_messages.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/utils/enum/auth_enum.dart';
 import 'package:bridge_x/core/navigation/screens_args/reset_password_args.dart';
-import 'package:bridge_x/core/widget/bridge_x_button.dart';
-import 'package:bridge_x/core/widget/bridge_x_snackbar.dart';
-import 'package:bridge_x/core/widget/vertical_spacing.dart';
+import 'package:bridge_x/core/widget/buttons/bridge_x_button.dart';
+import 'package:bridge_x/core/widget/feedback/bridge_x_snackbar.dart';
+import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:bridge_x/feature/auth/presentation/controller/auth_cubit.dart';
 import 'package:bridge_x/feature/auth/presentation/controller/auth_state.dart';
 
-import 'package:bridge_x/core/widget/error_dialog.dart';
+import 'package:bridge_x/core/widget/feedback/error_dialog.dart';
 import 'package:bridge_x/feature/auth/presentation/screens/verfiy_code/widget/otp_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

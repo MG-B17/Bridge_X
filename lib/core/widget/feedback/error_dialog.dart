@@ -1,6 +1,6 @@
-import 'package:bridge_x/core/extensions/context_extension.dart';
+﻿import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_colors.dart';
-import 'package:bridge_x/core/widget/bridge_x_snackbar.dart';
+import 'package:bridge_x/core/widget/feedback/bridge_x_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

@@ -1,15 +1,15 @@
-import 'package:bridge_x/core/animation/bottom_nav_bar_animation/controller/scroll_cubit.dart';
+﻿import 'package:bridge_x/core/animation/bottom_nav_bar_animation/controller/scroll_cubit.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
-import 'package:bridge_x/core/widget/bridge_x_button.dart';
-import 'package:bridge_x/core/widget/vertical_spacing.dart';
+import 'package:bridge_x/core/widget/buttons/bridge_x_button.dart';
+import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:bridge_x/core/widget/bridge_x_chip.dart';
+import 'package:bridge_x/core/widget/layout/bridge_x_chip.dart';
 import '../widgets/select_category_widgets/drag_handle.dart';
 import '../widgets/select_category_widgets/multi_category_info_banner.dart';
 

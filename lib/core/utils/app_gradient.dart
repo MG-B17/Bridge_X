@@ -11,12 +11,11 @@ abstract class AppGradient {
   static const LinearGradient rewards = AppColors.rewardsGradient;
   static const LinearGradient profile = AppColors.profileGradient;
 
-  static const LinearGradient productivityCard = LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    colors: [AppColors.cardSurfaceMid, AppColors.cardSurfaceEnd],
-    stops: [0.0, 1.0],
-  );
+  static LinearGradient productivityCard({required Color primaryLight, required Color teal}) => LinearGradient(
+        begin: Alignment.center,
+        end: Alignment(1,-1),
+        colors: [primaryLight.withValues(alpha: 0.35), teal.withValues(alpha: 0.2)],
+      );
 
   static const LinearGradient projectBarsCard = LinearGradient(
     begin: Alignment.topLeft,

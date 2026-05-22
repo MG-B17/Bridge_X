@@ -1,6 +1,6 @@
-import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+﻿import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
-import 'package:bridge_x/core/widget/bridge_x_divider.dart';
+import 'package:bridge_x/core/widget/layout/bridge_x_divider.dart';
 import 'package:flutter/material.dart';
 
 class LoginDivider extends StatelessWidget {

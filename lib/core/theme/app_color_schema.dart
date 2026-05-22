@@ -38,6 +38,7 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
   final Color amber; // Projects & Tasks
   final Color burgundy; // Growth & Rewards
   final Color gold; // Achievements / badges
+  final Color transparent;
 
   const AppColorScheme({
     required this.primary,
@@ -64,6 +65,7 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     required this.amber,
     required this.burgundy,
     required this.gold,
+    required this.transparent,
   });
 
   // ── Light Theme ────────────────────────────────────────────────────────────
@@ -97,6 +99,7 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     amber: AppColors.amber,
     burgundy: AppColors.burgundy,
     gold: AppColors.gold,
+    transparent: Colors.transparent,
   );
 
   // ── Dark Theme ─────────────────────────────────────────────────────────────
@@ -130,6 +133,7 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     amber: AppColors.amber,
     burgundy: AppColors.softBurgundy,
     gold: AppColors.gold,
+    transparent: Colors.transparent,
   );
 
   // ── Gradients ──────────────────────────────────────────────────────────────
@@ -168,6 +172,7 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     Color? amber,
     Color? burgundy,
     Color? gold,
+    Color? transparent,
   }) {
     return AppColorScheme(
       primary: primary ?? this.primary,
@@ -194,6 +199,7 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
       amber: amber ?? this.amber,
       burgundy: burgundy ?? this.burgundy,
       gold: gold ?? this.gold,
+      transparent: transparent ?? this.transparent,
     );
   }
 
@@ -225,6 +231,7 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
       amber: Color.lerp(amber, other.amber, t)!,
       burgundy: Color.lerp(burgundy, other.burgundy, t)!,
       gold: Color.lerp(gold, other.gold, t)!,
+      transparent: Color.lerp(transparent, other.transparent, t) ?? Colors.transparent,
     );
   }
 }

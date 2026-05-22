@@ -1,11 +1,11 @@
-import 'dart:async';
+﻿import 'dart:async';
 
 import 'package:bridge_x/core/animation/bottom_nav_bar_animation/widget/scroller_listener.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
-import 'package:bridge_x/core/widget/bridge_x_back_button.dart';
-import 'package:bridge_x/core/widget/vertical_spacing.dart';
+import 'package:bridge_x/core/widget/buttons/bridge_x_back_button.dart';
+import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:bridge_x/feature/matching/presentation/widgets/matching_process_widgets/dynamic_insight_card.dart';
 import 'package:bridge_x/feature/matching/presentation/widgets/matching_process_widgets/matching_progress_ring.dart';
 import 'package:bridge_x/feature/matching/presentation/widgets/matching_process_widgets/skill_scan_section.dart';

@@ -1,7 +1,7 @@
-import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+﻿import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
-import 'package:bridge_x/core/widget/bridge_x_text_form_field.dart';
-import 'package:bridge_x/core/widget/vertical_spacing.dart';
+import 'package:bridge_x/core/widget/inputs/bridge_x_text_form_field.dart';
+import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:flutter/material.dart';
 
 import 'username_field.dart';

@@ -1,10 +1,10 @@
-import 'package:bridge_x/core/animation/bottom_nav_bar_animation/widget/scroller_listener.dart';
+﻿import 'package:bridge_x/core/animation/bottom_nav_bar_animation/widget/scroller_listener.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
-import 'package:bridge_x/core/widget/bridge_x_back_button.dart';
-import 'package:bridge_x/core/widget/bridge_x_background_gears.dart';
-import 'package:bridge_x/core/widget/vertical_spacing.dart';
+import 'package:bridge_x/core/widget/buttons/bridge_x_back_button.dart';
+import 'package:bridge_x/core/widget/layout/bridge_x_background_gears.dart';
+import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:flutter/material.dart';
 
 import '../widget/my_tasks_widget/active_tasks_tab.dart';

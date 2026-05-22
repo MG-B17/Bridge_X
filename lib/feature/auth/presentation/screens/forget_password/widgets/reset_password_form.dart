@@ -1,15 +1,15 @@
-import 'package:bridge_x/core/constant/app_feedback_messages.dart';
+﻿import 'package:bridge_x/core/constant/app_feedback_messages.dart';
 import 'package:bridge_x/core/constant/app_validation_messages.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/utils/validator.dart';
-import 'package:bridge_x/core/widget/bridge_x_button.dart';
-import 'package:bridge_x/core/widget/bridge_x_snackbar.dart';
-import 'package:bridge_x/core/widget/bridge_x_text_form_field.dart';
-import 'package:bridge_x/core/widget/horizontal_spacing.dart';
-import 'package:bridge_x/core/widget/vertical_spacing.dart';
+import 'package:bridge_x/core/widget/buttons/bridge_x_button.dart';
+import 'package:bridge_x/core/widget/feedback/bridge_x_snackbar.dart';
+import 'package:bridge_x/core/widget/inputs/bridge_x_text_form_field.dart';
+import 'package:bridge_x/core/widget/layout/horizontal_spacing.dart';
+import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:bridge_x/feature/auth/presentation/controller/auth_cubit.dart';
 import 'package:bridge_x/feature/auth/presentation/controller/auth_state.dart';
 import 'package:bridge_x/core/utils/enum/auth_enum.dart';
@@ -18,7 +18,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:bridge_x/core/widget/error_dialog.dart';
+import 'package:bridge_x/core/widget/feedback/error_dialog.dart';
 
 class ResetPasswordForm extends StatefulWidget {
   final String email;

@@ -1,7 +1,7 @@
-import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+﻿import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/utils/enum/auth_enum.dart';
-import 'package:bridge_x/core/widget/vertical_spacing.dart';
+import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:bridge_x/feature/auth/presentation/auth_widget/screen_name_text.dart';
 import 'package:bridge_x/feature/auth/presentation/auth_widget/sub_tittle_text.dart';
 import 'package:bridge_x/core/navigation/screens_args/otp_args.dart';

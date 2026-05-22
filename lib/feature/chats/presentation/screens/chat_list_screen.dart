@@ -1,4 +1,4 @@
-import 'package:bridge_x/core/animation/bottom_nav_bar_animation/controller/scroll_cubit.dart';
+﻿import 'package:bridge_x/core/animation/bottom_nav_bar_animation/controller/scroll_cubit.dart';
 import 'package:bridge_x/core/animation/bottom_nav_bar_animation/widget/scroller_listener.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +8,7 @@ import '../../../../core/constant/bridge_x_strings.dart';
 import '../../../../core/navigation/route_constant/bridege_x_route_names.dart';
 import '../../../../core/theme/bridge_x_text_styles.dart';
 import '../../../../core/utils/app_spacing.dart';
-import '../../../../core/widget/vertical_spacing.dart';
+import '../../../../core/widget/layout/vertical_spacing.dart';
 import '../../data/mocks/chat_list.dart';
 import '../widgets/chat_list_widgets/chat_search_bar.dart';
 import '../widgets/chat_list_widgets/chat_tile.dart';

@@ -6,6 +6,8 @@ import 'package:bridge_x/core/network/api/dio_factory.dart';
 import 'package:bridge_x/core/network/network_info.dart';
 import 'package:bridge_x/core/services/chache_service.dart';
 import 'package:bridge_x/core/services/secure_storage_service.dart';
+import 'package:bridge_x/core/services/app_lifecycle_service.dart';
+import 'package:bridge_x/core/services/connectivity_service.dart';
 import 'package:bridge_x/core/theme/theme_controller.dart';
 import 'package:bridge_x/feature/auth/data/remote_data/auth_remote_data.dart';
 import 'package:bridge_x/feature/auth/data/repo_implement/auth_repo_implement.dart';
@@ -23,6 +25,13 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:dio/dio.dart';
+import 'package:bridge_x/core/network/interceptors/auth_interceptor.dart';
+import 'package:bridge_x/core/network/interceptors/connectivity_interceptor.dart';
+import 'package:bridge_x/core/network/interceptors/logging_interceptor.dart';
+import 'package:bridge_x/core/network/interceptors/refresh_token_interceptor.dart';
+import 'package:bridge_x/core/network/interceptors/retry_interceptor.dart';
+import 'package:bridge_x/feature/dashboard/di/dashboard_injection.dart';
 
 final sl = GetIt.instance;
 
@@ -65,6 +74,8 @@ Future<void> init() async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
   sl.registerLazySingleton<CacheService>(() => CacheServiceImpl(sl()));
+  sl.registerLazySingleton<AppLifecycleService>(() => AppLifecycleService());
+  sl.registerLazySingleton<ConnectivityService>(() => ConnectivityService(sl()));
   sl.registerLazySingleton<SecureStorageService>(
     () => SecureStorageService(
       secureStorage: const FlutterSecureStorage(
@@ -78,8 +89,40 @@ Future<void> init() async {
   sl.registerLazySingleton(() => InternetConnection());
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
   sl.registerLazySingleton<DioFactory>(() => DioFactory());
-  sl.registerLazySingleton<ApiClient>(() => ApiClient(DioFactory.createBase()));
 
+  // Interceptors
+  sl.registerLazySingleton<ConnectivityInterceptor>(
+    () => ConnectivityInterceptor(internetConnection: sl()),
+  );
+  sl.registerLazySingleton<AuthInterceptor>(
+    () => AuthInterceptor(secureStorageService: sl()),
+  );
+  sl.registerLazySingleton<LoggingInterceptor>(
+    () => LoggingInterceptor(),
+  );
+  sl.registerLazySingleton<RefreshTokenInterceptor>(
+    () => RefreshTokenInterceptor(secureStorageService: sl()),
+  );
+
+  final dio = DioFactory.createBase();
+  sl.registerLazySingleton<Dio>(() => dio);
+
+  sl.registerLazySingleton<RetryInterceptor>(
+    () => RetryInterceptor(dio: sl<Dio>(), maxRetries: 3),
+  );
+
+  dio.interceptors.addAll([
+    sl<ConnectivityInterceptor>(),
+    sl<AuthInterceptor>(),
+    sl<LoggingInterceptor>(),
+    sl<RetryInterceptor>(),
+    sl<RefreshTokenInterceptor>(),
+  ]);
+
+  sl.registerLazySingleton<ApiClient>(() => ApiClient(sl<Dio>()));
+
+  // features
+  initDashboard();
 
   // other 
   sl.registerLazySingleton<AppInitializer>(()=>AppInitializer());

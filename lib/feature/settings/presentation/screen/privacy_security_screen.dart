@@ -1,9 +1,9 @@
-import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+﻿import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
-import 'package:bridge_x/core/widget/bridge_x_background_gears.dart';
-import 'package:bridge_x/core/widget/bridge_x_screen_header.dart';
-import 'package:bridge_x/core/widget/vertical_spacing.dart';
+import 'package:bridge_x/core/widget/layout/bridge_x_background_gears.dart';
+import 'package:bridge_x/core/widget/layout/bridge_x_screen_header.dart';
+import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:flutter/material.dart';
 
 import '../widget/privacy_and_security_widget/account_security_section.dart';

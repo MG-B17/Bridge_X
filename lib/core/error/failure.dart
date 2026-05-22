@@ -1,5 +1,10 @@
 import 'package:equatable/equatable.dart';
 
+export 'server_failure.dart';
+export 'cache_failure.dart';
+export 'network_failure.dart';
+export 'unauthorized_failure.dart';
+
 abstract class Failure extends Equatable {
 
   final String message;
@@ -18,23 +23,6 @@ abstract class Failure extends Equatable {
       ];
 }
 
-
-
-class ServerFailure extends Failure {
-
-  const ServerFailure({
-    required super.message,
-    super.statusCode,
-  });
-}
-
-
-class NetworkFailure extends Failure {
-
-  const NetworkFailure({
-    required super.message,
-  });
-}
 
 
 class AuthFailure extends Failure {

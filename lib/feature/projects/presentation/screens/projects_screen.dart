@@ -1,7 +1,9 @@
-﻿import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+﻿import 'package:bridge_x/core/animation/bottom_nav_bar_animation/controller/scroll_cubit.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../widgets/projects_filter_widgets/project_filter_tabs.dart';
 import '../widgets/projects_empty_state_widgets/projects_empty_state.dart';
@@ -48,6 +50,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                     // TODO: Navigate to explore public teams
                   },
                   onCreateTeam: () {
+                    context.read<ScrollCubit>().hide();
                     context.pushNamed(BridegeXRouteNames.createTeam);
                   },
                 ),

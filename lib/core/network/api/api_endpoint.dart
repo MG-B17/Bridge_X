@@ -1,11 +1,10 @@
 class ApiEndpoint {
-
   // Authentication Endpoints
   static const String login = "/api/login";
   static const String register = "/api/register";
   static const String completeProfile = "/api/register/complete-profile";
-  static const String verifyEmail = "/api/register/verify"; 
-  static const String forgetPassword = "/api/forgot-password"; 
+  static const String verifyEmail = "/api/register/verify";
+  static const String forgetPassword = "/api/forgot-password";
   static const String resetPassword = "/api/reset-password";
   static const String verifyPassword = "/api/reset-password/verify";
   static const String resendVerificationCode = "/api/register/resend-code";
@@ -14,11 +13,24 @@ class ApiEndpoint {
   static const String googleRedirect = "/api/auth/google/redirect";
   static const String googleCallback = "/api/auth/google/callback";
   static const String facebookRedirect = "/api/auth/facebook/redirect";
-  static const String gitHubRedirect = "/api/auth/github/redirect"; 
+  static const String gitHubRedirect = "/api/auth/github/redirect";
 
+  // dashboard
+  static const String dashboard = "/api/my/statistics";
 
-  //dashboard
-  static const String dashboard = "/api/my/statistics"; 
+  // teams
+  static const String createTeam = "/api/teams";
 
-  
+  // projects 
+  static const String allProject = "/api/my-projects";
+  static String zeroProjectDetails({required int projectId}) =>
+      "/api/zero-project/$projectId";
+
+  static String projectDetails({required int projectId}) =>
+      "/api/my-projects/$projectId/details";
+
+  // tasks 
+  static String teamDetailsWithtasks({required int teamId}) =>
+      "/api/team/$teamId/full-details";
+
 }

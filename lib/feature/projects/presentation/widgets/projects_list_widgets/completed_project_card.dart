@@ -9,8 +9,7 @@ import 'package:bridge_x/core/widget/layout/horizontal_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// Card for a completed project showing status badge, title, star rating,
-/// description, action link, and date.
+
 class CompletedProjectCard extends StatelessWidget {
   const CompletedProjectCard({
     super.key,

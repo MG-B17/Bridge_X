@@ -14,4 +14,5 @@ class AppValidationMessages {
   static const String passwordNeedsSpecial = 'Must contain a special character (!@#\$&*~%^)';
   static const String passwordMismatch = 'Passwords do not match';
   static const String passwordMinLength = 'Password must be at least 8 characters long.';
+  static const String invalidProjectDescription = 'Description must be at least 10 characters';
 }

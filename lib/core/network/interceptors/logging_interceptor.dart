@@ -39,7 +39,7 @@ class LoggingInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
     LoggerService.error(
-      '❌ Error: [${err.response?.statusCode ?? 'No Status'}] ${err.requestOptions.method} ${err.requestOptions.path}\nMessage: ${err.message}',
+      '❌ Error: [${err.response?.statusCode ?? 'No Status'}] ${err.requestOptions.method} ${err.requestOptions.path}\nMessage: ${err.message}\nResponse Body: ${err.response?.data}',
       exception: err.error,
       stackTrace: err.stackTrace,
       tag: 'LoggingInterceptor',

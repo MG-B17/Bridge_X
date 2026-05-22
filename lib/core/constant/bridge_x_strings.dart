@@ -189,7 +189,7 @@ class AppStrings {
   // ── Teams ─────────────────────────────────────────────────────────────────
   static const String teamMembers = 'Team Members';
   static const String teamSettings = 'Team Settings';
-  static const String createTeam = 'Create Team';
+  static const String createTeam = 'Create Team 🚀';
   static const String createTeamSubtitle = 'Set up your team and project details';
   static const String joinTeam = 'Join Team';
   static const String teamName = 'Team Name';

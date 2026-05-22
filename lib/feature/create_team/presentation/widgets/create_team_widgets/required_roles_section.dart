@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
@@ -14,11 +14,13 @@ class RequiredRolesSection extends StatefulWidget {
     required this.roles,
     required this.onRoleRemoved,
     required this.onRoleAdded,
+    this.hasError = false,
   });
 
   final List<String> roles;
   final ValueChanged<String> onRoleRemoved;
   final ValueChanged<String> onRoleAdded;
+  final bool hasError;
 
   @override
   State<RequiredRolesSection> createState() => _RequiredRolesSectionState();
@@ -61,7 +63,10 @@ class _RequiredRolesSectionState extends State<RequiredRolesSection> {
           decoration: BoxDecoration(
             color: colors.surface,
             borderRadius: BorderRadius.circular(AppSpacing.radius12),
-            border: Border.all(color: colors.divider, width: 1.2),
+            border: Border.all(
+              color: widget.hasError ? colors.error : colors.divider,
+              width: widget.hasError ? 1.5 : 1.2,
+            ),
           ),
           child: Wrap(
             spacing: AppSpacing.spacing8,
@@ -72,8 +77,8 @@ class _RequiredRolesSectionState extends State<RequiredRolesSection> {
                     label: role,
                     onRemove: () => widget.onRoleRemoved(role),
                     backgroundColor: colors.teal.withValues(alpha: 0.2),
-                    borderColor: Colors.transparent,
-                    selectedBorderColor: Colors.transparent,
+                    borderColor: colors.transparent,
+                    selectedBorderColor: colors.transparent,
                     textColor: colors.ongoingText,
                     borderRadius: AppSpacing.radius12,
                     textStyle: AppTextStyles.labelSmall,
@@ -88,7 +93,7 @@ class _RequiredRolesSectionState extends State<RequiredRolesSection> {
                 child: BridgeXTextFormField(
                   controller: _controller,
                   hint: AppStrings.addMoreHint,
-                  fillColor: Colors.transparent,
+                  fillColor: colors.transparent,
                   isDense: true,
                   border: InputBorder.none,
                   enabledBorder: InputBorder.none,

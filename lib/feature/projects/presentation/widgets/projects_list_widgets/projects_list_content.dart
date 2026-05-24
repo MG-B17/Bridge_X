@@ -1,75 +1,84 @@
-﻿import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
+import 'package:bridge_x/feature/projects/domain/entities/completed_project_entity.dart';
+import 'package:bridge_x/feature/projects/domain/entities/ongoing_project_entity.dart';
 import 'package:flutter/material.dart';
-
 import 'completed_project_card.dart';
 import 'ongoing_project_card.dart';
 
-/// Renders the filtered list of project cards (ongoing + completed).
-///
-/// Extracted from [ProjectsScreen] so the screen file stays lean
-/// and can cleanly swap between this and [ProjectsEmptyState].
 class ProjectsListContent extends StatelessWidget {
   const ProjectsListContent({
     super.key,
     required this.selectedFilter,
+    required this.ongoingProjects,
+    required this.completedProjects,
   });
 
   final int selectedFilter;
+  final List<OngoingProjectEntity> ongoingProjects;
+  final List<CompletedProjectEntity> completedProjects;
+
+  bool get _showOngoing => selectedFilter != 2;
+  bool get _showCompleted => selectedFilter != 1;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: _buildFilteredProjects(),
+    final ongoingCount = _showOngoing ? ongoingProjects.length : 0;
+    final completedCount = _showCompleted ? completedProjects.length : 0;
+    final totalCount = ongoingCount + completedCount;
+
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: totalCount + (totalCount > 1 ? totalCount - 1 : 0),
+      itemBuilder: (context, index) => _buildItem(context, index),
     );
   }
 
-  List<Widget> _buildFilteredProjects() {
-    // Demo data — in production this would come from a BLoC/Cubit
-    final completedCards = [
-      const CompletedProjectCard(
-        title: 'API Gateway',
-        rating: 4.9,
-        description:
-            'Transitioning legacy monolithic endpoints to a modern serverless architecture with improved latency and security protocols across all regions.',
-        actionLabel: AppStrings.viewReport,
-        date: 'Nov 04, 2023',
-      ),
-    ];
+  Widget _buildItem(BuildContext context, int index) {
+    int itemIndex = 0;
 
-    final ongoingCards = [
-      const OngoingProjectCard(
-        title: 'FinTrack Mobile Pro',
-        phase: AppStrings.developmentPhase,
-        progress: 0.40,
-        memberCount: 5,
-        showYourTeamBadge: false,
-      ),
-      Padding(
-        padding: EdgeInsets.only(top: AppSpacing.md),
-        child: const OngoingProjectCard(
-          title: 'Quantum Dashboard\nRedesign',
-          phase: AppStrings.developmentPhase,
-          progress: 0.80,
-          memberCount: 4,
-          showYourTeamBadge: true,
-        ),
-      ),
-    ];
-
-    switch (selectedFilter) {
-      case 1: // Ongoing
-        return ongoingCards;
-      case 2: // Completed
-        return completedCards;
-      default: // All
-        return [
-          ...completedCards,
-          VerticalSpacing(AppSpacing.md),
-          ...ongoingCards,
-        ];
+    if (_showCompleted) {
+      for (int i = 0; i < completedProjects.length; i++) {
+        if (itemIndex == index) return _buildCompletedCard(completedProjects[i]);
+        itemIndex++;
+        if (i < completedProjects.length - 1) {
+          if (itemIndex == index) return VerticalSpacing(AppSpacing.md);
+          itemIndex++;
+        }
+      }
     }
+
+    if (_showOngoing) {
+      if (_showCompleted && completedProjects.isNotEmpty) {
+        if (itemIndex == index) return VerticalSpacing(AppSpacing.md);
+        itemIndex++;
+      }
+      for (int i = 0; i < ongoingProjects.length; i++) {
+        if (itemIndex == index) return _buildOngoingCard(ongoingProjects[i]);
+        itemIndex++;
+        if (i < ongoingProjects.length - 1) {
+          if (itemIndex == index) return VerticalSpacing(AppSpacing.md);
+          itemIndex++;
+        }
+      }
+    }
+
+    return const SizedBox.shrink();
+  }
+
+  Widget _buildOngoingCard(OngoingProjectEntity ongoing) {
+    return OngoingProjectCard(entity: ongoing);
+  }
+
+  Widget _buildCompletedCard(CompletedProjectEntity completed) {
+    return CompletedProjectCard(
+      title: completed.title,
+      rating: 4.8,
+      description: completed.description,
+      actionLabel: AppStrings.viewReport,
+      date: completed.expectedEndDate,
+    );
   }
 }

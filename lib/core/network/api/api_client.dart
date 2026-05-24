@@ -5,8 +5,8 @@ class ApiClient {
 
   ApiClient(this.dio);
 
-  Future<Response> get({required String path}) async {
-    return await dio.get(path);
+  Future<Response> get({required String path, Map<String, dynamic>? queryParameters}) async {
+    return await dio.get(path, queryParameters: queryParameters);
   }
 
   Future<Response> post({required String path, required dynamic data}) async {

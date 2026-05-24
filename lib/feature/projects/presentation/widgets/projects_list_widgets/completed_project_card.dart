@@ -51,6 +51,8 @@ class CompletedProjectCard extends StatelessWidget {
             label: AppStrings.completed,
             isCompleted: true,
             showIcon: true,
+            textColor: colors.ongoingText,
+            bgColor: colors.ongoingText.withValues(alpha: .4),
           ),
           VerticalSpacing(AppSpacing.sm),
 

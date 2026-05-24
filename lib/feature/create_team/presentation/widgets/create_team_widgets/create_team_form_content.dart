@@ -134,7 +134,7 @@ class _CreateTeamFormContentState extends State<CreateTeamFormContent> {
           BlocBuilder<CreateTeamCubit, CreateTeamState>(
             buildWhen: (previous, current) => previous.selectedTeamType != current.selectedTeamType,
             builder: (context, state) {
-              if (state.selectedTeamType == 1) {
+              if (state.selectedTeamType == 1) { // 1 = Public
                 return Column(
                   children: [const TeamMembersSection(), VerticalSpacing(AppSpacing.spacing16)],
                 );

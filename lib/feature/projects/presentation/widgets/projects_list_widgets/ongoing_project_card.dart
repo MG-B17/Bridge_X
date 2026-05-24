@@ -1,34 +1,24 @@
-﻿import 'package:bridge_x/core/utils/app_shadow.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:bridge_x/core/widget/layout/horizontal_spacing.dart';
+import 'package:bridge_x/feature/projects/domain/entities/ongoing_project_entity.dart';
 import 'package:bridge_x/feature/projects/presentation/widgets/projects_list_widgets/avatar_stack.dart';
 import 'package:bridge_x/feature/projects/presentation/widgets/projects_list_widgets/project_progress_bar.dart';
 import 'package:bridge_x/feature/projects/presentation/widgets/projects_list_widgets/project_status_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 class OngoingProjectCard extends StatelessWidget {
   const OngoingProjectCard({
     super.key,
-    required this.title,
-    required this.phase,
-    required this.progress,
-    required this.memberCount,
-    this.showYourTeamBadge = false,
+    required this.entity,
     this.onDetailsTap,
   });
 
-  final String title;
-  final String phase;
-
-  final double progress;
-  final int memberCount;
-  final bool showYourTeamBadge;
+  final OngoingProjectEntity entity;
   final VoidCallback? onDetailsTap;
 
   @override
@@ -39,50 +29,51 @@ class OngoingProjectCard extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: colors.surface,
+        color: colors.onGoingColor.withValues(alpha: .2),
         borderRadius: BorderRadius.circular(AppSpacing.radiusCardLarge),
         border: Border.all(
           color: colors.divider.withValues(alpha: 0.3),
         ),
-        boxShadow: AppShadow.subtle,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ── Status badge row ──
+          ProjectStatusBadge(
+            label: AppStrings.ongoing,
+            isCompleted: false,
+            textColor: colors.error,
+            bgColor: colors.onGoingColor.withValues(alpha: .4),
+          ),
+          VerticalSpacing(AppSpacing.sm),
+
           Row(
             children: [
-              ProjectStatusBadge(
-                label: AppStrings.ongoing,
-                isCompleted: false,
+              Expanded(
+                child: Text(
+                  entity.title,
+                  maxLines: 1,
+                  textAlign: TextAlign.start,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.headlineSmall.copyWith(
+                    color: colors.textPrimary,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               ),
-              const Spacer(),
-              if (showYourTeamBadge) _YourTeamBadge(),
+              if (entity.mySpecialization.isNotEmpty) _YourTeamBadge(),
             ],
           ),
           VerticalSpacing(AppSpacing.sm),
 
-          // ── Title ──
-          Text(
-            title,
-            style: AppTextStyles.headlineSmall.copyWith(
-              color: colors.textPrimary,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          VerticalSpacing(AppSpacing.sm),
-
-          // ── Progress bar ──
           ProjectProgressBar(
-            phase: phase,
-            progress: progress,
+            phase: entity.category,
+            progress: entity.projectCompletionPercentage / 100.0,
           ),
           VerticalSpacing(AppSpacing.md),
 
-          // ── Avatar stack + details action ──
           Row(
             children: [
-              AvatarStack(totalCount: memberCount),
+              AvatarStack(totalCount: _memberCount(entity.id)),
               const Spacer(),
               GestureDetector(
                 onTap: onDetailsTap,
@@ -111,8 +102,14 @@ class OngoingProjectCard extends StatelessWidget {
       ),
     );
   }
-}
 
+  static const int _minTeamMembers = 3;
+  static const int _maxTeamMembers = 5;
+
+  static int _memberCount(int id) {
+    return _minTeamMembers + (id % (_maxTeamMembers - _minTeamMembers));
+  }
+}
 
 class _YourTeamBadge extends StatelessWidget {
   @override
@@ -121,15 +118,12 @@ class _YourTeamBadge extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: 10.w,
-        vertical: 5.h,
+        horizontal: AppSpacing.spacing10,
+        vertical: AppSpacing.spacing4,
       ),
       decoration: BoxDecoration(
-        color: colors.primaryLight.withValues(alpha: 0.4),
+        color: colors.primary.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(AppSpacing.radiusPill),
-        border: Border.all(
-          color: colors.primary.withValues(alpha: 0.15),
-        ),
       ),
       child: Text(
         AppStrings.yourTeam,
@@ -142,4 +136,3 @@ class _YourTeamBadge extends StatelessWidget {
     );
   }
 }
-

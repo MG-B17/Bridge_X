@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/horizontal_spacing.dart';
 import 'package:flutter/material.dart';
@@ -14,24 +14,25 @@ class AvatarStack extends StatelessWidget {
     required this.totalCount,
     this.maxVisible = 2,
     this.avatarSize = 32,
+    this.colorsList = _defaultAvatarColors,
   });
 
   final int totalCount;
   final int maxVisible;
   final double avatarSize;
+  final List<Color> colorsList;
+
+  static const List<Color> _defaultAvatarColors = [
+    Color(0xFF8B5CF6),
+    Color(0xFFF59E0B),
+    Color(0xFF06B6D4),
+  ];
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final visibleCount = totalCount.clamp(0, maxVisible);
     final overflow = totalCount - maxVisible;
-
-    // Placeholder colors for demo avatars
-    const avatarColors = [
-      Color(0xFF8B5CF6), // violet
-      Color(0xFFF59E0B), // amber
-      Color(0xFF06B6D4), // teal
-    ];
 
     return SizedBox(
       height: avatarSize.w,
@@ -50,7 +51,7 @@ class AvatarStack extends StatelessWidget {
                     width: avatarSize.w,
                     height: avatarSize.w,
                     decoration: BoxDecoration(
-                      color: avatarColors[index % avatarColors.length],
+                      color: colorsList[index % colorsList.length],
                       shape: BoxShape.circle,
                       border: Border.all(
                         color: colors.surface,

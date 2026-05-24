@@ -21,6 +21,7 @@ abstract class AppSpacing {
   static double get spacing40 => 40.w;
   static double get spacing42 => 42.w;
   static double get spacing48 => 48.w;
+  static double get spacing72 => 72.w;
   static double get spacing75 => 75.w;
   static double get spacing260 => 260.w;
   static double get spacing280 => 280.w;

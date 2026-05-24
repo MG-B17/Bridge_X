@@ -33,6 +33,7 @@ import 'package:bridge_x/core/network/interceptors/refresh_token_interceptor.dar
 import 'package:bridge_x/core/network/interceptors/retry_interceptor.dart';
 import 'package:bridge_x/feature/dashboard/di/dashboard_injection.dart';
 import 'package:bridge_x/feature/create_team/di/create_team_injection.dart';
+import 'package:bridge_x/feature/project_details/di/project_details_injection.dart';
 import 'package:bridge_x/feature/projects/di/projects_injection.dart';
 
 final sl = GetIt.instance;
@@ -127,6 +128,7 @@ Future<void> init() async {
   initDashboard();
   initCreateTeam();
   initProjects();
+  initProjectDetails();
 
   // other 
   sl.registerLazySingleton<AppInitializer>(()=>AppInitializer());

@@ -1,7 +1,9 @@
 import 'package:bridge_x/core/animation/screen_transtion_animation/transitions/slide_right_trnasition.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dart';
+import 'package:bridge_x/core/navigation/screens_args/project_details_args.dart';
 import 'package:bridge_x/feature/create_team/presentation/screens/create_team_screen.dart';
+import 'package:bridge_x/feature/project_details/presentation/pages/project_details_screen.dart';
 import 'package:bridge_x/feature/projects/presentation/screens/projects_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -21,6 +23,20 @@ StatefulShellBranch projectRoute = StatefulShellBranch(
             child: const CreateTeamScreen(),
             state: state,
           ),
+        ),
+        GoRoute(
+          path: BridgeXRoutePaths.projectDetails,
+          name: BridegeXRouteNames.projectDetails,
+          pageBuilder: (context, state) {
+            final args = state.extra as ProjectDetailsArgs;
+            return slideRightTransitionPage.build(
+              child: ProjectDetailsScreen(
+                projectId: args.projectId,
+                status: args.status,
+              ),
+              state: state,
+            );
+          },
         ),
       ],
     ),

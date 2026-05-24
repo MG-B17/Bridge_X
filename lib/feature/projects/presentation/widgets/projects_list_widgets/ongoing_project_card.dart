@@ -83,14 +83,14 @@ class OngoingProjectCard extends StatelessWidget {
                     Text(
                       AppStrings.details,
                       style: AppTextStyles.titleMedium.copyWith(
-                        color: colors.textSecondary,
+                        color: colors.secondary,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     HorizontalSpacing(AppSpacing.xs),
                     Icon(
                       Icons.chevron_right_rounded,
-                      color: colors.textSecondary,
+                      color: colors.secondary,
                       size: 18.sp,
                     ),
                   ],

@@ -185,6 +185,10 @@ class AppStrings {
   static const String all = 'All';
   static const String developmentPhase = 'Development Phase';
   static const String yourTeam = 'Your Team';
+  static const String myRole = 'MY ROLE';
+  static const String githubRepositoryLink = 'GitHub Repository Link';
+  static const String viewTasks = 'View Tasks';
+  static const String viewChat = 'View Chat';
 
   // ── Teams ─────────────────────────────────────────────────────────────────
   static const String teamMembers = 'Team Members';

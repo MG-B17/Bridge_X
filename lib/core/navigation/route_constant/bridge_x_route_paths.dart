@@ -33,6 +33,7 @@ class BridgeXRoutePaths {
   static const String projects = '/projects';
 
   static const String createTeam = '/create-team';
+  static const String projectDetails = 'project-details';
 
 
   // matching root 

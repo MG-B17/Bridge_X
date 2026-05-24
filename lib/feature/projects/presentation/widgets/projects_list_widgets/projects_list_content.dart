@@ -1,9 +1,12 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/screens_args/project_details_args.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:bridge_x/feature/projects/domain/entities/completed_project_entity.dart';
 import 'package:bridge_x/feature/projects/domain/entities/ongoing_project_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'completed_project_card.dart';
 import 'ongoing_project_card.dart';
 
@@ -56,7 +59,7 @@ class ProjectsListContent extends StatelessWidget {
         itemIndex++;
       }
       for (int i = 0; i < ongoingProjects.length; i++) {
-        if (itemIndex == index) return _buildOngoingCard(ongoingProjects[i]);
+        if (itemIndex == index) return _buildOngoingCard(context, ongoingProjects[i]);
         itemIndex++;
         if (i < ongoingProjects.length - 1) {
           if (itemIndex == index) return VerticalSpacing(AppSpacing.md);
@@ -68,8 +71,17 @@ class ProjectsListContent extends StatelessWidget {
     return const SizedBox.shrink();
   }
 
-  Widget _buildOngoingCard(OngoingProjectEntity ongoing) {
-    return OngoingProjectCard(entity: ongoing);
+  Widget _buildOngoingCard(BuildContext context, OngoingProjectEntity ongoing) {
+    return OngoingProjectCard(
+      entity: ongoing,
+      onDetailsTap: () => context.pushNamed(
+        BridegeXRouteNames.projectDetails,
+        extra: ProjectDetailsArgs(
+          projectId: ongoing.id,
+          status: 'ongoing',
+        ),
+      ),
+    );
   }
 
   Widget _buildCompletedCard(CompletedProjectEntity completed) {

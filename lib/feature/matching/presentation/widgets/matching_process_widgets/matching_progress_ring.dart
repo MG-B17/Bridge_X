@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
@@ -27,7 +27,7 @@ class MatchingProgressRing extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // ── Track ring ──
+          // -- Track ring --
           CustomPaint(
             size: Size(size, size),
             painter: _RingPainter(
@@ -38,7 +38,7 @@ class MatchingProgressRing extends StatelessWidget {
             ),
           ),
 
-          // ── Center text ──
+          // -- Center text --
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -68,7 +68,7 @@ class MatchingProgressRing extends StatelessWidget {
   }
 }
 
-// ── Custom ring painter ─────────────────────────────────────────────────────
+// -- Custom ring painter -----------------------------------------------------
 class _RingPainter extends CustomPainter {
   _RingPainter({
     required this.progress,

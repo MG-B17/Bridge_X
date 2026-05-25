@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:bridge_x/feature/notifications/presentation/widgets/notifications_list_widgets/notification_icon_container.dart';

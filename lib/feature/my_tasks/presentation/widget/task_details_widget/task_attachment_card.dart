@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/horizontal_spacing.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
@@ -25,7 +25,6 @@ class TaskAttachmentCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // Icon Box
           Container(
             padding: EdgeInsets.all(8.r),
             decoration: BoxDecoration(
@@ -41,8 +40,6 @@ class TaskAttachmentCard extends StatelessWidget {
             ),
           ),
           HorizontalSpacing(AppSpacing.md),
-
-          // Title / Details
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,7 +53,7 @@ class TaskAttachmentCard extends StatelessWidget {
                 ),
                 VerticalSpacing(AppSpacing.xs),
                 Text(
-                  '${attachment.size} • Added ${attachment.dateAdded}',
+                  '${attachment.size} \u2022 Added ${attachment.dateAdded}',
                   style: context.textTheme.bodySmall?.copyWith(
                     color: context.colors.textSecondary,
                   ),
@@ -64,8 +61,6 @@ class TaskAttachmentCard extends StatelessWidget {
               ],
             ),
           ),
-
-          // Download Action
           IconButton(
             icon: Icon(
               Icons.download_outlined,

@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/horizontal_spacing.dart';
@@ -66,7 +66,7 @@ class TaskCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ── Project Label & Status Tag ──
+            // -- Project Label & Status Tag --
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -97,7 +97,7 @@ class TaskCard extends StatelessWidget {
             ),
             VerticalSpacing(AppSpacing.xs),
 
-            // ── Title ──
+            // -- Title --
             Text(
               task.title,
               style: context.textTheme.titleMedium?.copyWith(
@@ -107,7 +107,7 @@ class TaskCard extends StatelessWidget {
             ),
             VerticalSpacing(AppSpacing.md),
 
-            // ── Progress Bar ──
+            // -- Progress Bar --
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -138,14 +138,14 @@ class TaskCard extends StatelessWidget {
             ),
             VerticalSpacing(AppSpacing.md),
 
-            // ── Divider ──
+            // -- Divider --
             Container(
               height: 1.h,
               color: context.colors.divider,
             ),
             VerticalSpacing(AppSpacing.md),
 
-            // ── Due Date ──
+            // -- Due Date --
             Row(
               children: [
                 Icon(

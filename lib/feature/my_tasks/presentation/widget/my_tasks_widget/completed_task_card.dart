@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/theme/bridge_x_colors.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
@@ -33,7 +33,7 @@ class CompletedTaskCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // ── Green Check Icon ──
+            // -- Green Check Icon --
             Container(
               padding: EdgeInsets.all(AppSpacing.radius6),
               decoration: BoxDecoration(
@@ -48,7 +48,7 @@ class CompletedTaskCard extends StatelessWidget {
             ),
             HorizontalSpacing(AppSpacing.spacing16),
 
-            // ── Details ──
+            // -- Details --
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +81,7 @@ class CompletedTaskCard extends StatelessWidget {
               ),
             ),
 
-            // ── Options Button ──
+            // -- Options Button --
             IconButton(
               icon: Icon(
                 Icons.more_vert,

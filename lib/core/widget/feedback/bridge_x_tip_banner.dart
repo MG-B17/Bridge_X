@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/horizontal_spacing.dart';
@@ -29,7 +29,7 @@ class BridgeXTipBanner extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Text('💡', style: TextStyle(fontSize: AppSpacing.fontSize18)),
+          Text('??', style: TextStyle(fontSize: AppSpacing.fontSize18)),
           HorizontalSpacing(AppSpacing.spacing10),
           Expanded(
             child: Text(

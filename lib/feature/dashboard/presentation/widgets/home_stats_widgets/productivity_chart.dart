@@ -1,4 +1,4 @@
-﻿import 'dart:math' as math;
+import 'dart:math' as math;
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
@@ -40,7 +40,7 @@ class ProductivityChart extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // ── Donut chart ──
+          // -- Donut chart --
           SizedBox(
             width: donutSize,
             height: donutSize,
@@ -62,7 +62,7 @@ class ProductivityChart extends StatelessWidget {
             ),
           ),
           HorizontalSpacing(AppSpacing.spacing24),
-          // ── Legend ──
+          // -- Legend --
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +79,7 @@ class ProductivityChart extends StatelessWidget {
   }
 }
 
-// ── Custom donut chart painter ──────────────────────────────────────────────
+// -- Custom donut chart painter ----------------------------------------------
 class _DonutPainter extends CustomPainter {
   _DonutPainter({required this.percentage, required this.activeColor, required this.inactiveColor});
 

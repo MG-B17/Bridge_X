@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +23,8 @@ class GreetingHeader extends StatelessWidget {
             children: [
               Text(
                 programmerName != null && programmerName!.isNotEmpty
-                    ? 'Hi, $programmerName 👋'
-                    : 'Hi,           👋',
+                    ? 'Hi, $programmerName ??'
+                    : 'Hi,           ??',
                 style: AppTextStyles.displayLarge.copyWith(
                   color: context.colors.textPrimary,
                 ),

@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/utils/app_shadow.dart';
+import 'package:bridge_x/core/utils/app_shadow.dart';
 import 'package:bridge_x/core/constant/app_feedback_messages.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_colors.dart';
@@ -8,9 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// Design-system snackbar. All colors, radii, and shadows come from
-/// [AppColors] / [AppSpacing] — zero hardcoded values.
+/// [AppColors] / [AppSpacing].
 class BridgeXSnackBar {
-  // ─── Success ────────────────────────────────────────────────────────────────
   static void showSuccess({
     required BuildContext context,
     required String message,
@@ -27,7 +26,6 @@ class BridgeXSnackBar {
     );
   }
 
-  // ─── Error ──────────────────────────────────────────────────────────────────
   static void showError({
     required BuildContext context,
     required String message,
@@ -44,7 +42,6 @@ class BridgeXSnackBar {
     );
   }
 
-  // ─── Warning ────────────────────────────────────────────────────────────────
   static void showWarning({
     required BuildContext context,
     required String message,
@@ -61,7 +58,6 @@ class BridgeXSnackBar {
     );
   }
 
-  // ─── Internal builder ───────────────────────────────────────────────────────
   static void _show({
     required BuildContext context,
     required String title,
@@ -99,14 +95,12 @@ class BridgeXSnackBar {
             ),
             child: Row(
               children: [
-                // Outer ring
                 Container(
                   padding: EdgeInsets.all(AppSpacing.sm),
                   decoration: BoxDecoration(
                     color: accentColor.withValues(alpha: 0.12),
                     shape: BoxShape.circle,
                   ),
-                  // Inner filled circle + icon
                   child: Container(
                     padding: EdgeInsets.all(AppSpacing.xs + 1),
                     decoration: BoxDecoration(color: accentColor, shape: BoxShape.circle),
@@ -114,7 +108,6 @@ class BridgeXSnackBar {
                   ),
                 ),
                 HorizontalSpacing(AppSpacing.sm + AppSpacing.xs),
-                // Title + message
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,7 +131,6 @@ class BridgeXSnackBar {
                   ),
                 ),
                 HorizontalSpacing(AppSpacing.sm),
-                // Dismiss ×
                 GestureDetector(
                   onTap: () => messenger.hideCurrentSnackBar(),
                   child: Icon(Icons.close, color: colors.textSecondary, size: 17.sp),

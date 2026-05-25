@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/constant/app_feedback_messages.dart';
+import 'package:bridge_x/core/constant/app_feedback_messages.dart';
 import 'package:bridge_x/core/constant/app_validation_messages.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
@@ -13,12 +13,11 @@ import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:bridge_x/feature/auth/presentation/controller/auth_cubit.dart';
 import 'package:bridge_x/feature/auth/presentation/controller/auth_state.dart';
 import 'package:bridge_x/core/utils/enum/auth_enum.dart';
+import 'package:bridge_x/core/widget/feedback/error_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-
-import 'package:bridge_x/core/widget/feedback/error_dialog.dart';
 
 class ResetPasswordForm extends StatefulWidget {
   final String email;
@@ -61,7 +60,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
         children: [
           BridgeXTextFormField(
             label: AppStrings.newPassword.toUpperCase(),
-            hint: '••••••••',
+            hint: '\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022',
             controller: _newPasswordController,
             obscureText: true,
             prefixIcon: Icons.vpn_key_outlined,
@@ -70,7 +69,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
           VerticalSpacing(AppSpacing.lg),
           BridgeXTextFormField(
             label: AppStrings.confirmNewPassword.toUpperCase(),
-            hint: '••••••••',
+            hint: '\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022',
             controller: _confirmPasswordController,
             obscureText: true,
             prefixIcon: Icons.shield_outlined,

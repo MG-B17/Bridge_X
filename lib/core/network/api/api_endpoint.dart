@@ -20,17 +20,24 @@ class ApiEndpoint {
 
   // teams
   static const String createTeam = "/api/teams";
+  static String teamSettings({required int projectId}) =>
+      "/api/teams/$projectId/details";
 
   // projects 
   static const String allProject = "/api/my-projects";
-  static String zeroProjectDetails({required int projectId}) =>
+  static String projectDashboard({required int projectId}) =>
       "/api/zero-project/$projectId";
 
   static String projectDetails({required int projectId}) =>
       "/api/my-projects/$projectId/details";
 
+  static String submitprojectAsComplete({required int projectId}) =>
+      "/api/projects/$projectId/complete";    
+
   // tasks 
   static String teamDetailsWithtasks({required int teamId}) =>
       "/api/team/$teamId/full-details";
+  static String createTask({required int projectId}) =>
+      "/api/tasks/team/$projectId";
 
 }

@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/utils/app_shadow.dart';
+import 'package:bridge_x/core/utils/app_shadow.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/app_color_schema.dart';

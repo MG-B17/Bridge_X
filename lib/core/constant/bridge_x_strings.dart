@@ -34,7 +34,8 @@ class AppStrings {
   static const String alreadyHaveAccount = 'Already have an account? Log in';
   static const String noAccountPrefix = "Don't have an account? ";
   static const String alreadyHaveAccountPrefix = 'Already have an account? ';
-  static const String agreeTerms = 'I agree to the Terms of Service and Privacy Policy';
+  static const String agreeTerms =
+      'I agree to the Terms of Service and Privacy Policy';
   static const String agreeTermsPrefix = 'I agree to the ';
   static const String termsOfService = 'Terms of Service';
   static const String privacyPolicy = 'Privacy Policy';
@@ -58,7 +59,8 @@ class AppStrings {
   static const String newPasswordLabel = 'New Password';
   static const String newPasswordHint = 'Enter new password';
   static const String confirmNewPasswordHint = 'Confirm new password';
-  static const String passwordMinLength = 'Password must be at least 8 characters long.';
+  static const String passwordMinLength =
+      'Password must be at least 8 characters long.';
   static const String username = 'Username';
   static const String usernameHint = 'Enter username';
   static const String bio = 'Bio';
@@ -78,7 +80,8 @@ class AppStrings {
 
   // ── Auth — OTP / Verify ───────────────────────────────────────────────────
   static const String verifyCode = 'Verify Code';
-  static const String verifyDescription = 'Enter the 6-digit code sent to your email';
+  static const String verifyDescription =
+      'Enter the 6-digit code sent to your email';
   static const String resendCode = 'Resend code in 00:30';
   static const String wrongEmail = 'Wrong email?';
   static const String updatePassword = 'Update Password';
@@ -118,15 +121,18 @@ class AppStrings {
 
   // ── Home / Dashboard ─────────────────────────────────────────────────────
   static const String journeyStart = 'Your journey starts here';
-  static const String joinCreators = 'Join 2,000+ creators building the future.';
+  static const String joinCreators =
+      'Join 2,000+ creators building the future.';
   static const String hiGreeting = 'Hi, Ahmed 👋';
   static const String greetingSubtitle = "Let's build something great today";
-  static const String tipBanner = 'Tip: Join a team to start building real projects';
+  static const String tipBanner =
+      'Tip: Join a team to start building real projects';
   static const String basedOnCompleted = 'Based on completed tasks';
   static const String aiInsights = 'AI Insights';
   static const String insightProductivity =
       'You completed 30% more tasks this week compared to your average.';
-  static const String insightPeakTime = 'You are most productive in the evening (6 PM - 9 PM).';
+  static const String insightPeakTime =
+      'You are most productive in the evening (6 PM - 9 PM).';
   static const String home = 'Home';
   static const String chat = 'Chat';
   static const String projects = 'Projects';
@@ -171,17 +177,20 @@ class AppStrings {
   static const String business = 'Business';
   static const String requiredRoles = 'Required Roles';
   static const String addMoreHint = 'Add more...';
-  static const String rolesUsageDisclaimer = 'These roles will be used by the AI for matching.';
+  static const String rolesUsageDisclaimer =
+      'These roles will be used by the AI for matching.';
   static const String inviteMembersManually = 'Invite members manually';
   static const String youAreMentor = 'You are the mentor';
-  static const String projectSuccessfullySubmitted = 'You have successfully submitted this project';
+  static const String projectSuccessfullySubmitted =
+      'You have successfully submitted this project';
   static const String reviewPendingByAdmin = 'Review pending by administration';
   static const String viewSummary = 'View Summary';
   static const String backToProjects = 'Back to Projects';
   static const String addProject = '+ Add Project';
   static const String projectName = 'Project Name';
   static const String projectNameHint = 'e.g. Portfolio Redesign';
-  static const String myProjectsSubtitle = 'Manage and track your collaboration progress';
+  static const String myProjectsSubtitle =
+      'Manage and track your collaboration progress';
   static const String all = 'All';
   static const String developmentPhase = 'Development Phase';
   static const String yourTeam = 'Your Team';
@@ -194,22 +203,26 @@ class AppStrings {
   static const String teamMembers = 'Team Members';
   static const String teamSettings = 'Team Settings';
   static const String createTeam = 'Create Team 🚀';
-  static const String createTeamSubtitle = 'Set up your team and project details';
+  static const String createTeamSubtitle =
+      'Set up your team and project details';
   static const String joinTeam = 'Join Team';
   static const String teamName = 'Team Name';
   static const String teamNameHint = 'e.g. Project Phoenix';
   static const String teamInfo = 'Team Info';
   static const String mentorAccess = 'Mentor Access';
-  static const String youAreTeamLeader = 'You are the Team Leader of this project';
+  static const String youAreTeamLeader =
+      'You are the Team Leader of this project';
   static const String teamType = 'Team Type';
   static const String private = 'Private';
   static const String privateDesc = 'You manually add team members';
   static const String public = 'Public';
-  static const String publicDesc = 'AI matches members & others can request to join';
+  static const String publicDesc =
+      'AI matches members & others can request to join';
   static const String privateTeam = 'Private Team';
   static const String privateTeamDesc = 'You manually add team members';
   static const String publicTeam = 'Public Team';
-  static const String publicTeamDesc = 'AI matches members & others can request to join';
+  static const String publicTeamDesc =
+      'AI matches members & others can request to join';
   static const String addMember = 'Add Member';
   static const String addMembers = 'Add Members';
   static const String manageAll = 'Manage All';
@@ -222,48 +235,19 @@ class AppStrings {
   static const String viewTeam = 'View Team';
   static const String openChat = 'Open Chat';
   static const String backToTeam = 'Back to Team';
-  static const String noTeamsFound = 'No teams found';
-  static const String noTeamsFoundSubtitle =
-      'Your unique skill set might be just what a new team needs. Start a project today!';
-  static const String retryMatching = 'Retry Matching';
-  static const String createYourOwnTeam = 'Create Your Own Team';
-  static const String recommendedForYou = 'Recommended for you';
-  static const String requestToJoin = 'Request to Join';
-  static const String pendingApproval = 'Pending Approval';
-  static const String joinedTeam = "You've successfully joined this team 🎉";
-  static const String startCollaboration = 'Start collaborating with your team now';
-  static const String createTeamTip = 'Tip: Define clear roles to help others request to join your team';
-
-  // ── Chat ──────────────────────────────────────────────────────────────────
-
-  // Chat List
-  static const String searchTeamsOrMessages =
-      'Search teams or messages...';
-  static const String recentConversations =
-      'RECENT CONVERSATIONS';
-
-  // Empty Chat
-  static const String noMessagesYet = 'No messages yet';
-
-  static const String noMessagesDescription =
-      'Start a conversation with your team to stay synced and collaborative. Real-time updates help everyone move faster.';
-
-  // Chat Details
-  static const String today = 'TODAY';
-  static const String teamAlpha = 'Team Alpha';
-  static const String membersOnline = '5 members online';
-  static const String typeYourMessage =
-      'Type your message...';
-
-  // Dummy Messages
-  static const String msgBackendComplete =
-      "Hey team! Quick update — the backend API integration is complete 🎉";
-
-  static const String msgUiReply =
-      "Amazing! I'll connect the UI with it now.";
-
-  static const String msgAuthTest =
-      "Please test authentication endpoints too.";
+  static const String membersManagement = 'Members Management';
+  static const String assignTasks = 'Assign Tasks';
+  static const String projectControl = 'Project Control';
+  static const String removeTeam = 'Remove Team';
+  static const String createAssignTask = 'Create / Assign Task';
+  static const String noMembersInTeam = 'No members in this team.';
+  static const String navigationToAssignTask =
+      'Navigation to Assign Task screen';
+  static const String projectCompletionSubmitted =
+      'Project Completion request submitted';
+  static const String removeTeamSubmitted = 'Remove Team request submitted';
+  static const String submitProjectAsCompleted = 'Submit Project as Completed';
+  static const String memberSettingsFor = 'Member settings for';
 
   // ── Tasks ─────────────────────────────────────────────────────────────────
   static const String createTask = 'Create Task';
@@ -278,13 +262,15 @@ class AppStrings {
   static const String inProgress = 'In Progress';
   static const String pending = 'Pending';
   static const String myTasks = 'My Tasks';
-  static const String myTasksSubtitle = 'Manage your daily workflow and projects';
+  static const String myTasksSubtitle =
+      'Manage your daily workflow and projects';
   static const String allCaughtUp = 'All caught up!';
   static const String exploreProjects = 'Explore Projects';
   static const String active = 'Active';
   static const String nearCompletion = 'Near Completion';
   static const String progress = 'Progress';
-  static const String noActiveTasks = "You don't have any active tasks right now.";
+  static const String noActiveTasks =
+      "You don't have any active tasks right now.";
   static const String takeBreak = 'Take a break or find a new project.';
   static const String description = 'Description';
   static const String dueDate = 'Due Date';
@@ -328,10 +314,12 @@ class AppStrings {
   static const String tapToUpdateAvatar = 'Tap to update avatar';
   static const String professionRole = 'Profession/Role';
   static const String available = 'Available';
-  static const String bioMaxCharsHint = 'Maximum 250 characters. Professional bio recommended.';
+  static const String bioMaxCharsHint =
+      'Maximum 250 characters. Professional bio recommended.';
   static const String yourRole = 'YOUR ROLE';
   static const String uiuxDesigner = 'UI/UX Designer';
-  static const String roleDescription = 'You are responsible for design tasks in this project';
+  static const String roleDescription =
+      'You are responsible for design tasks in this project';
   static const String overview = 'OVERVIEW';
   static const String projectOverview =
       'Building a next-generation design system and component library using React and Tailwind CSS. Focus on accessibility and performance.';
@@ -355,11 +343,13 @@ class AppStrings {
   static const String currentTier = 'CURRENT TIER';
   static const String beginnerSilver = 'Beginner Silver';
   static const String progressToGold = 'Progress to Gold';
-  static const String nextTierRequirement = 'Next: Beginner Gold - 100 tasks remaining';
+  static const String nextTierRequirement =
+      'Next: Beginner Gold - 100 tasks remaining';
   static const String averageRating = 'Average Rating';
   static const String top5Percent = 'TOP 5%';
   static const String highActivityConsistency = 'High Activity Consistency';
-  static const String performanceCalculatedAI = 'Your performance is calculated using AI';
+  static const String performanceCalculatedAI =
+      'Your performance is calculated using AI';
   static const String levelRoadmap = 'Level Roadmap';
   static const String beginnerTier = 'BEGINNER TIER';
   static const String juniorTier = 'JUNIOR TIER';
@@ -373,18 +363,42 @@ class AppStrings {
 
   // ── Notifications ─────────────────────────────────────────────────────────
   static const String youreIn = "You're in! 🎉";
-  static const String acceptedIntoFrontendGuild = "You've been accepted into Frontend Guild";
+  static const String acceptedIntoFrontendGuild =
+      "You've been accepted into Frontend Guild";
   static const String newTaskAssigned = 'New Task Assigned';
-  static const String assignedNewTask = "You've been assigned a new task: Design Login Screen";
-  static const String newMessageInAlphaCoders = 'New message in Alpha Coders chat';
+  static const String assignedNewTask =
+      "You've been assigned a new task: Design Login Screen";
+  static const String newMessageInAlphaCoders =
+      'New message in Alpha Coders chat';
   static const String taskUpdated = 'Task Updated';
-  static const String taskStatusUpdated = "Your task status has been updated to 'In Progress'";
+  static const String taskStatusUpdated =
+      "Your task status has been updated to 'In Progress'";
   static const String requestUpdate = 'Request Update';
   static const String requestToJoinNotApproved =
       "Your request to join 'Nexus Web' was not approved";
   static const String justNow = 'Just now';
   static const String twoHoursAgo = '2 hours ago';
-
+  static const String today = 'Today';
+  static const String viewDetails = 'View Details';
+  static const String noNotifications = 'No notifications yet';
+  static const String msgAuthTest = 'Authentication test message';
+  static const String msgBackendComplete = 'Backend development is complete';
+  static const String msgUiReply =
+      'Great work! I will start integrating the frontend.';
+  static const String teamAlpha = 'Team Alpha';
+  static const String teamBeta = 'Team Beta';
+  static const String membersOnline = '5 members online';
+  static const String typeYourMessage = 'Type your message...';
+  static const String searchTeamsOrMessages = 'Send Message';
+  static const String recentConversations = 'Recent Conversations';
+  static const String retryMatching = 'Retry Matching';
+  static const String createYourOwnTeam = 'Create Your Own Team';
+  static const String requestToJoin =
+      "Request to join";
+  static const String noTeamsFound = 'No teams found';
+  static const String noTeamsFoundSubtitle =
+      'We couldn\'t find any teams matching your profile. Try adjusting your preferences or create a new team to start collaborating.';
+  static const String recommendedForYou = 'Recommended for you';
   // ── Matching ──────────────────────────────────────────────────────────────
   static const String matching = 'Matching';
   static const String matchingSubtitle =
@@ -399,7 +413,8 @@ class AppStrings {
   static const String experienceAnalyzed = 'Experience analyzed';
   static const String finalizingShortlist = 'Finalizing shortlist';
   static const String selectCategory = 'Select Category';
-  static const String categorySheetSubtitle = 'Choose the type of team you want to join';
+  static const String categorySheetSubtitle =
+      'Choose the type of team you want to join';
   static const String multiCategoryHint =
       'You can select multiple categories. This helps our algorithm find the best squad match for your specific skill set.';
   static const String startMatching = 'Start Matching';
@@ -421,7 +436,8 @@ class AppStrings {
   static const String privacyDisclaimer =
       'Bridge X uses end-to-end encryption for all sensitive data transmission. Your personal information is never shared with third-party advertisers without your explicit consent. For more details, view our ';
   static const String securityUpdate = 'Security Update';
-  static const String securityUpdateDesc = 'Manage your Bridge X account security';
+  static const String securityUpdateDesc =
+      'Manage your Bridge X account security';
 
   // ── About ─────────────────────────────────────────────────────────────────
   static const String aboutUs = 'About Us';
@@ -440,13 +456,21 @@ class AppStrings {
   static const String newMessages = 'New Messages';
   static const String newMessagesDesc = 'Alerts for new chat messages';
   static const String taskUpdates = 'Task Updates';
-  static const String taskUpdatesDesc = 'Notify when a task is assigned or updated';
+  static const String taskUpdatesDesc =
+      'Notify when a task is assigned or updated';
 
   // ── Misc / Common Labels ──────────────────────────────────────────────────
   static const String development = 'Development';
   static const String design = 'Design';
   static const String success = 'Success';
   static const String error = 'Error';
+  static const String noTeamMembersYet = 'No team members yet';
+  static const String projectCompletion = 'Project Completion';
+  static const String projectCompletionConfirmation =
+      '"Are you sure you want to mark this project as completed?"';
+  static const String markProjectAsCompletedDesc =
+      'Mark this project as completed when all tasks are done';
+  static const String youAreMentorBadge = 'YOU ARE THE MENTOR';
 
   // ── Error Dialog Titles ───────────────────────────────────────────────────
   static const String loginFailed = 'Login Failed';

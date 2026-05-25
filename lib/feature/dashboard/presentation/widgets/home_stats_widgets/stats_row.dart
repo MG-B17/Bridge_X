@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
@@ -57,7 +57,7 @@ class StatsRow extends StatelessWidget {
   }
 }
 
-// ── Single stat item ────────────────────────────────────────────────────────
+// -- Single stat item --------------------------------------------------------
 class _StatItem extends StatelessWidget {
   const _StatItem({
     required this.value,
@@ -109,7 +109,7 @@ class _StatItem extends StatelessWidget {
   }
 }
 
-// ── Vertical divider between stats ──────────────────────────────────────────
+// -- Vertical divider between stats ------------------------------------------
 class _VerticalDivider extends StatelessWidget {
   const _VerticalDivider({required this.color});
 

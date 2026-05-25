@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/animation/bottom_nav_bar_animation/controller/scroll_cubit.dart';
+import 'package:bridge_x/core/animation/bottom_nav_bar_animation/controller/scroll_cubit.dart';
 import 'package:bridge_x/core/animation/bottom_nav_bar_animation/widget/scroller_listener.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:flutter/material.dart';

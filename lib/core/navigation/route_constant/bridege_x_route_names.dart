@@ -18,10 +18,14 @@ class BridegeXRouteNames {
   static const String projects = 'projects';
   static const String profile = 'profile';
   static const String notifications = 'notifications';
-
   static const String notificationsDetails = 'notificationsDetails';
+
   static const String createTeam = 'create-team';
   static const String projectDetails = 'project-details';
+  static const String projectDashboard = 'project-dashboard'; // Added this line
+  static const String teamSettings = 'team-settings';
+  static const String completedProjectDetails = 'completed-project-details';
+  static const String createTask = 'create-task';
   static const String matchingProcess = 'matching-process';
   static const String noTeamsFound = 'no-teams-found';
   static const String recommendedTeams = 'recommended-teams';

@@ -42,4 +42,7 @@ class ApiEndpoint {
   static String viewTask({required int projectId}) =>
       "/api/team/$projectId/full-details";
 
+  //profile 
+  static const String profileData = "/api/my/dashboard";
+
 }

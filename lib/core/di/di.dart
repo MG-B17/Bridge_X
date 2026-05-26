@@ -34,7 +34,7 @@ import 'package:bridge_x/core/network/interceptors/retry_interceptor.dart';
 import 'package:bridge_x/feature/dashboard/di/dashboard_injection.dart';
 import 'package:bridge_x/feature/create_team/di/create_team_injection.dart';
 import 'package:bridge_x/feature/projects_management/di/projects_management_injection.dart';
-import 'package:bridge_x/feature/view_task/di/view_task_injection.dart';
+import 'package:bridge_x/feature/task_management/di/task_management_injection.dart';
 
 final sl = GetIt.instance;
 
@@ -128,7 +128,7 @@ Future<void> init() async {
   initDashboard();
   initCreateTeam();
   initProjectsManagement();
-  initViewTask();
+  initTaskManagement();
 
   // other 
   sl.registerLazySingleton<AppInitializer>(()=>AppInitializer());

@@ -5,9 +5,7 @@ import 'package:bridge_x/core/error/failure.dart';
 import 'package:bridge_x/core/network/network_info.dart';
 import 'package:bridge_x/feature/projects_management/data/datasources/local/projects_management_local_data.dart';
 import 'package:bridge_x/feature/projects_management/data/datasources/remote/projects_management_remote_data_source.dart';
-import 'package:bridge_x/feature/projects_management/data/models/create_task_request_model.dart';
 import 'package:bridge_x/feature/projects_management/domain/entities/all_projects_entity.dart';
-import 'package:bridge_x/feature/projects_management/domain/entities/create_task_entity.dart';
 import 'package:bridge_x/feature/projects_management/domain/entities/dashboard/project_dashboard_entity.dart';
 import 'package:bridge_x/feature/projects_management/domain/entities/dashboard/submit_project_entity.dart';
 import 'package:bridge_x/feature/projects_management/domain/entities/dashboard/team_settings_entity.dart';
@@ -114,33 +112,6 @@ class ProjectsManagementRepositoryImpl implements ProjectsManagementRepository {
     return _safeRemoteCall(
       () async => (await remoteDataSource.getCompletedProjectDetails(
         projectId: projectId,
-      )).toEntity(),
-    );
-  }
-
-  @override
-  Future<Either<Failure, CreateTaskEntity>> createTask({
-    required int projectId,
-    required String title,
-    required String description,
-    required int programmerId,
-    required String deadline,
-    required int priority,
-    String? gitLink,
-    required List<String> tags,
-  }) async {
-    return _safeRemoteCall(
-      () async => (await remoteDataSource.createTask(
-        projectId: projectId,
-        request: CreateTaskRequestModel(
-          title: title,
-          description: description,
-          programmerId: programmerId,
-          deadline: deadline,
-          priority: priority,
-          gitLink: gitLink,
-          tags: tags,
-        ),
       )).toEntity(),
     );
   }

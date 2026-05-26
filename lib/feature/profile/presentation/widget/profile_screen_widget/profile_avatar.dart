@@ -1,4 +1,3 @@
-import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
@@ -9,14 +8,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class ProfileAvatar extends StatelessWidget {
-  const ProfileAvatar({super.key});
+  const ProfileAvatar({super.key, this.avatarUrl, this.level});
+
+  final String? avatarUrl;
+  final String? level;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        // Avatar background circle
         Container(
           width: 100.w,
           height: 100.w,
@@ -30,29 +31,23 @@ class ProfileAvatar extends StatelessWidget {
           ),
           child: Center(
             child: ClipOval(
-              child: Image.asset(
-                'assets/images/avatar.jpg', // Replace with actual asset
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: context.colors.indigo.withValues(alpha: 0.2),
-                    child: Icon(
-                      Icons.person,
-                      size: 50.w,
-                      color: context.colors.indigo,
-                    ),
-                  );
-                },
-              ),
+              child: avatarUrl != null
+                  ? Image.network(
+                      avatarUrl!,
+                      width: 100.w,
+                      height: 100.w,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => _fallbackAvatar(context),
+                    )
+                  : _fallbackAvatar(context),
             ),
           ),
         ),
-        // Badge
         Positioned(
           bottom: -5.h,
           right: -10.w,
           child: GestureDetector(
-            onTap: (){
+            onTap: () {
               context.goNamed(BridegeXRouteNames.level);
             },
             child: Container(
@@ -61,7 +56,7 @@ class ProfileAvatar extends StatelessWidget {
                 vertical: 4.h,
               ),
               decoration: BoxDecoration(
-                color: context.colors.textPrimary, // Dark blue/primary
+                color: context.colors.textPrimary,
                 borderRadius: BorderRadius.circular(AppSpacing.radiusPill),
                 border: Border.all(
                   color: context.colors.surface,
@@ -72,7 +67,7 @@ class ProfileAvatar extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    AppStrings.beginner,
+                    level ?? 'Beginner',
                     style: AppTextStyles.labelSmall.copyWith(
                       color: context.colors.surface,
                       fontSize: 10.sp,
@@ -81,7 +76,7 @@ class ProfileAvatar extends StatelessWidget {
                   ),
                   HorizontalSpacing(4),
                   Icon(
-                    Icons.workspace_premium_outlined, // Medal icon
+                    Icons.workspace_premium_outlined,
                     size: 12.w,
                     color: context.colors.surface,
                   ),
@@ -91,6 +86,19 @@ class ProfileAvatar extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _fallbackAvatar(BuildContext context) {
+    return Container(
+      width: 100.w,
+      height: 100.w,
+      color: context.colors.indigo.withValues(alpha: 0.2),
+      child: Icon(
+        Icons.person,
+        size: 50.w,
+        color: context.colors.indigo,
+      ),
     );
   }
 }

@@ -35,6 +35,7 @@ import 'package:bridge_x/feature/dashboard/di/dashboard_injection.dart';
 import 'package:bridge_x/feature/create_team/di/create_team_injection.dart';
 import 'package:bridge_x/feature/projects_management/di/projects_management_injection.dart';
 import 'package:bridge_x/feature/task_management/di/task_management_injection.dart';
+import 'package:bridge_x/feature/profile/di/profile_injection.dart';
 
 final sl = GetIt.instance;
 
@@ -129,6 +130,7 @@ Future<void> init() async {
   initCreateTeam();
   initProjectsManagement();
   initTaskManagement();
+  initProfile();
 
   // other 
   sl.registerLazySingleton<AppInitializer>(()=>AppInitializer());

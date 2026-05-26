@@ -7,24 +7,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProfileStats extends StatelessWidget {
-  const ProfileStats({super.key});
+  const ProfileStats({super.key, this.completedTasks, this.teamsCount, this.inProgressTasks});
+
+  final int? completedTasks;
+  final int? teamsCount;
+  final int? inProgressTasks;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         _StatCard(
-          value: '12',
+          value: '${completedTasks ?? 0}',
           label: 'COMPLETED\nTASKS',
         ),
         HorizontalSpacing(AppSpacing.sm),
         _StatCard(
-          value: '3',
+          value: '${teamsCount ?? 0}',
           label: 'TEAMS',
         ),
         HorizontalSpacing(AppSpacing.sm),
         _StatCard(
-          value: '10',
+          value: '${inProgressTasks ?? 0}',
           label: 'ACTIVE TASKS',
         ),
       ],
@@ -47,7 +51,7 @@ class _StatCard extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: AppSpacing.xs, vertical: AppSpacing.lg),
         decoration: BoxDecoration(
-          color: context.colors.primary.withValues(alpha: 0.05), // Light background
+          color: context.colors.primary.withValues(alpha: 0.05),
           borderRadius: BorderRadius.circular(AppSpacing.radiusCardLarge),
           border: Border.all(
             color: context.colors.divider.withValues(alpha: 0.3),
@@ -60,8 +64,8 @@ class _StatCard extends StatelessWidget {
             Text(
               value,
               style: AppTextStyles.headlineMedium.copyWith(
-                color: context.colors.textPrimary, // Value color
-                fontWeight: FontWeight.w800, // Extra bold
+                color: context.colors.textPrimary,
+                fontWeight: FontWeight.w800,
               ),
             ),
             VerticalSpacing(4),
@@ -69,7 +73,7 @@ class _StatCard extends StatelessWidget {
               label,
               textAlign: TextAlign.center,
               style: AppTextStyles.labelSmall.copyWith(
-                color: context.colors.textSecondary, // Label color
+                color: context.colors.textSecondary,
                 fontSize: 9.sp,
                 fontWeight: FontWeight.w600,
               ),
@@ -80,4 +84,3 @@ class _StatCard extends StatelessWidget {
     );
   }
 }
-

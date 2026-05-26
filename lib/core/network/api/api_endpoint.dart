@@ -44,5 +44,7 @@ class ApiEndpoint {
 
   //profile 
   static const String profileData = "/api/my/dashboard";
+  static const String updateProfile = "/api/profile/update";
+  static const String displayProfile = "/api/profile";
 
 }

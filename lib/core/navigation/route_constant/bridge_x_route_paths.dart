@@ -39,6 +39,7 @@ class BridgeXRoutePaths {
   static const String createTask = 'create-task';
   static const String viewTask = 'view-task';
   static const String reportUser = 'report-user';
+  static const String teamEvaluation = 'team-evaluation';
 
 
   // matching root 

@@ -4,6 +4,7 @@ import 'package:bridge_x/core/error/error_strings.dart';
 import 'package:bridge_x/core/error/exception.dart';
 import 'package:bridge_x/core/error/failure.dart';
 import 'package:bridge_x/core/network/network_info.dart';
+import 'package:bridge_x/core/services/chache_service.dart';
 import 'package:bridge_x/core/services/secure_storage_service.dart';
 import 'package:bridge_x/core/services/logger_service.dart';
 import 'package:bridge_x/feature/auth/data/remote_data/auth_remote_data.dart';
@@ -22,11 +23,13 @@ class AuthRepoImplement extends AuthRepo {
   final AuthRemoteData authRemoteData;
   final NetworkInfo networkInfo;
   final SecureStorageService secureStorageService;
+  final CacheService cacheService;
 
   AuthRepoImplement({
     required this.authRemoteData,
     required this.networkInfo,
     required this.secureStorageService,
+    required this.cacheService,
   });
 
   @override
@@ -218,20 +221,22 @@ class AuthRepoImplement extends AuthRepo {
         LoggerService.debug('Logging out', tag: 'AuthRepo');
         await authRemoteData.logout();
         await secureStorageService.delete(key: AppKeys.authToken);
+        await cacheService.clearData();
         LoggerService.info('Logout successful, token deleted', tag: 'AuthRepo');
         return Right(null);
       } on ServerException catch (e) {
-        // Even if API call fails, delete the local token for security
         await secureStorageService.delete(key: AppKeys.authToken);
+        await cacheService.clearData();
         LoggerService.error('Logout API failed, local token still deleted', exception: e, tag: 'AuthRepo');
         return Left(ServerFailure(message: e.message!));
       } on DioException catch (error) {
         await secureStorageService.delete(key: AppKeys.authToken);
+        await cacheService.clearData();
         return left(ErrorHandler.handle(error));
       }
     } else {
-      // Offline: still delete the local token
       await secureStorageService.delete(key: AppKeys.authToken);
+      await cacheService.clearData();
       LoggerService.warning('No internet — local token deleted anyway', tag: 'AuthRepo');
       return Right(null);
     }

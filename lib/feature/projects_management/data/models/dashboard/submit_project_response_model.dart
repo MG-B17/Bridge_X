@@ -1,13 +1,8 @@
 import 'package:bridge_x/feature/projects_management/domain/entities/dashboard/submit_project_entity.dart';
-import 'package:json_annotation/json_annotation.dart';
 
-part 'submit_project_response_model.g.dart';
-
-@JsonSerializable()
 class SubmitProjectResponseModel {
   final bool success;
   final String message;
-  @JsonKey(name: 'project_status')
   final String projectStatus;
 
   SubmitProjectResponseModel({
@@ -16,10 +11,13 @@ class SubmitProjectResponseModel {
     required this.projectStatus,
   });
 
-  factory SubmitProjectResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$SubmitProjectResponseModelFromJson(json);
-
-  Map<String, dynamic> toJson() => _$SubmitProjectResponseModelToJson(this);
+  factory SubmitProjectResponseModel.fromJson(Map<String, dynamic> json) {
+    return SubmitProjectResponseModel(
+      success: json['success'] as bool? ?? false,
+      message: json['message'] as String? ?? '',
+      projectStatus: json['project_status'] as String? ?? '',
+    );
+  }
 
   SubmitProjectEntity toEntity() {
     return SubmitProjectEntity(

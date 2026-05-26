@@ -2,6 +2,7 @@ import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/widget/layout/horizontal_spacing.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:bridge_x/feature/projects_management/domain/entities/details/team_member_entity.dart';
 import 'package:bridge_x/feature/projects_management/presentation/widgets/details_screen_widgets/team_member_avatar.dart';
@@ -50,7 +51,7 @@ class TeamMembersSection extends StatelessWidget {
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: teamMembers.length,
-              separatorBuilder: (context, index) =>VerticalSpacing(AppSpacing.md),
+              separatorBuilder: (context, index) => HorizontalSpacing(AppSpacing.md),
               itemBuilder: (context, index) => TeamMemberAvatar(
                 member: teamMembers[index],
               ),

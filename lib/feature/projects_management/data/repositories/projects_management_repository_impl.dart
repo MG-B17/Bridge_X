@@ -11,6 +11,7 @@ import 'package:bridge_x/feature/projects_management/domain/entities/dashboard/s
 import 'package:bridge_x/feature/projects_management/domain/entities/dashboard/team_settings_entity.dart';
 import 'package:bridge_x/feature/projects_management/domain/entities/details/completed_project_details_entity.dart';
 import 'package:bridge_x/feature/projects_management/domain/entities/details/project_details_entity.dart';
+import 'package:bridge_x/feature/projects_management/domain/entities/paginated_projects_entity.dart';
 import 'package:bridge_x/feature/projects_management/domain/repositories/projects_management_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
@@ -69,6 +70,22 @@ class ProjectsManagementRepositoryImpl implements ProjectsManagementRepository {
     } catch (e) {
       return Left(CacheFailure(message: ErrorStrings.checkYouInternetConnection));
     }
+  }
+
+  @override
+  Future<Either<Failure, PaginatedProjectsEntity>> getProjects({
+    int page = 1,
+    String? status,
+  }) async {
+    return _safeRemoteCall(
+      () async {
+        final response = await remoteDataSource.getProjects(
+          page: page,
+          status: status,
+        );
+        return response.toEntity();
+      },
+    );
   }
 
   @override

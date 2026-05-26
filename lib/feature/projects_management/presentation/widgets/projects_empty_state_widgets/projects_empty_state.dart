@@ -12,28 +12,38 @@ class ProjectsEmptyState extends StatelessWidget {
     super.key,
     this.onExploreTeams,
     this.onCreateTeam,
-
   });
 
   final VoidCallback? onExploreTeams;
   final VoidCallback? onCreateTeam;
 
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const EmptyStateIllustration(),
-        VerticalSpacing(AppSpacing.lg),
-        const EmptyStateContent(),
-        VerticalSpacing(AppSpacing.xl),
-        EmptyStateActions(
-          onExploreTeams: onExploreTeams,
-          onCreateTeam: onCreateTeam,
-        ),
-        VerticalSpacing(AppSpacing.xl),
-        const SocialProofFooter(),
-      ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const EmptyStateIllustration(),
+                VerticalSpacing(AppSpacing.lg),
+                const EmptyStateContent(),
+                VerticalSpacing(AppSpacing.xl),
+                EmptyStateActions(
+                  onExploreTeams: onExploreTeams,
+                  onCreateTeam: onCreateTeam,
+                ),
+                VerticalSpacing(AppSpacing.xl),
+                const SocialProofFooter(),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

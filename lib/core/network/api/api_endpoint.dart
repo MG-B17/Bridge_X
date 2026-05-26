@@ -52,4 +52,10 @@ class ApiEndpoint {
   static String reportInfo({required int userId}) => "/api/user/$userId/report-info";
   static const String reports = "/api/reports";
 
+  // team evaluation
+  static String teamBasicDetails({required int teamId}) =>
+      "/api/teams/$teamId/basic-details";
+  static String evaluateAll({required int teamId}) =>
+      "/api/teams/$teamId/evaluate-all";
+
 }

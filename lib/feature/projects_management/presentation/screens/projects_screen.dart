@@ -1,208 +1,141 @@
-import 'package:bridge_x/core/animation/bottom_nav_bar_animation/controller/scroll_cubit.dart';
-import 'package:bridge_x/core/animation/bottom_nav_bar_animation/widget/scroller_listener.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/di/di.dart';
+import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
+import 'package:bridge_x/core/utils/app_shadow.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
-import 'package:bridge_x/core/utils/extensions.dart';
-import 'package:bridge_x/core/widget/feedback/bridge_x_error_widget.dart';
+import 'package:bridge_x/core/widget/layout/bridge_x_chip.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
-import 'package:bridge_x/core/widget/loading/bridge_x_refresh_indicator.dart';
-import 'package:bridge_x/core/widget/loading/bridge_x_skeletonizer.dart';
-import 'package:bridge_x/feature/projects_management/domain/entities/all_projects_entity.dart';
-import 'package:bridge_x/feature/projects_management/presentation/bloc/projects_list/projects_list_bloc.dart';
-import 'package:bridge_x/feature/projects_management/presentation/bloc/projects_list/projects_list_event.dart';
-import 'package:bridge_x/feature/projects_management/presentation/bloc/projects_list/projects_list_state.dart';
+import 'package:bridge_x/feature/projects_management/domain/usecases/get_projects_usecase.dart';
+import 'package:bridge_x/feature/projects_management/presentation/bloc/projects_tab/projects_tab_bloc.dart';
+import 'package:bridge_x/feature/projects_management/presentation/bloc/projects_tab/projects_tab_event.dart';
+import 'package:bridge_x/feature/projects_management/presentation/widgets/projects_header_widgets/projects_header.dart';
+import 'package:bridge_x/feature/projects_management/presentation/widgets/projects_tab_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import '../widgets/projects_filter_widgets/project_filter_tabs.dart';
-import '../widgets/projects_empty_state_widgets/projects_empty_state.dart';
-import '../widgets/projects_header_widgets/projects_header.dart';
-import '../widgets/projects_list_widgets/projects_list_content.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ProjectsScreen extends StatelessWidget {
+class ProjectsScreen extends StatefulWidget {
   const ProjectsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const _ProjectsScreenContent();
-  }
+  State<ProjectsScreen> createState() => _ProjectsScreenState();
 }
 
-class _ProjectsScreenContent extends StatefulWidget {
-  const _ProjectsScreenContent();
+class _ProjectsScreenState extends State<ProjectsScreen>
+    with SingleTickerProviderStateMixin {
+  late final TabController _tabController;
+  late final ProjectsTabBloc _allBloc;
+  late final ProjectsTabBloc _ongoingBloc;
+  late final ProjectsTabBloc _completedBloc;
 
-  @override
-  State<_ProjectsScreenContent> createState() => _ProjectsScreenContentState();
-}
+  static const _filters = [
+    AppStrings.all,
+    AppStrings.ongoing,
+    AppStrings.completed,
+  ];
 
-class _ProjectsScreenContentState extends State<_ProjectsScreenContent> {
-  late final ScrollController scrollController;
   @override
   void initState() {
-    scrollController = ScrollController();
-    scrollController.addListener(() {
-      if (scrollController.position.pixels >= scrollController.position.maxScrollExtent - 200) {
-        context.read<ProjectsListBloc>().add(const LoadMoreProjects());
-      }
-    });
     super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+
+    final useCase = sl<GetProjectsUseCase>();
+    _allBloc = ProjectsTabBloc(getProjectsUseCase: useCase, status: null)
+      ..add(const LoadProjectsTab());
+    _ongoingBloc =
+        ProjectsTabBloc(getProjectsUseCase: useCase, status: 'ongoing')
+          ..add(const LoadProjectsTab());
+    _completedBloc =
+        ProjectsTabBloc(getProjectsUseCase: useCase, status: 'completed')
+          ..add(const LoadProjectsTab());
   }
 
   @override
-  dispose() {
-    scrollController.dispose();
+  void dispose() {
+    _tabController.dispose();
+    _allBloc.close();
+    _ongoingBloc.close();
+    _completedBloc.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ScrollNavListener(
-      controller: scrollController,
-      child: Scaffold(
-        body: SafeArea(
-          child: BlocBuilder<ProjectsListBloc, ProjectsListState>(
-            buildWhen: (previous, current) => previous != current,
-            builder: (context, state) {
-              if (state is ProjectsListFailure) {
-                return BridgeXErrorWidget(
-                  errorTittle: AppStrings.error,
-                  errorMessage: state.errorMessage,
-                  refreshButtonTap: () => context.read<ProjectsListBloc>().add(const LoadProjects()),
-                );
-              }
-
-              final isLoading = state is ProjectsListLoading || state is ProjectsListInitial;
-              final isRefreshing = state is ProjectsListRefreshing;
-              final showSkeleton = isLoading || isRefreshing;
-
-              return BridgeXSkeletonizer(
-                enableloading: showSkeleton,
-                child: BridgeXRefreshIndicator(
-                  color: isRefreshing ? context.appColors.transparent : context.appColors.primary,
-                  backgroundColor: isRefreshing ? context.appColors.transparent : null,
-                  onRefresh: () async => context.read<ProjectsListBloc>().add(const RefreshProjects()),
-                  child: SingleChildScrollView(
-                    controller: scrollController,
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: AppSpacing.spacing20,
-                      vertical: AppSpacing.spacing16,
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: AppSpacing.spacing20,
+                vertical: AppSpacing.spacing16,
+              ),
+              child: const ProjectsHeader(),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppSpacing.spacing20),
+              child: ListenableBuilder(
+                listenable: _tabController,
+                builder: (context, _) => _buildChipTabs(context),
+              ),
+            ),
+            VerticalSpacing(AppSpacing.spacing16),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: AppSpacing.spacing20),
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    BlocProvider.value(
+                      value: _allBloc,
+                      child: const ProjectsTabPage(),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const ProjectsHeader(),
-                        VerticalSpacing(AppSpacing.spacing16),
-                        _FilterTabsSelector(scrollController: scrollController),
-                        VerticalSpacing(AppSpacing.spacing16),
-                        _ProjectsContentSelector(scrollController: scrollController),
-                        VerticalSpacing(AppSpacing.spacing32),
-                      ],
+                    BlocProvider.value(
+                      value: _ongoingBloc,
+                      child: const ProjectsTabPage(),
                     ),
-                  ),
+                    BlocProvider.value(
+                      value: _completedBloc,
+                      child: const ProjectsTabPage(),
+                    ),
+                  ],
                 ),
-              );
-            },
-          ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
-}
 
-class _FilterTabsSelector extends StatelessWidget {
-  final ScrollController scrollController;
-
-  const _FilterTabsSelector({required this.scrollController});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocSelector<ProjectsListBloc, ProjectsListState, int>(
-      selector: _extractFilter,
-      builder: (context, selectedFilter) {
-        return ProjectFilterTabs(
-          selectedIndex: selectedFilter,
-          onChanged: (filterIndex) {
-            context.read<ProjectsListBloc>().add(ChangeFilter(filterIndex));
-          },
+  Widget _buildChipTabs(BuildContext context) {
+    return Row(
+      children: List.generate(_filters.length, (index) {
+        final isSelected = _tabController.index == index;
+        return Padding(
+          padding: EdgeInsets.only(right: AppSpacing.sm),
+          child: BridgeXChip(
+            label: _filters[index],
+            isSelected: isSelected,
+            onTap: () => _tabController.animateTo(index),
+            selectedBackgroundColor: context.colors.primary,
+            backgroundColor: context.colors.surface,
+            selectedBorderColor: context.colors.primary,
+            borderColor: context.colors.divider,
+            selectedTextColor: Colors.white,
+            textColor: context.colors.textPrimary,
+            borderRadius: AppSpacing.radiusPill,
+            boxShadow: AppShadow.subtle,
+            textStyle: AppTextStyles.titleMedium.copyWith(fontSize: 13.sp),
+            padding: EdgeInsets.symmetric(
+              horizontal: AppSpacing.md,
+              vertical: AppSpacing.sm,
+            ),
+          ),
         );
-      },
+      }),
     );
   }
-}
-
-class _ProjectsContentSelector extends StatelessWidget {
-  final ScrollController scrollController;
-
-  const _ProjectsContentSelector({required this.scrollController});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocSelector<ProjectsListBloc, ProjectsListState, _ProjectsContentModel>(
-      selector: (state) {
-        final isLoading = state is ProjectsListLoading || state is ProjectsListInitial;
-        final isLoadingMore = state is ProjectsListLoadingMore;
-        final projectsData = _extractData(state);
-        final selectedFilter = _extractFilter(state);
-        final isTabEmpty = projectsData.isTabEmpty(selectedFilter, isLoading || isLoadingMore);
-
-        return _ProjectsContentModel(
-          projectsData: projectsData,
-          selectedFilter: selectedFilter,
-          isTabEmpty: isTabEmpty,
-          isLoading: isLoading,
-        );
-      },
-      builder: (context, model) {
-        return model.isTabEmpty
-            ? ProjectsEmptyState(
-                onExploreTeams: () {},
-                onCreateTeam: () {
-                  context.read<ScrollCubit>().hide();
-                  context.pushNamed(BridegeXRouteNames.createTeam);
-                },
-              )
-            : ProjectsListContent(
-                selectedFilter: model.selectedFilter,
-                ongoingProjects: model.projectsData.ongoingProjects,
-                completedProjects: model.projectsData.completedProjects,
-              );
-      },
-    );
-  }
-}
-
-int _extractFilter(ProjectsListState state) => switch (state) {
-  ProjectsListLoaded(:final selectedFilter) => selectedFilter,
-  ProjectsListLoadingMore(:final selectedFilter) => selectedFilter,
-  ProjectsListRefreshing(:final selectedFilter) => selectedFilter,
-  ProjectsListLoading(:final selectedFilter) => selectedFilter,
-  ProjectsListFailure(:final selectedFilter) => selectedFilter,
-  _ => 0,
-};
-
-AllProjectsEntity _extractData(ProjectsListState state) => switch (state) {
-  ProjectsListLoaded(:final data) => data,
-  ProjectsListLoadingMore(:final data) => data,
-  ProjectsListRefreshing(:final data) => data,
-  ProjectsListLoading(:final placeholderData) =>
-    placeholderData ?? const AllProjectsEntity(ongoingProjects: [], completedProjects: []),
-  ProjectsListFailure(:final lastData) =>
-    lastData ?? const AllProjectsEntity(ongoingProjects: [], completedProjects: []),
-  _ => const AllProjectsEntity(ongoingProjects: [], completedProjects: []),
-};
-
-class _ProjectsContentModel {
-  final AllProjectsEntity projectsData;
-  final int selectedFilter;
-  final bool isTabEmpty;
-  final bool isLoading;
-
-  const _ProjectsContentModel({
-    required this.projectsData,
-    required this.selectedFilter,
-    required this.isTabEmpty,
-    required this.isLoading,
-  });
 }

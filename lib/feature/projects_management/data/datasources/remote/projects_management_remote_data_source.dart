@@ -8,10 +8,16 @@ import 'package:bridge_x/feature/projects_management/data/models/dashboard/submi
 import 'package:bridge_x/feature/projects_management/data/models/dashboard/team_settings_model.dart';
 import 'package:bridge_x/feature/projects_management/data/models/details/completed_project_details_response_model.dart';
 import 'package:bridge_x/feature/projects_management/data/models/details/project_details_response_model.dart';
+import 'package:bridge_x/feature/projects_management/data/models/paginated_projects_response_model.dart';
 import 'package:dio/dio.dart';
 
 abstract class ProjectsManagementRemoteDataSource {
   Future<AllProjectsResponseModel> getAllProjects({int page = 1});
+
+  Future<PaginatedProjectsResponseModel> getProjects({
+    int page = 1,
+    String? status,
+  });
 
   Future<ProjectDashboardResponseModel> getProjectDashboard(int projectId);
 
@@ -44,6 +50,36 @@ class ProjectsManagementRemoteDataSourceImpl
       );
       if (response.data != null) {
         return AllProjectsResponseModel.fromJson(response.data);
+      } else {
+        throw ServerException('Empty response data received');
+      }
+    } catch (e) {
+      if (e is DioException) {
+        rethrow;
+      } else if (e is ServerException) {
+        rethrow;
+      } else {
+        throw ServerException(ErrorStrings.serverError);
+      }
+    }
+  }
+
+  @override
+  Future<PaginatedProjectsResponseModel> getProjects({
+    int page = 1,
+    String? status,
+  }) async {
+    try {
+      final queryParams = <String, dynamic>{};
+      if (page > 1) queryParams['page'] = page;
+      if (status != null) queryParams['status'] = status;
+
+      final response = await apiClient.get(
+        path: ApiEndpoint.allProject,
+        queryParameters: queryParams.isNotEmpty ? queryParams : null,
+      );
+      if (response.data != null) {
+        return PaginatedProjectsResponseModel.fromJson(response.data);
       } else {
         throw ServerException('Empty response data received');
       }

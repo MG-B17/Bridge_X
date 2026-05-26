@@ -6,6 +6,7 @@ import 'package:bridge_x/core/widget/layout/horizontal_spacing.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:bridge_x/feature/projects_management/domain/entities/dashboard/project_dashboard_entity.dart';
 import 'package:bridge_x/feature/projects_management/domain/entities/dashboard/project_member_entity.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class TeamMembersSection extends StatelessWidget {
@@ -85,7 +86,7 @@ class MemberCard extends StatelessWidget {
           CircleAvatar(
             radius: AppSpacing.spacing24,
             backgroundImage: member.avatarUrl != null
-                ? NetworkImage(member.avatarUrl!)
+                ? CachedNetworkImageProvider(member.avatarUrl!)
                 : null,
             child: member.avatarUrl == null
                 ? const Icon(Icons.person, size: 28)

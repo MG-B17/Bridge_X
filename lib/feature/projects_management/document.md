@@ -25,7 +25,7 @@
 
 The Projects Management feature is the central hub for managing team projects. It provides:
 
-- **Projects List** — View all ongoing and completed projects with filter tabs
+- **Projects List** — Tabbed view (All / Ongoing / Completed) with swipeable navigation, per-tab pagination, and independent refresh
 - **Project Details** — View project info, team members, GitHub link, role
 - **Completed Project Details** — Extended view with rating, feedback, duration, impact sections
 - **Project Dashboard** — Stats, completion progress, team members, submit-as-complete action
@@ -51,11 +51,15 @@ Presentation  →  Domain  →  Data
 | **Data** | API calls, JSON parsing, local cache |
 
 ### Key Design Decisions
-- **Bloc** used for complex event-driven flows (projects list, project details, project dashboard, team settings)
+- **Bloc** used for complex event-driven flows (projects tab, project details, project dashboard, team settings)
 - **Cubit** used for simpler flows (completed project details, submit project)
+- **Per-tab BLoC architecture** — Each tab (All/Ongoing/Completed) has its own `ProjectsTabBloc` instance with independent state, pagination, and refresh
+- **TabController + chip-style tabs** — Swipeable `TabBarView` synced with chip filter UI via `ListenableBuilder` (scoped rebuild)
 - **BridgeXSkeletonizer** for loading states with placeholder data
 - **BridgeXRefreshIndicator** for pull-to-refresh with skeleton (not both visible simultaneously)
 - **BridgeXErrorWidget** for full-screen error states with retry
+- **CachedNetworkImageProvider** for disk-level avatar caching
+- **AutomaticKeepAliveClientMixin** on tab pages to preserve scroll position and state across tab switches
 
 ---
 
@@ -84,32 +88,68 @@ All screens are registered under the `project_route` in `lib/core/navigation/rou
 
 ## 4. Data Model & API Contracts
 
-### 4.1 All Projects
+### 4.1 Projects List (Paginated)
 
 **Endpoint:** `GET /api/my-projects` (`ApiEndpoint.allProject`)  
-**Query:** `?page=N` for pagination
+**Query Parameters:**
+- `?page=N` — Pagination (default: 1)
+- `?status=ongoing` — Filter ongoing projects only
+- `?status=completed` — Filter completed projects only
+- No status param — Returns all projects (mixed ongoing + completed)
 
-**Response:**
+**Response (Laravel Paginated):**
 ```json
 {
+  "success": true,
   "data": {
-    "ongoing_projects": [...],
-    "completed_projects": [...],
     "current_page": 1,
-    "total_pages": 3
+    "data": [
+      {
+        "id": 14,
+        "title": "bridge X",
+        "description": "Bridge x is a mobile app...",
+        "category": "Development",
+        "estimated_duration_days": 30,
+        "expected_end_date": "2026-06-25",
+        "project_completion_percentage": 0,
+        "my_completion_percentage": 0,
+        "my_specialization": "Flutter Developer",
+        "completion_date": "2026-05-26"  // only present for completed projects
+      }
+    ],
+    "last_page": 1,
+    "next_page_url": null,
+    "per_page": 10,
+    "total": 2
   }
 }
 ```
 
-**Entity:** `AllProjectsEntity`
+**Model:** `PaginatedProjectsResponseModel` → `PaginatedProjectsEntity`
 
 | Field | Type |
 |---|---|
-| `ongoingProjects` | `List<OngoingProjectEntity>` |
-| `completedProjects` | `List<CompletedProjectEntity>` |
-| `currentPage` | `int?` |
-| `totalPages` | `int?` |
-| `hasMore` | `bool` |
+| `projects` | `List<ProjectItemEntity>` |
+| `currentPage` | `int` |
+| `lastPage` | `int` |
+| `hasMore` | `bool` (derived from `nextPageUrl != null`) |
+
+**ProjectItemEntity:**
+
+| Field | Type | Notes |
+|---|---|---|
+| `id` | `int` | |
+| `title` | `String` | |
+| `description` | `String` | |
+| `category` | `String` | |
+| `estimatedDurationDays` | `int` | |
+| `expectedEndDate` | `String` | |
+| `projectCompletionPercentage` | `double` | |
+| `myCompletionPercentage` | `double` | |
+| `mySpecialization` | `String` | |
+| `completionDate` | `String?` | Present only for completed projects |
+
+`isCompleted` getter: `completionDate != null`
 
 ---
 
@@ -190,19 +230,30 @@ All screens are registered under the `project_route` in `lib/core/navigation/rou
 
 **Entity:** `SubmitProjectEntity`
 
+| Field | Type |
+|---|---|
+| `success` | `bool` |
+| `message` | `String` |
+| `projectStatus` | `String` |
+
 ---
 
 ## 5. State Machines
 
-### 5.1 ProjectsListBloc
+### 5.1 ProjectsTabBloc (per-tab, 3 instances)
 
 ```
-ProjectsListInitial → LoadProjects → ProjectsListLoading → ProjectsListLoaded
-                                                          → ProjectsListFailure
-ProjectsListLoaded → RefreshProjects → ProjectsListRefreshing → ProjectsListLoaded
-ProjectsListLoaded → LoadMoreProjects → ProjectsListLoadingMore → ProjectsListLoaded
-ProjectsListLoaded → ChangeFilter → ProjectsListLoaded (new filter index)
+ProjectsTabInitial → LoadProjectsTab → ProjectsTabLoading(placeholder) → ProjectsTabLoaded(projects, hasMore)
+                                                                        → ProjectsTabFailure(message)
+ProjectsTabLoaded → RefreshProjectsTab → ProjectsTabRefreshing(projects) → ProjectsTabLoaded
+                                                                          → ProjectsTabFailure(message, lastData)
+ProjectsTabLoaded → LoadMoreProjectsTab → ProjectsTabLoadingMore(projects) → ProjectsTabLoaded(merged)
 ```
+
+**Guards:**
+- `LoadProjectsTab`: Ignored if already Loading or Refreshing
+- `RefreshProjectsTab`: Ignored if already Loading or Refreshing
+- `LoadMoreProjectsTab`: Only fires if state is `ProjectsTabLoaded` and `hasMore == true`
 
 ### 5.2 ProjectDetailsBloc
 
@@ -229,25 +280,41 @@ Same pattern as ProjectDetailsBloc.
 
 ## 6. Data Flow
 
-### Projects List — Initial Load
+### Projects Screen — Initial Load (All 3 Tabs)
 
 ```
-ProjectsScreen mounted
-    └─► ShellRoute creates ProjectsListBloc..add(LoadProjects())
-            └─► emit(ProjectsListLoading(placeholderData: placeholder))
-                    └─► GetAllProjectsUseCase → Repository → RemoteDataSource
-                            └─► Success: emit(ProjectsListLoaded(data))
-                            └─► Failure: emit(ProjectsListFailure(message))
+ProjectsScreen.initState()
+    ├─► _allBloc = ProjectsTabBloc(status: null)..add(LoadProjectsTab())
+    ├─► _ongoingBloc = ProjectsTabBloc(status: 'ongoing')..add(LoadProjectsTab())
+    └─► _completedBloc = ProjectsTabBloc(status: 'completed')..add(LoadProjectsTab())
+
+Each bloc independently:
+    └─► emit(ProjectsTabLoading(placeholderData))
+            └─► GetProjectsUseCase(page: 1, status: ...) → Repository → RemoteDataSource
+                    └─► GET /api/my-projects?status=...
+                    └─► Success: emit(ProjectsTabLoaded(projects, hasMore))
+                    └─► Failure: emit(ProjectsTabFailure(message))
 ```
 
-### Projects List — Pagination
+### Projects Tab — Pagination
 
 ```
 ScrollController reaches maxScrollExtent - 200
-    └─► add(LoadMoreProjects())
-            └─► Guard: only if state is ProjectsListLoaded && hasMore
-            └─► emit(ProjectsListLoadingMore(data))
-            └─► Fetch page N+1 → merge with existing data
+    └─► add(LoadMoreProjectsTab())
+            └─► Guard: only if state is ProjectsTabLoaded && hasMore
+            └─► emit(ProjectsTabLoadingMore(projects))
+            └─► Fetch page N+1 → merge with existing projects list
+            └─► emit(ProjectsTabLoaded([...old, ...new], hasMore))
+```
+
+### Projects Tab — Refresh
+
+```
+Pull-to-refresh on active tab
+    └─► add(RefreshProjectsTab())
+            └─► emit(ProjectsTabRefreshing(currentProjects))  // skeleton shows
+            └─► Fetch page 1 → replace data
+            └─► emit(ProjectsTabLoaded(freshData, hasMore))
 ```
 
 ### Project Details — Load
@@ -268,22 +335,27 @@ ProjectDetailsScreen(projectId, status)
 ### ProjectsScreen
 
 ```
-ProjectsScreen
-└── ScrollNavListener
-    └── Scaffold > SafeArea
-        └── BlocBuilder<ProjectsListBloc>
-            ├── [Failure] → BridgeXErrorWidget
-            └── [Other] → BridgeXSkeletonizer
-                └── BridgeXRefreshIndicator
-                    └── SingleChildScrollView
-                        └── Column
-                            ├── ProjectsHeader
-                            ├── _FilterTabsSelector (BlocSelector)
-                            └── _ProjectsContentSelector (BlocSelector)
-                                ├── ProjectsEmptyState (if empty)
-                                └── ProjectsListContent
-                                    ├── CompletedProjectCard(s)
-                                    └── OngoingProjectCard(s)
+ProjectsScreen (StatefulWidget + SingleTickerProviderStateMixin)
+└── Scaffold > SafeArea
+    └── Column
+        ├── ProjectsHeader
+        ├── ListenableBuilder(listenable: _tabController)  // scoped rebuild
+        │   └── Row of BridgeXChip (All / Ongoing / Completed)
+        └── Expanded > TabBarView(controller: _tabController)
+            ├── BlocProvider.value(_allBloc) → ProjectsTabPage
+            ├── BlocProvider.value(_ongoingBloc) → ProjectsTabPage
+            └── BlocProvider.value(_completedBloc) → ProjectsTabPage
+
+ProjectsTabPage (AutomaticKeepAliveClientMixin)
+└── BlocBuilder<ProjectsTabBloc>(buildWhen: ...)
+    ├── [Failure, no lastData] → BridgeXErrorWidget
+    └── BridgeXSkeletonizer
+        └── BridgeXRefreshIndicator
+            ├── [Empty] → ProjectsEmptyState
+            └── ListView.separated
+                ├── OngoingProjectCard (if !isCompleted)
+                ├── CompletedProjectCard (if isCompleted)
+                └── CircularProgressIndicator (if LoadingMore)
 ```
 
 ### ProjectDetailsScreen
@@ -324,17 +396,29 @@ Same as ProjectDetailsScreen but with CompletedProjectDetailsContent:
 
 ## 8. Edge Cases & Logic Rules
 
-### Projects Screen Initial Load
-- `ProjectsListInitial` is treated as loading → skeleton shows immediately (no flash of empty state)
-- Empty state only shown after data loads and is actually empty
+### Projects Screen — Tab Behavior
+- All 3 endpoints fetched on screen open (parallel requests)
+- Refresh only affects the active tab — skeleton shows on that tab only
+- Tab switching via swipe (TabBarView) or tap (chip) — both synced via TabController
+- `ListenableBuilder` scopes chip rebuild — TabBarView does NOT rebuild on tab change
+- `AutomaticKeepAliveClientMixin` preserves tab state (scroll position, loaded data) across switches
 
-### Filter Tabs
-- Filter 0 = All, Filter 1 = Ongoing only, Filter 2 = Completed only
-- `isTabEmpty` checks if filtered list is empty (excluding loading states)
+### Projects Tab — Loading States
+- `ProjectsTabInitial` treated as loading → skeleton shows immediately
+- Empty state only shown when NOT loading AND NOT failure AND projects list is empty
+- Failure with `lastData == null` → full-screen error widget
+- Failure with `lastData != null` → shows last data (user can still see content)
 
-### Pagination Guard
-- Only triggers if `state is ProjectsListLoaded && data.hasMore`
-- Prevents duplicate requests if already in `ProjectsListLoadingMore`
+### Projects Tab — Pagination
+- Scroll listener triggers at `maxScrollExtent - 200px`
+- Guard: only fires if `state is ProjectsTabLoaded && hasMore`
+- `LoadingMore` state appends a `CircularProgressIndicator` at list bottom
+- Page counter is per-bloc (independent per tab)
+
+### Projects Tab — Project Card Type
+- `ProjectItemEntity.isCompleted` (derived from `completionDate != null`) determines card type
+- Ongoing → `OngoingProjectCard` with "Your Team" and "Details" actions
+- Completed → `CompletedProjectCard` with "View Report" action
 
 ### Refresh Flow (All Screens)
 - RefreshIndicator color set to transparent during refreshing (skeleton handles visual feedback)
@@ -360,18 +444,19 @@ All registrations in `projects_management_injection.dart`:
 | `ProjectsManagementLocalData` | `registerLazySingleton` | Shared |
 | `ProjectsManagementRemoteDataSource` | `registerLazySingleton` | Shared |
 | `ProjectsManagementRepository` | `registerLazySingleton` | Shared |
-| `GetAllProjectsUseCase` | `registerLazySingleton` | Shared |
+| `GetProjectsUseCase` | `registerLazySingleton` | Shared |
 | `GetProjectDashboardUseCase` | `registerLazySingleton` | Shared |
 | `GetTeamSettingsUseCase` | `registerLazySingleton` | Shared |
 | `SubmitProjectAsCompleteUseCase` | `registerLazySingleton` | Shared |
 | `GetProjectDetailsUseCase` | `registerLazySingleton` | Shared |
 | `GetCompletedProjectDetailsUseCase` | `registerLazySingleton` | Shared |
-| `ProjectsListBloc` | `registerFactory` | Per screen |
 | `ProjectDashboardBloc` | `registerFactory` | Per screen |
 | `ProjectDetailsBloc` | `registerFactory` | Per screen |
 | `CompletedProjectDetailsCubit` | `registerFactory` | Per screen |
 | `TeamSettingsBloc` | `registerFactory` | Per screen |
 | `SubmitProjectCubit` | `registerFactory` | Per screen |
+
+**Note:** `ProjectsTabBloc` is NOT registered in DI — it's created directly in `ProjectsScreen.initState()` (3 instances with different `status` params) and disposed in `dispose()`.
 
 ---
 
@@ -385,9 +470,11 @@ lib/feature/projects_management/
 │
 ├── domain/
 │   ├── entities/
-│   │   ├── all_projects_entity.dart
-│   │   ├── ongoing_project_entity.dart
-│   │   ├── completed_project_entity.dart
+│   │   ├── all_projects_entity.dart          (legacy, used by cache layer)
+│   │   ├── ongoing_project_entity.dart       (legacy, used by OngoingProjectCard)
+│   │   ├── completed_project_entity.dart     (legacy, used by cache layer)
+│   │   ├── project_item_entity.dart          ★ unified project entity
+│   │   ├── paginated_projects_entity.dart    ★ pagination wrapper
 │   │   ├── details/
 │   │   │   ├── project_details_entity.dart
 │   │   │   ├── completed_project_details_entity.dart
@@ -403,7 +490,7 @@ lib/feature/projects_management/
 │   ├── repositories/
 │   │   └── projects_management_repository.dart
 │   └── usecases/
-│       ├── get_all_projects_usecase.dart
+│       ├── get_projects_usecase.dart          ★ paginated, status-filtered
 │       ├── get_project_details_usecase.dart
 │       ├── get_completed_project_details_usecase.dart
 │       ├── get_project_dashboard_usecase.dart
@@ -412,9 +499,11 @@ lib/feature/projects_management/
 │
 ├── data/
 │   ├── models/
-│   │   ├── all_projects_response_model.dart
-│   │   ├── ongoing_project_model.dart
-│   │   ├── completed_project_model.dart
+│   │   ├── all_projects_response_model.dart   (legacy, used by cache)
+│   │   ├── ongoing_project_model.dart         (legacy, used by cache)
+│   │   ├── completed_project_model.dart       (legacy, used by cache)
+│   │   ├── project_item_model.dart            ★ unified project model
+│   │   ├── paginated_projects_response_model.dart  ★ Laravel pagination parser
 │   │   ├── details/
 │   │   │   ├── project_details_response_model.dart
 │   │   │   ├── completed_project_details_response_model.dart
@@ -435,14 +524,17 @@ lib/feature/projects_management/
 │
 └── presentation/
     ├── bloc/
-    │   ├── projects_list/ (Bloc: events + states + bloc)
-    │   ├── project_details/ (Bloc: events + states + bloc)
-    │   ├── project_dashboard/ (Bloc: events + states + bloc)
-    │   ├── team_settings/ (Bloc: events + states + bloc)
-    │   ├── completed_project_details/ (Cubit + states)
-    │   └── submit_project/ (Cubit + states)
+    │   ├── projects_tab/                      ★ per-tab state management
+    │   │   ├── projects_tab_bloc.dart
+    │   │   ├── projects_tab_event.dart
+    │   │   └── projects_tab_state.dart
+    │   ├── project_details/ (Bloc)
+    │   ├── project_dashboard/ (Bloc)
+    │   ├── team_settings/ (Bloc)
+    │   ├── completed_project_details/ (Cubit)
+    │   └── submit_project/ (Cubit)
     ├── screens/
-    │   ├── projects_screen.dart
+    │   ├── projects_screen.dart               ★ TabController + 3 tab blocs
     │   ├── project_details_screen.dart
     │   ├── completed_project_details_screen.dart
     │   ├── project_dashboard_screen.dart
@@ -450,10 +542,8 @@ lib/feature/projects_management/
     └── widgets/
         ├── projects_header_widgets/
         │   └── projects_header.dart
-        ├── projects_filter_widgets/
-        │   └── project_filter_tabs.dart
+        ├── projects_tab_page.dart             ★ reusable per-tab page widget
         ├── projects_list_widgets/
-        │   ├── projects_list_content.dart
         │   ├── ongoing_project_card.dart
         │   ├── completed_project_card.dart
         │   ├── project_status_badge.dart

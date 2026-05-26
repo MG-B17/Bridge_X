@@ -1,5 +1,7 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/di/di.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/screens_args/team_evaluation_args.dart';
 import 'package:bridge_x/core/widget/buttons/bridge_x_button.dart';
 import 'package:bridge_x/core/widget/feedback/error_dialog.dart';
 import 'package:bridge_x/core/widget/feedback/loading_dialog.dart';
@@ -35,7 +37,10 @@ class SubmitButton extends StatelessWidget {
               title: 'Success',
               message: state.message,
               onAction: () {
-                context.pop();
+                context.pushNamed(
+                  BridegeXRouteNames.teamEvaluation,
+                  extra: TeamEvaluationArgs(teamId: projectId),
+                );
               },
             );
           } else if (state is SubmitProjectFailure) {

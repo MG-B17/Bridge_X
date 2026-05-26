@@ -5,11 +5,17 @@ import 'package:bridge_x/feature/projects_management/domain/entities/dashboard/s
 import 'package:bridge_x/feature/projects_management/domain/entities/dashboard/team_settings_entity.dart';
 import 'package:bridge_x/feature/projects_management/domain/entities/details/completed_project_details_entity.dart';
 import 'package:bridge_x/feature/projects_management/domain/entities/details/project_details_entity.dart';
+import 'package:bridge_x/feature/projects_management/domain/entities/paginated_projects_entity.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class ProjectsManagementRepository {
   Future<Either<Failure, AllProjectsEntity>> getAllProjects({int page = 1});
   Future<Either<Failure, AllProjectsEntity>> getCachedProjects();
+
+  Future<Either<Failure, PaginatedProjectsEntity>> getProjects({
+    int page = 1,
+    String? status,
+  });
 
   Future<Either<Failure, ProjectDashboardEntity>> getProjectDashboard(
     int projectId,

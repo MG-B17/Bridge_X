@@ -158,8 +158,7 @@ class AuthCubit extends Cubit<AuthState> {
     result.fold(
       (failure) => emit(state.copyWith(status: AuthStatus.error, message: failure.message)),
       (_) {
-        // Reset AppState → GoRouter fires → auto-navigates back to login
-        appState.reset();
+        appState.isLoggedIn = false;
         emit(state.copyWith(status: AuthStatus.success, message: AppFeedbackMessages.logoutSuccess));
       },
     );

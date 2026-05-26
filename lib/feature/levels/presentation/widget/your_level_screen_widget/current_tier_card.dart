@@ -8,26 +8,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CurrentTierCard extends StatelessWidget {
-  const CurrentTierCard({super.key});
+  const CurrentTierCard({
+    super.key,
+    this.currentLevelFull,
+    this.progressPercentage,
+    this.nextLevelFull,
+  });
+
+  final String? currentLevelFull;
+  final int? progressPercentage;
+  final String? nextLevelFull;
 
   @override
   Widget build(BuildContext context) {
+    final progress = (progressPercentage ?? 0) / 100;
+
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: context.colors.secondary, 
+        color: context.colors.secondary,
         borderRadius: BorderRadius.circular(AppSpacing.radiusCardLarge),
         boxShadow: AppShadow.subtle,
       ),
       child: Stack(
         children: [
-          // Background faint icon
           Positioned(
             top: -10.h,
             right: -10.w,
             child: Icon(
-              Icons.workspace_premium, // Or any medal/badge icon
+              Icons.workspace_premium,
               size: 100.w,
               color: context.colors.surface.withValues(alpha: 0.1),
             ),
@@ -45,7 +55,7 @@ class CurrentTierCard extends StatelessWidget {
               ),
               VerticalSpacing(AppSpacing.xs),
               Text(
-                AppStrings.beginnerSilver,
+                currentLevelFull ?? 'Beginner Bronze',
                 style: AppTextStyles.displayLarge.copyWith(
                   color: context.colors.surface,
                   fontWeight: FontWeight.w800,
@@ -56,14 +66,14 @@ class CurrentTierCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    AppStrings.progressToGold,
+                    'Progress to ${nextLevelFull ?? 'Next Level'}',
                     style: AppTextStyles.bodyMedium.copyWith(
                       color: context.colors.surface.withValues(alpha: 0.9),
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                   Text(
-                    '70%',
+                    '${progressPercentage ?? 0}%',
                     style: AppTextStyles.bodyMedium.copyWith(
                       color: context.colors.surface,
                       fontWeight: FontWeight.bold,
@@ -75,7 +85,7 @@ class CurrentTierCard extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(AppSpacing.radiusPill),
                 child: LinearProgressIndicator(
-                  value: 0.7,
+                  value: progress,
                   minHeight: 8.h,
                   backgroundColor: context.colors.surface.withValues(alpha: 0.2),
                   valueColor: AlwaysStoppedAnimation<Color>(context.colors.primaryLight),
@@ -107,4 +117,3 @@ class CurrentTierCard extends StatelessWidget {
     );
   }
 }
-

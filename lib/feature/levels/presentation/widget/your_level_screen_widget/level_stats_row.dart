@@ -8,7 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LevelStatsRow extends StatelessWidget {
-  const LevelStatsRow({super.key});
+  const LevelStatsRow({super.key, this.totalTasks, this.averageRating});
+
+  final int? totalTasks;
+  final num? averageRating;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,7 @@ class LevelStatsRow extends StatelessWidget {
       children: [
         Expanded(
           child: _StatCard(
-            title: '128',
+            title: '${totalTasks ?? 0}',
             subtitle: AppStrings.completedTasks,
             icon: Icons.check_circle_outline,
             backgroundColor: context.colors.textSecondary.withValues(alpha: 0.1),
@@ -26,11 +29,11 @@ class LevelStatsRow extends StatelessWidget {
         HorizontalSpacing(AppSpacing.md),
         Expanded(
           child: _StatCard(
-            title: '4.8',
+            title: '${averageRating ?? 0}',
             subtitle: AppStrings.averageRating,
             icon: Icons.star_outline,
-            backgroundColor: const Color(0xFFFDEBE3), // Peach background
-            iconColor: const Color(0xFF8B4513), // Brown icon
+            backgroundColor: const Color(0xFFFDEBE3),
+            iconColor: const Color(0xFF8B4513),
             badgeText: AppStrings.top5Percent,
           ),
         ),
@@ -79,7 +82,7 @@ class _StatCard extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF8B4513), // Brown badge background
+                    color: const Color(0xFF8B4513),
                     borderRadius: BorderRadius.circular(AppSpacing.radiusXs),
                   ),
                   child: Text(

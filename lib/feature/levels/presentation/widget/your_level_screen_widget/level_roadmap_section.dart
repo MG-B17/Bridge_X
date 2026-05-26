@@ -8,14 +8,47 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LevelRoadmapSection extends StatelessWidget {
-  const LevelRoadmapSection({super.key});
+  const LevelRoadmapSection({super.key, this.baseLevel, this.subLevel});
+
+  final String? baseLevel;
+  final String? subLevel;
+
+  // Order indices for comparison
+  static const _baseLevels = ['beginner', 'junior', 'senior'];
+  static const _subLevels = ['bronze', 'silver', 'gold'];
+
+  _BadgeStatus _getBadgeStatus(String tierBase, String tierSub) {
+    final currentBaseIdx = _baseLevels.indexOf(baseLevel?.toLowerCase() ?? '');
+    final currentSubIdx = _subLevels.indexOf(subLevel?.toLowerCase() ?? '');
+    final tierBaseIdx = _baseLevels.indexOf(tierBase);
+    final tierSubIdx = _subLevels.indexOf(tierSub);
+
+    if (currentBaseIdx < 0) return _BadgeStatus.locked;
+
+    if (tierBaseIdx < currentBaseIdx) return _BadgeStatus.completed;
+    if (tierBaseIdx > currentBaseIdx) return _BadgeStatus.locked;
+
+    // Same base level
+    if (tierSubIdx < currentSubIdx) return _BadgeStatus.completed;
+    if (tierSubIdx == currentSubIdx) return _BadgeStatus.active;
+    return _BadgeStatus.dashed;
+  }
+
+  bool _isTierActive(String tierBase) {
+    return tierBase == (baseLevel?.toLowerCase() ?? '');
+  }
+
+  bool _isTierCompleted(String tierBase) {
+    final currentBaseIdx = _baseLevels.indexOf(baseLevel?.toLowerCase() ?? '');
+    final tierBaseIdx = _baseLevels.indexOf(tierBase);
+    return tierBaseIdx < currentBaseIdx;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Title Row
         Row(
           children: [
             Icon(Icons.map_outlined, color: context.colors.textPrimary, size: 24.w),
@@ -30,48 +63,48 @@ class LevelRoadmapSection extends StatelessWidget {
           ],
         ),
         VerticalSpacing(AppSpacing.lg),
-        
-        // Roadmap Steps
         _RoadmapStep(
           title: AppStrings.beginnerTier,
-          isActiveTier: true,
-          isCompleted: true,
+          isActiveTier: _isTierActive('beginner') || _isTierCompleted('beginner'),
+          isCompleted: _isTierCompleted('beginner'),
           isLast: false,
           child: Row(
             children: [
-              _TierBadge(label: AppStrings.bronze, status: _BadgeStatus.completed),
+              _TierBadge(label: AppStrings.bronze, status: _getBadgeStatus('beginner', 'bronze')),
               HorizontalSpacing(AppSpacing.sm),
-              _TierBadge(label: AppStrings.silver, status: _BadgeStatus.active),
+              _TierBadge(label: AppStrings.silver, status: _getBadgeStatus('beginner', 'silver')),
               HorizontalSpacing(AppSpacing.sm),
-              _TierBadge(label: AppStrings.gold, status: _BadgeStatus.dashed),
+              _TierBadge(label: AppStrings.gold, status: _getBadgeStatus('beginner', 'gold')),
             ],
           ),
         ),
-        
         _RoadmapStep(
           title: AppStrings.juniorTier,
-          isActiveTier: false,
-          isCompleted: false,
+          isActiveTier: _isTierActive('junior') || _isTierCompleted('junior'),
+          isCompleted: _isTierCompleted('junior'),
           isLast: false,
           child: Row(
             children: [
-              _TierBadge(label: AppStrings.bronze, status: _BadgeStatus.locked),
+              _TierBadge(label: AppStrings.bronze, status: _getBadgeStatus('junior', 'bronze')),
               HorizontalSpacing(AppSpacing.sm),
-              _TierBadge(label: AppStrings.silver, status: _BadgeStatus.locked),
+              _TierBadge(label: AppStrings.silver, status: _getBadgeStatus('junior', 'silver')),
               HorizontalSpacing(AppSpacing.sm),
-              _TierBadge(label: AppStrings.gold, status: _BadgeStatus.locked),
+              _TierBadge(label: AppStrings.gold, status: _getBadgeStatus('junior', 'gold')),
             ],
           ),
         ),
-
         _RoadmapStep(
           title: AppStrings.seniorTier,
-          isActiveTier: false,
-          isCompleted: false,
+          isActiveTier: _isTierActive('senior') || _isTierCompleted('senior'),
+          isCompleted: _isTierCompleted('senior'),
           isLast: true,
           child: Row(
             children: [
-              _TierBadge(label: AppStrings.bronze, status: _BadgeStatus.locked),
+              _TierBadge(label: AppStrings.bronze, status: _getBadgeStatus('senior', 'bronze')),
+              HorizontalSpacing(AppSpacing.sm),
+              _TierBadge(label: AppStrings.silver, status: _getBadgeStatus('senior', 'silver')),
+              HorizontalSpacing(AppSpacing.sm),
+              _TierBadge(label: AppStrings.gold, status: _getBadgeStatus('senior', 'gold')),
             ],
           ),
         ),
@@ -101,17 +134,15 @@ class _RoadmapStep extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Node & Line column
           Column(
             children: [
-              // Node circle
               Container(
                 width: 24.w,
                 height: 24.w,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: isActiveTier 
-                      ? context.colors.primaryLight.withValues(alpha: 0.3) 
+                  color: isActiveTier
+                      ? context.colors.primaryLight.withValues(alpha: 0.3)
                       : context.colors.divider.withValues(alpha: 0.2),
                 ),
                 child: Center(
@@ -120,8 +151,8 @@ class _RoadmapStep extends StatelessWidget {
                     height: 16.w,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: isActiveTier 
-                          ? const Color(0xFF0D3269) // Dark blue
+                      color: isActiveTier
+                          ? const Color(0xFF0D3269)
                           : context.colors.divider.withValues(alpha: 0.5),
                     ),
                     child: isActiveTier
@@ -130,7 +161,6 @@ class _RoadmapStep extends StatelessWidget {
                   ),
                 ),
               ),
-              // Line
               if (!isLast)
                 Expanded(
                   child: Container(
@@ -141,7 +171,6 @@ class _RoadmapStep extends StatelessWidget {
             ],
           ),
           HorizontalSpacing(AppSpacing.md),
-          // Content column
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,8 +179,8 @@ class _RoadmapStep extends StatelessWidget {
                 Text(
                   title,
                   style: AppTextStyles.titleMedium.copyWith(
-                    color: isActiveTier 
-                        ? const Color(0xFF0D3269) 
+                    color: isActiveTier
+                        ? const Color(0xFF0D3269)
                         : context.colors.textSecondary,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 1.2,
@@ -159,7 +188,7 @@ class _RoadmapStep extends StatelessWidget {
                 ),
                 VerticalSpacing(AppSpacing.sm),
                 child,
-                VerticalSpacing(AppSpacing.xl), // Spacing to next node
+                VerticalSpacing(AppSpacing.xl),
               ],
             ),
           ),
@@ -192,7 +221,7 @@ class _TierBadge extends StatelessWidget {
         textColor = context.colors.textPrimary;
         break;
       case _BadgeStatus.active:
-        bgColor = const Color(0xFF0D3269); // Dark blue
+        bgColor = const Color(0xFF0D3269);
         textColor = Colors.white;
         break;
       case _BadgeStatus.dashed:

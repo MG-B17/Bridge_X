@@ -39,5 +39,7 @@ class ApiEndpoint {
       "/api/team/$teamId/full-details";
   static String createTask({required int projectId}) =>
       "/api/tasks/team/$projectId";
+  static String viewTask({required int projectId}) =>
+      "/api/team/$projectId/full-details";
 
 }

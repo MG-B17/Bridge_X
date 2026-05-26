@@ -1,7 +1,7 @@
 import 'package:bridge_x/core/error/failure.dart';
 import 'package:bridge_x/core/usecase/usecases.dart';
-import 'package:bridge_x/feature/create_task/domain/entities/create_task_entity.dart';
-import 'package:bridge_x/feature/create_task/domain/repositories/create_task_repository.dart';
+import 'package:bridge_x/feature/projects_management/domain/entities/create_task_entity.dart';
+import 'package:bridge_x/feature/projects_management/domain/repositories/projects_management_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
@@ -31,7 +31,7 @@ class CreateTaskParams extends Equatable {
 }
 
 class CreateTaskUseCase implements UseCase<CreateTaskEntity, CreateTaskParams> {
-  final CreateTaskRepository repository;
+  final ProjectsManagementRepository repository;
 
   CreateTaskUseCase({required this.repository});
 

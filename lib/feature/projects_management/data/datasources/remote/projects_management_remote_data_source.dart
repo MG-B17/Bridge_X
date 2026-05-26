@@ -3,6 +3,8 @@ import 'package:bridge_x/core/error/exception.dart';
 import 'package:bridge_x/core/network/api/api_client.dart';
 import 'package:bridge_x/core/network/api/api_endpoint.dart';
 import 'package:bridge_x/feature/projects_management/data/models/all_projects_response_model.dart';
+import 'package:bridge_x/feature/projects_management/data/models/create_task_request_model.dart';
+import 'package:bridge_x/feature/projects_management/data/models/create_task_response_model.dart';
 import 'package:bridge_x/feature/projects_management/data/models/dashboard/project_dashboard_response_model.dart';
 import 'package:bridge_x/feature/projects_management/data/models/dashboard/submit_project_response_model.dart';
 import 'package:bridge_x/feature/projects_management/data/models/dashboard/team_settings_model.dart';
@@ -26,6 +28,11 @@ abstract class ProjectsManagementRemoteDataSource {
 
   Future<CompletedProjectDetailsResponseModel> getCompletedProjectDetails({
     required int projectId,
+  });
+
+  Future<CreateTaskResponseModel> createTask({
+    required int projectId,
+    required CreateTaskRequestModel request,
   });
 }
 
@@ -171,6 +178,29 @@ class ProjectsManagementRemoteDataSourceImpl
       } else {
         throw ServerException(ErrorStrings.serverError);
       }
+    }
+  }
+
+  @override
+  Future<CreateTaskResponseModel> createTask({
+    required int projectId,
+    required CreateTaskRequestModel request,
+  }) async {
+    try {
+      final response = await apiClient.post(
+        path: ApiEndpoint.createTask(projectId: projectId),
+        data: request.toJson(),
+      );
+      if (response.data != null) {
+        return CreateTaskResponseModel.fromJson(
+          response.data as Map<String, dynamic>,
+        );
+      } else {
+        throw ServerException('Empty response data received');
+      }
+    } catch (e) {
+      if (e is DioException || e is ServerException) rethrow;
+      throw ServerException(ErrorStrings.serverError);
     }
   }
 }

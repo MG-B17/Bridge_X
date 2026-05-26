@@ -1,13 +1,18 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/screens_args/view_task_args.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/horizontal_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class ProjectDetailsActionButtons extends StatelessWidget {
-  const ProjectDetailsActionButtons({super.key});
+  const ProjectDetailsActionButtons({super.key, required this.projectId});
+
+  final int projectId;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +26,10 @@ class ProjectDetailsActionButtons extends StatelessWidget {
             icon: Icons.assignment_outlined,
             backgroundColor: colors.secondary,
             foregroundColor: colors.surface,
-            onTap: null,
+            onTap: () => context.pushNamed(
+              BridegeXRouteNames.viewTask,
+              extra: ViewTaskArgs(projectId: projectId),
+            ),
           ),
         ),
         HorizontalSpacing(AppSpacing.spacing8),

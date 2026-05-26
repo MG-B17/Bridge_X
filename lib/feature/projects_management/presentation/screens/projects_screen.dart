@@ -72,7 +72,7 @@ class _ProjectsScreenContentState extends State<_ProjectsScreenContent> {
                 );
               }
 
-              final isLoading = state is ProjectsListLoading;
+              final isLoading = state is ProjectsListLoading || state is ProjectsListInitial;
               final isRefreshing = state is ProjectsListRefreshing;
               final showSkeleton = isLoading || isRefreshing;
 

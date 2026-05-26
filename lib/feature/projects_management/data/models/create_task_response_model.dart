@@ -1,4 +1,4 @@
-import 'package:bridge_x/feature/create_task/domain/entities/create_task_entity.dart';
+import 'package:bridge_x/feature/projects_management/domain/entities/create_task_entity.dart';
 
 class CreateTaskResponseModel {
   final int id;

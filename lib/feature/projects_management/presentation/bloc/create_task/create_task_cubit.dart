@@ -1,25 +1,26 @@
-import 'package:bridge_x/feature/create_task/domain/repositories/create_task_repository.dart';
-import 'package:bridge_x/feature/create_task/domain/usecases/create_task_usecase.dart';
-import 'package:bridge_x/feature/create_task/presentation/cubit/create_task_state.dart';
+import 'package:bridge_x/feature/projects_management/domain/repositories/projects_management_repository.dart';
+import 'package:bridge_x/feature/projects_management/domain/usecases/create_task_usecase.dart';
+import 'package:bridge_x/feature/projects_management/presentation/bloc/create_task/create_task_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CreateTaskCubit extends Cubit<CreateTaskState> {
   final CreateTaskUseCase _createTaskUseCase;
-  final CreateTaskRepository _repository;
+  final ProjectsManagementRepository _repository;
 
   CreateTaskCubit({
     required CreateTaskUseCase createTaskUseCase,
-    required CreateTaskRepository repository,
+    required ProjectsManagementRepository repository,
   })  : _createTaskUseCase = createTaskUseCase,
         _repository = repository,
         super(const CreateTaskInitial());
 
   Future<void> loadMembers(int projectId) async {
     emit(const CreateTaskMembersLoading());
-    final result = await _repository.getTeamMembers(projectId);
+    final result = await _repository.getTeamSettings(projectId);
+    if (isClosed) return;
     result.fold(
       (failure) => emit(CreateTaskError(failure.message)),
-      (members) => emit(CreateTaskReady(members: members)),
+      (settings) => emit(CreateTaskReady(members: settings.members)),
     );
   }
 
@@ -34,6 +35,13 @@ class CreateTaskCubit extends Cubit<CreateTaskState> {
     final current = state;
     if (current is CreateTaskReady) {
       emit(current.copyWith(priority: priority));
+    }
+  }
+
+  void setDate(DateTime date) {
+    final current = state;
+    if (current is CreateTaskReady) {
+      emit(current.copyWith(selectedDate: date));
     }
   }
 
@@ -79,6 +87,8 @@ class CreateTaskCubit extends Cubit<CreateTaskState> {
       gitLink: gitLink,
       tags: current.tags,
     ));
+
+    if (isClosed) return;
 
     result.fold(
       (failure) => emit(CreateTaskError(failure.message)),

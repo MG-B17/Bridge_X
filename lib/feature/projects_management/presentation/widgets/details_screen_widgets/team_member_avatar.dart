@@ -28,23 +28,17 @@ class TeamMemberAvatar extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: colors.surface, width: 2.w),
-            ),
-            child: CircleAvatar(
-              radius: 28.r,
-              backgroundColor: colors.primaryLight.withValues(alpha: 0.35),
-              backgroundImage: hasAvatar ? NetworkImage(avatarUrl) : null,
-              child: hasAvatar
-                  ? null
-                  : Icon(
-                      Icons.person,
-                      color: colors.secondary,
-                      size: 28.sp,
-                    ),
-            ),
+          CircleAvatar(
+            radius: 24.r,
+            backgroundColor: colors.primaryLight.withValues(alpha: 0.35),
+            backgroundImage: hasAvatar ? NetworkImage(avatarUrl) : null,
+            child: hasAvatar
+                ? null
+                : Icon(
+                    Icons.person,
+                    color: colors.secondary,
+                    size: 24.sp,
+                  ),
           ),
           VerticalSpacing(AppSpacing.xs),
           Text(

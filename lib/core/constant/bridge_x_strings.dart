@@ -477,4 +477,23 @@ class AppStrings {
   static const String registrationFailed = 'Registration Failed';
   static const String verificationFailed = 'Verification Failed';
   static const String requestFailed = 'Request Failed';
+
+  // ── Create Task Screen ────────────────────────────────────────────────────
+  static const String taskTitleHint = 'e.g. Implement OAuth2 flow';
+  static const String assignTo = 'Assign To';
+  static const String searchTeamMembers = 'Search team members...';
+  static const String add = 'Add';
+  static const String taskDetailsHint = 'Describe what needs to be done...';
+  static const String selectDate = 'Select date';
+  static const String priority = 'Priority';
+  static const String priorityLow = 'LOW';
+  static const String priorityMed = 'MED';
+  static const String priorityHigh = 'HIGH';
+  static const String tags = 'Tags';
+  static const String tag = 'Tag';
+  static const String addTag = 'Add Tag';
+  static const String enterTagName = 'Enter tag name';
+  static const String creatingTask = 'Creating task...';
+  static const String taskCreated = 'Task Created!';
+  static const String taskCreatedMessage = 'Task has been created successfully.';
 }

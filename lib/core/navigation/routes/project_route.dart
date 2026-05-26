@@ -7,16 +7,18 @@ import 'package:bridge_x/core/navigation/screens_args/create_task_args.dart';
 import 'package:bridge_x/core/navigation/screens_args/project_dashboard_args.dart';
 import 'package:bridge_x/core/navigation/screens_args/project_details_args.dart';
 import 'package:bridge_x/core/navigation/screens_args/team_settings_args.dart';
-import 'package:bridge_x/feature/create_task/presentation/cubit/create_task_cubit.dart';
-import 'package:bridge_x/feature/create_task/presentation/screens/create_task_screen.dart';
+import 'package:bridge_x/core/navigation/screens_args/view_task_args.dart';
 import 'package:bridge_x/feature/create_team/presentation/screens/create_team_screen.dart';
+import 'package:bridge_x/feature/projects_management/presentation/bloc/create_task/create_task_cubit.dart';
 import 'package:bridge_x/feature/projects_management/presentation/bloc/projects_list/projects_list_bloc.dart';
 import 'package:bridge_x/feature/projects_management/presentation/bloc/projects_list/projects_list_event.dart';
 import 'package:bridge_x/feature/projects_management/presentation/screens/completed_project_details_screen.dart';
+import 'package:bridge_x/feature/projects_management/presentation/screens/create_task_screen.dart';
 import 'package:bridge_x/feature/projects_management/presentation/screens/project_dashboard_screen.dart';
 import 'package:bridge_x/feature/projects_management/presentation/screens/project_details_screen.dart';
 import 'package:bridge_x/feature/projects_management/presentation/screens/projects_screen.dart';
 import 'package:bridge_x/feature/projects_management/presentation/screens/team_settings_screen.dart';
+import 'package:bridge_x/feature/view_task/presentation/screens/view_task_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -109,6 +111,17 @@ StatefulShellBranch projectRoute = StatefulShellBranch(
                     create: (_) => sl<CreateTaskCubit>()..loadMembers(args.projectId),
                     child: CreateTaskScreen(projectId: args.projectId),
                   ),
+                  state: state,
+                );
+              },
+            ),
+            GoRoute(
+              path: BridgeXRoutePaths.viewTask,
+              name: BridegeXRouteNames.viewTask,
+              pageBuilder: (context, state) {
+                final args = state.extra as ViewTaskArgs;
+                return slideRightTransitionPage.build(
+                  child: ViewTaskScreen(projectId: args.projectId),
                   state: state,
                 );
               },

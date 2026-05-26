@@ -58,7 +58,7 @@ class CompletedProjectDetailsContent extends StatelessWidget {
         VerticalSpacing(AppSpacing.spacing16),
         YourImpactSection(impacts: project.impacts),
         VerticalSpacing(AppSpacing.spacing24),
-        const ProjectDetailsActionButtons(),
+        ProjectDetailsActionButtons(projectId: project.id),
         VerticalSpacing(AppSpacing.spacing32),
       ],
     );

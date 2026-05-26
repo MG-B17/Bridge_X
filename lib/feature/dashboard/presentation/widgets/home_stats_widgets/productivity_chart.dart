@@ -53,6 +53,8 @@ class ProductivityChart extends StatelessWidget {
               child: Center(
                 child: Text(
                   label,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.headlineSmall.copyWith(
                     color: context.colors.textPrimary,
                     fontWeight: FontWeight.w700,

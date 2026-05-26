@@ -3,6 +3,7 @@ import 'package:bridge_x/feature/projects_management/data/datasources/local/proj
 import 'package:bridge_x/feature/projects_management/data/datasources/remote/projects_management_remote_data_source.dart';
 import 'package:bridge_x/feature/projects_management/data/repositories/projects_management_repository_impl.dart';
 import 'package:bridge_x/feature/projects_management/domain/repositories/projects_management_repository.dart';
+import 'package:bridge_x/feature/projects_management/domain/usecases/create_task_usecase.dart';
 import 'package:bridge_x/feature/projects_management/domain/usecases/get_all_projects_usecase.dart';
 import 'package:bridge_x/feature/projects_management/domain/usecases/get_completed_project_details_usecase.dart';
 import 'package:bridge_x/feature/projects_management/domain/usecases/get_project_dashboard_usecase.dart';
@@ -10,6 +11,7 @@ import 'package:bridge_x/feature/projects_management/domain/usecases/get_project
 import 'package:bridge_x/feature/projects_management/domain/usecases/get_team_settings_usecase.dart';
 import 'package:bridge_x/feature/projects_management/domain/usecases/submit_project_as_complete_usecase.dart';
 import 'package:bridge_x/feature/projects_management/presentation/bloc/completed_project_details/completed_project_details_cubit.dart';
+import 'package:bridge_x/feature/projects_management/presentation/bloc/create_task/create_task_cubit.dart';
 import 'package:bridge_x/feature/projects_management/presentation/bloc/project_dashboard/project_dashboard_bloc.dart';
 import 'package:bridge_x/feature/projects_management/presentation/bloc/project_details/project_details_bloc.dart';
 import 'package:bridge_x/feature/projects_management/presentation/bloc/projects_list/projects_list_bloc.dart';
@@ -60,6 +62,10 @@ void initProjectsManagement() {
     () => GetCompletedProjectDetailsUseCase(repository: sl()),
   );
 
+  sl.registerLazySingleton<CreateTaskUseCase>(
+    () => CreateTaskUseCase(repository: sl()),
+  );
+
   // Blocs
   sl.registerFactory<ProjectsListBloc>(
     () => ProjectsListBloc(getAllProjectsUseCase: sl()),
@@ -75,6 +81,10 @@ void initProjectsManagement() {
 
   sl.registerFactory<CompletedProjectDetailsCubit>(
     () => CompletedProjectDetailsCubit(useCase: sl()),
+  );
+
+  sl.registerFactory<CreateTaskCubit>(
+    () => CreateTaskCubit(createTaskUseCase: sl(), repository: sl()),
   );
 
   sl.registerFactory<TeamSettingsBloc>(

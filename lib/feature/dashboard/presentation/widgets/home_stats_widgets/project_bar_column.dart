@@ -64,12 +64,18 @@ class ProjectBarColumn extends StatelessWidget {
 
         VerticalSpacing(AppSpacing.height10),
 
-        Text(
-          name,
-          style: TextStyle(
-            color: context.colors.textPrimary,
-            fontWeight: FontWeight.w700,
-            fontSize: AppSpacing.fontSize14,
+        SizedBox(
+          width: AppSpacing.barWidth * 2.5,
+          child: Text(
+            name,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: context.colors.textPrimary,
+              fontWeight: FontWeight.w700,
+              fontSize: AppSpacing.fontSize14,
+            ),
           ),
         ),
       ],

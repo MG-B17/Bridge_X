@@ -300,6 +300,16 @@ class AppStrings {
   static const String viewReport = 'View Report';
   static const String submitReport = 'Submit Report';
   static const String reportUser = 'Report User';
+  static const String makeMentor = 'Make Mentor';
+  static const String selectAReason = 'SELECT A REASON';
+  static const String notContributing = 'Not contributing';
+  static const String missedDeadlines = 'Missed deadlines';
+  static const String inappropriateBehavior = 'Inappropriate behavior';
+  static const String spamOrIrrelevantMessages = 'Spam or irrelevant messages';
+  static const String other = 'Other';
+  static const String describeTheIssue = 'Describe the issue...';
+  static const String reportSubmittedSuccess = 'Report submitted successfully';
+  static const String failedToLoadUser = 'Failed to Load User';
   static const String submitReportTitle = 'Submit report?';
   static const String submitReportDesc =
       'Are you sure you want to report this user? Our team will review the activity promptly.';

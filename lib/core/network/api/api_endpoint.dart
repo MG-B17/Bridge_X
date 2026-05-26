@@ -48,4 +48,8 @@ class ApiEndpoint {
   static const String displayProfile = "/api/profile";
   static const String level = "/api/my/level-progression";
 
+  // reports
+  static String reportInfo({required int userId}) => "/api/user/$userId/report-info";
+  static const String reports = "/api/reports";
+
 }

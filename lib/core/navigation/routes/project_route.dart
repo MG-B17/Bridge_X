@@ -8,6 +8,7 @@ import 'package:bridge_x/core/navigation/screens_args/project_dashboard_args.dar
 import 'package:bridge_x/core/navigation/screens_args/project_details_args.dart';
 import 'package:bridge_x/core/navigation/screens_args/team_settings_args.dart';
 import 'package:bridge_x/core/navigation/screens_args/view_task_args.dart';
+import 'package:bridge_x/core/navigation/screens_args/report_user_args.dart';
 import 'package:bridge_x/feature/create_team/presentation/screens/create_team_screen.dart';
 import 'package:bridge_x/feature/projects_management/presentation/bloc/projects_list/projects_list_bloc.dart';
 import 'package:bridge_x/feature/projects_management/presentation/bloc/projects_list/projects_list_event.dart';
@@ -19,6 +20,7 @@ import 'package:bridge_x/feature/projects_management/presentation/screens/team_s
 import 'package:bridge_x/feature/task_management/presentation/bloc/create_task/create_task_cubit.dart';
 import 'package:bridge_x/feature/task_management/presentation/screens/create_task_screen.dart';
 import 'package:bridge_x/feature/task_management/presentation/screens/view_task_screen.dart';
+import 'package:bridge_x/feature/report/presentation/screen/report_user_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -122,6 +124,17 @@ StatefulShellBranch projectRoute = StatefulShellBranch(
                 final args = state.extra as ViewTaskArgs;
                 return slideRightTransitionPage.build(
                   child: ViewTaskScreen(projectId: args.projectId),
+                  state: state,
+                );
+              },
+            ),
+            GoRoute(
+              path: BridgeXRoutePaths.reportUser,
+              name: BridegeXRouteNames.reportUser,
+              pageBuilder: (context, state) {
+                final args = state.extra as ReportUserArgs;
+                return _bottomSheetTransition.build(
+                  child: ReportUserScreen(userId: args.userId),
                   state: state,
                 );
               },

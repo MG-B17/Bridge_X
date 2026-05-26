@@ -37,6 +37,7 @@ import 'package:bridge_x/feature/projects_management/di/projects_management_inje
 import 'package:bridge_x/feature/task_management/di/task_management_injection.dart';
 import 'package:bridge_x/feature/profile/di/profile_injection.dart';
 import 'package:bridge_x/feature/levels/di/levels_injection.dart';
+import 'package:bridge_x/feature/report/di/report_injection.dart';
 
 final sl = GetIt.instance;
 
@@ -133,6 +134,7 @@ Future<void> init() async {
   initTaskManagement();
   initProfile();
   initLevels();
+  initReport();
 
   // other 
   sl.registerLazySingleton<AppInitializer>(()=>AppInitializer());

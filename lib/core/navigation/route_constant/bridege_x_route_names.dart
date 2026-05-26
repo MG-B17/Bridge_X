@@ -27,6 +27,7 @@ class BridegeXRouteNames {
   static const String completedProjectDetails = 'completed-project-details';
   static const String createTask = 'create-task';
   static const String viewTask = 'view-task';
+  static const String reportUser = 'report-user';
   static const String matchingProcess = 'matching-process';
   static const String noTeamsFound = 'no-teams-found';
   static const String recommendedTeams = 'recommended-teams';

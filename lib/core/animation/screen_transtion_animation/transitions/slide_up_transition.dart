@@ -15,7 +15,7 @@ class BottomSheetTransitionPage extends AppPageTransition {
   CustomTransitionPage build({
     required Widget child,
     required GoRouterState state,
-    Duration duration = const Duration(milliseconds: 750),
+    Duration duration = const Duration(milliseconds: 1000),
   }) {
     return CustomTransitionPage(
       key: state.pageKey,

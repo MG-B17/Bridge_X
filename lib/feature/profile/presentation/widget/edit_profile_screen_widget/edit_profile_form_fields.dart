@@ -51,6 +51,7 @@ class EditProfileFormFields extends StatelessWidget {
 
         
         ProfessionDropdown(
+          key: ValueKey(selectedProfession),
           selectedValue: selectedProfession,
           professions: professions,
           onChanged: onProfessionChanged,

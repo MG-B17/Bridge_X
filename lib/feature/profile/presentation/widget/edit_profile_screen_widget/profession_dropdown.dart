@@ -36,7 +36,7 @@ class ProfessionDropdown extends StatelessWidget {
             borderRadius: BorderRadius.circular(12.r),
           ),
           child: DropdownButtonFormField<String>(
-            initialValue: selectedValue,
+            initialValue: selectedValue.isNotEmpty ? selectedValue : null,
             items: professions
                 .map((profession) => DropdownMenuItem(value: profession, child: Text(profession)))
                 .toList(),

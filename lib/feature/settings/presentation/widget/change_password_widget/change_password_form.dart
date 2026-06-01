@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/buttons/bridge_x_button.dart';
@@ -39,7 +39,7 @@ class ChangePasswordForm extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // ── Current Password ──
+        // -- Current Password --
         BridgeXTextFormField(
           label: AppStrings.currentPassword,
           hint: AppStrings.currentPasswordHint,
@@ -53,7 +53,7 @@ class ChangePasswordForm extends StatelessWidget {
         ),
         VerticalSpacing(AppSpacing.spacing20),
 
-        // ── New Password ──
+        // -- New Password --
         BridgeXTextFormField(
           label: AppStrings.newPasswordLabel,
           hint: AppStrings.newPasswordHint,
@@ -67,7 +67,7 @@ class ChangePasswordForm extends StatelessWidget {
         ),
         VerticalSpacing(AppSpacing.spacing20),
 
-        // ── Confirm Password ──
+        // -- Confirm Password --
         BridgeXTextFormField(
           label: AppStrings.confirmNewPassword,
           hint: AppStrings.confirmNewPasswordHint,
@@ -81,11 +81,11 @@ class ChangePasswordForm extends StatelessWidget {
         ),
         VerticalSpacing(AppSpacing.spacing20),
 
-        // ── Password Requirements ──
+        // -- Password Requirements --
         const PasswordRequirements(),
         VerticalSpacing(AppSpacing.spacing32),
 
-        // ── Submit Button ──
+        // -- Submit Button --
         BridgeXButton(
           text: AppStrings.updatePassword,
           onTap: onUpdatePassword,

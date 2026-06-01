@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/constant/app_feedback_messages.dart';
+import 'package:bridge_x/core/constant/app_feedback_messages.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';

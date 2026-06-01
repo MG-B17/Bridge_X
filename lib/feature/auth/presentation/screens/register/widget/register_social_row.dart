@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/widget/layout/horizontal_spacing.dart';
+import 'package:bridge_x/core/widget/layout/horizontal_spacing.dart';
 import 'package:bridge_x/feature/auth/presentation/auth_widget/github_widget.dart';
 import 'package:bridge_x/feature/auth/presentation/auth_widget/google_widget.dart';
 import 'package:bridge_x/feature/auth/presentation/auth_widget/social_button.dart';

@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

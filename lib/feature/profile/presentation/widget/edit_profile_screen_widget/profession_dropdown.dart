@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +36,7 @@ class ProfessionDropdown extends StatelessWidget {
             borderRadius: BorderRadius.circular(12.r),
           ),
           child: DropdownButtonFormField<String>(
-            initialValue: selectedValue,
+            initialValue: selectedValue.isNotEmpty ? selectedValue : null,
             items: professions
                 .map((profession) => DropdownMenuItem(value: profession, child: Text(profession)))
                 .toList(),

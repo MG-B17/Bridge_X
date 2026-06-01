@@ -98,4 +98,12 @@ class AppValidator {
     }
     return null;
   }
+  static String? projectDescription(String? value, [String? fieldName]) {
+    final req = required(value, fieldName);
+    if (req != null) return req;
+    if (value!.trim().length < 10) {
+      return AppValidationMessages.invalidProjectDescription;
+    }
+    return null;
+  }
 }

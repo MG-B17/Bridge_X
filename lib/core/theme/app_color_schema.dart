@@ -31,6 +31,7 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
   final Color error;
   final Color warning;
   final Color info;
+  final Color onGoingColor;
 
   // ── Section Accents (for per-feature theming) ──────────────────────────────
   final Color teal; // AI Matching
@@ -66,6 +67,7 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     required this.burgundy,
     required this.gold,
     required this.transparent,
+    required this.onGoingColor
   });
 
   // ── Light Theme ────────────────────────────────────────────────────────────
@@ -100,6 +102,7 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     burgundy: AppColors.burgundy,
     gold: AppColors.gold,
     transparent: Colors.transparent,
+    onGoingColor: Color(0xFFEC8098)
   );
 
   // ── Dark Theme ─────────────────────────────────────────────────────────────
@@ -127,6 +130,7 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     error: Color(0xFFDC2626),
     warning: AppColors.amber,
     info: Color(0xFF60A5FA), // blue-400
+    onGoingColor:Color(0xFFEC8098),
 
     teal: AppColors.teal,
     indigo: AppColors.indigo,
@@ -200,6 +204,7 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
       burgundy: burgundy ?? this.burgundy,
       gold: gold ?? this.gold,
       transparent: transparent ?? this.transparent,
+      onGoingColor:onGoingColor
     );
   }
 
@@ -231,6 +236,7 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
       amber: Color.lerp(amber, other.amber, t)!,
       burgundy: Color.lerp(burgundy, other.burgundy, t)!,
       gold: Color.lerp(gold, other.gold, t)!,
+      onGoingColor:Color.lerp(onGoingColor, other.onGoingColor, t)! ,
       transparent: Color.lerp(transparent, other.transparent, t) ?? Colors.transparent,
     );
   }

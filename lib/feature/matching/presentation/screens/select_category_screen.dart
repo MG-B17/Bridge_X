@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/animation/bottom_nav_bar_animation/controller/scroll_cubit.dart';
+import 'package:bridge_x/core/animation/bottom_nav_bar_animation/controller/scroll_cubit.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';

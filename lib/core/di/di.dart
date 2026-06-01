@@ -32,6 +32,13 @@ import 'package:bridge_x/core/network/interceptors/logging_interceptor.dart';
 import 'package:bridge_x/core/network/interceptors/refresh_token_interceptor.dart';
 import 'package:bridge_x/core/network/interceptors/retry_interceptor.dart';
 import 'package:bridge_x/feature/dashboard/di/dashboard_injection.dart';
+import 'package:bridge_x/feature/create_team/di/create_team_injection.dart';
+import 'package:bridge_x/feature/projects_management/di/projects_management_injection.dart';
+import 'package:bridge_x/feature/team_evaluation/di/team_evaluation_injection.dart';
+import 'package:bridge_x/feature/task_management/di/task_management_injection.dart';
+import 'package:bridge_x/feature/profile/di/profile_injection.dart';
+import 'package:bridge_x/feature/levels/di/levels_injection.dart';
+import 'package:bridge_x/feature/report/di/report_injection.dart';
 
 final sl = GetIt.instance;
 
@@ -64,7 +71,7 @@ Future<void> init() async {
 
   // repositories
   sl.registerLazySingleton<AuthRepo>(
-    () => AuthRepoImplement(authRemoteData: sl(), networkInfo: sl(), secureStorageService: sl()),
+    () => AuthRepoImplement(authRemoteData: sl(), networkInfo: sl(), secureStorageService: sl(), cacheService: sl()),
   );
 
   // data sources
@@ -123,6 +130,13 @@ Future<void> init() async {
 
   // features
   initDashboard();
+  initCreateTeam();
+  initProjectsManagement();
+  initTaskManagement();
+  initTeamEvaluation();
+  initProfile();
+  initLevels();
+  initReport();
 
   // other 
   sl.registerLazySingleton<AppInitializer>(()=>AppInitializer());

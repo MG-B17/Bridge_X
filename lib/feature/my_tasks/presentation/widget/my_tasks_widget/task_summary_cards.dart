@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/horizontal_spacing.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
@@ -19,7 +19,7 @@ class TaskSummaryCards extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        // ── Total Done Card ──
+        // -- Total Done Card --
         Expanded(
           child: Container(
             padding: EdgeInsets.all(AppSpacing.md),
@@ -69,7 +69,7 @@ class TaskSummaryCards extends StatelessWidget {
         ),
         HorizontalSpacing(AppSpacing.md),
 
-        // ── This Week Card ──
+        // -- This Week Card --
         Expanded(
           child: Container(
             padding: EdgeInsets.all(AppSpacing.md),

@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:bridge_x/feature/auth/presentation/auth_widget/screen_name_text.dart';

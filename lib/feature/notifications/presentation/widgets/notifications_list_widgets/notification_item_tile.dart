@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/navigation/screens_args/notifications_details_args.dart';

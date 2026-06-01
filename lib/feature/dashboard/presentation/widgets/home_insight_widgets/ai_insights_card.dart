@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_gradient.dart';
@@ -29,10 +29,10 @@ class AiInsightsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ── Title row ──
+          // -- Title row --
           Row(
             children: [
-              Text('✨', style: TextStyle(fontSize: AppSpacing.spacing20)),
+              Text('?', style: TextStyle(fontSize: AppSpacing.spacing20)),
               HorizontalSpacing(AppSpacing.spacing8),
               Text(
                 AppStrings.aiInsights,
@@ -61,7 +61,7 @@ class AiInsightsCard extends StatelessWidget {
   }
 }
 
-// ── Single insight row ──────────────────────────────────────────────────────
+// -- Single insight row ------------------------------------------------------
 class _InsightItem extends StatelessWidget {
   const _InsightItem({
     required this.icon,

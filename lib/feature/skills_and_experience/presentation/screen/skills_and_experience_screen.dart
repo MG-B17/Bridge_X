@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/animation/bottom_nav_bar_animation/widget/scroller_listener.dart';
+import 'package:bridge_x/core/animation/bottom_nav_bar_animation/widget/scroller_listener.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
@@ -59,29 +59,29 @@ class _SkillsAndExperienceScreenState extends State<SkillsAndExperienceScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // ── Screen Header ──
+                    // -- Screen Header --
                     const BridgeXScreenHeader(
                       title: AppStrings.skillsAndExperience,
                     ),
                     VerticalSpacing(AppSpacing.spacing24),
 
-                    // ── Experience Level Card ──
+                    // -- Experience Level Card --
                     const ExperienceLevelSection(),
                     VerticalSpacing(AppSpacing.spacing24),
 
-                    // ── Skills Card ──
+                    // -- Skills Card --
                     const SkillsSection(),
                     VerticalSpacing(AppSpacing.spacing24),
 
-                    // ── Experience Description Card ──
+                    // -- Experience Description Card --
                     ExperienceDescriptionSection(controller: _experienceController),
                     VerticalSpacing(AppSpacing.spacing24),
 
-                    // ── Projects Section ──
+                    // -- Projects Section --
                     const ProjectsSection(),
                     VerticalSpacing(AppSpacing.spacing32),
 
-                    // ── Save Changes ──
+                    // -- Save Changes --
                     BridgeXButton(
                       text: AppStrings.saveChanges,
                       onTap: () {
@@ -90,7 +90,7 @@ class _SkillsAndExperienceScreenState extends State<SkillsAndExperienceScreen> {
                     ),
                     VerticalSpacing(AppSpacing.spacing16),
 
-                    // ── Cancel ──
+                    // -- Cancel --
                     Center(
                       child: TextButton(
                         onPressed: () {

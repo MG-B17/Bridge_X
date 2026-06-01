@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/inputs/bridge_x_text_form_field.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
@@ -51,6 +51,7 @@ class EditProfileFormFields extends StatelessWidget {
 
         
         ProfessionDropdown(
+          key: ValueKey(selectedProfession),
           selectedValue: selectedProfession,
           professions: professions,
           onChanged: onProfessionChanged,

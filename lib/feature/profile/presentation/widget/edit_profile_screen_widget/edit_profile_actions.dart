@@ -1,4 +1,4 @@
-﻿import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
@@ -9,25 +9,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class EditProfileActions extends StatelessWidget {
-  const EditProfileActions({required this.onSave, super.key});
+  const EditProfileActions({required this.onSave, this.isLoading = false, super.key});
 
   final VoidCallback onSave;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        
-        BridgeXButton(text: AppStrings.saveChanges, onTap: onSave),
-
+        BridgeXButton(text: AppStrings.saveChanges, onTap: onSave, isLoading: isLoading),
         VerticalSpacing(AppSpacing.md),
-
-        
         GestureDetector(
           onTap: () {
-            if (context.mounted) {
-              context.pop();
-            }
+            if (context.mounted) context.pop();
           },
           child: Container(
             width: double.infinity,

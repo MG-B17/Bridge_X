@@ -4,6 +4,7 @@ import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../../core/constant/bridge_x_strings.dart';
 import '../../../../core/navigation/route_constant/bridege_x_route_names.dart';
 import '../../../../core/theme/bridge_x_text_styles.dart';
@@ -44,7 +45,9 @@ class _ChatListScreenState extends State<ChatListScreen> {
                 VerticalSpacing(AppSpacing.spacing24),
                 Text(
                   AppStrings.chats,
-                  style: AppTextStyles.displayLarge.copyWith(color: context.colors.textPrimary),
+                  style: AppTextStyles.displayLarge.copyWith(
+                    color: context.colors.textPrimary,
+                  ),
                 ),
                 VerticalSpacing(AppSpacing.spacing24),
                 const ChatSearchBar(),
@@ -61,7 +64,6 @@ class _ChatListScreenState extends State<ChatListScreen> {
                         onTap: () {
                           context.read<ScrollCubit>().hide();
                           context.pushNamed(BridegeXRouteNames.chatDetails);
-                          
                         },
                         child: ChatTile(
                           chat: chats[index],
@@ -77,7 +79,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
                         ),
                       );
                     },
-                    separatorBuilder: (context, index) => VerticalSpacing(AppSpacing.spacing16),
+                    separatorBuilder: (context, index) =>
+                        VerticalSpacing(AppSpacing.spacing16),
                   ),
                 ),
               ],

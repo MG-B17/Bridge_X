@@ -40,6 +40,7 @@ class BridgeXRoutePaths {
   static const String viewTask = 'view-task';
   static const String reportUser = 'report-user';
   static const String teamEvaluation = 'team-evaluation';
+  static const String addMembersBottomSheet = 'add-members-bottom-sheet';
 
 
   // matching root 

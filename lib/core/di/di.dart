@@ -8,6 +8,8 @@ import 'package:bridge_x/core/services/chache_service.dart';
 import 'package:bridge_x/core/services/secure_storage_service.dart';
 import 'package:bridge_x/core/services/app_lifecycle_service.dart';
 import 'package:bridge_x/core/services/connectivity_service.dart';
+import 'package:bridge_x/core/services/notification_services/firebase_push_notification_service.dart';
+import 'package:bridge_x/core/services/notification_services/flutter_local_notification_service.dart';
 import 'package:bridge_x/core/theme/theme_controller.dart';
 import 'package:bridge_x/feature/auth/data/remote_data/auth_remote_data.dart';
 import 'package:bridge_x/feature/auth/data/repo_implement/auth_repo_implement.dart';
@@ -56,6 +58,7 @@ Future<void> init() async {
       verifyPasswordUsecase: sl(),
       changePasswordUsecase: sl(),
       appState: sl(),
+      pushNotificationService: sl(),
     ),
   );
   sl.registerLazySingleton<ScrollCubit>(()=>ScrollCubit());
@@ -83,6 +86,12 @@ Future<void> init() async {
   sl.registerLazySingleton<CacheService>(() => CacheServiceImpl(sl()));
   sl.registerLazySingleton<AppLifecycleService>(() => AppLifecycleService());
   sl.registerLazySingleton<ConnectivityService>(() => ConnectivityService(sl()));
+  sl.registerLazySingleton<LocalNotificationService>(
+    () => FlutterLocalNotificationService(),
+  );
+  sl.registerLazySingleton<PushNotificationService>(
+    () => FirebasePushNotificationService(localNotificationService: sl()),
+  );
   sl.registerLazySingleton<SecureStorageService>(
     () => SecureStorageService(
       secureStorage: const FlutterSecureStorage(

@@ -56,6 +56,11 @@ dependencies:
   rxdart: ^0.28.0
   smooth_page_indicator: ^2.0.1
 
+  # Firebase
+  firebase_core: 
+  firebase_messaging: 
+  flutter_local_notifications: 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -70,6 +75,5 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/
     - assets/svgs/
     - assets/lottie/

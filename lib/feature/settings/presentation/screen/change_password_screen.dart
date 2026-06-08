@@ -46,7 +46,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   }
 
   void _handleUpdatePassword() {
-    // TODO: Connect to AuthCubit / ChangePasswordUseCase
     if (_currentPasswordController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text(AppStrings.currentPasswordHint)),

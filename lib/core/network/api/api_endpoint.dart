@@ -20,6 +20,7 @@ class ApiEndpoint {
 
   // teams
   static const String createTeam = "/api/teams";
+  static const String myChats = "/api/teams/my-chats";
   static String teamSettings({required int projectId}) =>
       "/api/teams/$projectId/details";
 
@@ -57,5 +58,8 @@ class ApiEndpoint {
       "/api/teams/$teamId/basic-details";
   static String evaluateAll({required int teamId}) =>
       "/api/teams/$teamId/evaluate-all";
+
+  // ai matching
+  static const String aiMatchTeams = "/api/ai/match-teams";
 
 }

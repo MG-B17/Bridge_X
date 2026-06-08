@@ -21,6 +21,14 @@ class TeamCard extends StatelessWidget {
     required this.maxMembers,
     this.avatarColor,
     this.onRequestJoin,
+    this.teamVibe,
+    this.totalMatchScore,
+    this.chemistryScore,
+    this.experienceFitScore,
+    this.skillCoverage,
+    this.matchedSkillsCount,
+    this.missingSkillsCount,
+    this.teamId,
   });
 
   final String initials;
@@ -32,6 +40,15 @@ class TeamCard extends StatelessWidget {
   final int maxMembers;
   final Color? avatarColor;
   final VoidCallback? onRequestJoin;
+
+  final String? teamVibe;
+  final num? totalMatchScore;
+  final num? chemistryScore;
+  final num? experienceFitScore;
+  final num? skillCoverage;
+  final int? matchedSkillsCount;
+  final int? missingSkillsCount;
+  final int? teamId;
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +99,7 @@ class TeamCard extends StatelessWidget {
                     ),
                     VerticalSpacing(AppSpacing.spacing4),
                     Text(
-                      category,
+                      teamVibe ?? category,
                       style: AppTextStyles.labelSmall.copyWith(
                         color: colors.textSecondary,
                       ),
@@ -93,16 +110,30 @@ class TeamCard extends StatelessWidget {
             ],
           ),
           VerticalSpacing(AppSpacing.spacing8),
-          Text(
-            description,
-            style: AppTextStyles.bodyMedium.copyWith(
-              color: colors.textSecondary,
-              height: 1.4,
-            ),
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-          ),
-          VerticalSpacing(AppSpacing.spacing8),
+           Text(
+             description,
+             style: AppTextStyles.bodyMedium.copyWith(
+               color: colors.textSecondary,
+               height: 1.4,
+             ),
+             maxLines: 3,
+             overflow: TextOverflow.ellipsis,
+           ),
+           if (totalMatchScore != null) ...[
+             VerticalSpacing(AppSpacing.spacing8),
+             Wrap(
+               spacing: AppSpacing.spacing8,
+               runSpacing: AppSpacing.height8,
+               children: [
+                 _ScoreBadge(label: 'Match', value: totalMatchScore!, color: colors.primary),
+                 _ScoreBadge(label: 'Chemistry', value: chemistryScore ?? 0, color: colors.success),
+                 _ScoreBadge(label: 'Exp Fit', value: experienceFitScore ?? 0, color: colors.amber),
+                 _ScoreBadge(label: 'Coverage', value: skillCoverage ?? 0, color: colors.teal),
+               ],
+             ),
+           ],
+           VerticalSpacing(AppSpacing.spacing8),
+
           Wrap(
             spacing: AppSpacing.spacing6,
             runSpacing: AppSpacing.height6,
@@ -255,6 +286,50 @@ class _MiniAvatarStack extends StatelessWidget {
                 ),
               ),
             ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ScoreBadge extends StatelessWidget {
+  final String label;
+  final num value;
+  final Color color;
+
+  const _ScoreBadge({
+    required this.label,
+    required this.value,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(AppSpacing.radius6),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            '$label: ',
+            style: AppTextStyles.labelSmall.copyWith(
+              color: context.colors.textSecondary,
+              fontSize: AppSpacing.fontSize10,
+            ),
+          ),
+          Text(
+            '${value.toStringAsFixed(1)}%',
+            style: AppTextStyles.labelSmall.copyWith(
+              color: color,
+              fontWeight: FontWeight.w700,
+              fontSize: AppSpacing.fontSize10,
+            ),
+          ),
         ],
       ),
     );

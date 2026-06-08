@@ -33,6 +33,7 @@ import 'package:bridge_x/core/network/interceptors/connectivity_interceptor.dart
 import 'package:bridge_x/core/network/interceptors/logging_interceptor.dart';
 import 'package:bridge_x/core/network/interceptors/refresh_token_interceptor.dart';
 import 'package:bridge_x/core/network/interceptors/retry_interceptor.dart';
+import 'package:bridge_x/feature/chats/di/chats_injection.dart';
 import 'package:bridge_x/feature/dashboard/di/dashboard_injection.dart';
 import 'package:bridge_x/feature/create_team/di/create_team_injection.dart';
 import 'package:bridge_x/feature/projects_management/di/projects_management_injection.dart';
@@ -41,6 +42,7 @@ import 'package:bridge_x/feature/task_management/di/task_management_injection.da
 import 'package:bridge_x/feature/profile/di/profile_injection.dart';
 import 'package:bridge_x/feature/levels/di/levels_injection.dart';
 import 'package:bridge_x/feature/report/di/report_injection.dart';
+import 'package:bridge_x/feature/matching/di/matching_injection.dart';
 
 final sl = GetIt.instance;
 
@@ -138,6 +140,7 @@ Future<void> init() async {
   sl.registerLazySingleton<ApiClient>(() => ApiClient(sl<Dio>()));
 
   // features
+  initChats();
   initDashboard();
   initCreateTeam();
   initProjectsManagement();
@@ -146,6 +149,7 @@ Future<void> init() async {
   initProfile();
   initLevels();
   initReport();
+  initMatching();
 
   // other 
   sl.registerLazySingleton<AppInitializer>(()=>AppInitializer());

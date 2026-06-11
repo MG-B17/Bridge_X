@@ -10,10 +10,9 @@ import 'package:bridge_x/core/widget/loading/bridge_x_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bridge_x/core/di/di.dart';
-import 'package:bridge_x/feature/matching/domain/entities/ai_match_entity.dart';
 import 'package:bridge_x/feature/matching/presentation/cubit/matching_cubit.dart';
 import 'package:bridge_x/feature/matching/presentation/cubit/matching_state.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 import '../widgets/recommended_teams_widgets/team_cards_list.dart';
 

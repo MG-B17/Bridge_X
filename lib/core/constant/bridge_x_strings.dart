@@ -248,6 +248,16 @@ class AppStrings {
   static const String removeTeamSubmitted = 'Remove Team request submitted';
   static const String submitProjectAsCompleted = 'Submit Project as Completed';
   static const String memberSettingsFor = 'Member settings for';
+  static const String addMemberToTeam = 'Add Member to Team';
+  static const String expandYourCollaborationNetwork =
+      'Expand your collaboration network';
+  static const String searchMembers = 'Search team members...';
+  static const String findColleagues =
+      "Find colleagues by their name or @username to start collaborating.";
+  static const String sendInvitation = "sent Invitation";
+  static const String noUserFound = "No users found";
+  static const String noUserFoundSubTittle =
+      "Try another username or email to invite them to the team.";
 
   // ── Tasks ─────────────────────────────────────────────────────────────────
   static const String createTask = 'Create Task';
@@ -403,8 +413,7 @@ class AppStrings {
   static const String recentConversations = 'Recent Conversations';
   static const String retryMatching = 'Retry Matching';
   static const String createYourOwnTeam = 'Create Your Own Team';
-  static const String requestToJoin =
-      "Request to join";
+  static const String requestToJoin = "Request to join";
   static const String noTeamsFound = 'No teams found';
   static const String noTeamsFoundSubtitle =
       'We couldn\'t find any teams matching your profile. Try adjusting your preferences or create a new team to start collaborating.';
@@ -505,5 +514,6 @@ class AppStrings {
   static const String enterTagName = 'Enter tag name';
   static const String creatingTask = 'Creating task...';
   static const String taskCreated = 'Task Created!';
-  static const String taskCreatedMessage = 'Task has been created successfully.';
+  static const String taskCreatedMessage =
+      'Task has been created successfully.';
 }

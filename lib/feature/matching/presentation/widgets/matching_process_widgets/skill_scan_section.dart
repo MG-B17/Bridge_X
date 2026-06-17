@@ -6,9 +6,10 @@ import 'package:bridge_x/core/widget/layout/horizontal_spacing.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:flutter/material.dart';
 
-/// Skill scan progress bar + verification step list.
 class SkillScanSection extends StatelessWidget {
-  const SkillScanSection({super.key});
+  final double progress;
+
+  const SkillScanSection({super.key, required this.progress});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class SkillScanSection extends StatelessWidget {
               ),
             ),
             Text(
-              AppStrings.matchingDot,
+              '${(progress * 100).toInt()}%',
               style: AppTextStyles.labelSmall.copyWith(
                 color: colors.textSecondary,
                 fontWeight: FontWeight.w500,
@@ -49,7 +50,7 @@ class SkillScanSection extends StatelessWidget {
                   color: colors.primaryLight.withValues(alpha: 0.5),
                 ),
                 FractionallySizedBox(
-                  widthFactor: 0.65,
+                  widthFactor: progress.clamp(0.0, 1.0),
                   child: Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -65,19 +66,19 @@ class SkillScanSection extends StatelessWidget {
           ),
         ),
         VerticalSpacing(AppSpacing.spacing24),
-        const _VerificationStep(
+        _VerificationStep(
           label: AppStrings.skillsVerified,
-          isCompleted: true,
+          isCompleted: progress >= 0.15,
         ),
         VerticalSpacing(AppSpacing.spacing16),
-        const _VerificationStep(
+        _VerificationStep(
           label: AppStrings.experienceAnalyzed,
-          isCompleted: true,
+          isCompleted: progress >= 0.50,
         ),
         VerticalSpacing(AppSpacing.spacing16),
-        const _VerificationStep(
+        _VerificationStep(
           label: AppStrings.finalizingShortlist,
-          isCompleted: false,
+          isCompleted: progress >= 0.85,
         ),
       ],
     );
@@ -85,13 +86,13 @@ class SkillScanSection extends StatelessWidget {
 }
 
 class _VerificationStep extends StatelessWidget {
+  final String label;
+  final bool isCompleted;
+
   const _VerificationStep({
     required this.label,
     required this.isCompleted,
   });
-
-  final String label;
-  final bool isCompleted;
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +121,13 @@ class _VerificationStep extends StatelessWidget {
                     color: Colors.white,
                     size: AppSpacing.fontSize14,
                   )
-                : null,
+                : Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: colors.primary,
+                    ),
+                  ),
           ),
           HorizontalSpacing(AppSpacing.spacing16),
           Expanded(

@@ -56,6 +56,12 @@ dependencies:
   rxdart: ^0.28.0
   smooth_page_indicator: ^2.0.1
 
+
+  # Firebase
+  firebase_core: 
+  firebase_messaging: 
+  flutter_local_notifications: 
+
   
   #firebase
   firebase_core: ^4.10.0

@@ -33,7 +33,9 @@ class _CreateTeamScreenState extends State<CreateTeamScreen> {
   void _showLoadingDialog() {
     if (!_isLoadingDialogShowing) {
       _isLoadingDialogShowing = true;
-      LoadingDialog.show(context: context, message: 'Creating team...').then((_) {
+      LoadingDialog.show(context: context, message: 'Creating team...').then((
+        _,
+      ) {
         _isLoadingDialogShowing = false;
       });
     }

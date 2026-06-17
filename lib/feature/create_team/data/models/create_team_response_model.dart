@@ -24,6 +24,3 @@ class CreateTeamResponseModel extends CreateTeamEntity {
     );
   }
 }
-
-
-

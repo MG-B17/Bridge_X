@@ -8,6 +8,7 @@ import 'package:bridge_x/core/services/chache_service.dart';
 import 'package:bridge_x/core/services/secure_storage_service.dart';
 import 'package:bridge_x/core/services/app_lifecycle_service.dart';
 import 'package:bridge_x/core/services/connectivity_service.dart';
+import 'package:bridge_x/core/services/supabase_service.dart';
 import 'package:bridge_x/core/services/notification_services/firebase_push_notification_service.dart';
 import 'package:bridge_x/core/services/notification_services/flutter_local_notification_service.dart';
 import 'package:bridge_x/core/theme/theme_controller.dart';
@@ -33,7 +34,6 @@ import 'package:bridge_x/core/network/interceptors/connectivity_interceptor.dart
 import 'package:bridge_x/core/network/interceptors/logging_interceptor.dart';
 import 'package:bridge_x/core/network/interceptors/refresh_token_interceptor.dart';
 import 'package:bridge_x/core/network/interceptors/retry_interceptor.dart';
-import 'package:bridge_x/feature/chats/di/chats_injection.dart';
 import 'package:bridge_x/feature/dashboard/di/dashboard_injection.dart';
 import 'package:bridge_x/feature/create_team/di/create_team_injection.dart';
 import 'package:bridge_x/feature/projects_management/di/projects_management_injection.dart';
@@ -43,6 +43,8 @@ import 'package:bridge_x/feature/profile/di/profile_injection.dart';
 import 'package:bridge_x/feature/levels/di/levels_injection.dart';
 import 'package:bridge_x/feature/report/di/report_injection.dart';
 import 'package:bridge_x/feature/matching/di/matching_injection.dart';
+import 'package:bridge_x/feature/notifications/di/notifications_injection.dart';
+import 'package:bridge_x/features/chat/di/chat_injection.dart';
 
 final sl = GetIt.instance;
 
@@ -94,6 +96,7 @@ Future<void> init() async {
   sl.registerLazySingleton<PushNotificationService>(
     () => FirebasePushNotificationService(localNotificationService: sl()),
   );
+  sl.registerLazySingleton<SupabaseService>(() => SupabaseService());
   sl.registerLazySingleton<SecureStorageService>(
     () => SecureStorageService(
       secureStorage: const FlutterSecureStorage(
@@ -140,7 +143,7 @@ Future<void> init() async {
   sl.registerLazySingleton<ApiClient>(() => ApiClient(sl<Dio>()));
 
   // features
-  initChats();
+  initChatList();
   initDashboard();
   initCreateTeam();
   initProjectsManagement();
@@ -150,6 +153,7 @@ Future<void> init() async {
   initLevels();
   initReport();
   initMatching();
+  initNotifications();
 
   // other 
   sl.registerLazySingleton<AppInitializer>(()=>AppInitializer());

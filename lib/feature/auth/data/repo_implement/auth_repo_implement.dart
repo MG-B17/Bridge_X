@@ -85,8 +85,13 @@ class AuthRepoImplement extends AuthRepo {
     if (await networkInfo.isConnected) {
       try {
         LoggerService.debug('Attempting login for: ${loginEntity.email}', tag: 'AuthRepo');
-        final token = await authRemoteData.login(loginEntity: loginEntity);
-        await secureStorageService.write(key: AppKeys.authToken, value: token);
+        final response = await authRemoteData.login(loginEntity: loginEntity);
+        await secureStorageService.write(key: AppKeys.authToken, value: response.token);
+        await secureStorageService.write(key: AppKeys.userId, value: response.userId.toString());
+        await secureStorageService.write(
+          key: AppKeys.userName,
+          value: response.userName ?? 'User ${response.userId}',
+        );
         LoggerService.info('Login successful for: ${loginEntity.email}', tag: 'AuthRepo');
         return const Right('Login successful!');
       } on ServerException catch (e) {
@@ -221,21 +226,29 @@ class AuthRepoImplement extends AuthRepo {
         LoggerService.debug('Logging out', tag: 'AuthRepo');
         await authRemoteData.logout();
         await secureStorageService.delete(key: AppKeys.authToken);
+        await secureStorageService.delete(key: AppKeys.userId);
+        await secureStorageService.delete(key: AppKeys.userName);
         await cacheService.clearData();
         LoggerService.info('Logout successful, token deleted', tag: 'AuthRepo');
         return Right(null);
       } on ServerException catch (e) {
         await secureStorageService.delete(key: AppKeys.authToken);
+        await secureStorageService.delete(key: AppKeys.userId);
+        await secureStorageService.delete(key: AppKeys.userName);
         await cacheService.clearData();
         LoggerService.error('Logout API failed, local token still deleted', exception: e, tag: 'AuthRepo');
         return Left(ServerFailure(message: e.message!));
       } on DioException catch (error) {
         await secureStorageService.delete(key: AppKeys.authToken);
+        await secureStorageService.delete(key: AppKeys.userId);
+        await secureStorageService.delete(key: AppKeys.userName);
         await cacheService.clearData();
         return left(ErrorHandler.handle(error));
       }
     } else {
       await secureStorageService.delete(key: AppKeys.authToken);
+      await secureStorageService.delete(key: AppKeys.userId);
+      await secureStorageService.delete(key: AppKeys.userName);
       await cacheService.clearData();
       LoggerService.warning('No internet — local token deleted anyway', tag: 'AuthRepo');
       return Right(null);

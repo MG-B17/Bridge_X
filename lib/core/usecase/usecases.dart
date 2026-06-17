@@ -10,3 +10,7 @@ class NoParams extends Equatable {
   @override
   List<Object?> get props => [];
 }
+
+abstract class StreamUseCase<Output, Params> {
+  Stream<Output> call(Params params);
+}

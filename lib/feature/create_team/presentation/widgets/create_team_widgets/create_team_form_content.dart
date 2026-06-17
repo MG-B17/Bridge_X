@@ -58,11 +58,14 @@ class _CreateTeamFormContentState extends State<CreateTeamFormContent> {
           const BridgeXTipBanner(message: AppStrings.youAreTeamLeader),
           VerticalSpacing(AppSpacing.spacing14),
           BlocBuilder<CreateTeamCubit, CreateTeamState>(
-            buildWhen: (previous, current) => previous.selectedTeamType != current.selectedTeamType,
+            buildWhen: (previous, current) =>
+                previous.selectedTeamType != current.selectedTeamType,
             builder: (context, state) {
               return TeamTypeSelector(
                 selectedIndex: state.selectedTeamType,
-                onChanged: (index) => context.read<CreateTeamCubit>().changeTeamType(index: index),
+                onChanged: (index) => context
+                    .read<CreateTeamCubit>()
+                    .changeTeamType(index: index),
               );
             },
           ),
@@ -71,7 +74,8 @@ class _CreateTeamFormContentState extends State<CreateTeamFormContent> {
             label: AppStrings.teamName,
             hint: AppStrings.teamNameHint,
             controller: _teamNameController,
-            validator: (value) => AppValidator.required(value, AppStrings.teamName),
+            validator: (value) =>
+                AppValidator.required(value, AppStrings.teamName),
           ),
           VerticalSpacing(AppSpacing.spacing16),
           BridgeXTextFormField(
@@ -84,16 +88,21 @@ class _CreateTeamFormContentState extends State<CreateTeamFormContent> {
           VerticalSpacing(AppSpacing.spacing16),
           ProjectDescriptionField(
             controller: _descriptionController,
-            validator: (value) =>
-                AppValidator.projectDescription(value, AppStrings.projectDescription),
+            validator: (value) => AppValidator.projectDescription(
+              value,
+              AppStrings.projectDescription,
+            ),
           ),
           VerticalSpacing(AppSpacing.spacing24),
           BlocBuilder<CreateTeamCubit, CreateTeamState>(
-            buildWhen: (previous, current) => previous.selectedCategory != current.selectedCategory,
+            buildWhen: (previous, current) =>
+                previous.selectedCategory != current.selectedCategory,
             builder: (context, state) {
               return CategorySelectionSection(
                 selectedIndex: state.selectedCategory,
-                onChanged: (index) => context.read<CreateTeamCubit>().changeCategory(index: index),
+                onChanged: (index) => context
+                    .read<CreateTeamCubit>()
+                    .changeCategory(index: index),
               );
             },
           ),
@@ -113,16 +122,22 @@ class _CreateTeamFormContentState extends State<CreateTeamFormContent> {
             },
           ),
           BlocBuilder<CreateTeamCubit, CreateTeamState>(
-            buildWhen: (previous, current) => previous.showRolesError != current.showRolesError,
+            buildWhen: (previous, current) =>
+                previous.showRolesError != current.showRolesError,
             builder: (context, state) {
               if (state.showRolesError) {
                 return Padding(
                   padding: EdgeInsets.only(top: AppSpacing.spacing6),
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: AppSpacing.spacing8),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: AppSpacing.spacing8,
+                    ),
                     child: Text(
                       'Please add at least one required role',
-                      style: TextStyle(color: context.colors.error, fontSize: 12.sp),
+                      style: TextStyle(
+                        color: context.colors.error,
+                        fontSize: 12.sp,
+                      ),
                     ),
                   ),
                 );
@@ -132,11 +147,16 @@ class _CreateTeamFormContentState extends State<CreateTeamFormContent> {
           ),
           VerticalSpacing(AppSpacing.spacing24),
           BlocBuilder<CreateTeamCubit, CreateTeamState>(
-            buildWhen: (previous, current) => previous.selectedTeamType != current.selectedTeamType,
+            buildWhen: (previous, current) =>
+                previous.selectedTeamType != current.selectedTeamType,
             builder: (context, state) {
-              if (state.selectedTeamType == 1) { // 1 = Public
+              if (state.selectedTeamType == 0) {
+                // 0 = Private
                 return Column(
-                  children: [const TeamMembersSection(), VerticalSpacing(AppSpacing.spacing16)],
+                  children: [
+                    const TeamMembersSection(),
+                    VerticalSpacing(AppSpacing.spacing16),
+                  ],
                 );
               }
               return const SizedBox.shrink();

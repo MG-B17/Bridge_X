@@ -11,7 +11,9 @@ class CreateTeamUseCase implements UseCase<CreateTeamEntity, CreateTeamParams> {
   CreateTeamUseCase({required this.repository});
 
   @override
-  Future<Either<Failure, CreateTeamEntity>> call(CreateTeamParams params) async {
+  Future<Either<Failure, CreateTeamEntity>> call(
+    CreateTeamParams params,
+  ) async {
     return await repository.createTeam(request: params);
   }
 }

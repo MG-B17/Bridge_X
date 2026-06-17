@@ -7,6 +7,7 @@ class CreateTeamParams extends Equatable {
   final String githubUrl;
   final List<String> categories;
   final List<String> requiredTracks;
+  final List<String> invitations;
 
   const CreateTeamParams({
     required this.name,
@@ -15,15 +16,17 @@ class CreateTeamParams extends Equatable {
     required this.githubUrl,
     required this.categories,
     required this.requiredTracks,
+    this.invitations = const [],
   });
 
   @override
   List<Object?> get props => [
-        name,
-        description,
-        isPublic,
-        githubUrl,
-        categories,
-        requiredTracks,
-      ];
+    name,
+    description,
+    isPublic,
+    githubUrl,
+    categories,
+    requiredTracks,
+    invitations,
+  ];
 }

@@ -1,3 +1,5 @@
+import 'package:bridge_x/core/constant/app_keys.dart';
+import 'package:bridge_x/core/services/secure_storage_service.dart';
 import 'package:bridge_x/feature/profile/data/models/update_profile_request_model.dart';
 import 'package:bridge_x/feature/profile/domain/entities/edit_profile_entity.dart';
 import 'package:bridge_x/feature/profile/domain/usecases/get_profile_usecase.dart';
@@ -8,12 +10,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class EditProfileCubit extends Cubit<EditProfileState> {
   final GetProfileUseCase _getProfileUseCase;
   final UpdateProfileUseCase _updateProfileUseCase;
+  final SecureStorageService _secureStorageService;
 
   EditProfileCubit({
     required GetProfileUseCase getProfileUseCase,
     required UpdateProfileUseCase updateProfileUseCase,
+    required SecureStorageService secureStorageService,
   }) : _getProfileUseCase = getProfileUseCase,
        _updateProfileUseCase = updateProfileUseCase,
+       _secureStorageService = secureStorageService,
        super(EditProfileInitial());
 
   Future<void> fetchProfile() async {
@@ -44,7 +49,8 @@ class EditProfileCubit extends Cubit<EditProfileState> {
 
     result.fold((failure) => emit(EditProfileError(message: failure.message)), (
       profile,
-    ) {
+    ) async {
+      await _secureStorageService.write(key: AppKeys.userName, value: profile.userName);
       emit(EditProfileUpdated(profile: profile));
       fetchProfile();
     });

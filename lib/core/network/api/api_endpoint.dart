@@ -21,10 +21,11 @@ class ApiEndpoint {
   // teams
   static const String createTeam = "/api/teams";
   static const String myChats = "/api/teams/my-chats";
+  static const String searchProgrammers = "/api/search/programmers";
   static String teamSettings({required int projectId}) =>
       "/api/teams/$projectId/details";
 
-  // projects 
+  // projects
   static const String allProject = "/api/my-projects";
   static String projectDashboard({required int projectId}) =>
       "/api/zero-project/$projectId";
@@ -33,9 +34,9 @@ class ApiEndpoint {
       "/api/my-projects/$projectId/details";
 
   static String submitprojectAsComplete({required int projectId}) =>
-      "/api/projects/$projectId/complete";    
+      "/api/projects/$projectId/complete";
 
-  // tasks 
+  // tasks
   static String teamDetailsWithtasks({required int teamId}) =>
       "/api/team/$teamId/full-details";
   static String createTask({required int projectId}) =>
@@ -43,14 +44,15 @@ class ApiEndpoint {
   static String viewTask({required int projectId}) =>
       "/api/team/$projectId/full-details";
 
-  //profile 
+  //profile
   static const String profileData = "/api/my/dashboard";
   static const String updateProfile = "/api/profile/update";
   static const String displayProfile = "/api/profile";
   static const String level = "/api/my/level-progression";
 
   // reports
-  static String reportInfo({required int userId}) => "/api/user/$userId/report-info";
+  static String reportInfo({required int userId}) =>
+      "/api/user/$userId/report-info";
   static const String reports = "/api/reports";
 
   // team evaluation
@@ -62,4 +64,11 @@ class ApiEndpoint {
   // ai matching
   static const String aiMatchTeams = "/api/ai/match-teams";
 
+  // notifications
+  static const String notifications = "/api/notifications";
+  static String notificationRead({required String notificationId}) =>
+      "/api/notifications/$notificationId/read";
+  static const String notificationsReadAll = "/api/notifications/read-all";
+  static const String notificationsUnreadCount =
+      "/api/notifications/unread-count";
 }

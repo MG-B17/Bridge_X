@@ -7,6 +7,7 @@ class CreateTeamRequestModel extends Equatable {
   final String githubUrl;
   final List<String> categories;
   final List<String> requiredTracks;
+  final List<String> invitations;
 
   const CreateTeamRequestModel({
     required this.name,
@@ -15,10 +16,11 @@ class CreateTeamRequestModel extends Equatable {
     required this.githubUrl,
     required this.categories,
     required this.requiredTracks,
+    this.invitations = const [],
   });
 
   Map<String, dynamic> toJson() {
-    return {
+    final json = <String, dynamic>{
       'name': name,
       'description': description,
       'is_public': isPublic,
@@ -26,8 +28,20 @@ class CreateTeamRequestModel extends Equatable {
       'categories': categories,
       'required_tracks': requiredTracks,
     };
+    if (!isPublic && invitations.isNotEmpty) {
+      json['invitations'] = invitations;
+    }
+    return json;
   }
 
   @override
-  List<Object?> get props => [name, description, isPublic, githubUrl, categories, requiredTracks];
+  List<Object?> get props => [
+    name,
+    description,
+    isPublic,
+    githubUrl,
+    categories,
+    requiredTracks,
+    invitations,
+  ];
 }

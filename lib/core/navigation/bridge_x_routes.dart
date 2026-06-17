@@ -1,5 +1,6 @@
 import 'package:bridge_x/core/di/di.dart';
 import 'package:bridge_x/core/init/app_state.dart';
+import 'package:bridge_x/core/navigation/navigator_keys.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dart';
 import 'package:bridge_x/core/navigation/routes/chat_route.dart';
@@ -14,10 +15,7 @@ import 'package:bridge_x/feature/auth/presentation/screens/login/login_screen.da
 import 'package:bridge_x/feature/layout/layout.dart';
 import 'package:bridge_x/feature/onboarding/presentation/screens/onboarding_screen.dart';
 import 'package:bridge_x/feature/splash/splash_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 
 final appRouter = GoRouter(
   navigatorKey: rootNavigatorKey,

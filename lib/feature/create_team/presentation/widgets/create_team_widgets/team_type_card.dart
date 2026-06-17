@@ -36,9 +36,7 @@ class TeamTypeCard extends StatelessWidget {
               : colors.surface,
           borderRadius: BorderRadius.circular(AppSpacing.radius12),
           border: Border.all(
-            color: isSelected
-                ? colors.secondary
-                : colors.divider,
+            color: isSelected ? colors.secondary : colors.divider,
             width: isSelected ? 1.8 : 1.2,
           ),
         ),

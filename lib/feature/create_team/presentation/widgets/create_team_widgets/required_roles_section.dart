@@ -73,20 +73,22 @@ class _RequiredRolesSectionState extends State<RequiredRolesSection> {
             runSpacing: AppSpacing.height8,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              ...widget.roles.map((role) => BridgeXChip(
-                    label: role,
-                    onRemove: () => widget.onRoleRemoved(role),
-                    backgroundColor: colors.teal.withValues(alpha: 0.2),
-                    borderColor: colors.transparent,
-                    selectedBorderColor: colors.transparent,
-                    textColor: colors.ongoingText,
-                    borderRadius: AppSpacing.radius12,
-                    textStyle: AppTextStyles.labelSmall,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: AppSpacing.spacing10,
-                      vertical: AppSpacing.height6,
-                    ),
-                  )),
+              ...widget.roles.map(
+                (role) => BridgeXChip(
+                  label: role,
+                  onRemove: () => widget.onRoleRemoved(role),
+                  backgroundColor: colors.teal.withValues(alpha: 0.2),
+                  borderColor: colors.transparent,
+                  selectedBorderColor: colors.transparent,
+                  textColor: colors.ongoingText,
+                  borderRadius: AppSpacing.radius12,
+                  textStyle: AppTextStyles.labelSmall,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: AppSpacing.spacing10,
+                    vertical: AppSpacing.height6,
+                  ),
+                ),
+              ),
               SizedBox(
                 width: AppSpacing.width160,
                 height: AppSpacing.height32,
@@ -102,8 +104,12 @@ class _RequiredRolesSectionState extends State<RequiredRolesSection> {
                     horizontal: AppSpacing.spacing8,
                     vertical: AppSpacing.height6,
                   ),
-                  hintStyle: AppTextStyles.labelSmall.copyWith(color: colors.textHint),
-                  style: AppTextStyles.labelSmall.copyWith(color: colors.textPrimary),
+                  hintStyle: AppTextStyles.labelSmall.copyWith(
+                    color: colors.textHint,
+                  ),
+                  style: AppTextStyles.labelSmall.copyWith(
+                    color: colors.textPrimary,
+                  ),
                   textInputAction: TextInputAction.done,
                   onFieldSubmitted: (_) => _submitRole(),
                 ),

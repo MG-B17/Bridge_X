@@ -8,6 +8,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 
+@pragma('vm:entry-point')
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  if (kDebugMode) {
+    LoggerService.info(
+      'Background message: ${message.notification?.title ?? message.data['title']}',
+      tag: 'PushNotification',
+    );
+  }
+}
+
 class FirebasePushNotificationService implements PushNotificationService {
   FirebasePushNotificationService({required this.localNotificationService});
 
@@ -26,6 +36,8 @@ class FirebasePushNotificationService implements PushNotificationService {
     );
 
     _fcm = FirebaseMessaging.instance;
+
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
     if (kDebugMode) {
       LoggerService.info('Firebase initialized', tag: 'PushNotification');

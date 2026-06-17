@@ -20,7 +20,9 @@ class CreateTeamMapper {
         return 'frontend';
       } else if (lower.contains('backend')) {
         return 'backend';
-      } else if (lower.contains('ux') || lower.contains('ui') || lower.contains('design')) {
+      } else if (lower.contains('ux') ||
+          lower.contains('ui') ||
+          lower.contains('design')) {
         return 'ui/ux';
       }
 

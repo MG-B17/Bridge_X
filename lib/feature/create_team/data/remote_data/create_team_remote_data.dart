@@ -4,10 +4,15 @@ import 'package:bridge_x/core/network/api/api_client.dart';
 import 'package:bridge_x/core/network/api/api_endpoint.dart';
 import 'package:bridge_x/feature/create_team/data/models/create_team_request_model.dart';
 import 'package:bridge_x/feature/create_team/data/models/create_team_response_model.dart';
+import 'package:bridge_x/feature/create_team/data/models/programmer_search_response_model.dart';
 import 'package:dio/dio.dart';
 
 abstract class CreateTeamRemoteData {
-  Future<CreateTeamResponseModel> createTeam({required CreateTeamRequestModel request});
+  Future<CreateTeamResponseModel> createTeam({
+    required CreateTeamRequestModel request,
+  });
+
+  Future<List<ProgrammerSearchResponseModel>> searchProgrammers(String query);
 }
 
 class CreateTeamRemoteDataImpl implements CreateTeamRemoteData {
@@ -16,9 +21,14 @@ class CreateTeamRemoteDataImpl implements CreateTeamRemoteData {
   CreateTeamRemoteDataImpl({required this.apiClient});
 
   @override
-  Future<CreateTeamResponseModel> createTeam({required CreateTeamRequestModel request}) async {
+  Future<CreateTeamResponseModel> createTeam({
+    required CreateTeamRequestModel request,
+  }) async {
     try {
-      final response = await apiClient.post(path: ApiEndpoint.createTeam, data: request.toJson());
+      final response = await apiClient.post(
+        path: ApiEndpoint.createTeam,
+        data: request.toJson(),
+      );
       if (response.data != null) {
         return CreateTeamResponseModel.fromJson(response.data);
       } else {
@@ -32,6 +42,39 @@ class CreateTeamRemoteDataImpl implements CreateTeamRemoteData {
       } else {
         throw ServerException(ErrorStrings.serverError);
       }
+    }
+  }
+
+  @override
+  Future<List<ProgrammerSearchResponseModel>> searchProgrammers(
+    String query,
+  ) async {
+    try {
+      final response = await apiClient.get(
+        path: ApiEndpoint.searchProgrammers,
+        queryParameters: {'query': query},
+      );
+      if (response.data == null) {
+        throw ServerException('Empty response data received');
+      }
+
+      final data = response.data;
+      final programmers = data is Map<String, dynamic>
+          ? data['data'] as List? ?? []
+          : const [];
+      return programmers
+          .whereType<Map>()
+          .map(
+            (programmer) => ProgrammerSearchResponseModel.fromJson(
+              Map<String, dynamic>.from(programmer),
+            ),
+          )
+          .toList();
+    } catch (e) {
+      if (e is DioException || e is ServerException) {
+        rethrow;
+      }
+      throw ServerException(ErrorStrings.serverError);
     }
   }
 }

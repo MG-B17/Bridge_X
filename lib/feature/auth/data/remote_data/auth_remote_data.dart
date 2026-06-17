@@ -3,6 +3,7 @@ import 'package:bridge_x/core/error/error_strings.dart';
 import 'package:bridge_x/core/error/exception.dart';
 import 'package:bridge_x/core/network/api/api_client.dart';
 import 'package:bridge_x/core/network/api/api_endpoint.dart';
+import 'package:bridge_x/feature/auth/data/models/login_response_model.dart';
 import 'package:bridge_x/feature/auth/data/models/register_model.dart';
 import 'package:bridge_x/feature/auth/data/models/rest_password_reponse_model.dart';
 import 'package:bridge_x/feature/auth/domain/entity/change_password_entity.dart';
@@ -15,7 +16,7 @@ import 'package:dio/dio.dart';
 
 abstract class AuthRemoteData {
   Future<String> register({required RegisterEntity registerEntity});
-  Future<String> login({required LoginEntity loginEntity});
+  Future<LoginResponseModel> login({required LoginEntity loginEntity});
   Future<String> verifyEmail({required VerifyCodeEntity verifyCodeEntity});
   Future<String> resendVerify({required String email});
   Future<String> forgetPassword({required ForgetPasswordEntity forgetPasswordEntity});
@@ -75,15 +76,14 @@ class AuthRemoteDataImpl implements AuthRemoteData {
   }
 
   @override
-  Future<String> login({required LoginEntity loginEntity}) async {
+  Future<LoginResponseModel> login({required LoginEntity loginEntity}) async {
     final login = loginEntity.toJson();
     try {
       final response = await apiClient.post(path: ApiEndpoint.login, data: login);
-      final token = response.data['token'];
-      if (token == null) {
-        throw ServerException('Token not found in login response');
+      if (response.data == null) {
+        throw ServerException('Empty login response');
       }
-      return token;
+      return LoginResponseModel.fromJson(response.data);
     } catch (e) {
       if (e is DioException) {
         rethrow;

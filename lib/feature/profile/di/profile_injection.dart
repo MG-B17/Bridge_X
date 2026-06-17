@@ -35,6 +35,6 @@ void initProfile() {
     () => ProfileDashboardCubit(getProfileDashboardUseCase: sl()),
   );
   sl.registerFactory<EditProfileCubit>(
-    () => EditProfileCubit(getProfileUseCase: sl(), updateProfileUseCase: sl()),
+    () => EditProfileCubit(getProfileUseCase: sl(), updateProfileUseCase: sl(), secureStorageService: sl()),
   );
 }

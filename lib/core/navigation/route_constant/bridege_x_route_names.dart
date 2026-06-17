@@ -32,6 +32,7 @@ class BridegeXRouteNames {
   static const String matchingProcess = 'matching-process';
   static const String noTeamsFound = 'no-teams-found';
   static const String recommendedTeams = 'recommended-teams';
+  static const String addMembersBottomSheet = 'add-members-bottom-sheet';
 
   //Profile Roote
   static const String editProfile = 'edit-profile';

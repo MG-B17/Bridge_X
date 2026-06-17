@@ -3,10 +3,13 @@ import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:flutter/material.dart';
 
+import 'package:bridge_x/feature/matching/domain/entities/team_recommendation_entity.dart';
 import 'team_card.dart';
 
 class TeamCardsList extends StatelessWidget {
-  const TeamCardsList({super.key});
+  final List<TeamRecommendationEntity> recommendations;
+
+  const TeamCardsList({super.key, required this.recommendations});
 
   @override
   Widget build(BuildContext context) {
@@ -14,41 +17,29 @@ class TeamCardsList extends StatelessWidget {
 
     return Column(
       children: [
-        TeamCard(
-          initials: 'A',
-          name: 'Alpha Coders',
-          category: 'Mobile App \u2022 Fintech',
-          description:
-              'Building a next-gen personal finance app focusing on gamified saving habits and intuitiv...',
-          tags: const ['UI/UX', 'Flutter', 'Node.js'],
-          currentMembers: 3,
-          maxMembers: 5,
-          avatarColor: colors.indigo,
-        ),
-        VerticalSpacing(AppSpacing.spacing16),
-        TeamCard(
-          initials: 'FE',
-          name: 'Team up Coders',
-          category: 'Mobile App \u2022 Fintech',
-          description:
-              'Looking for experienced React developers to help build our next-generation component...',
-          tags: const ['React', 'TypeScript', 'Design Systems'],
-          currentMembers: 3,
-          maxMembers: 5,
-          avatarColor: colors.textPrimary,
-        ),
-        VerticalSpacing(AppSpacing.spacing16),
-        TeamCard(
-          initials: 'N',
-          name: 'Nexus Web',
-          category: 'Web Platform \u2022 E-commerce',
-          description:
-              'Creating a headless e-commerce solution for local artisans to easily set up shop and sell...',
-          tags: const ['React', 'GraphQL'],
-          currentMembers: 4,
-          maxMembers: 6,
-          avatarColor: colors.success,
-        ),
+        ...recommendations.map((rec) {
+          return Padding(
+            padding: EdgeInsets.only(bottom: AppSpacing.spacing16),
+            child: TeamCard(
+              initials: rec.teamName.isNotEmpty ? rec.teamName[0].toUpperCase() : '?',
+              name: rec.teamName,
+              category: '', // Handled by teamVibe in TeamCard
+              description: 'Matched based on your skills and experience. ${rec.teamVibe} vibe.',
+              tags: rec.matchedSkills,
+              currentMembers: rec.matchedSkillsCount,
+              maxMembers: rec.matchedSkillsCount + rec.missingSkillsCount,
+              avatarColor: colors.primary,
+              teamVibe: rec.teamVibe,
+              totalMatchScore: rec.totalMatchScore,
+              chemistryScore: rec.chemistryScore,
+              experienceFitScore: rec.experienceFitScore,
+              skillCoverage: rec.skillCoverage,
+              matchedSkillsCount: rec.matchedSkillsCount,
+              missingSkillsCount: rec.missingSkillsCount,
+              teamId: rec.teamId,
+            ),
+          );
+        }).toList(),
         VerticalSpacing(AppSpacing.spacing24),
       ],
     );

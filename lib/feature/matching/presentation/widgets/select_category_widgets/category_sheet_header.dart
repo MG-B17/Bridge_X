@@ -4,6 +4,7 @@ import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CategorySheetHeader extends StatelessWidget {
   const CategorySheetHeader({super.key});
@@ -25,7 +26,7 @@ class CategorySheetHeader extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: () => Navigator.pop(context),
+              onTap: () => context.pop(),
               child: Icon(
                 Icons.close,
                 color: colors.textSecondary,

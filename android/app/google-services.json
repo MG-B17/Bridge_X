@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "827671253011",
+    "project_id": "bridgex-81714",
+    "storage_bucket": "bridgex-81714.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:827671253011:android:1c05a61bc13efcb5546fe6",
+        "android_client_info": {
+          "package_name": "com.example.bridge_x"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIKQJkgwYVQEK0WKLAIl4BlAxGCMJ5JgM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

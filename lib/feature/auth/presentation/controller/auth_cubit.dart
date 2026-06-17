@@ -1,5 +1,7 @@
 import 'package:bridge_x/core/constant/app_feedback_messages.dart';
 import 'package:bridge_x/core/init/app_state.dart';
+import 'package:bridge_x/core/services/logger_service.dart';
+import 'package:bridge_x/core/services/notification_services/firebase_push_notification_service.dart';
 import 'package:bridge_x/core/utils/enum/auth_enum.dart';
 import 'package:bridge_x/feature/auth/domain/entity/change_password_entity.dart';
 import 'package:bridge_x/feature/auth/domain/entity/forget_password_entity.dart';
@@ -15,6 +17,7 @@ import 'package:bridge_x/feature/auth/domain/usecases/reset_password_usecase.dar
 import 'package:bridge_x/feature/auth/domain/usecases/verify_email_usecase.dart';
 import 'package:bridge_x/feature/auth/domain/usecases/verify_password_usecase.dart';
 import 'package:bridge_x/feature/auth/presentation/controller/auth_state.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -27,6 +30,7 @@ class AuthCubit extends Cubit<AuthState> {
     required this.changePasswordUsecase,
     required this.verifyPasswordUsecase,
     required this.appState,
+    required this.pushNotificationService,
   }) : super(AuthState());
 
   final LoginUsecase loginUsecase;
@@ -37,11 +41,16 @@ class AuthCubit extends Cubit<AuthState> {
   final ChangePasswordUsecase changePasswordUsecase;
   final VerifyPasswordUsecase verifyPasswordUsecase;
   final AppState appState;
+  final PushNotificationService pushNotificationService;
 
   Future<void> login({required String email, required String password}) async {
+    final token = pushNotificationService.fcmToken;
+    if (kDebugMode) {
+      LoggerService.info('FCM token for login: $token', tag: 'AuthCubit');
+    }
     emit(state.copyWith(status: AuthStatus.loading, action: AuthAction.login));
     final result = await loginUsecase(
-      loginEntity: LoginEntity(email: email, password: password),
+      loginEntity: LoginEntity(email: email, password: password, fcmToken: token),
     );
     result.fold(
       (failure) => emit(state.copyWith(status: AuthStatus.error, message: failure.message)),
@@ -159,6 +168,7 @@ class AuthCubit extends Cubit<AuthState> {
       (failure) => emit(state.copyWith(status: AuthStatus.error, message: failure.message)),
       (_) {
         appState.isLoggedIn = false;
+        pushNotificationService.refreshToken();
         emit(state.copyWith(status: AuthStatus.success, message: AppFeedbackMessages.logoutSuccess));
       },
     );

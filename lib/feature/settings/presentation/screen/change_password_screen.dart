@@ -52,6 +52,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     super.dispose();
   }
 
+
   void _handleUpdatePassword(BuildContext context) {
     final currentPassword = _currentPasswordController.text.trim();
     final newPassword = _newPasswordController.text.trim();
@@ -61,6 +62,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       BridgeXSnackBar.showWarning(
         context: context,
         message: AppStrings.currentPasswordHint,
+
+  void _handleUpdatePassword() {
+    if (_currentPasswordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text(AppStrings.currentPasswordHint)),
+
       );
       return;
     }

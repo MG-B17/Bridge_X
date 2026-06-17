@@ -12,9 +12,9 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   EditProfileCubit({
     required GetProfileUseCase getProfileUseCase,
     required UpdateProfileUseCase updateProfileUseCase,
-  })  : _getProfileUseCase = getProfileUseCase,
-        _updateProfileUseCase = updateProfileUseCase,
-        super(EditProfileInitial());
+  }) : _getProfileUseCase = getProfileUseCase,
+       _updateProfileUseCase = updateProfileUseCase,
+       super(EditProfileInitial());
 
   Future<void> fetchProfile() async {
     if (state is EditProfileLoading) return;
@@ -42,10 +42,12 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     final result = await _updateProfileUseCase(request);
     if (isClosed) return;
 
-    result.fold(
-      (failure) => emit(EditProfileError(message: failure.message)),
-      (profile) => emit(EditProfileUpdated(profile: profile)),
-    );
+    result.fold((failure) => emit(EditProfileError(message: failure.message)), (
+      profile,
+    ) {
+      emit(EditProfileUpdated(profile: profile));
+      fetchProfile();
+    });
   }
 
   EditProfileEntity? get _currentProfile {

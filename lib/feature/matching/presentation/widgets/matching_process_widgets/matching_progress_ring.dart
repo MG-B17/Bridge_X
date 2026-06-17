@@ -27,18 +27,17 @@ class MatchingProgressRing extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // -- Track ring --
-          CustomPaint(
-            size: Size(size, size),
-            painter: _RingPainter(
-              progress: percentage / 100,
-              trackColor: colors.divider.withValues(alpha: 0.3),
-              gradientColors: [colors.teal, colors.primary],
-              strokeWidth: AppSpacing.spacing10,
+          RepaintBoundary(
+            child: CustomPaint(
+              size: Size(size, size),
+              painter: _RingPainter(
+                progress: percentage / 100,
+                trackColor: colors.divider.withValues(alpha: 0.3),
+                gradientColors: [colors.teal, colors.primary],
+                strokeWidth: AppSpacing.spacing10,
+              ),
             ),
           ),
-
-          // -- Center text --
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -68,7 +67,6 @@ class MatchingProgressRing extends StatelessWidget {
   }
 }
 
-// -- Custom ring painter -----------------------------------------------------
 class _RingPainter extends CustomPainter {
   _RingPainter({
     required this.progress,
@@ -99,6 +97,8 @@ class _RingPainter extends CustomPainter {
         ..strokeWidth = strokeWidth
         ..strokeCap = StrokeCap.round,
     );
+
+    if (progress <= 0) return;
 
     // Progress arc
     final rect = Rect.fromCircle(center: center, radius: radius);

@@ -20,6 +20,7 @@ class ChangePasswordForm extends StatelessWidget {
     required this.onNewPasswordVisibilityToggle,
     required this.onConfirmPasswordVisibilityToggle,
     required this.onUpdatePassword,
+    this.isLoading = false,
     super.key,
   });
 
@@ -33,6 +34,7 @@ class ChangePasswordForm extends StatelessWidget {
   final VoidCallback onNewPasswordVisibilityToggle;
   final VoidCallback onConfirmPasswordVisibilityToggle;
   final VoidCallback onUpdatePassword;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +92,7 @@ class ChangePasswordForm extends StatelessWidget {
           text: AppStrings.updatePassword,
           onTap: onUpdatePassword,
           suffixicon: Icons.arrow_forward,
+          isLoading: isLoading,
         ),
       ],
     );

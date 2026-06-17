@@ -2,9 +2,11 @@ import 'package:bridge_x/core/di/di.dart';
 import 'package:bridge_x/feature/profile/data/datasource/profile_remote_data_source.dart';
 import 'package:bridge_x/feature/profile/data/repositories/profile_repository_impl.dart';
 import 'package:bridge_x/feature/profile/domain/repositories/profile_repository.dart';
+import 'package:bridge_x/feature/profile/domain/usecases/change_password_usecase.dart';
 import 'package:bridge_x/feature/profile/domain/usecases/get_profile_dashboard_usecase.dart';
 import 'package:bridge_x/feature/profile/domain/usecases/get_profile_usecase.dart';
 import 'package:bridge_x/feature/profile/domain/usecases/update_profile_usecase.dart';
+import 'package:bridge_x/feature/profile/presentation/controller/change_password_cubit.dart';
 import 'package:bridge_x/feature/profile/presentation/controller/edit_profile_cubit.dart';
 import 'package:bridge_x/feature/profile/presentation/controller/profile_dashboard_cubit.dart';
 
@@ -29,6 +31,9 @@ void initProfile() {
   sl.registerLazySingleton<UpdateProfileUseCase>(
     () => UpdateProfileUseCase(repository: sl()),
   );
+  sl.registerLazySingleton<ChangePasswordUseCase>(
+    () => ChangePasswordUseCase(repository: sl()),
+  );
 
   // Cubits
   sl.registerFactory<ProfileDashboardCubit>(
@@ -36,5 +41,8 @@ void initProfile() {
   );
   sl.registerFactory<EditProfileCubit>(
     () => EditProfileCubit(getProfileUseCase: sl(), updateProfileUseCase: sl()),
+  );
+  sl.registerFactory<ChangePasswordCubit>(
+    () => ChangePasswordCubit(changePasswordUseCase: sl()),
   );
 }

@@ -45,6 +45,7 @@ import 'package:bridge_x/feature/report/di/report_injection.dart';
 import 'package:bridge_x/feature/matching/di/matching_injection.dart';
 import 'package:bridge_x/feature/notifications/di/notifications_injection.dart';
 import 'package:bridge_x/features/chat/di/chat_injection.dart';
+import 'package:bridge_x/feature/invitaions/di/invitaions_injection.dart';
 
 final sl = GetIt.instance;
 
@@ -154,6 +155,7 @@ Future<void> init() async {
   initReport();
   initMatching();
   initNotifications();
+  initInvitaions();
 
   // other 
   sl.registerLazySingleton<AppInitializer>(()=>AppInitializer());

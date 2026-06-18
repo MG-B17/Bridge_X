@@ -26,7 +26,7 @@ class ProjectDashboardContent extends StatelessWidget {
         VerticalSpacing(AppSpacing.spacing24),
         SizedBox(
           height: AppSpacing.height72 + AppSpacing.height8,
-          child: ActionButtonsSection(projectId: project.projectId),
+          child: ActionButtonsSection(teamId: project.projectId),
         ),
         VerticalSpacing(AppSpacing.spacing24),
         CompletionCard(projectId: project.projectId),

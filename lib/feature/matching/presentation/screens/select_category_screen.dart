@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bridge_x/core/widget/layout/bridge_x_chip.dart';
-import '../widgets/select_category_widgets/drag_handle.dart';
+import '../../../../core/widget/layout/drag_handle.dart';
 import '../widgets/select_category_widgets/multi_category_info_banner.dart';
 
 

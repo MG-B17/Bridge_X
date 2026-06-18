@@ -9,6 +9,7 @@ import 'package:bridge_x/core/navigation/routes/forget_password_route.dart';
 import 'package:bridge_x/core/navigation/routes/profile_route.dart';
 import 'package:bridge_x/core/navigation/routes/project_route.dart';
 import 'package:bridge_x/core/navigation/routes/singup_route.dart';
+import 'package:bridge_x/core/navigation/routes/invitaions_route.dart';
 import 'package:bridge_x/core/navigation/services/navigation_guard_simple.dart';
 import 'package:bridge_x/feature/auth/presentation/screens/complete_profile/complete_profile_screen.dart';
 import 'package:bridge_x/feature/auth/presentation/screens/login/login_screen.dart';
@@ -45,6 +46,7 @@ final appRouter = GoRouter(
     ),
     forgetPasswordRoute,
     singupRoute,
+    invitaionsRoute,
     GoRoute(
       path: BridgeXRoutePaths.completeProfile,
       name: BridegeXRouteNames.completeProfile,

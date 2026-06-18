@@ -15,6 +15,7 @@ import 'package:bridge_x/feature/profile/presentation/controller/edit_profile_cu
 import 'package:bridge_x/feature/profile/presentation/controller/edit_profile_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import '../widget/edit_profile_screen_widget/edit_profile_avatar.dart';
@@ -35,9 +36,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   late TextEditingController _bioController;
   late TextEditingController _professionController;
   final ScrollController _scrollController = ScrollController();
+  final ImagePicker _imagePicker = ImagePicker();
 
   String _selectedProfession = '';
   String? _pickedImagePath;
+  bool _isPickingImage = false;
 
   // Original values for change detection
   EditProfileEntity? _originalProfile;
@@ -95,10 +98,27 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final picked = await picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
-    if (picked != null && mounted) {
-      setState(() => _pickedImagePath = picked.path);
+    if (_isPickingImage) return;
+
+    _isPickingImage = true;
+    try {
+      final picked = await _imagePicker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 80,
+      );
+      if (picked != null && mounted) {
+        setState(() => _pickedImagePath = picked.path);
+      }
+    } on PlatformException catch (e) {
+      if (!mounted) return;
+      if (e.code != 'already_active') {
+        BridgeXSnackBar.showError(
+          context: context,
+          message: 'Failed to pick image. Please try again.',
+        );
+      }
+    } finally {
+      _isPickingImage = false;
     }
   }
 

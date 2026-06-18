@@ -24,7 +24,7 @@ class FlutterLocalNotificationService implements LocalNotificationService {
     );
 
     await _plugin.initialize(
-      settings: settings,
+      settings,
       onDidReceiveNotificationResponse: _onNotificationTap,
     );
 
@@ -54,10 +54,10 @@ class FlutterLocalNotificationService implements LocalNotificationService {
     );
 
     await _plugin.show(
-      id: id,
-      title: title,
-      body: body,
-      notificationDetails: details,
+      id,
+      title,
+      body,
+      details,
       payload: payload,
     );
   }

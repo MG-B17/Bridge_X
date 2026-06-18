@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class ActionButtonsSection extends StatelessWidget {
-  final int projectId;
+  final int teamId;
 
-  const ActionButtonsSection({super.key, required this.projectId});
+  const ActionButtonsSection({super.key, required this.teamId});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class ActionButtonsSection extends StatelessWidget {
         Expanded(
           child: _buildButton(
             onTap: () {
-              context.goNamed(BridegeXRouteNames.teamSettings,extra: TeamSettingsArgs(projectId:projectId));
+              context.goNamed(BridegeXRouteNames.teamSettings,extra: TeamSettingsArgs(teamId: teamId));
             },
             context,
             AppStrings.teamSettings,

@@ -16,16 +16,23 @@ class PaginatedProjectsResponseModel {
 
   factory PaginatedProjectsResponseModel.fromJson(Map<String, dynamic> json) {
     final data = json['data'] as Map<String, dynamic>? ?? json;
-    final items = (data['data'] as List? ?? [])
-        .map((e) => ProjectItemModel.fromJson(e as Map<String, dynamic>))
+    final rawItems = data['data'] as List? ?? const [];
+    final items = rawItems
+        .whereType<Map>()
+        .map((e) => ProjectItemModel.fromJson(Map<String, dynamic>.from(e)))
         .toList();
 
     return PaginatedProjectsResponseModel(
       projects: items,
-      currentPage: data['current_page'] as int? ?? 1,
-      lastPage: data['last_page'] as int? ?? 1,
+      currentPage: _readInt(data['current_page'], fallback: 1),
+      lastPage: _readInt(data['last_page'], fallback: 1),
       nextPageUrl: data['next_page_url'] as String?,
     );
+  }
+
+  static int _readInt(dynamic value, {required int fallback}) {
+    if (value is int) return value;
+    return int.tryParse(value?.toString() ?? '') ?? fallback;
   }
 
   PaginatedProjectsEntity toEntity() => PaginatedProjectsEntity(

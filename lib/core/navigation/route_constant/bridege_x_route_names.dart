@@ -19,6 +19,7 @@ class BridegeXRouteNames {
   static const String profile = 'profile';
   static const String notifications = 'notifications';
   static const String notificationsDetails = 'notificationsDetails';
+  static const String projectProgress = 'project-progress';
 
   static const String createTeam = 'create-team';
   static const String projectDetails = 'project-details';
@@ -32,6 +33,7 @@ class BridegeXRouteNames {
   static const String matchingProcess = 'matching-process';
   static const String noTeamsFound = 'no-teams-found';
   static const String recommendedTeams = 'recommended-teams';
+  static const String addMembersBottomSheet = 'add-members-bottom-sheet';
 
   //Profile Roote
   static const String editProfile = 'edit-profile';
@@ -45,4 +47,9 @@ class BridegeXRouteNames {
   static const String changePassword = 'change-password';
   static const String aboutUs = 'about-us';
   static const String level = 'level';
+
+  // invitations root
+  static const String requestsCenter = 'requests-center';
+  static const String requestReviewInvitation = 'request-review-invitation';
+  static const String requestReviewJoinRequest = 'request-review-join-request';
 }

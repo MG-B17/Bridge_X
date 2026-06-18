@@ -16,12 +16,12 @@ import 'package:go_router/go_router.dart';
 
 class TeamSettingsContent extends StatelessWidget {
   final TeamSettingsEntity teamSettings;
-  final int projectId;
+  final int teamId;
 
   const TeamSettingsContent({
     super.key,
     required this.teamSettings,
-    required this.projectId,
+    required this.teamId,
   });
 
   @override
@@ -49,7 +49,7 @@ class TeamSettingsContent extends StatelessWidget {
           onTap: () {
             context.pushNamed(
               BridegeXRouteNames.createTask,
-              extra: CreateTaskArgs(projectId: projectId),
+              extra: CreateTaskArgs(teamId: teamId),
             );
           },
         ),

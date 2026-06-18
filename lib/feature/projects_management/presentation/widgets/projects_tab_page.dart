@@ -30,29 +30,22 @@ class ProjectsTabPage extends StatefulWidget {
 
 class _ProjectsTabPageState extends State<ProjectsTabPage>
     with AutomaticKeepAliveClientMixin {
-  late final ScrollController _scrollController;
-
   @override
   bool get wantKeepAlive => true;
 
-  @override
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController();
-    _scrollController.addListener(_onScroll);
-  }
+  bool _onScrollNotification(ScrollNotification notification) {
+    if (notification.metrics.axis != Axis.vertical ||
+        notification.metrics.maxScrollExtent <= 0 ||
+        notification is! ScrollUpdateNotification) {
+      return false;
+    }
 
-  void _onScroll() {
-    if (_scrollController.position.pixels >=
-        _scrollController.position.maxScrollExtent - 200) {
+    if (notification.metrics.pixels >=
+        notification.metrics.maxScrollExtent - 200) {
       context.read<ProjectsTabBloc>().add(const LoadMoreProjectsTab());
     }
-  }
 
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
+    return false;
   }
 
   @override
@@ -73,53 +66,63 @@ class _ProjectsTabPageState extends State<ProjectsTabPage>
           );
         }
 
-        final isLoading = state is ProjectsTabLoading || state is ProjectsTabInitial;
+        final isLoading =
+            state is ProjectsTabLoading || state is ProjectsTabInitial;
         final isRefreshing = state is ProjectsTabRefreshing;
         final isFailure = state is ProjectsTabFailure;
         final showSkeleton = isLoading || isRefreshing;
         final projects = _extractProjects(state);
         final isEmpty = !isLoading && !isFailure && projects.isEmpty;
 
-        return BridgeXSkeletonizer(
-          enableloading: showSkeleton,
-          child: BridgeXRefreshIndicator(
-            color: isRefreshing
-                ? context.appColors.transparent
-                : context.appColors.primary,
-            backgroundColor:
-                isRefreshing ? context.appColors.transparent : null,
-            onRefresh: () async =>
-                context.read<ProjectsTabBloc>().add(const RefreshProjectsTab()),
-            child: isEmpty
-                ? ProjectsEmptyState(
-                    onExploreTeams: () {},
-                    onCreateTeam: () {
-                      context.read<ScrollCubit>().hide();
-                      context.pushNamed(BridegeXRouteNames.createTeam);
-                    },
-                  )
-                : ListView.separated(
-                    controller: _scrollController,
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    padding: EdgeInsets.only(
-                      bottom: AppSpacing.spacing32,
+        return NotificationListener<ScrollNotification>(
+          onNotification: _onScrollNotification,
+          child: BridgeXSkeletonizer(
+            enableloading: showSkeleton,
+            child: BridgeXRefreshIndicator(
+              color: isRefreshing
+                  ? context.appColors.transparent
+                  : context.appColors.primary,
+              backgroundColor: isRefreshing
+                  ? context.appColors.transparent
+                  : null,
+              onRefresh: () async => context.read<ProjectsTabBloc>().add(
+                const RefreshProjectsTab(),
+              ),
+              child: isEmpty
+                  ? ProjectsEmptyState(
+                      onExploreTeams: () {},
+                      onCreateTeam: () {
+                        context.read<ScrollCubit>().hide();
+                        context.pushNamed(BridegeXRouteNames.createTeam);
+                      },
+                    )
+                  : ListView.separated(
+                      key: PageStorageKey<String>(
+                        'projects-tab-${context.read<ProjectsTabBloc>().status ?? 'all'}',
+                      ),
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      padding: EdgeInsets.only(
+                        top: AppSpacing.spacing16,
+                        bottom: AppSpacing.spacing32,
+                      ),
+                      itemCount:
+                          projects.length +
+                          (state is ProjectsTabLoadingMore ? 1 : 0),
+                      separatorBuilder: (context, index) =>
+                          VerticalSpacing(AppSpacing.md),
+                      itemBuilder: (context, index) {
+                        if (index >= projects.length) {
+                          return const Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(16),
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        }
+                        return _buildProjectCard(context, projects[index]);
+                      },
                     ),
-                    itemCount:
-                        projects.length + (state is ProjectsTabLoadingMore ? 1 : 0),
-                    separatorBuilder: (context, index) =>
-                        VerticalSpacing(AppSpacing.md),
-                    itemBuilder: (context, index) {
-                      if (index >= projects.length) {
-                        return const Center(
-                          child: Padding(
-                            padding: EdgeInsets.all(16),
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
-                      }
-                      return _buildProjectCard(context, projects[index]);
-                    },
-                  ),
+            ),
           ),
         );
       },

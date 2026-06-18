@@ -24,6 +24,7 @@ class BridgeXRoutePaths {
   static const String selectCategory = 'select-category';
   static const String notifications = 'notifications';
   static const String notificationsDetails = 'notificationsDetails';
+  static const String projectProgress = 'project-progress';
 
   // chat root 
   static const String chat = '/chat';
@@ -40,6 +41,7 @@ class BridgeXRoutePaths {
   static const String viewTask = 'view-task';
   static const String reportUser = 'report-user';
   static const String teamEvaluation = 'team-evaluation';
+  static const String addMembersBottomSheet = 'add-members-bottom-sheet';
 
 
   // matching root 
@@ -61,4 +63,9 @@ class BridgeXRoutePaths {
   static const String changePassword = 'change-password';
   static const String aboutUs = 'about-us';
   static const String level = 'level';
+
+  // invitations root
+  static const String requestsCenter = '/requests-center';
+  static const String requestReviewInvitation = 'request-review-invitation';
+  static const String requestReviewJoinRequest = 'request-review-join-request';
 }

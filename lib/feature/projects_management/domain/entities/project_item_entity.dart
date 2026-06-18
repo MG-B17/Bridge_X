@@ -11,6 +11,7 @@ class ProjectItemEntity extends Equatable {
   final double myCompletionPercentage;
   final String mySpecialization;
   final String? completionDate;
+  final String? imageUrl;
 
   const ProjectItemEntity({
     required this.id,
@@ -23,6 +24,7 @@ class ProjectItemEntity extends Equatable {
     required this.myCompletionPercentage,
     required this.mySpecialization,
     this.completionDate,
+    this.imageUrl,
   });
 
   bool get isCompleted => completionDate != null;
@@ -39,5 +41,6 @@ class ProjectItemEntity extends Equatable {
         myCompletionPercentage,
         mySpecialization,
         completionDate,
+        imageUrl,
       ];
 }

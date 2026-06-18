@@ -13,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
+
 class TeamMembersSection extends StatelessWidget {
   const TeamMembersSection({super.key});
 
@@ -45,7 +46,10 @@ class TeamMembersSection extends StatelessWidget {
                 runSpacing: AppSpacing.spacing4,
                 children: state.invitedMembers.map((username) {
                   return Chip(
-                    label: Text(username, style: const TextStyle(fontSize: 13)),
+                    label: Text(
+                      username.startsWith('@') ? username : '@$username',
+                      style: const TextStyle(fontSize: 13),
+                    ),
                     deleteIcon: const Icon(Icons.close, size: 16),
                     onDeleted: () => context
                         .read<CreateTeamCubit>()
@@ -448,6 +452,7 @@ class _AddMemberSheetContentState extends State<_AddMemberSheetContent> {
               textAlign: TextAlign.center,
             ),
           ),
+
         ],
       ),
     );
@@ -534,9 +539,9 @@ class _AddMemberSheetContentState extends State<_AddMemberSheetContent> {
                 ),
               ),
               child: isSelected
-                  ? const Icon(
+                  ? Icon(
                       Icons.check,
-                      color: Colors.white,
+                      color: colors.surface,
                       size: 14,
                     )
                   : null,

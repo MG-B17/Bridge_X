@@ -1,7 +1,7 @@
 class TeamSettingsArgs {
-  final int projectId;
+  final int teamId;
 
   const TeamSettingsArgs({
-    required this.projectId,
+    required this.teamId,
   });
 }

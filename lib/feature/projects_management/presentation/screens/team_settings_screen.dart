@@ -14,15 +14,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TeamSettingsScreen extends StatelessWidget {
-  const TeamSettingsScreen({super.key, required this.projectId});
+  const TeamSettingsScreen({super.key, required this.teamID});
 
-  final int projectId;
+  final int teamID;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<TeamSettingsBloc>(
       create: (_) =>
-          sl<TeamSettingsBloc>()..add(LoadTeamSettings(projectId)),
+          sl<TeamSettingsBloc>()..add(LoadTeamSettings(teamID)),
       child: Scaffold(
         body: SafeArea(
           child: BlocBuilder<TeamSettingsBloc, TeamSettingsState>(
@@ -33,7 +33,7 @@ class TeamSettingsScreen extends StatelessWidget {
                   errorTittle: AppStrings.error,
                   errorMessage: state.message,
                   refreshButtonTap: () =>
-                      context.read<TeamSettingsBloc>().add(LoadTeamSettings(projectId)),
+                      context.read<TeamSettingsBloc>().add(LoadTeamSettings(teamID)),
                 );
               }
 
@@ -43,7 +43,7 @@ class TeamSettingsScreen extends StatelessWidget {
 
               return BridgeXRefreshIndicator(
                 onRefresh: () async =>
-                    context.read<TeamSettingsBloc>().add(RefreshTeamSettings(projectId)),
+                    context.read<TeamSettingsBloc>().add(RefreshTeamSettings(teamID)),
                 color: context.colors.primary,
                 child: BridgeXSkeletonizer(
                   enableloading: isLoading,
@@ -57,7 +57,7 @@ class TeamSettingsScreen extends StatelessWidget {
                     ),
                     child: TeamSettingsContent(
                       teamSettings: _resolveTeamSettings(state),
-                      projectId: projectId,
+                      teamId: teamID,
                     ),
                   ),
                 ),

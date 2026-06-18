@@ -23,8 +23,8 @@ class GreetingHeader extends StatelessWidget {
             children: [
               Text(
                 programmerName != null && programmerName!.isNotEmpty
-                    ? 'Hi, $programmerName ??'
-                    : 'Hi,           ??',
+                    ? AppStrings.hiGreeting(name:programmerName!)
+                    : 'Hi,',
                 style: AppTextStyles.displayLarge.copyWith(
                   color: context.colors.textPrimary,
                 ),

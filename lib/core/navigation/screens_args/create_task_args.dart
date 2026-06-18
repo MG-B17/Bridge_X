@@ -1,5 +1,5 @@
 class CreateTaskArgs {
-  final int projectId;
+  final int teamId;
 
-  const CreateTaskArgs({required this.projectId});
+  const CreateTaskArgs({required this.teamId});
 }

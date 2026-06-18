@@ -1,6 +1,5 @@
 import 'package:bridge_x/core/animation/bottom_nav_bar_animation/widget/scroller_listener.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
-import 'package:bridge_x/core/di/di.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/buttons/bridge_x_back_button.dart';
@@ -25,6 +24,15 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   final ScrollController _scrollController = ScrollController();
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      context.read<NotificationsCubit>().refreshNotifications();
+    });
+  }
+
+  @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
@@ -32,58 +40,49 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => sl<NotificationsCubit>()..refreshNotifications(),
-      child: Builder(
-        builder: (context) {
-          return ScrollNavListener(
-            controller: _scrollController,
-            child: Scaffold(
-              appBar: AppBar(
-                backgroundColor: context.colors.scaffoldBg,
-                elevation: 0,
-                leading: Center(child: const BridgeXBackButton()),
-                title: Text(
-                  AppStrings.notifications,
-                  style: context.textTheme.titleLarge?.copyWith(
-                    color: context.colors.ongoingText,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                actions: [
-                  BlocBuilder<NotificationsCubit, NotificationsState>(
-                    buildWhen: (previous, current) =>
-                        previous.isActionLoading != current.isActionLoading,
-                    builder: (context, state) {
-                      return TextButton(
-                        onPressed: state.isActionLoading
-                            ? null
-                            : () => context
-                                  .read<NotificationsCubit>()
-                                  .markAllAsRead(),
-                        child: Text(
-                          AppStrings.markAllRead,
-                          style: context.textTheme.labelLarge?.copyWith(
-                            color: context.colors.primary,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-              body: Stack(
-                children: [
-                  const BridgeXBackgroundGears(icon: Icons.notifications),
-                  BlocBuilder<NotificationsCubit, NotificationsState>(
-                    builder: (context, state) => _buildBody(context, state),
-                  ),
-                ],
-              ),
+    return ScrollNavListener(
+      controller: _scrollController,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: context.colors.scaffoldBg,
+          elevation: 0,
+          leading: Center(child: const BridgeXBackButton()),
+          title: Text(
+            AppStrings.notifications,
+            style: context.textTheme.titleLarge?.copyWith(
+              color: context.colors.ongoingText,
+              fontWeight: FontWeight.bold,
             ),
-          );
-        },
+          ),
+          actions: [
+            BlocBuilder<NotificationsCubit, NotificationsState>(
+              buildWhen: (previous, current) =>
+                  previous.isActionLoading != current.isActionLoading,
+              builder: (context, state) {
+                return TextButton(
+                  onPressed: state.isActionLoading
+                      ? null
+                      : () => context.read<NotificationsCubit>().markAllAsRead(),
+                  child: Text(
+                    AppStrings.markAllRead,
+                    style: context.textTheme.labelLarge?.copyWith(
+                      color: context.colors.primary,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+        body: Stack(
+          children: [
+            const BridgeXBackgroundGears(icon: Icons.notifications),
+            BlocBuilder<NotificationsCubit, NotificationsState>(
+              builder: (context, state) => _buildBody(context, state),
+            ),
+          ],
+        ),
       ),
     );
   }

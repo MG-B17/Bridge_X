@@ -1,10 +1,10 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
-import 'package:bridge_x/core/extensions/context_extension.dart';
-import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/theme/bridge_x_colors.dart';
 import 'package:bridge_x/feature/auth/presentation/screens/complete_profile/cubit/complete_profile_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ExperienceLevelSelector extends StatelessWidget {
   const ExperienceLevelSelector({super.key});
@@ -13,26 +13,37 @@ class ExperienceLevelSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
-    final text = context.textTheme;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Section title
         Text(
           AppStrings.experienceLevel,
-          style: text.titleMedium?.copyWith(
+          style: GoogleFonts.inter(
+            fontSize: 18.sp,
             fontWeight: FontWeight.bold,
-            color: colors.textPrimary,
+            color: AppColors.navyBlue,
           ),
         ),
-        SizedBox(height: AppSpacing.lg),
+        SizedBox(height: 16.h),
+        // Outer container pill
         Container(
-          padding: EdgeInsets.all(12.r),
+          width: double.infinity,
+          padding: EdgeInsets.all(6.r),
           decoration: BoxDecoration(
-            color: colors.background,
-            borderRadius: BorderRadius.circular(AppSpacing.radiusCardLarge),
-            border: Border.all(color: colors.divider.withValues(alpha: 0.5)),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(50.r),
+            border: Border.all(
+              color: AppColors.lightGray.withValues(alpha: 0.6),
+              width: 1.5,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primaryBlue.withValues(alpha: 0.06),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
           ),
           child: BlocBuilder<CompleteProfileCubit, CompleteProfileState>(
             builder: (context, state) {
@@ -41,27 +52,46 @@ class ExperienceLevelSelector extends StatelessWidget {
                   final isSelected = state.selectedExperience == level;
                   return Expanded(
                     child: GestureDetector(
-                      onTap: () => context.read<CompleteProfileCubit>().selectExperience(level),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 12.h),
+                      onTap: () => context
+                          .read<CompleteProfileCubit>()
+                          .selectExperience(level),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.easeInOut,
+                        padding: EdgeInsets.symmetric(vertical: 14.h),
                         decoration: BoxDecoration(
-                          color: isSelected ? colors.surface : Colors.transparent,
-                          borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
-                          border: isSelected ? Border.all(color: colors.primary.withValues(alpha: 0.5)) : null,
-                          boxShadow: isSelected ? [
-                            BoxShadow(
-                              color: colors.primary.withValues(alpha: 0.2),
-                              blurRadius: 10,
-                              offset: const Offset(0, 4),
-                            )
-                          ] : null,
+                          color:
+                              isSelected ? Colors.white : Colors.transparent,
+                          borderRadius: BorderRadius.circular(50.r),
+                          border: isSelected
+                              ? Border.all(
+                                  color: AppColors.primaryBlue,
+                                  width: 2,
+                                )
+                              : null,
+                          boxShadow: isSelected
+                              ? [
+                                  BoxShadow(
+                                    color: AppColors.primaryBlue
+                                        .withValues(alpha: 0.18),
+                                    blurRadius: 16,
+                                    spreadRadius: 1,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ]
+                              : null,
                         ),
                         child: Text(
                           level,
                           textAlign: TextAlign.center,
-                          style: text.bodyMedium?.copyWith(
-                            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                            color: isSelected ? colors.primary : colors.textSecondary,
+                          style: GoogleFonts.inter(
+                            fontSize: 14.sp,
+                            fontWeight: isSelected
+                                ? FontWeight.bold
+                                : FontWeight.w500,
+                            color: isSelected
+                                ? AppColors.navyBlue
+                                : AppColors.gray,
                           ),
                         ),
                       ),

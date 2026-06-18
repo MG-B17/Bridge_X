@@ -123,11 +123,17 @@ class AppStrings {
   static const String journeyStart = 'Your journey starts here';
   static const String joinCreators =
       'Join 2,000+ creators building the future.';
-  static const String hiGreeting = 'Hi, Ahmed 👋';
+  static  String hiGreeting({required String name}) => 'Hi, $name 👋';
   static const String greetingSubtitle = "Let's build something great today";
   static const String tipBanner =
       'Tip: Join a team to start building real projects';
   static const String basedOnCompleted = 'Based on completed tasks';
+  static const String projectProgress = 'Project Progress';
+  static const String projectProgressSubtitle =
+      'Track your contribution across projects.';
+  static const String focusOnImpact = 'Focus on Impact';
+  static const String focusOnImpactDescription =
+      'Your efficiency has increased by 12% this month.';
   static const String aiInsights = 'AI Insights';
   static const String insightProductivity =
       'You completed 30% more tasks this week compared to your average.';
@@ -248,6 +254,16 @@ class AppStrings {
   static const String removeTeamSubmitted = 'Remove Team request submitted';
   static const String submitProjectAsCompleted = 'Submit Project as Completed';
   static const String memberSettingsFor = 'Member settings for';
+  static const String addMemberToTeam = 'Add Member to Team';
+  static const String expandYourCollaborationNetwork =
+      'Expand your collaboration network';
+  static const String searchMembers = 'Search team members...';
+  static const String findColleagues =
+      "Find colleagues by their name or @username to start collaborating.";
+  static const String sendInvitation = "sent Invitation";
+  static const String noUserFound = "No users found";
+  static const String noUserFoundSubTittle =
+      "Try another username or email to invite them to the team.";
 
   // ── Tasks ─────────────────────────────────────────────────────────────────
   static const String createTask = 'Create Task';
@@ -403,8 +419,7 @@ class AppStrings {
   static const String recentConversations = 'Recent Conversations';
   static const String retryMatching = 'Retry Matching';
   static const String createYourOwnTeam = 'Create Your Own Team';
-  static const String requestToJoin =
-      "Request to join";
+  static const String requestToJoin = "Request to join";
   static const String noTeamsFound = 'No teams found';
   static const String noTeamsFoundSubtitle =
       'We couldn\'t find any teams matching your profile. Try adjusting your preferences or create a new team to start collaborating.';
@@ -505,5 +520,6 @@ class AppStrings {
   static const String enterTagName = 'Enter tag name';
   static const String creatingTask = 'Creating task...';
   static const String taskCreated = 'Task Created!';
-  static const String taskCreatedMessage = 'Task has been created successfully.';
+  static const String taskCreatedMessage =
+      'Task has been created successfully.';
 }

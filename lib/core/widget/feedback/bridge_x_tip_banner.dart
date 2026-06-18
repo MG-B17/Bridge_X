@@ -29,7 +29,7 @@ class BridgeXTipBanner extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Text('??', style: TextStyle(fontSize: AppSpacing.fontSize18)),
+          Text("💡", style: TextStyle(fontSize: AppSpacing.fontSize18)),
           HorizontalSpacing(AppSpacing.spacing10),
           Expanded(
             child: Text(

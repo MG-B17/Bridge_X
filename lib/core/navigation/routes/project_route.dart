@@ -1,6 +1,7 @@
 import 'package:bridge_x/core/animation/screen_transtion_animation/transitions/slide_right_trnasition.dart';
 import 'package:bridge_x/core/animation/screen_transtion_animation/transitions/slide_up_transition.dart';
 import 'package:bridge_x/core/di/di.dart';
+import 'package:bridge_x/core/navigation/navigator_keys.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dart';
 import 'package:bridge_x/core/navigation/screens_args/create_task_args.dart';
@@ -10,6 +11,7 @@ import 'package:bridge_x/core/navigation/screens_args/team_settings_args.dart';
 import 'package:bridge_x/core/navigation/screens_args/view_task_args.dart';
 import 'package:bridge_x/core/navigation/screens_args/report_user_args.dart';
 import 'package:bridge_x/feature/create_team/presentation/screens/create_team_screen.dart';
+import 'package:bridge_x/feature/create_team/presentation/widgets/add_members_bottom_sheet.dart';
 import 'package:bridge_x/feature/projects_management/presentation/screens/completed_project_details_screen.dart';
 import 'package:bridge_x/feature/projects_management/presentation/screens/project_dashboard_screen.dart';
 import 'package:bridge_x/feature/projects_management/presentation/screens/project_details_screen.dart';
@@ -25,8 +27,10 @@ import 'package:bridge_x/core/navigation/screens_args/team_evaluation_args.dart'
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-final SlideRightTransitionPage slideRightTransitionPage = SlideRightTransitionPage();
-final BottomSheetTransitionPage _bottomSheetTransition = BottomSheetTransitionPage();
+final SlideRightTransitionPage slideRightTransitionPage =
+    SlideRightTransitionPage();
+final BottomSheetTransitionPage _bottomSheetTransition =
+    BottomSheetTransitionPage();
 
 StatefulShellBranch projectRoute = StatefulShellBranch(
   routes: [
@@ -41,10 +45,19 @@ StatefulShellBranch projectRoute = StatefulShellBranch(
             GoRoute(
               path: BridgeXRoutePaths.createTeam,
               name: BridegeXRouteNames.createTeam,
+              parentNavigatorKey: rootNavigatorKey,
               pageBuilder: (context, state) => slideRightTransitionPage.build(
                 child: const CreateTeamScreen(),
                 state: state,
               ),
+              routes: [
+                GoRoute(
+                  path: BridgeXRoutePaths.addMembersBottomSheet,
+                  name: BridegeXRouteNames.addMembersBottomSheet,
+                  pageBuilder: (context, state) => _bottomSheetTransition
+                      .build(child: const AddMembersBottomSheet(), state: state),
+                ),
+              ],
             ),
             GoRoute(
               path: BridgeXRoutePaths.projectDetails,
@@ -66,9 +79,7 @@ StatefulShellBranch projectRoute = StatefulShellBranch(
               pageBuilder: (context, state) {
                 final args = state.extra as ProjectDashboardArgs;
                 return slideRightTransitionPage.build(
-                  child: ProjectDashboardScreen(
-                    projectId: args.projectId,
-                  ),
+                  child: ProjectDashboardScreen(projectId: args.projectId),
                   state: state,
                 );
               },
@@ -79,9 +90,7 @@ StatefulShellBranch projectRoute = StatefulShellBranch(
               pageBuilder: (context, state) {
                 final args = state.extra as TeamSettingsArgs;
                 return slideRightTransitionPage.build(
-                  child: TeamSettingsScreen(
-                    projectId: args.projectId,
-                  ),
+                  child: TeamSettingsScreen(teamID: args.teamId),
                   state: state,
                 );
               },
@@ -106,8 +115,9 @@ StatefulShellBranch projectRoute = StatefulShellBranch(
                 final args = state.extra as CreateTaskArgs;
                 return _bottomSheetTransition.build(
                   child: BlocProvider<CreateTaskCubit>(
-                    create: (_) => sl<CreateTaskCubit>()..loadMembers(args.projectId),
-                    child: CreateTaskScreen(projectId: args.projectId),
+                    create: (_) =>
+                        sl<CreateTaskCubit>()..loadMembers(args.teamId),
+                    child: CreateTaskScreen(projectId: args.teamId),
                   ),
                   state: state,
                 );
@@ -142,8 +152,8 @@ StatefulShellBranch projectRoute = StatefulShellBranch(
                 final args = state.extra as TeamEvaluationArgs;
                 return slideRightTransitionPage.build(
                   child: BlocProvider<TeamEvaluationCubit>(
-                    create: (_) => sl<TeamEvaluationCubit>()
-                      ..loadMembers(args.teamId),
+                    create: (_) =>
+                        sl<TeamEvaluationCubit>()..loadMembers(args.teamId),
                     child: TeamEvaluationScreen(teamId: args.teamId),
                   ),
                   state: state,

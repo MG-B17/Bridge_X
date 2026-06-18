@@ -14,6 +14,8 @@ import 'package:bridge_x/core/widget/feedback/error_dialog.dart';
 import 'package:bridge_x/feature/dashboard/presentation/cubit/dashboard_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import '../widgets/home_header_widgets/greeting_header.dart';
 import '../widgets/home_insight_widgets/ai_insights_card.dart';
 import '../widgets/home_insight_widgets/team_action_buttons.dart';
@@ -91,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           GreetingHeader(programmerName: dashboard?.programmerName),
                           VerticalSpacing(AppSpacing.spacing16),
-                          (dashboard?.projectsDetails.isEmpty ?? false)
+                          (dashboard?.totalProjectsParticipated == 0)
                               ? const BridgeXTipBanner(message: AppStrings.tipBanner)
                               : const SizedBox.shrink(),
                           VerticalSpacing(AppSpacing.spacing16),
@@ -105,7 +107,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           VerticalSpacing(AppSpacing.spacing24),
                           ProductivitySection(completionRate: dashboard?.overallCompletionRate),
                           VerticalSpacing(AppSpacing.spacing16),
-                          ProjectBarsCard(projects: dashboard?.projectsDetails),
+                          (dashboard?.projectsDetails.isNotEmpty ?? true)
+                              ? GestureDetector(
+                                  onTap: () {
+                                    context.pushNamed(
+                                      BridegeXRouteNames.projectProgress,
+                                      extra: dashboard?.projectsDetails,
+                                    );
+                                  },
+                                  child: ProjectBarsCard(projects: dashboard?.projectsDetails),
+                                )
+                              : const SizedBox.shrink(),
                           VerticalSpacing(AppSpacing.spacing16),
                           const AiInsightsCard(),
                         ],

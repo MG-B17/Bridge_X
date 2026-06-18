@@ -11,6 +11,7 @@ class ProjectItemModel {
   final double myCompletionPercentage;
   final String mySpecialization;
   final String? completionDate;
+  final String? imageUrl;
 
   const ProjectItemModel({
     required this.id,
@@ -23,15 +24,18 @@ class ProjectItemModel {
     required this.myCompletionPercentage,
     required this.mySpecialization,
     this.completionDate,
+    this.imageUrl,
   });
 
   factory ProjectItemModel.fromJson(Map<String, dynamic> json) {
     return ProjectItemModel(
-      id: json['id'] as int? ?? 0,
+      id: json['id'] as int? ?? int.tryParse(json['id']?.toString() ?? '') ?? 0,
       title: json['title'] as String? ?? '',
       description: json['description'] as String? ?? '',
       category: json['category'] as String? ?? '',
-      estimatedDurationDays: json['estimated_duration_days'] as int? ?? 0,
+      estimatedDurationDays:
+          json['estimated_duration_days'] as int? ??
+          int.tryParse(json['estimated_duration_days']?.toString() ?? '') ?? 0,
       expectedEndDate: json['expected_end_date'] as String? ?? '',
       projectCompletionPercentage:
           (json['project_completion_percentage'] as num?)?.toDouble() ?? 0.0,
@@ -39,6 +43,7 @@ class ProjectItemModel {
           (json['my_completion_percentage'] as num?)?.toDouble() ?? 0.0,
       mySpecialization: json['my_specialization'] as String? ?? '',
       completionDate: json['completion_date'] as String?,
+      imageUrl: json['image_url'] as String?,
     );
   }
 
@@ -53,5 +58,6 @@ class ProjectItemModel {
         myCompletionPercentage: myCompletionPercentage,
         mySpecialization: mySpecialization,
         completionDate: completionDate,
+        imageUrl: imageUrl,
       );
 }

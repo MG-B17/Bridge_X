@@ -3,7 +3,9 @@ import 'package:bridge_x/core/animation/screen_transtion_animation/transitions/s
 import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dart';
 import 'package:bridge_x/core/navigation/screens_args/notifications_details_args.dart';
+import 'package:bridge_x/feature/dashboard/domain/entities/project_detail_entity.dart';
 import 'package:bridge_x/feature/dashboard/presentation/screens/home_screen.dart';
+import 'package:bridge_x/feature/dashboard/presentation/screens/project_progress_screen.dart';
 import 'package:bridge_x/feature/matching/presentation/screens/matching_process_screen.dart';
 import 'package:bridge_x/feature/matching/presentation/screens/no_teams_found_screen.dart';
 import 'package:bridge_x/feature/matching/presentation/screens/recommended_teams_screen.dart';
@@ -82,6 +84,17 @@ StatefulShellBranch homeRoute = StatefulShellBranch(
               },
             ),
           ],
+        ),
+        GoRoute(
+          path: BridgeXRoutePaths.projectProgress,
+          name: BridegeXRouteNames.projectProgress,
+          pageBuilder: (context, state) {
+            final projects = state.extra as List<ProjectDetailEntity>?;
+            return slideRightTransitionPage.build(
+              child: ProjectProgressScreen(projects: projects),
+              state: state,
+            );
+          },
         ),
       ],
     ),

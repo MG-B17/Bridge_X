@@ -13,6 +13,7 @@ import 'package:bridge_x/feature/auth/presentation/controller/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:bridge_x/feature/invitaions/presentation/utils/invitaions_strings.dart';
 import 'profile_menu_item.dart';
 import 'logout_dialog.dart';
 
@@ -56,6 +57,14 @@ class ProfileMenu extends StatelessWidget {
               badgeCount: 3,
               onTap: () {
                 context.goNamed(BridegeXRouteNames.myTasks);
+              },
+            ),
+            BridgeXDivider(height: 16, indent: 24, endIndent: 24, color: context.colors.divider),
+            ProfileMenuItem(
+              label: InvitaionsStrings.requestsCenter,
+              icon: Icons.mail_outline_rounded,
+              onTap: () {
+                context.pushNamed(BridegeXRouteNames.requestsCenter);
               },
             ),
             BridgeXDivider(height: 16, indent: 24, endIndent: 24, color: context.colors.divider),

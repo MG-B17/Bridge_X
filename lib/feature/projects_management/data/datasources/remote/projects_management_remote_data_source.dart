@@ -70,13 +70,12 @@ class ProjectsManagementRemoteDataSourceImpl
     String? status,
   }) async {
     try {
-      final queryParams = <String, dynamic>{};
-      if (page > 1) queryParams['page'] = page;
+      final queryParams = <String, dynamic>{'page': page};
       if (status != null) queryParams['status'] = status;
 
       final response = await apiClient.get(
         path: ApiEndpoint.allProject,
-        queryParameters: queryParams.isNotEmpty ? queryParams : null,
+        queryParameters: queryParams,
       );
       if (response.data != null) {
         return PaginatedProjectsResponseModel.fromJson(response.data);

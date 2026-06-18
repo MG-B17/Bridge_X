@@ -66,6 +66,13 @@ class ApiEndpoint {
 
   // notifications
   static const String notifications = "/api/notifications";
+  static const String invitations = "/api/invitations";
+  static String invitationDetails({required int invitationId}) =>
+      "/api/invitations/$invitationId/details";
+  static String acceptTeamInvitation({required int invitationId}) =>
+      "/api/teams/invitations/$invitationId/accept";
+  static String declineTeamInvitation({required int invitationId}) =>
+      "/api/teams/invitations/$invitationId/decline";
   static String notificationRead({required String notificationId}) =>
       "/api/notifications/$notificationId/read";
   static const String notificationsReadAll = "/api/notifications/read-all";

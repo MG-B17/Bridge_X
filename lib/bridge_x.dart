@@ -1,6 +1,7 @@
 import 'package:bridge_x/core/animation/bottom_nav_bar_animation/controller/scroll_cubit.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/feature/auth/presentation/controller/auth_cubit.dart';
+import 'package:bridge_x/feature/notifications/presentation/cubit/notifications_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,6 +22,9 @@ class BridgeXApp extends StatelessWidget {
         ),
         BlocProvider(create: (_) => di.sl<AuthCubit>()),
         BlocProvider(create: (_) => di.sl<ScrollCubit>()),
+        BlocProvider(
+          create: (_) => di.sl<NotificationsCubit>()..fetchUnreadCount(),
+        ),
       ],
       child: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, themeMode) {

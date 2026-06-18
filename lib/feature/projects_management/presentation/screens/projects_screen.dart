@@ -5,7 +5,6 @@ import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_shadow.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/bridge_x_chip.dart';
-import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:bridge_x/feature/projects_management/domain/usecases/get_projects_usecase.dart';
 import 'package:bridge_x/feature/projects_management/presentation/bloc/projects_tab/projects_tab_bloc.dart';
 import 'package:bridge_x/feature/projects_management/presentation/bloc/projects_tab/projects_tab_event.dart';
@@ -43,12 +42,14 @@ class _ProjectsScreenState extends State<ProjectsScreen>
     final useCase = sl<GetProjectsUseCase>();
     _allBloc = ProjectsTabBloc(getProjectsUseCase: useCase, status: null)
       ..add(const LoadProjectsTab());
-    _ongoingBloc =
-        ProjectsTabBloc(getProjectsUseCase: useCase, status: 'ongoing')
-          ..add(const LoadProjectsTab());
-    _completedBloc =
-        ProjectsTabBloc(getProjectsUseCase: useCase, status: 'completed')
-          ..add(const LoadProjectsTab());
+    _ongoingBloc = ProjectsTabBloc(
+      getProjectsUseCase: useCase,
+      status: 'ongoing',
+    )..add(const LoadProjectsTab());
+    _completedBloc = ProjectsTabBloc(
+      getProjectsUseCase: useCase,
+      status: 'completed',
+    )..add(const LoadProjectsTab());
   }
 
   @override
@@ -64,47 +65,58 @@ class _ProjectsScreenState extends State<ProjectsScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: AppSpacing.spacing20,
-                vertical: AppSpacing.spacing16,
-              ),
-              child: const ProjectsHeader(),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: AppSpacing.spacing20),
-              child: ListenableBuilder(
-                listenable: _tabController,
-                builder: (context, _) => _buildChipTabs(context),
-              ),
-            ),
-            VerticalSpacing(AppSpacing.spacing16),
-            Expanded(
+        child: NestedScrollView(
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+            SliverToBoxAdapter(
               child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: AppSpacing.spacing20,
+                  vertical: AppSpacing.spacing16,
+                ),
+                child: const ProjectsHeader(),
+              ),
+            ),
+            SliverAppBar(
+              pinned: true,
+              primary: false,
+              automaticallyImplyLeading: false,
+              backgroundColor: context.colors.scaffoldBg,
+              surfaceTintColor: Colors.transparent,
+              elevation: innerBoxIsScrolled ? 2 : 0,
+              toolbarHeight: AppSpacing.height72,
+              titleSpacing: 0,
+              title: Padding(
                 padding: EdgeInsets.symmetric(horizontal: AppSpacing.spacing20),
-                child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    BlocProvider.value(
-                      value: _allBloc,
-                      child: const ProjectsTabPage(),
-                    ),
-                    BlocProvider.value(
-                      value: _ongoingBloc,
-                      child: const ProjectsTabPage(),
-                    ),
-                    BlocProvider.value(
-                      value: _completedBloc,
-                      child: const ProjectsTabPage(),
-                    ),
-                  ],
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ListenableBuilder(
+                    listenable: _tabController,
+                    builder: (context, _) => _buildChipTabs(context),
+                  ),
                 ),
               ),
             ),
           ],
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: AppSpacing.spacing20),
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                BlocProvider.value(
+                  value: _allBloc,
+                  child: const ProjectsTabPage(),
+                ),
+                BlocProvider.value(
+                  value: _ongoingBloc,
+                  child: const ProjectsTabPage(),
+                ),
+                BlocProvider.value(
+                  value: _completedBloc,
+                  child: const ProjectsTabPage(),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

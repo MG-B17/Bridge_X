@@ -39,7 +39,7 @@ class TeamCardsList extends StatelessWidget {
               teamId: rec.teamId,
             ),
           );
-        }).toList(),
+        }),
         VerticalSpacing(AppSpacing.spacing24),
       ],
     );

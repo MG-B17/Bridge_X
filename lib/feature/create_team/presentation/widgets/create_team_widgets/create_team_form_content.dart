@@ -151,7 +151,6 @@ class _CreateTeamFormContentState extends State<CreateTeamFormContent> {
                 previous.selectedTeamType != current.selectedTeamType,
             builder: (context, state) {
               if (state.selectedTeamType == 0) {
-                // 0 = Private
                 return Column(
                   children: [
                     const TeamMembersSection(),

@@ -1,5 +1,5 @@
 import 'package:bridge_x/core/animation/bottom_nav_bar_animation/controller/scroll_cubit.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/feedback/bridge_x_error_widget.dart';
 import 'package:bridge_x/core/widget/feedback/error_dialog.dart';
@@ -63,7 +63,7 @@ class _TeamEvaluationScreenState extends State<TeamEvaluationScreen> {
 
   void _onBack() {
     context.read<ScrollCubit>().show();
-    context.goNamed(BridegeXRouteNames.projects);
+    context.goNamed(BridgeXRouteNames.projects);
   }
 
   @override
@@ -81,7 +81,7 @@ class _TeamEvaluationScreenState extends State<TeamEvaluationScreen> {
             message: state.message,
             onAction: () {
               context.read<ScrollCubit>().show();
-              context.goNamed(BridegeXRouteNames.projects);
+              context.goNamed(BridgeXRouteNames.projects);
             },
           );
         } else if (state is TeamEvaluationSubmitFailure) {

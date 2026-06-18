@@ -1,4 +1,4 @@
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/navigation/screens_args/request_review_invitation_args.dart';
 import 'package:bridge_x/core/navigation/screens_args/request_review_join_request_args.dart';
 import 'package:bridge_x/feature/invitaions/domain/entities/join_request_entity.dart';
@@ -40,7 +40,7 @@ class RequestsCenterListContent extends StatelessWidget {
             invitation: invitation,
             onReview: () {
               context.pushNamed(
-                BridegeXRouteNames.requestReviewInvitation,
+                BridgeXRouteNames.requestReviewInvitation,
                 extra: RequestReviewInvitationArgs(
                   invitation: invitation,
                   cubit: cubit,
@@ -62,7 +62,7 @@ class RequestsCenterListContent extends StatelessWidget {
           joinRequest: joinRequest,
           onReview: () {
             context.pushNamed(
-              BridegeXRouteNames.requestReviewJoinRequest,
+              BridgeXRouteNames.requestReviewJoinRequest,
               extra: RequestReviewJoinRequestArgs(
                 joinRequest: joinRequest,
                 cubit: cubit,

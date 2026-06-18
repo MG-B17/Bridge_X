@@ -1,6 +1,6 @@
 import 'package:bridge_x/core/animation/bottom_nav_bar_animation/widget/scroller_listener.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +53,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       label: AppStrings.notifications,
                       icon: Icons.notifications_none,
                       onTap: () {
-                        context.goNamed(BridegeXRouteNames.notificationsSettings);
+                        context.goNamed(BridgeXRouteNames.notificationsSettings);
                       },
                     ),
                     VerticalSpacing(AppSpacing.spacing8),
@@ -61,7 +61,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       label: AppStrings.privacyAndSecurity,
                       icon: Icons.lock_outline,
                       onTap: () {
-                        context.goNamed(BridegeXRouteNames.privacySecurity);
+                        context.goNamed(BridgeXRouteNames.privacySecurity);
                       },
                     ),
                     VerticalSpacing(AppSpacing.spacing8),
@@ -69,7 +69,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       label: AppStrings.aboutUs,
                       icon: Icons.info_outline,
                       onTap: () {
-                        context.goNamed(BridegeXRouteNames.aboutUs);
+                        context.goNamed(BridgeXRouteNames.aboutUs);
                       },
                     ),
                     VerticalSpacing(AppSpacing.spacing32),

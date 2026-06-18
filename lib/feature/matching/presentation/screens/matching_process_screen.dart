@@ -1,6 +1,6 @@
 import 'package:bridge_x/core/animation/bottom_nav_bar_animation/widget/scroller_listener.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/buttons/bridge_x_back_button.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
@@ -67,12 +67,12 @@ class _MatchingProcessScreenState extends State<MatchingProcessScreen>
     final state = _apiResult;
     if (state is MatchingLoaded) {
       if (state.data.recommendations.isNotEmpty) {
-        context.goNamed(BridegeXRouteNames.recommendedTeams);
+        context.goNamed(BridgeXRouteNames.recommendedTeams);
       } else {
-        context.goNamed(BridegeXRouteNames.noTeamsFound);
+        context.goNamed(BridgeXRouteNames.noTeamsFound);
       }
     } else {
-      context.goNamed(BridegeXRouteNames.noTeamsFound);
+      context.goNamed(BridgeXRouteNames.noTeamsFound);
     }
   }
 

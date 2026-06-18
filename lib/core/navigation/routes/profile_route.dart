@@ -1,5 +1,5 @@
 import 'package:bridge_x/core/animation/screen_transtion_animation/transitions/slide_right_trnasition.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dart';
 import 'package:bridge_x/feature/settings/presentation/screen/about_screen.dart';
 import 'package:bridge_x/feature/levels/presentation/screen/your_level_screens.dart';
@@ -21,13 +21,13 @@ final SlideRightTransitionPage slideRightTransitionPage = SlideRightTransitionPa
 StatefulShellBranch profileRoute = StatefulShellBranch(
   routes: [
     GoRoute(
-      name: BridegeXRouteNames.profile,
+      name: BridgeXRouteNames.profile,
       path: BridgeXRoutePaths.profile,
       builder: (context, state) => const ProfileScreen(),
       routes: [
         GoRoute(
           path: BridgeXRoutePaths.editProfile,
-          name: BridegeXRouteNames.editProfile,
+          name: BridgeXRouteNames.editProfile,
           pageBuilder: (context, state) => slideRightTransitionPage.build(
             child: const EditProfileScreen(),
             state: state,
@@ -35,7 +35,7 @@ StatefulShellBranch profileRoute = StatefulShellBranch(
         ),
         GoRoute(
           path: BridgeXRoutePaths.settings,
-          name: BridegeXRouteNames.settings,
+          name: BridgeXRouteNames.settings,
           pageBuilder: (context, state) => slideRightTransitionPage.build(
             child: const SettingsScreen(),
             state: state,
@@ -43,7 +43,7 @@ StatefulShellBranch profileRoute = StatefulShellBranch(
           routes: [
             GoRoute(
               path: BridgeXRoutePaths.notificationsSettings,
-              name: BridegeXRouteNames.notificationsSettings,
+              name: BridgeXRouteNames.notificationsSettings,
               pageBuilder: (context, state) => slideRightTransitionPage.build(
                 child: const NotificationSettingsScreen(),
                 state: state,
@@ -51,7 +51,7 @@ StatefulShellBranch profileRoute = StatefulShellBranch(
             ),
             GoRoute(
               path: BridgeXRoutePaths.privacySecurity,
-              name: BridegeXRouteNames.privacySecurity,
+              name: BridgeXRouteNames.privacySecurity,
               pageBuilder: (context, state) => slideRightTransitionPage.build(
                 child: const PrivacySecurityScreen(),
                 state: state,
@@ -59,7 +59,7 @@ StatefulShellBranch profileRoute = StatefulShellBranch(
               routes: [
                 GoRoute(
                   path: BridgeXRoutePaths.changePassword,
-                  name: BridegeXRouteNames.changePassword,
+                  name: BridgeXRouteNames.changePassword,
                   pageBuilder: (context, state) => slideRightTransitionPage.build(
                     child: const ChangePasswordScreen(),
                     state: state,
@@ -69,7 +69,7 @@ StatefulShellBranch profileRoute = StatefulShellBranch(
             ),
             GoRoute(
               path: BridgeXRoutePaths.aboutUs,
-              name: BridegeXRouteNames.aboutUs,
+              name: BridgeXRouteNames.aboutUs,
               pageBuilder: (context, state) => slideRightTransitionPage.build(
                 child: const AboutScreen(),
                 state: state,
@@ -79,7 +79,7 @@ StatefulShellBranch profileRoute = StatefulShellBranch(
         ),
         GoRoute(
           path: BridgeXRoutePaths.myTasks,
-          name: BridegeXRouteNames.myTasks,
+          name: BridgeXRouteNames.myTasks,
           pageBuilder: (context, state) => slideRightTransitionPage.build(
             child: const MyTasksScreen(),
             state: state,
@@ -87,7 +87,7 @@ StatefulShellBranch profileRoute = StatefulShellBranch(
           routes: [
             GoRoute(
               path: BridgeXRoutePaths.myTasksDetails,
-              name: BridegeXRouteNames.myTasksDetails,
+              name: BridgeXRouteNames.myTasksDetails,
               pageBuilder: (context, state) => slideRightTransitionPage.build(
                 child: TaskDetailsScreen(task: state.extra as TaskItem?),
                 state: state,
@@ -97,7 +97,7 @@ StatefulShellBranch profileRoute = StatefulShellBranch(
         ),
         GoRoute(
           path: BridgeXRoutePaths.myProjects,
-          name: BridegeXRouteNames.myProjects,
+          name: BridgeXRouteNames.myProjects,
           pageBuilder: (context, state) => slideRightTransitionPage.build(
             child: const Scaffold(body: Center(child: Text('myProjects'))),
             state: state,
@@ -105,7 +105,7 @@ StatefulShellBranch profileRoute = StatefulShellBranch(
         ),
         GoRoute(
           path: BridgeXRoutePaths.level,
-          name: BridegeXRouteNames.level,
+          name: BridgeXRouteNames.level,
           pageBuilder: (context, state) => slideRightTransitionPage.build(
             child: const YourLevelScreen(),
             state: state,
@@ -113,7 +113,7 @@ StatefulShellBranch profileRoute = StatefulShellBranch(
         ),
         GoRoute(
           path: BridgeXRoutePaths.skillsAndExperience,
-          name: BridegeXRouteNames.skillsAndExperience,
+          name: BridgeXRouteNames.skillsAndExperience,
           pageBuilder: (context, state) => slideRightTransitionPage.build(
             child: const SkillsAndExperienceScreen(),
             state: state,

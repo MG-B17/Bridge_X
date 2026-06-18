@@ -2,7 +2,6 @@ import 'package:bridge_x/core/utils/app_shadow.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SocialButton extends StatelessWidget {
   const SocialButton({super.key, required this.onTap, required this.child});
@@ -17,8 +16,8 @@ class SocialButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 72.w,
-        height: 52.h,
+        width: AppSpacing.width72,
+        height: AppSpacing.height52,
         decoration: BoxDecoration(
           color: colors.surface,
           borderRadius: BorderRadius.circular(AppSpacing.radiusCard),

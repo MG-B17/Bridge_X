@@ -1,6 +1,9 @@
+import 'package:bridge_x/core/constant/app_keys.dart';
 import 'package:bridge_x/core/di/di.dart';
 import 'package:bridge_x/core/init/app_state.dart';
 import 'package:bridge_x/core/init/init_app.dart';
+import 'package:bridge_x/core/services/cache_service.dart';
+import 'package:bridge_x/core/services/secure_storage_service.dart';
 import 'package:bridge_x/feature/splash/widgets/splash_content.dart';
 import 'package:flutter/material.dart';
 
@@ -39,14 +42,29 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   }
 
   Future<void> _loadAppData() async {
-    try {
-      final result = await sl<AppInitializer>().init();
+    final result = await sl<AppInitializer>().init();
 
-      _appState.isLoggedIn = result.isLoggedIn;
-      _appState.hasSeenOnboarding = result.hasSeenOnboarding;
-    } catch (e) {
-      // print('Error loading app data: $e');
-      rethrow;
+    _appState.isLoggedIn = result.isLoggedIn;
+    _appState.hasSeenOnboarding = result.hasSeenOnboarding;
+    _appState.isVerified = result.isVerified;
+    _appState.trackSelectionCompleted = result.trackSelectionCompleted;
+    _appState.isProfileComplete = result.isProfileComplete;
+    _appState.username = result.username;
+
+    if (result.isLoggedIn && !result.isVerified) {
+      final secureStorage = sl<SecureStorageService>();
+      await secureStorage.delete(key: AppKeys.authToken);
+      await secureStorage.delete(key: AppKeys.userId);
+      await secureStorage.delete(key: AppKeys.userName);
+      await secureStorage.delete(key: AppKeys.isVerified);
+      await secureStorage.delete(key: AppKeys.trackSelectionCompleted);
+      await secureStorage.delete(key: AppKeys.isProfileComplete);
+      await sl<CacheService>().clearData();
+      _appState.isLoggedIn = false;
+      _appState.isVerified = false;
+      _appState.trackSelectionCompleted = false;
+      _appState.isProfileComplete = false;
+      _appState.username = null;
     }
   }
 

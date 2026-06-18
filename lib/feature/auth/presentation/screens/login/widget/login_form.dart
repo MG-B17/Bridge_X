@@ -1,18 +1,18 @@
 import 'package:bridge_x/core/constant/app_feedback_messages.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/services/logger_service.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/feature/auth/utils/auth_enum.dart';
 import 'package:bridge_x/core/utils/validator.dart';
 import 'package:bridge_x/core/widget/buttons/bridge_x_button.dart';
-import 'package:bridge_x/core/widget/feedback/bridge_x_snackbar.dart';
-import 'package:bridge_x/core/widget/inputs/bridge_x_text_form_field.dart';
-import 'package:bridge_x/core/widget/feedback/error_dialog.dart';
 import 'package:bridge_x/core/widget/buttons/text_button.dart';
+import 'package:bridge_x/core/widget/feedback/bridge_x_snackbar.dart';
+import 'package:bridge_x/core/widget/feedback/error_dialog.dart';
+import 'package:bridge_x/core/widget/inputs/bridge_x_text_form_field.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
-import 'package:bridge_x/feature/auth/presentation/controller/auth_cubit.dart';
-import 'package:bridge_x/feature/auth/presentation/controller/auth_state.dart';
-import 'package:bridge_x/core/utils/enum/auth_enum.dart';
+import 'package:bridge_x/feature/auth/presentation/controller/login/login_cubit.dart';
+import 'package:bridge_x/feature/auth/presentation/controller/login/login_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -45,8 +45,8 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthCubit, AuthState>(
-      listenWhen: (prev, curr) => curr.action == AuthAction.login && prev.status != curr.status,
+    return BlocListener<LoginCubit, LoginState>(
+      listenWhen: (prev, curr) => prev.status != curr.status,
       listener: (context, state) {
         if (state.status == AuthStatus.error) {
           LoggerService.warning('Login failed: ${state.message}', tag: 'LoginForm');
@@ -61,7 +61,7 @@ class _LoginFormState extends State<LoginForm> {
             context: context,
             message: state.message ?? AppFeedbackMessages.loginSuccess,
           );
-          context.goNamed(BridegeXRouteNames.home);
+          context.goNamed(BridgeXRouteNames.home);
         }
       },
       child: Form(
@@ -80,24 +80,35 @@ class _LoginFormState extends State<LoginForm> {
               autofillHints: const [AutofillHints.email],
             ),
             VerticalSpacing(AppSpacing.md),
-            BridgeXTextFormField(
-              label: AppStrings.password,
-              hint: AppStrings.passwordHint,
-              controller: _passwordController,
-              keyboardType: TextInputType.visiblePassword,
-              obscureText: true,
-              prefixIcon: Icons.lock_outline,
-              validator: AppValidator.password,
-              textInputAction: TextInputAction.done,
-              autofillHints: const [AutofillHints.password],
+            BlocBuilder<LoginCubit, LoginState>(
+              buildWhen: (p, c) => p.isPasswordVisible != c.isPasswordVisible,
+              builder: (context, state) => BridgeXTextFormField(
+                label: AppStrings.password,
+                hint: AppStrings.passwordHint,
+                controller: _passwordController,
+                keyboardType: TextInputType.visiblePassword,
+                obscureText: !state.isPasswordVisible,
+                prefixIcon: Icons.lock_outline,
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    state.isPasswordVisible
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                  ),
+                  onPressed: () => context.read<LoginCubit>().togglePasswordVisibility(),
+                ),
+                validator: AppValidator.password,
+                textInputAction: TextInputAction.done,
+                autofillHints: const [AutofillHints.password],
+              ),
             ),
             VerticalSpacing(AppSpacing.md),
             _buildForgotPasswordRow(),
             VerticalSpacing(AppSpacing.sm),
-            BlocBuilder<AuthCubit, AuthState>(
+            BlocBuilder<LoginCubit, LoginState>(
+              buildWhen: (p, c) => p.status != c.status,
               builder: (context, state) {
-                final isLoading =
-                    state.status == AuthStatus.loading && state.action == AuthAction.login;
+                final isLoading = state.status == AuthStatus.loading;
                 return BridgeXButton(
                   text: AppStrings.login,
                   isLoading: isLoading,
@@ -118,7 +129,7 @@ class _LoginFormState extends State<LoginForm> {
         BridgeXTextButton(
           text: AppStrings.forgotPassword,
           onTap: () {
-            context.pushNamed(BridegeXRouteNames.forgotPassword);
+            context.pushNamed(BridgeXRouteNames.forgotPassword);
           },
         ),
       ],
@@ -128,7 +139,7 @@ class _LoginFormState extends State<LoginForm> {
   void _onLoginTapped() {
     if (_formKey.currentState?.validate() ?? false) {
       LoggerService.debug('Attempting login for: ${_emailController.text}', tag: 'LoginForm');
-      context.read<AuthCubit>().login(
+      context.read<LoginCubit>().login(
         email: _emailController.text.trim(),
         password: _passwordController.text,
       );

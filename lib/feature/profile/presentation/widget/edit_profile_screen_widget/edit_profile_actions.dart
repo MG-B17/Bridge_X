@@ -9,37 +9,45 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class EditProfileActions extends StatelessWidget {
-  const EditProfileActions({required this.onSave, this.isLoading = false, super.key});
+  const EditProfileActions({
+    required this.onSave,
+    this.isLoading = false,
+    this.hideCancel = false,
+    super.key,
+  });
 
   final VoidCallback onSave;
   final bool isLoading;
+  final bool hideCancel;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         BridgeXButton(text: AppStrings.saveChanges, onTap: onSave, isLoading: isLoading),
-        VerticalSpacing(AppSpacing.md),
-        GestureDetector(
-          onTap: () {
-            if (context.mounted) context.pop();
-          },
-          child: Container(
-            width: double.infinity,
-            height: 50.h,
-            decoration: BoxDecoration(
-              color: context.colors.surface,
-              borderRadius: BorderRadius.circular(20.r),
-              border: Border.all(color: context.colors.divider, width: 1),
-            ),
-            child: Center(
-              child: Text(
-                AppStrings.cancel,
-                style: AppTextStyles.titleMedium.copyWith(color: context.colors.textPrimary),
+        if (!hideCancel) ...[
+          VerticalSpacing(AppSpacing.md),
+          GestureDetector(
+            onTap: () {
+              if (context.mounted) context.pop();
+            },
+            child: Container(
+              width: double.infinity,
+              height: 50.h,
+              decoration: BoxDecoration(
+                color: context.colors.surface,
+                borderRadius: BorderRadius.circular(20.r),
+                border: Border.all(color: context.colors.divider, width: 1),
+              ),
+              child: Center(
+                child: Text(
+                  AppStrings.cancel,
+                  style: AppTextStyles.titleMedium.copyWith(color: context.colors.textPrimary),
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ],
     );
   }

@@ -1,5 +1,5 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/buttons/bridge_x_button.dart';
 import 'package:bridge_x/core/widget/buttons/bridge_x_outline_button.dart';
@@ -19,7 +19,7 @@ class TeamActionButtons extends StatelessWidget {
             text: AppStrings.joinTeam,
             prefixicon: Icons.group_add_outlined,
             onTap: () {
-              context.pushNamed(BridegeXRouteNames.selectCategory);
+              context.pushNamed(BridgeXRouteNames.selectCategory);
             },
           ),
         ),
@@ -29,7 +29,7 @@ class TeamActionButtons extends StatelessWidget {
             text: AppStrings.createTeam,
             prefixicon: Icons.add_circle_outline,
             onTap: () {
-              context.pushNamed(BridegeXRouteNames.createTeam);
+              context.pushNamed(BridgeXRouteNames.createTeam);
             },
           ),
         ),

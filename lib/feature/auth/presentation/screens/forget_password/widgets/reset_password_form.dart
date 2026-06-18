@@ -2,21 +2,21 @@ import 'package:bridge_x/core/constant/app_feedback_messages.dart';
 import 'package:bridge_x/core/constant/app_validation_messages.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/feature/auth/utils/auth_enum.dart';
 import 'package:bridge_x/core/utils/validator.dart';
 import 'package:bridge_x/core/widget/buttons/bridge_x_button.dart';
 import 'package:bridge_x/core/widget/feedback/bridge_x_snackbar.dart';
+import 'package:bridge_x/core/widget/feedback/error_dialog.dart';
 import 'package:bridge_x/core/widget/inputs/bridge_x_text_form_field.dart';
 import 'package:bridge_x/core/widget/layout/horizontal_spacing.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
-import 'package:bridge_x/feature/auth/presentation/controller/auth_cubit.dart';
-import 'package:bridge_x/feature/auth/presentation/controller/auth_state.dart';
-import 'package:bridge_x/core/utils/enum/auth_enum.dart';
-import 'package:bridge_x/core/widget/feedback/error_dialog.dart';
+import 'package:bridge_x/feature/auth/presentation/controller/password_reset/password_reset_cubit.dart';
+import 'package:bridge_x/feature/auth/presentation/controller/password_reset/password_reset_state.dart';
+import 'package:bridge_x/feature/auth/utils/auth_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class ResetPasswordForm extends StatefulWidget {
@@ -58,28 +58,50 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          BridgeXTextFormField(
-            label: AppStrings.newPassword.toUpperCase(),
-            hint: '\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022',
-            controller: _newPasswordController,
-            obscureText: true,
-            prefixIcon: Icons.vpn_key_outlined,
-            validator: AppValidator.password,
+          BlocBuilder<PasswordResetCubit, PasswordResetState>(
+            buildWhen: (p, c) => p.isPasswordVisible != c.isPasswordVisible,
+            builder: (context, state) => BridgeXTextFormField(
+              label: AppStrings.newPassword.toUpperCase(),
+              hint: AuthStrings.passwordDots,
+              controller: _newPasswordController,
+              obscureText: !state.isPasswordVisible,
+              prefixIcon: Icons.vpn_key_outlined,
+              suffixIcon: IconButton(
+                icon: Icon(
+                  state.isPasswordVisible
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
+                ),
+                onPressed: () => context.read<PasswordResetCubit>().togglePasswordVisibility(),
+              ),
+              validator: AppValidator.password,
+            ),
           ),
           VerticalSpacing(AppSpacing.lg),
-          BridgeXTextFormField(
-            label: AppStrings.confirmNewPassword.toUpperCase(),
-            hint: '\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022',
-            controller: _confirmPasswordController,
-            obscureText: true,
-            prefixIcon: Icons.shield_outlined,
-            validator: (val) => AppValidator.confirmPassword(_newPasswordController.text)(val),
+          BlocBuilder<PasswordResetCubit, PasswordResetState>(
+            buildWhen: (p, c) => p.isConfirmPasswordVisible != c.isConfirmPasswordVisible,
+            builder: (context, state) => BridgeXTextFormField(
+              label: AppStrings.confirmNewPassword.toUpperCase(),
+              hint: AuthStrings.passwordDots,
+              controller: _confirmPasswordController,
+              obscureText: !state.isConfirmPasswordVisible,
+              prefixIcon: Icons.shield_outlined,
+              suffixIcon: IconButton(
+                icon: Icon(
+                  state.isConfirmPasswordVisible
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
+                ),
+                onPressed: () => context.read<PasswordResetCubit>().toggleConfirmPasswordVisibility(),
+              ),
+              validator: (val) => AppValidator.confirmPassword(_newPasswordController.text)(val),
+            ),
           ),
           VerticalSpacing(AppSpacing.lg),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.info_outline, color: colors.textSecondary, size: 16.sp),
+              Icon(Icons.info_outline, color: colors.textSecondary, size: AppSpacing.fontSize16),
               HorizontalSpacing(AppSpacing.xs),
               Expanded(
                 child: Text(
@@ -90,18 +112,16 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
             ],
           ),
           VerticalSpacing(AppSpacing.xl),
-          BlocConsumer<AuthCubit, AuthState>(
-            listenWhen: (prev, curr) =>
-                curr.action == AuthAction.resetPassword && prev.status != curr.status,
-            buildWhen: (prev, curr) =>
-                curr.action == AuthAction.resetPassword && prev.status != curr.status,
+          BlocConsumer<PasswordResetCubit, PasswordResetState>(
+            listenWhen: (prev, curr) => prev.status != curr.status,
+            buildWhen: (prev, curr) => prev.status != curr.status,
             listener: (context, state) {
               if (state.status == AuthStatus.success) {
                 BridgeXSnackBar.showSuccess(
                   context: context,
                   message: state.message ?? AppFeedbackMessages.passwordResetSuccess,
                 );
-                context.goNamed(BridegeXRouteNames.login);
+                context.goNamed(BridgeXRouteNames.login);
               } else if (state.status == AuthStatus.error) {
                 ErrorDialog.show(
                   context: context,
@@ -119,7 +139,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                     ? null
                     : () {
                         if (_formKey.currentState?.validate() ?? false) {
-                          context.read<AuthCubit>().resetPassword(
+                          context.read<PasswordResetCubit>().resetPassword(
                             email: widget.email,
                             code: widget.code,
                             newPassword: _newPasswordController.text,

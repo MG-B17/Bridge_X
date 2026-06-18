@@ -11,6 +11,7 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   final GetProfileUseCase _getProfileUseCase;
   final UpdateProfileUseCase _updateProfileUseCase;
   final SecureStorageService _secureStorageService;
+  EditProfileEntity? _cachedProfile;
 
   EditProfileCubit({
     required GetProfileUseCase getProfileUseCase,
@@ -31,15 +32,25 @@ class EditProfileCubit extends Cubit<EditProfileState> {
 
     result.fold(
       (failure) => emit(EditProfileError(message: failure.message)),
-      (profile) => emit(EditProfileLoaded(profile: profile)),
+      (profile) {
+        _cachedProfile = profile;
+        emit(EditProfileLoaded(profile: profile));
+      },
     );
+  }
+
+  EditProfileEntity? _profileFromState(EditProfileState state) {
+    if (state is EditProfileLoaded) return state.profile;
+    if (state is EditProfileUpdating) return state.profile;
+    if (state is EditProfileUpdated) return state.profile;
+    return null;
   }
 
   Future<void> updateProfile(UpdateProfileRequestModel request) async {
     if (state is EditProfileUpdating) return;
     if (!request.hasChanges) return;
 
-    final currentProfile = _currentProfile;
+    final currentProfile = _cachedProfile ?? _profileFromState(state);
     if (currentProfile == null) return;
 
     emit(EditProfileUpdating(profile: currentProfile));
@@ -47,20 +58,14 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     final result = await _updateProfileUseCase(request);
     if (isClosed) return;
 
-    result.fold((failure) => emit(EditProfileError(message: failure.message)), (
-      profile,
-    ) async {
-      await _secureStorageService.write(key: AppKeys.userName, value: profile.userName);
-      emit(EditProfileUpdated(profile: profile));
-      fetchProfile();
-    });
-  }
-
-  EditProfileEntity? get _currentProfile {
-    final s = state;
-    if (s is EditProfileLoaded) return s.profile;
-    if (s is EditProfileUpdating) return s.profile;
-    if (s is EditProfileUpdated) return s.profile;
-    return null;
+    result.fold(
+      (failure) => emit(EditProfileError(message: failure.message)),
+      (profile) async {
+        _cachedProfile = profile;
+        await _secureStorageService.write(key: AppKeys.userName, value: profile.userName);
+        emit(EditProfileUpdated(profile: profile));
+        fetchProfile();
+      },
+    );
   }
 }

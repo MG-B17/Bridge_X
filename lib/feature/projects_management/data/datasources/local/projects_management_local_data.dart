@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:bridge_x/core/constant/app_keys.dart';
 import 'package:bridge_x/core/error/exception.dart';
-import 'package:bridge_x/core/services/chache_service.dart';
+import 'package:bridge_x/core/services/cache_service.dart';
 import 'package:bridge_x/feature/projects_management/data/models/all_projects_response_model.dart';
 
 abstract class ProjectsManagementLocalData {

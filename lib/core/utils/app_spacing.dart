@@ -38,6 +38,7 @@ abstract class AppSpacing {
   static double get height16 => 16.h;
   static double get height18 => 18.h;
   static double get height20 => 20.h;
+  static double get height24 => 24.h;
   static double get height40 => 40.h;
   static double get height50 => 50.h;
   static double get height58 => 58.h;
@@ -75,7 +76,28 @@ abstract class AppSpacing {
   static double get radius24 => 24.r;
   static double get radius28 => 28.r;
   static double get radius30 => 30.r;
+  static double get radius25 => 25.r;
   static double get radius32 => 32.r;
+
+  static double get width50 => 50.w;
+  static double get width64 => 64.w;
+  static double get width72 => 72.w;
+  static double get width80 => 80.w;
+  static double get width85 => 85.w;
+  static double get width90 => 90.w;
+  static double get width95 => 95.w;
+  static double get width100 => 100.w;
+  static double get width110 => 110.w;
+
+  static double get height41 => 41.h;
+  static double get height52 => 52.h;
+  static double get height60 => 60.h;
+  static double get height200 => 200.h;
+  static double get height350 => 350.h;
+  static double get height450 => 450.h;
+  static double get height580 => 580.h;
+  static double get height700 => 700.h;
+  static double get height800 => 800.h;
 
   static double get otpCellSize => 45.w;
   static double get section => 40.w;

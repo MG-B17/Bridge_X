@@ -1,6 +1,6 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/navigation/screens_args/notifications_details_args.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/horizontal_spacing.dart';
@@ -43,7 +43,7 @@ class NotificationItemTile extends StatelessWidget {
           iconColor: visuals.iconColor,
           time: time,
         );
-        context.pushNamed(BridegeXRouteNames.notificationsDetails, extra: args);
+        context.pushNamed(BridgeXRouteNames.notificationsDetails, extra: args);
       },
       borderRadius: BorderRadius.circular(AppSpacing.radius16),
       child: Container(

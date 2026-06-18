@@ -1,7 +1,7 @@
 import 'package:bridge_x/core/animation/bottom_nav_bar_animation/widget/scroller_listener.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/buttons/bridge_x_back_button.dart';
 import 'package:bridge_x/core/widget/layout/section_header.dart';
@@ -60,7 +60,7 @@ class _RecommendedTeamsScreenState extends State<RecommendedTeamsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  BridgeXBackButton(onTap: () => context.goNamed(BridegeXRouteNames.home)),
+                  BridgeXBackButton(onTap: () => context.goNamed(BridgeXRouteNames.home)),
                   VerticalSpacing(AppSpacing.spacing16),
                   SectionHeader(
                     title: AppStrings.recommendedForYou,

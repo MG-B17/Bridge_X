@@ -1,15 +1,15 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
-import 'package:bridge_x/core/utils/enum/auth_enum.dart';
+import 'package:bridge_x/feature/auth/utils/auth_enum.dart';
 import 'package:bridge_x/core/widget/feedback/error_dialog.dart';
 import 'package:bridge_x/core/widget/feedback/loading_dialog.dart';
 import 'package:bridge_x/core/widget/feedback/success_dialog.dart';
 import 'package:bridge_x/core/widget/layout/bridge_x_background_gears.dart';
 import 'package:bridge_x/core/widget/layout/bridge_x_screen_header.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
-import 'package:bridge_x/feature/auth/presentation/controller/auth_cubit.dart';
-import 'package:bridge_x/feature/auth/presentation/controller/auth_state.dart';
+import 'package:bridge_x/feature/auth/presentation/controller/account/account_cubit.dart';
+import 'package:bridge_x/feature/auth/presentation/controller/account/account_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -80,7 +80,7 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthCubit, AuthState>(
+    return BlocListener<AccountCubit, AccountState>(
       listenWhen: (previous, current) =>
           current.action == AuthAction.softDeleteProfile,
       listener: (context, state) {
@@ -95,7 +95,7 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
             title: AppStrings.success,
             message: state.message ?? 'Account deleted successfully',
             onAction: () {
-              context.read<AuthCubit>().completeSoftDeleteSignOut();
+              context.read<AccountCubit>().completeSoftDeleteSignOut();
             },
           );
         } else if (state.status == AuthStatus.error) {
@@ -139,7 +139,7 @@ class _PrivacySecurityScreenState extends State<PrivacySecurityScreen> {
                           final confirmed =
                               await _showDeleteAccountConfirmationDialog();
                           if ((confirmed ?? false) && context.mounted) {
-                            context.read<AuthCubit>().softDeleteProfile();
+                            context.read<AccountCubit>().softDeleteProfile();
                           }
                         },
                       ),

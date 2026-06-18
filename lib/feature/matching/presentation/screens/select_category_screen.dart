@@ -1,7 +1,7 @@
 import 'package:bridge_x/core/animation/bottom_nav_bar_animation/controller/scroll_cubit.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/buttons/bridge_x_button.dart';
@@ -125,7 +125,7 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
                   BridgeXButton(
                     text: AppStrings.startMatching,
                     onTap: _selected.isNotEmpty
-                        ? () => context.pushNamed(BridegeXRouteNames.matchingProcess)
+                        ? () => context.pushNamed(BridgeXRouteNames.matchingProcess)
                         : null,
                   ),
                   VerticalSpacing(AppSpacing.spacing16),

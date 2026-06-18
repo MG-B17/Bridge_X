@@ -2,7 +2,7 @@ import 'package:bridge_x/core/animation/screen_transtion_animation/transitions/s
 import 'package:bridge_x/core/animation/screen_transtion_animation/transitions/slide_up_transition.dart';
 import 'package:bridge_x/core/di/di.dart';
 import 'package:bridge_x/core/navigation/navigator_keys.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dart';
 import 'package:bridge_x/core/navigation/screens_args/create_task_args.dart';
 import 'package:bridge_x/core/navigation/screens_args/project_dashboard_args.dart';
@@ -39,12 +39,12 @@ StatefulShellBranch projectRoute = StatefulShellBranch(
       routes: [
         GoRoute(
           path: BridgeXRoutePaths.projects,
-          name: BridegeXRouteNames.projects,
+          name: BridgeXRouteNames.projects,
           builder: (context, state) => const ProjectsScreen(),
           routes: [
             GoRoute(
               path: BridgeXRoutePaths.createTeam,
-              name: BridegeXRouteNames.createTeam,
+              name: BridgeXRouteNames.createTeam,
               parentNavigatorKey: rootNavigatorKey,
               pageBuilder: (context, state) => slideRightTransitionPage.build(
                 child: const CreateTeamScreen(),
@@ -53,7 +53,7 @@ StatefulShellBranch projectRoute = StatefulShellBranch(
               routes: [
                 GoRoute(
                   path: BridgeXRoutePaths.addMembersBottomSheet,
-                  name: BridegeXRouteNames.addMembersBottomSheet,
+                  name: BridgeXRouteNames.addMembersBottomSheet,
                   pageBuilder: (context, state) => _bottomSheetTransition
                       .build(child: const AddMembersBottomSheet(), state: state),
                 ),
@@ -61,7 +61,7 @@ StatefulShellBranch projectRoute = StatefulShellBranch(
             ),
             GoRoute(
               path: BridgeXRoutePaths.projectDetails,
-              name: BridegeXRouteNames.projectDetails,
+              name: BridgeXRouteNames.projectDetails,
               pageBuilder: (context, state) {
                 final args = state.extra as ProjectDetailsArgs;
                 return slideRightTransitionPage.build(
@@ -75,7 +75,7 @@ StatefulShellBranch projectRoute = StatefulShellBranch(
             ),
             GoRoute(
               path: BridgeXRoutePaths.projectDashboard,
-              name: BridegeXRouteNames.projectDashboard,
+              name: BridgeXRouteNames.projectDashboard,
               pageBuilder: (context, state) {
                 final args = state.extra as ProjectDashboardArgs;
                 return slideRightTransitionPage.build(
@@ -86,7 +86,7 @@ StatefulShellBranch projectRoute = StatefulShellBranch(
             ),
             GoRoute(
               path: BridgeXRoutePaths.teamSettings,
-              name: BridegeXRouteNames.teamSettings,
+              name: BridgeXRouteNames.teamSettings,
               pageBuilder: (context, state) {
                 final args = state.extra as TeamSettingsArgs;
                 return slideRightTransitionPage.build(
@@ -97,7 +97,7 @@ StatefulShellBranch projectRoute = StatefulShellBranch(
             ),
             GoRoute(
               path: BridgeXRoutePaths.completedProjectDetails,
-              name: BridegeXRouteNames.completedProjectDetails,
+              name: BridgeXRouteNames.completedProjectDetails,
               pageBuilder: (context, state) {
                 final args = state.extra as ProjectDetailsArgs;
                 return slideRightTransitionPage.build(
@@ -110,7 +110,7 @@ StatefulShellBranch projectRoute = StatefulShellBranch(
             ),
             GoRoute(
               path: BridgeXRoutePaths.createTask,
-              name: BridegeXRouteNames.createTask,
+              name: BridgeXRouteNames.createTask,
               pageBuilder: (context, state) {
                 final args = state.extra as CreateTaskArgs;
                 return _bottomSheetTransition.build(
@@ -125,7 +125,7 @@ StatefulShellBranch projectRoute = StatefulShellBranch(
             ),
             GoRoute(
               path: BridgeXRoutePaths.viewTask,
-              name: BridegeXRouteNames.viewTask,
+              name: BridgeXRouteNames.viewTask,
               pageBuilder: (context, state) {
                 final args = state.extra as ViewTaskArgs;
                 return slideRightTransitionPage.build(
@@ -136,7 +136,7 @@ StatefulShellBranch projectRoute = StatefulShellBranch(
             ),
             GoRoute(
               path: BridgeXRoutePaths.reportUser,
-              name: BridegeXRouteNames.reportUser,
+              name: BridgeXRouteNames.reportUser,
               pageBuilder: (context, state) {
                 final args = state.extra as ReportUserArgs;
                 return _bottomSheetTransition.build(
@@ -147,7 +147,7 @@ StatefulShellBranch projectRoute = StatefulShellBranch(
             ),
             GoRoute(
               path: BridgeXRoutePaths.teamEvaluation,
-              name: BridegeXRouteNames.teamEvaluation,
+              name: BridgeXRouteNames.teamEvaluation,
               pageBuilder: (context, state) {
                 final args = state.extra as TeamEvaluationArgs;
                 return slideRightTransitionPage.build(

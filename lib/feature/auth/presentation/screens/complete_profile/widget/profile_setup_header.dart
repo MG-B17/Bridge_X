@@ -1,10 +1,9 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
-import 'package:bridge_x/core/theme/bridge_x_colors.dart';
+import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
+import 'package:bridge_x/feature/auth/utils/auth_strings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileSetupHeader extends StatelessWidget {
@@ -15,30 +14,20 @@ class ProfileSetupHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Top nav row: back arrow + "Profile Setup"
         Row(
           children: [
-            GestureDetector(
-              onTap: () => context.pop(),
-              child: Icon(
-                Icons.arrow_back,
-                color: AppColors.navyBlue,
-                size: 22.sp,
-              ),
-            ),
-            SizedBox(width: 12.w),
+            SizedBox(width: AppSpacing.spacing12),
             Text(
               AppStrings.profileSetup,
               style: GoogleFonts.inter(
-                fontSize: 16.sp,
+                fontSize: AppSpacing.fontSize16,
                 fontWeight: FontWeight.bold,
-                color: AppColors.navyBlue,
+                color: context.colors.textPrimary,
               ),
             ),
           ],
         ),
         VerticalSpacing(AppSpacing.spacing24),
-        // Large centered title and subtitle
         Center(
           child: Column(
             children: [
@@ -46,19 +35,19 @@ class ProfileSetupHeader extends StatelessWidget {
                 AppStrings.completeProfile,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
-                  fontSize: 28.sp,
+                  fontSize: AppSpacing.fontSize30,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.primaryBlue,
+                  color: context.colors.primary,
                 ),
               ),
               VerticalSpacing(AppSpacing.spacing8),
               Text(
-                'Help us find the right team for you.',
+                AuthStrings.subtitleFindTeam,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
-                  fontSize: 14.sp,
+                  fontSize: AppSpacing.fontSize14,
                   fontWeight: FontWeight.w400,
-                  color: AppColors.gray,
+                  color: context.colors.textSecondary,
                 ),
               ),
             ],

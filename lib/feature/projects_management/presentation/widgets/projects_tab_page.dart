@@ -1,6 +1,6 @@
 import 'package:bridge_x/core/animation/bottom_nav_bar_animation/controller/scroll_cubit.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/navigation/screens_args/project_dashboard_args.dart';
 import 'package:bridge_x/core/navigation/screens_args/project_details_args.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
@@ -93,7 +93,7 @@ class _ProjectsTabPageState extends State<ProjectsTabPage>
                       onExploreTeams: () {},
                       onCreateTeam: () {
                         context.read<ScrollCubit>().hide();
-                        context.pushNamed(BridegeXRouteNames.createTeam);
+                        context.pushNamed(BridgeXRouteNames.createTeam);
                       },
                     )
                   : ListView.separated(
@@ -150,7 +150,7 @@ class _ProjectsTabPageState extends State<ProjectsTabPage>
         onActionTap: () {
           context.read<ScrollCubit>().hide();
           context.pushNamed(
-            BridegeXRouteNames.completedProjectDetails,
+            BridgeXRouteNames.completedProjectDetails,
             extra: ProjectDetailsArgs(
               projectId: project.id,
               status: 'completed',
@@ -175,14 +175,14 @@ class _ProjectsTabPageState extends State<ProjectsTabPage>
       onYourTeamTap: () {
         context.read<ScrollCubit>().hide();
         context.pushNamed(
-          BridegeXRouteNames.projectDashboard,
+          BridgeXRouteNames.projectDashboard,
           extra: ProjectDashboardArgs(projectId: project.id),
         );
       },
       onDetailsTap: () {
         context.read<ScrollCubit>().hide();
         context.pushNamed(
-          BridegeXRouteNames.projectDetails,
+          BridgeXRouteNames.projectDetails,
           extra: ProjectDetailsArgs(projectId: project.id, status: 'ongoing'),
         );
       },

@@ -15,7 +15,7 @@ import 'package:bridge_x/feature/dashboard/presentation/cubit/dashboard_state.da
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import '../widgets/home_header_widgets/greeting_header.dart';
 import '../widgets/home_insight_widgets/ai_insights_card.dart';
 import '../widgets/home_insight_widgets/team_action_buttons.dart';
@@ -111,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ? GestureDetector(
                                   onTap: () {
                                     context.pushNamed(
-                                      BridegeXRouteNames.projectProgress,
+                                      BridgeXRouteNames.projectProgress,
                                       extra: dashboard?.projectsDetails,
                                     );
                                   },

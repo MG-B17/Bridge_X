@@ -1,7 +1,7 @@
 import 'package:bridge_x/core/di/di.dart';
 import 'package:bridge_x/core/init/app_state.dart';
 import 'package:bridge_x/core/navigation/navigator_keys.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dart';
 import 'package:bridge_x/core/navigation/routes/chat_route.dart';
 import 'package:bridge_x/core/navigation/routes/home_route.dart';
@@ -15,6 +15,7 @@ import 'package:bridge_x/feature/auth/presentation/screens/complete_profile/comp
 import 'package:bridge_x/feature/auth/presentation/screens/login/login_screen.dart';
 import 'package:bridge_x/feature/layout/layout.dart';
 import 'package:bridge_x/feature/onboarding/presentation/screens/onboarding_screen.dart';
+import 'package:bridge_x/feature/profile/presentation/screen/edit_profile.dart';
 import 'package:bridge_x/feature/splash/splash_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -30,18 +31,18 @@ final appRouter = GoRouter(
   routes: [
     GoRoute(
       path: BridgeXRoutePaths.splash,
-      name: BridegeXRouteNames.splash,
+      name: BridgeXRouteNames.splash,
       builder: (context, state) => const SplashScreen(),
     ),
 
     GoRoute(
       path: BridgeXRoutePaths.onboarding,
-      name: BridegeXRouteNames.onboarding,
+      name: BridgeXRouteNames.onboarding,
       builder: (context, state) => const OnboardingScreen(),
     ),
     GoRoute(
       path: BridgeXRoutePaths.login,
-      name: BridegeXRouteNames.login,
+      name: BridgeXRouteNames.login,
       builder: (context, state) => const LoginScreen(),
     ),
     forgetPasswordRoute,
@@ -49,8 +50,13 @@ final appRouter = GoRouter(
     invitaionsRoute,
     GoRoute(
       path: BridgeXRoutePaths.completeProfile,
-      name: BridegeXRouteNames.completeProfile,
+      name: BridgeXRouteNames.completeProfile,
       builder: (context, state) => const CompleteProfileScreen(),
+    ),
+    GoRoute(
+      path: BridgeXRoutePaths.updateProfile,
+      name: BridgeXRouteNames.updateProfile,
+      builder: (context, state) => const EditProfileScreen(isSetupMode: true),
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, statefulNavigationShell) =>

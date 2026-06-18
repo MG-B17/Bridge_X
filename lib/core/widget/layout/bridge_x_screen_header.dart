@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 class BridgeXScreenHeader extends StatelessWidget {
   const BridgeXScreenHeader({
     required this.title,
+    this.isSetupMode = false,
     this.titleStyle,
     this.backButtonBgColor,
     this.backButtonIconColor,
@@ -15,7 +16,7 @@ class BridgeXScreenHeader extends StatelessWidget {
     this.spacing,
     super.key,
   });
-
+  final bool isSetupMode;
   final String title;
   final TextStyle? titleStyle;
   final Color? backButtonBgColor;
@@ -27,7 +28,8 @@ class BridgeXScreenHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        BridgeXBackButton(
+       if (!isSetupMode)
+         BridgeXBackButton(
           backgroundColor: backButtonBgColor,
           iconColor: backButtonIconColor,
           boxShadow: backButtonShadow,

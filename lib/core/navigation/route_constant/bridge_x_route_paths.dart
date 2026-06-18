@@ -16,6 +16,7 @@ class BridgeXRoutePaths {
 
 
   static const String completeProfile = '/complete-profile';
+  static const String updateProfile = '/update-profile';
 
   static const String layout = '/layout';
 

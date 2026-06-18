@@ -1,6 +1,6 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/theme_extension.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/navigation/screens_args/team_settings_args.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
@@ -28,7 +28,7 @@ class ActionButtonsSection extends StatelessWidget {
         Expanded(
           child: _buildButton(
             onTap: () {
-              context.goNamed(BridegeXRouteNames.teamSettings,extra: TeamSettingsArgs(teamId: teamId));
+              context.goNamed(BridgeXRouteNames.teamSettings,extra: TeamSettingsArgs(teamId: teamId));
             },
             context,
             AppStrings.teamSettings,

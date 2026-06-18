@@ -1,6 +1,7 @@
-import 'package:bridge_x/core/theme/bridge_x_colors.dart';
+import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/feature/auth/utils/auth_strings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileQuote extends StatelessWidget {
@@ -9,15 +10,15 @@ class ProfileQuote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 12.w),
+      padding: EdgeInsets.symmetric(horizontal: AppSpacing.spacing12),
       child: Text(
-        '"The secret of getting ahead is getting started. Your profile is the first step of your Bridge X legacy."',
+        AuthStrings.quoteText,
         textAlign: TextAlign.center,
         style: GoogleFonts.inter(
-          fontSize: 13.sp,
+          fontSize: AppSpacing.fontSize14,
           fontWeight: FontWeight.w400,
           fontStyle: FontStyle.italic,
-          color: AppColors.gray,
+          color: context.colors.textSecondary,
           height: 1.6,
         ),
       ),

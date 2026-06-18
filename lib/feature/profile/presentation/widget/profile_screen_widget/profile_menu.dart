@@ -1,15 +1,15 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
-import 'package:bridge_x/core/utils/enum/auth_enum.dart';
+import 'package:bridge_x/feature/auth/utils/auth_enum.dart';
 import 'package:bridge_x/core/widget/feedback/bridge_x_snackbar.dart';
 import 'package:bridge_x/core/widget/feedback/error_dialog.dart';
 import 'package:bridge_x/core/widget/feedback/loading_dialog.dart';
 import 'package:bridge_x/core/widget/layout/bridge_x_divider.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
-import 'package:bridge_x/feature/auth/presentation/controller/auth_cubit.dart';
-import 'package:bridge_x/feature/auth/presentation/controller/auth_state.dart';
+import 'package:bridge_x/feature/auth/presentation/controller/account/account_cubit.dart';
+import 'package:bridge_x/feature/auth/presentation/controller/account/account_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -22,7 +22,7 @@ class ProfileMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthCubit, AuthState>(
+    return BlocListener<AccountCubit, AccountState>(
       listenWhen: (prev, curr) => curr.action == AuthAction.logout,
       listener: (context, state) {
         if (!context.mounted) return;
@@ -56,7 +56,7 @@ class ProfileMenu extends StatelessWidget {
               icon: Icons.task_alt_outlined,
               badgeCount: 3,
               onTap: () {
-                context.goNamed(BridegeXRouteNames.myTasks);
+                context.goNamed(BridgeXRouteNames.myTasks);
               },
             ),
             BridgeXDivider(height: 16, indent: 24, endIndent: 24, color: context.colors.divider),
@@ -64,7 +64,7 @@ class ProfileMenu extends StatelessWidget {
               label: InvitaionsStrings.requestsCenter,
               icon: Icons.mail_outline_rounded,
               onTap: () {
-                context.pushNamed(BridegeXRouteNames.requestsCenter);
+                context.pushNamed(BridgeXRouteNames.requestsCenter);
               },
             ),
             BridgeXDivider(height: 16, indent: 24, endIndent: 24, color: context.colors.divider),
@@ -72,7 +72,7 @@ class ProfileMenu extends StatelessWidget {
               label: AppStrings.skillsAndExperience,
               icon: Icons.psychology_outlined,
               onTap: () {
-                context.goNamed(BridegeXRouteNames.skillsAndExperience);
+                context.goNamed(BridgeXRouteNames.skillsAndExperience);
               },
             ),
             BridgeXDivider(height: 16, indent: 24, endIndent: 24, color: context.colors.divider),
@@ -80,7 +80,7 @@ class ProfileMenu extends StatelessWidget {
               label: AppStrings.settings,
               icon: Icons.settings_outlined,
               onTap: () {
-                context.goNamed(BridegeXRouteNames.settings);
+                context.goNamed(BridgeXRouteNames.settings);
               },
             ),
             BridgeXDivider(height: 16, indent: 24, endIndent: 24, color: context.colors.divider),
@@ -91,7 +91,7 @@ class ProfileMenu extends StatelessWidget {
                 final confirmed = await LogoutDialog.show(context);
                 if (confirmed ?? false) {
                   if (!context.mounted) return;
-                  context.read<AuthCubit>().logout();
+                  context.read<AccountCubit>().logout();
                 }
               },
               isDestructive: true,

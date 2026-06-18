@@ -1,5 +1,5 @@
 import 'package:bridge_x/core/extensions/context_extension.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/horizontal_spacing.dart';
@@ -48,7 +48,7 @@ class ProfileAvatar extends StatelessWidget {
           right: -10.w,
           child: GestureDetector(
             onTap: () {
-              context.goNamed(BridegeXRouteNames.level);
+              context.goNamed(BridgeXRouteNames.level);
             },
             child: Container(
               padding: EdgeInsets.symmetric(

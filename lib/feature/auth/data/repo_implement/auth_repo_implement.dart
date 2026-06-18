@@ -4,18 +4,19 @@ import 'package:bridge_x/core/error/error_strings.dart';
 import 'package:bridge_x/core/error/exception.dart';
 import 'package:bridge_x/core/error/failure.dart';
 import 'package:bridge_x/core/network/network_info.dart';
-import 'package:bridge_x/core/services/chache_service.dart';
+import 'package:bridge_x/core/services/cache_service.dart';
 import 'package:bridge_x/core/services/secure_storage_service.dart';
 import 'package:bridge_x/core/services/logger_service.dart';
-import 'package:bridge_x/feature/auth/data/models/complete_profile_request_model.dart';
-import 'package:bridge_x/feature/auth/data/remote_data/auth_remote_data.dart';
-import 'package:bridge_x/feature/auth/domain/entity/change_password_entity.dart';
-import 'package:bridge_x/feature/auth/domain/entity/forget_password_entity.dart';
-import 'package:bridge_x/feature/auth/domain/entity/login_entity.dart';
-import 'package:bridge_x/feature/auth/domain/entity/register_entity.dart';
-import 'package:bridge_x/feature/auth/domain/entity/reset_password_entity.dart';
+import 'package:bridge_x/feature/auth/data/data_source/remote_data/auth_remote_data.dart';
+import 'package:bridge_x/feature/auth/data/models/complete_profile_models/complete_profile_request_model.dart';
+import 'package:bridge_x/feature/auth/domain/entity/change_password_entity/change_password_entity.dart';
+import 'package:bridge_x/feature/auth/domain/entity/forget_password_entity/forget_password_entity.dart';
+import 'package:bridge_x/feature/auth/domain/entity/login_entity/login_entity.dart';
+import 'package:bridge_x/feature/auth/domain/entity/login_entity/login_result_entity.dart';
+import 'package:bridge_x/feature/auth/domain/entity/register_entity/register_entity.dart';
+import 'package:bridge_x/feature/auth/domain/entity/reset_password_entity/reset_password_entity.dart';
 import 'package:bridge_x/feature/auth/domain/entity/verify_code_entity.dart';
-import 'package:bridge_x/feature/auth/domain/entity/verify_password_result_entity.dart';
+import 'package:bridge_x/feature/auth/domain/entity/verify_password_entity/verify_password_result_entity.dart';
 import 'package:bridge_x/feature/auth/domain/repo/auth_repo.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
@@ -82,7 +83,7 @@ class AuthRepoImplement extends AuthRepo {
   }
 
   @override
-  Future<Either<Failure, String>> login({required LoginEntity loginEntity}) async {
+  Future<Either<Failure, LoginResultEntity>> login({required LoginEntity loginEntity}) async {
     if (await networkInfo.isConnected) {
       try {
         LoggerService.debug('Attempting login for: ${loginEntity.email}', tag: 'AuthRepo');
@@ -94,7 +95,13 @@ class AuthRepoImplement extends AuthRepo {
           value: response.userName ?? 'User ${response.userId}',
         );
         LoggerService.info('Login successful for: ${loginEntity.email}', tag: 'AuthRepo');
-        return const Right('Login successful!');
+        return Right(LoginResultEntity(
+          token: response.token,
+          userId: response.userId,
+          userName: response.userName,
+          isVerified: response.isVerified,
+          isProfileComplete: response.isProfileComplete,
+        ));
       } on ServerException catch (e) {
         LoggerService.error('Login failed for: ${loginEntity.email}', exception: e, tag: 'AuthRepo');
         return Left(ServerFailure(message: e.message!));

@@ -1,9 +1,10 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
-import 'package:bridge_x/core/theme/bridge_x_colors.dart';
-import 'package:bridge_x/feature/auth/presentation/screens/complete_profile/cubit/complete_profile_cubit.dart';
+import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/feature/auth/presentation/controller/complete_profile/complete_profile_cubit.dart';
+import 'package:bridge_x/feature/auth/presentation/controller/complete_profile/complete_profile_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ExperienceLevelSelector extends StatelessWidget {
@@ -16,36 +17,35 @@ class ExperienceLevelSelector extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Section title
         Text(
           AppStrings.experienceLevel,
           style: GoogleFonts.inter(
-            fontSize: 18.sp,
+            fontSize: AppSpacing.fontSize18,
             fontWeight: FontWeight.bold,
-            color: AppColors.navyBlue,
+            color: context.colors.textPrimary,
           ),
         ),
-        SizedBox(height: 16.h),
-        // Outer container pill
+        SizedBox(height: AppSpacing.height16),
         Container(
           width: double.infinity,
-          padding: EdgeInsets.all(6.r),
+          padding: EdgeInsets.all(AppSpacing.radius6),
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(50.r),
+            color: context.colors.surface,
+            borderRadius: BorderRadius.circular(AppSpacing.radiusPill),
             border: Border.all(
-              color: AppColors.lightGray.withValues(alpha: 0.6),
+              color: context.colors.divider.withValues(alpha: 0.6),
               width: 1.5,
             ),
             boxShadow: [
               BoxShadow(
-                color: AppColors.primaryBlue.withValues(alpha: 0.06),
+                color: context.colors.primary.withValues(alpha: 0.06),
                 blurRadius: 12,
                 offset: const Offset(0, 4),
               ),
             ],
           ),
           child: BlocBuilder<CompleteProfileCubit, CompleteProfileState>(
+            buildWhen: (p, c) => p.selectedExperience != c.selectedExperience,
             builder: (context, state) {
               return Row(
                 children: levels.map((level) {
@@ -56,23 +56,23 @@ class ExperienceLevelSelector extends StatelessWidget {
                           .read<CompleteProfileCubit>()
                           .selectExperience(level),
                       child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 200),
+                        duration: AppSpacing.animationNormal,
                         curve: Curves.easeInOut,
-                        padding: EdgeInsets.symmetric(vertical: 14.h),
+                        padding: EdgeInsets.symmetric(vertical: AppSpacing.height14),
                         decoration: BoxDecoration(
                           color:
-                              isSelected ? Colors.white : Colors.transparent,
-                          borderRadius: BorderRadius.circular(50.r),
+                              isSelected ? context.colors.surface : context.colors.transparent,
+                          borderRadius: BorderRadius.circular(AppSpacing.radiusPill),
                           border: isSelected
                               ? Border.all(
-                                  color: AppColors.primaryBlue,
+                                  color: context.colors.primary,
                                   width: 2,
                                 )
                               : null,
                           boxShadow: isSelected
                               ? [
                                   BoxShadow(
-                                    color: AppColors.primaryBlue
+                                    color: context.colors.primary
                                         .withValues(alpha: 0.18),
                                     blurRadius: 16,
                                     spreadRadius: 1,
@@ -85,13 +85,13 @@ class ExperienceLevelSelector extends StatelessWidget {
                           level,
                           textAlign: TextAlign.center,
                           style: GoogleFonts.inter(
-                            fontSize: 14.sp,
+                            fontSize: AppSpacing.fontSize14,
                             fontWeight: isSelected
                                 ? FontWeight.bold
                                 : FontWeight.w500,
                             color: isSelected
-                                ? AppColors.navyBlue
-                                : AppColors.gray,
+                                ? context.colors.textPrimary
+                                : context.colors.textSecondary,
                           ),
                         ),
                       ),

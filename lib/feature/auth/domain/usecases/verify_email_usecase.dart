@@ -8,7 +8,9 @@ class VerifyEmailUsecase {
 
   VerifyEmailUsecase({required this.authRepo});
 
-  Future<Either<Failure,String>> call({required VerifyCodeEntity verifyCodeEntity}) async {
+  Future<Either<Failure, String>> call({
+    required VerifyCodeEntity verifyCodeEntity,
+  }) async {
     return await authRepo.verifyEmail(verifyCodeEntity: verifyCodeEntity);
   }
 }

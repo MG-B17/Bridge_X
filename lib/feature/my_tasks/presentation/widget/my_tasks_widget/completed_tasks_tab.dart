@@ -1,5 +1,5 @@
 import 'package:bridge_x/core/extensions/context_extension.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/horizontal_spacing.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
@@ -70,7 +70,7 @@ class CompletedTasksTab extends StatelessWidget {
               task: task,
               onTap: () {
                 context.goNamed(
-                  BridegeXRouteNames.myTasksDetails,
+                  BridgeXRouteNames.myTasksDetails,
                   extra: task,
                 );
               },

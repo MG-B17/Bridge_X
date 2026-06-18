@@ -1009,7 +1009,7 @@ packages:
     source: hosted
     version: "3.2.1"
   passkeys:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: passkeys
       sha256: "09e55fed6ff40499e6bb901da13ab58985e966b05fb91da8323ac081683e97ba"

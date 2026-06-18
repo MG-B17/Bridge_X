@@ -1,6 +1,6 @@
 import 'package:bridge_x/core/animation/screen_transtion_animation/transitions/slide_right_trnasition.dart';
 import 'package:bridge_x/core/di/di.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dart';
 import 'package:bridge_x/features/chat/presentation/bloc/chat_list_cubit.dart';
 import 'package:bridge_x/features/chat/presentation/bloc/chat_room_cubit.dart';
@@ -15,7 +15,7 @@ final chatRoute = StatefulShellBranch(
   routes: [
     GoRoute(
       path: BridgeXRoutePaths.chat,
-      name: BridegeXRouteNames.chat,
+      name: BridgeXRouteNames.chat,
       builder: (context, state) => BlocProvider<ChatListCubit>(
         create: (_) => sl<ChatListCubit>(),
         child: const ChatListPage(),
@@ -23,7 +23,7 @@ final chatRoute = StatefulShellBranch(
       routes: [
         GoRoute(
           path: '${BridgeXRoutePaths.chatDetails}/:teamId',
-          name: BridegeXRouteNames.chatDetails,
+          name: BridgeXRouteNames.chatDetails,
           builder: (context, state) {
             final teamId = state.pathParameters['teamId'] ?? '';
             final teamName = state.extra as String? ?? '';

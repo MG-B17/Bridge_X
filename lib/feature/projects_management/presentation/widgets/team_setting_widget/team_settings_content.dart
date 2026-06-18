@@ -1,5 +1,5 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/navigation/screens_args/create_task_args.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/buttons/bridge_x_button.dart';
@@ -48,7 +48,7 @@ class TeamSettingsContent extends StatelessWidget {
           prefixicon: Icons.playlist_add_check,
           onTap: () {
             context.pushNamed(
-              BridegeXRouteNames.createTask,
+              BridgeXRouteNames.createTask,
               extra: CreateTaskArgs(teamId: teamId),
             );
           },

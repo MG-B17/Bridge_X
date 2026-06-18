@@ -1,8 +1,11 @@
 import 'dart:io';
 import 'package:bridge_x/core/animation/bottom_nav_bar_animation/widget/scroller_listener.dart';
+import 'package:bridge_x/core/constant/app_keys.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/di/di.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/init/app_state.dart';
+import 'package:bridge_x/core/services/secure_storage_service.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/buttons/bridge_x_button.dart';
@@ -24,7 +27,9 @@ import '../widget/edit_profile_screen_widget/edit_profile_form_fields.dart';
 import '../widget/edit_profile_screen_widget/edit_profile_actions.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({super.key});
+  final bool isSetupMode;
+
+  const EditProfileScreen({super.key, this.isSetupMode = false});
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
@@ -202,6 +207,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               BridgeXScreenHeader(
+                isSetupMode : widget.isSetupMode,
                 title: AppStrings.editProfile,
                 titleStyle: AppTextStyles.headlineMedium.copyWith(
                   color: context.colors.textPrimary,
@@ -241,6 +247,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               EditProfileActions(
                 onSave: () => _handleSave(context),
                 isLoading: isUpdating,
+                hideCancel: widget.isSetupMode,
               ),
               VerticalSpacing(AppSpacing.xl),
             ],
@@ -261,7 +268,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           }
           if (state is EditProfileUpdated) {
             BridgeXSnackBar.showSuccess(context: context, message: 'Profile updated successfully');
-            if (context.mounted) context.pop();
+            if (widget.isSetupMode) {
+              final appState = sl<AppState>();
+              final name = _usernameController.text.trim();
+              appState.isProfileComplete = true;
+              appState.username = name;
+              sl<SecureStorageService>().writeBool(key: AppKeys.isProfileComplete, value: true);
+              sl<SecureStorageService>().write(key: AppKeys.userName, value: name);
+            } else {
+              if (context.mounted) context.pop();
+            }
           }
           if (state is EditProfileError) {
             BridgeXSnackBar.showError(context: context, message: state.message);

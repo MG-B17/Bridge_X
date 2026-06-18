@@ -1,5 +1,5 @@
 import 'package:bridge_x/core/extensions/context_extension.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/utils/app_shadow.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/feature/notifications/presentation/cubit/notifications_cubit.dart';
@@ -19,7 +19,7 @@ class NotificationBellButton extends StatelessWidget {
       builder: (context, state) {
         return GestureDetector(
           onTap: () async {
-            await context.pushNamed(BridegeXRouteNames.notifications);
+            await context.pushNamed(BridgeXRouteNames.notifications);
             if (!context.mounted) return;
             await context.read<NotificationsCubit>().fetchUnreadCount();
           },

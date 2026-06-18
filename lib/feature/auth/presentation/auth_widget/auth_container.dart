@@ -1,7 +1,6 @@
 import 'package:bridge_x/core/extensions/theme_extension.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AuthContainer extends StatelessWidget {
   const AuthContainer({super.key, required this.child});
@@ -15,8 +14,8 @@ class AuthContainer extends StatelessWidget {
       decoration: BoxDecoration(
         color: context.colors.surface,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(AppSpacing.radiusPill + 25.r),
-          topRight: Radius.circular(AppSpacing.radiusPill + 25.r),
+          topLeft: Radius.circular(AppSpacing.radiusPill + AppSpacing.radius25),
+          topRight: Radius.circular(AppSpacing.radiusPill + AppSpacing.radius25),
         ),
         boxShadow: [
           BoxShadow(

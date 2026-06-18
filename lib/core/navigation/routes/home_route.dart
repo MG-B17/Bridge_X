@@ -1,6 +1,6 @@
 import 'package:bridge_x/core/animation/screen_transtion_animation/transitions/slide_right_trnasition.dart';
 import 'package:bridge_x/core/animation/screen_transtion_animation/transitions/slide_up_transition.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dart';
 import 'package:bridge_x/core/navigation/screens_args/notifications_details_args.dart';
 import 'package:bridge_x/feature/dashboard/domain/entities/project_detail_entity.dart';
@@ -21,17 +21,17 @@ StatefulShellBranch homeRoute = StatefulShellBranch(
   routes: [
     GoRoute(
       path: BridgeXRoutePaths.home,
-      name: BridegeXRouteNames.home,
+      name: BridgeXRouteNames.home,
       builder: (context, state) => const HomeScreen(),
       routes: [
         GoRoute(
           path: BridgeXRoutePaths.selectCategory,
-          name: BridegeXRouteNames.selectCategory,
+          name: BridgeXRouteNames.selectCategory,
           pageBuilder: (context, state) => bottomSheetTransitionPage.build(child: const SelectCategoryScreen(), state: state),
           routes: [
             GoRoute(
               path: BridgeXRoutePaths.matchingProcess,
-              name: BridegeXRouteNames.matchingProcess,
+              name: BridgeXRouteNames.matchingProcess,
               pageBuilder: (context, state) => slideRightTransitionPage.build(
                 child: const MatchingProcessScreen(),
                 state: state,
@@ -39,7 +39,7 @@ StatefulShellBranch homeRoute = StatefulShellBranch(
               routes: [
                 GoRoute(
                   path: BridgeXRoutePaths.noTeamsFound,
-                  name: BridegeXRouteNames.noTeamsFound,
+                  name: BridgeXRouteNames.noTeamsFound,
                   pageBuilder: (context, state) => slideRightTransitionPage.build(
                     child: const NoTeamsFoundScreen(),
                     state: state,
@@ -47,7 +47,7 @@ StatefulShellBranch homeRoute = StatefulShellBranch(
                 ),
                 GoRoute(
                   path: BridgeXRoutePaths.recommendedTeams,
-                  name: BridegeXRouteNames.recommendedTeams,
+                  name: BridgeXRouteNames.recommendedTeams,
                   pageBuilder: (context, state) => slideRightTransitionPage.build(
                     child: const RecommendedTeamsScreen(),
                     state: state,
@@ -59,7 +59,7 @@ StatefulShellBranch homeRoute = StatefulShellBranch(
         ),
         GoRoute(
           path: BridgeXRoutePaths.notifications,
-          name: BridegeXRouteNames.notifications,
+          name: BridgeXRouteNames.notifications,
           pageBuilder: (context, state) => slideRightTransitionPage.build(
             child: const NotificationsScreen(),
             state: state,
@@ -67,7 +67,7 @@ StatefulShellBranch homeRoute = StatefulShellBranch(
           routes: [
             GoRoute(
               path: BridgeXRoutePaths.notificationsDetails,
-              name: BridegeXRouteNames.notificationsDetails,
+              name: BridgeXRouteNames.notificationsDetails,
               pageBuilder: (context, state) {
                 final args = state.extra as NotificationsDetailsArgs;
                 return slideRightTransitionPage.build(
@@ -87,7 +87,7 @@ StatefulShellBranch homeRoute = StatefulShellBranch(
         ),
         GoRoute(
           path: BridgeXRoutePaths.projectProgress,
-          name: BridegeXRouteNames.projectProgress,
+          name: BridgeXRouteNames.projectProgress,
           pageBuilder: (context, state) {
             final projects = state.extra as List<ProjectDetailEntity>?;
             return slideRightTransitionPage.build(

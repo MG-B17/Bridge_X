@@ -1,18 +1,17 @@
 import 'package:bridge_x/core/constant/app_feedback_messages.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
+import 'package:bridge_x/core/navigation/screens_args/otp_args.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
-import 'package:bridge_x/core/utils/enum/auth_enum.dart';
+import 'package:bridge_x/feature/auth/utils/auth_enum.dart';
 import 'package:bridge_x/core/utils/validator.dart';
 import 'package:bridge_x/core/widget/buttons/bridge_x_button.dart';
 import 'package:bridge_x/core/widget/feedback/bridge_x_snackbar.dart';
+import 'package:bridge_x/core/widget/feedback/error_dialog.dart';
 import 'package:bridge_x/core/widget/inputs/bridge_x_text_form_field.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
-import 'package:bridge_x/feature/auth/presentation/controller/auth_cubit.dart';
-import 'package:bridge_x/feature/auth/presentation/controller/auth_state.dart';
-
-import 'package:bridge_x/core/widget/feedback/error_dialog.dart';
-import 'package:bridge_x/core/navigation/screens_args/otp_args.dart';
+import 'package:bridge_x/feature/auth/presentation/controller/password_reset/password_reset_cubit.dart';
+import 'package:bridge_x/feature/auth/presentation/controller/password_reset/password_reset_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -55,11 +54,9 @@ class _ForgetPasswordFormState extends State<ForgetPasswordForm> {
             prefixIcon: Icons.email_outlined,
           ),
           VerticalSpacing(AppSpacing.xl),
-          BlocConsumer<AuthCubit, AuthState>(
-            listenWhen: (prev, curr) =>
-                curr.action == AuthAction.forgetPassword && prev.status != curr.status,
-            buildWhen: (prev, curr) =>
-                curr.action == AuthAction.forgetPassword && prev.status != curr.status,
+          BlocConsumer<PasswordResetCubit, PasswordResetState>(
+            listenWhen: (prev, curr) => prev.status != curr.status,
+            buildWhen: (prev, curr) => prev.status != curr.status,
             listener: (context, state) {
               if (state.status == AuthStatus.success) {
                 BridgeXSnackBar.showSuccess(
@@ -67,7 +64,7 @@ class _ForgetPasswordFormState extends State<ForgetPasswordForm> {
                   message: state.message ?? AppFeedbackMessages.resetEmailSent,
                 );
                 context.pushNamed(
-                  BridegeXRouteNames.verifyPasswordCode,
+                  BridgeXRouteNames.verifyPasswordCode,
                   extra: OtpArgs(email: _controller.text,),
                 );
               } else if (state.status == AuthStatus.error) {
@@ -84,8 +81,8 @@ class _ForgetPasswordFormState extends State<ForgetPasswordForm> {
               onTap: state.status == AuthStatus.loading
                   ? null
                   : () {
-                      if (_formKey.currentState!.validate()) {
-                        context.read<AuthCubit>().forgetPassword(email: _controller.text.trim());
+                      if (_formKey.currentState?.validate() ?? false) {
+                        context.read<PasswordResetCubit>().forgetPassword(email: _controller.text.trim());
                       }
                     },
             ),

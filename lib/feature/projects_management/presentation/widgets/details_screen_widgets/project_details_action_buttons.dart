@@ -1,6 +1,6 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/navigation/screens_args/view_task_args.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
@@ -27,7 +27,7 @@ class ProjectDetailsActionButtons extends StatelessWidget {
             backgroundColor: colors.secondary,
             foregroundColor: colors.surface,
             onTap: () => context.pushNamed(
-              BridegeXRouteNames.viewTask,
+              BridgeXRouteNames.viewTask,
               extra: ViewTaskArgs(projectId: projectId),
             ),
           ),

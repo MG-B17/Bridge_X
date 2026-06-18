@@ -1,3 +1,12 @@
+export 'home_strings.dart';
+export 'matching_strings.dart';
+export 'misc_strings.dart';
+export 'onboarding_strings.dart';
+export 'profile_strings.dart';
+export 'project_strings.dart';
+export 'settings_strings.dart';
+export 'track_strings.dart';
+
 class AppStrings {
   const AppStrings._();
 

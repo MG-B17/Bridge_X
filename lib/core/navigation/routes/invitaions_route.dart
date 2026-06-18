@@ -1,5 +1,5 @@
 import 'package:bridge_x/core/animation/screen_transtion_animation/transitions/slide_right_trnasition.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dart';
 import 'package:bridge_x/core/navigation/screens_args/request_review_invitation_args.dart';
 import 'package:bridge_x/core/navigation/screens_args/request_review_join_request_args.dart';
@@ -13,12 +13,12 @@ final SlideRightTransitionPage slideRightTransitionPage = SlideRightTransitionPa
 
 final invitaionsRoute = GoRoute(
   path: BridgeXRoutePaths.requestsCenter,
-  name: BridegeXRouteNames.requestsCenter,
+  name: BridgeXRouteNames.requestsCenter,
   builder: (context, state) => const RequestsCenterScreen(),
   routes: [
     GoRoute(
       path: BridgeXRoutePaths.requestReviewInvitation,
-      name: BridegeXRouteNames.requestReviewInvitation,
+      name: BridgeXRouteNames.requestReviewInvitation,
       pageBuilder: (context, state) {
         final args = state.extra as RequestReviewInvitationArgs;
         return slideRightTransitionPage.build(
@@ -32,7 +32,7 @@ final invitaionsRoute = GoRoute(
     ),
     GoRoute(
       path: BridgeXRoutePaths.requestReviewJoinRequest,
-      name: BridegeXRouteNames.requestReviewJoinRequest,
+      name: BridgeXRouteNames.requestReviewJoinRequest,
       pageBuilder: (context, state) {
         final args = state.extra as RequestReviewJoinRequestArgs;
         return slideRightTransitionPage.build(

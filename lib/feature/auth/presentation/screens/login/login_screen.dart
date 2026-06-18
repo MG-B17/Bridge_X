@@ -1,22 +1,27 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/core/di/di.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:bridge_x/feature/auth/presentation/auth_widget/auth_container.dart';
 import 'package:bridge_x/feature/auth/presentation/auth_widget/screen_name_text.dart';
-import 'package:bridge_x/feature/auth/presentation/auth_widget/sub_tittle_text.dart';
+import 'package:bridge_x/feature/auth/presentation/auth_widget/sub_title_text.dart';
+import 'package:bridge_x/feature/auth/presentation/controller/login/login_cubit.dart';
 import 'package:bridge_x/feature/auth/presentation/screens/login/widget/login_divider.dart';
 import 'package:bridge_x/feature/auth/presentation/screens/login/widget/login_footer.dart';
 import 'package:bridge_x/feature/auth/presentation/screens/login/widget/login_form.dart';
 import 'package:bridge_x/feature/auth/presentation/screens/login/widget/login_header.dart';
 import 'package:bridge_x/feature/auth/presentation/screens/login/widget/login_social_row.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocProvider<LoginCubit>(
+      create: (_) => sl<LoginCubit>(),
+      child: Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -28,7 +33,7 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     ScreenNameText(text: AppStrings.welcomeBack),
                     VerticalSpacing(AppSpacing.sm),
-                    SubTittleText(text: AppStrings.loginSubtitle),
+                    SubTitleText(text: AppStrings.loginSubtitle),
                     VerticalSpacing(AppSpacing.xxl),
                     const LoginForm(),
                     VerticalSpacing(AppSpacing.lg),
@@ -44,6 +49,7 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
       ),
+    ),
     );
   }
 }

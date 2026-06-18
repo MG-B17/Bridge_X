@@ -1,6 +1,6 @@
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/di/di.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/navigation/screens_args/team_evaluation_args.dart';
 import 'package:bridge_x/core/widget/buttons/bridge_x_button.dart';
 import 'package:bridge_x/core/widget/feedback/error_dialog.dart';
@@ -38,7 +38,7 @@ class SubmitButton extends StatelessWidget {
               message: state.message,
               onAction: () {
                 context.pushNamed(
-                  BridegeXRouteNames.teamEvaluation,
+                  BridgeXRouteNames.teamEvaluation,
                   extra: TeamEvaluationArgs(teamId: projectId),
                 );
               },

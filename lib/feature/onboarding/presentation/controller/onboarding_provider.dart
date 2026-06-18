@@ -1,17 +1,17 @@
 import 'package:bridge_x/core/constant/app_keys.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
 import 'package:bridge_x/core/init/app_state.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
-import 'package:bridge_x/core/services/chache_service.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
+import 'package:bridge_x/core/services/secure_storage_service.dart';
 import 'package:bridge_x/feature/onboarding/presentation/model/onboarding_content_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class OnboardingProvider extends ChangeNotifier {
-  final CacheService _cacheService;
+  final SecureStorageService _secureStorageService;
   final AppState _appState;
 
-  OnboardingProvider(this._cacheService, this._appState);
+  OnboardingProvider(this._secureStorageService, this._appState);
 
   final PageController pageController = PageController();
   int currentPage = 0;
@@ -49,17 +49,17 @@ class OnboardingProvider extends ChangeNotifier {
       );
     } else {
       await _markOnboardingSeen();
-      if (context.mounted) context.goNamed(BridegeXRouteNames.login);
+      if (context.mounted) context.goNamed(BridgeXRouteNames.login);
     }
   }
 
   Future<void> skip({required BuildContext context}) async {
     await _markOnboardingSeen();
-    if (context.mounted) context.goNamed(BridegeXRouteNames.login);
+    if (context.mounted) context.goNamed(BridgeXRouteNames.login);
   }
 
   Future<void> _markOnboardingSeen() async {
-    await _cacheService.saveData(key: AppKeys.onboardingSeenKey, value: true);
+    await _secureStorageService.writeBool(key: AppKeys.onboardingSeenKey, value: true);
     _appState.hasSeenOnboarding = true;
   }
 

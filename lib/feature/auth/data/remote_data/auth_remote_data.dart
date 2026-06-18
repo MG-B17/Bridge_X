@@ -3,6 +3,7 @@ import 'package:bridge_x/core/error/error_strings.dart';
 import 'package:bridge_x/core/error/exception.dart';
 import 'package:bridge_x/core/network/api/api_client.dart';
 import 'package:bridge_x/core/network/api/api_endpoint.dart';
+import 'package:bridge_x/feature/auth/data/models/complete_profile_request_model.dart';
 import 'package:bridge_x/feature/auth/data/models/login_response_model.dart';
 import 'package:bridge_x/feature/auth/data/models/register_model.dart';
 import 'package:bridge_x/feature/auth/data/models/rest_password_reponse_model.dart';
@@ -24,6 +25,7 @@ abstract class AuthRemoteData {
   Future<String> resetPassword({required ResetPasswordEntity resetPasswordEntity});
   Future<String> changePassword({required ChangePasswordEntity changePasswordEntity});
   Future<void> logout();
+  Future<String> completeProfile({required CompleteProfileRequestModel request});
 }
 
 class AuthRemoteDataImpl implements AuthRemoteData {
@@ -163,6 +165,23 @@ class AuthRemoteDataImpl implements AuthRemoteData {
   Future<void> logout() async {
     try {
       await apiClient.post(path: ApiEndpoint.logout, data: {});
+    } catch (e) {
+      if (e is DioException) {
+        rethrow;
+      } else {
+        throw ServerException(ErrorStrings.serverError);
+      }
+    }
+  }
+
+  @override
+  Future<String> completeProfile({required CompleteProfileRequestModel request}) async {
+    try {
+      final response = await apiClient.post(
+        path: ApiEndpoint.completeProfile,
+        data: request.toJson(),
+      );
+      return response.data['message'] as String? ?? '';
     } catch (e) {
       if (e is DioException) {
         rethrow;

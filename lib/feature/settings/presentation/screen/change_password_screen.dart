@@ -4,11 +4,13 @@ import 'package:bridge_x/core/di/di.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/widget/feedback/error_dialog.dart';
+import 'package:bridge_x/core/widget/feedback/loading_dialog.dart';
+import 'package:bridge_x/core/widget/feedback/success_dialog.dart';
 import 'package:bridge_x/core/widget/feedback/bridge_x_snackbar.dart';
 import 'package:bridge_x/core/widget/layout/bridge_x_background_gears.dart';
 import 'package:bridge_x/core/widget/layout/bridge_x_screen_header.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
-import 'package:bridge_x/feature/profile/data/models/change_password_request.dart';
 import 'package:bridge_x/feature/profile/presentation/controller/change_password_cubit.dart';
 import 'package:bridge_x/feature/profile/presentation/controller/change_password_state.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +36,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   bool _showCurrentPassword = false;
   bool _showNewPassword = false;
   bool _showConfirmPassword = false;
+  bool _isLoadingDialogShowing = false;
 
   @override
   void initState() {
@@ -65,6 +68,20 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       );
       return;
     }
+    if (newPassword.isEmpty) {
+      BridgeXSnackBar.showWarning(
+        context: context,
+        message: AppStrings.newPasswordHint,
+      );
+      return;
+    }
+    if (confirmPassword.isEmpty) {
+      BridgeXSnackBar.showWarning(
+        context: context,
+        message: AppStrings.confirmNewPasswordHint,
+      );
+      return;
+    }
     if (newPassword.length < 8) {
       BridgeXSnackBar.showWarning(
         context: context,
@@ -81,28 +98,58 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     }
 
     context.read<ChangePasswordCubit>().changePassword(
-          ChangePasswordRequestModel(
-            currentPassword: currentPassword,
-            password: newPassword,
-            passwordConfirmation: confirmPassword,
-          ),
-        );
+      currentPassword: currentPassword,
+      password: newPassword,
+      passwordConfirmation: confirmPassword,
+    );
   }
+
+  void _showLoadingDialog(BuildContext context) {
+    if (_isLoadingDialogShowing) return;
+    _isLoadingDialogShowing = true;
+    LoadingDialog.show(context: context, message: 'Changing password...').then((_) {
+      _isLoadingDialogShowing = false;
+    });
+  }
+
+  void _hideLoadingDialog(BuildContext context) {
+    if (!_isLoadingDialogShowing) return;
+    LoadingDialog.hide(context);
+    _isLoadingDialogShowing = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ChangePasswordCubit>(
       create: (_) => sl<ChangePasswordCubit>(),
       child: BlocConsumer<ChangePasswordCubit, ChangePasswordState>(
         listener: (context, state) {
+          if (state is ChangePasswordLoading) {
+            _showLoadingDialog(context);
+            return;
+          }
+
           if (state is ChangePasswordSuccess) {
+            _hideLoadingDialog(context);
             _currentPasswordController.clear();
             _newPasswordController.clear();
             _confirmPasswordController.clear();
-            BridgeXSnackBar.showSuccess(context: context, message: state.message);
-            if (context.mounted) context.pop();
+            SuccessDialog.show(
+              context: context,
+              title: AppStrings.success,
+              message: 'Password changed successfully.',
+              onAction: () {
+                if (context.mounted) context.pop();
+              },
+            );
           }
           if (state is ChangePasswordError) {
-            BridgeXSnackBar.showError(context: context, message: state.message);
+            _hideLoadingDialog(context);
+            ErrorDialog.show(
+              context: context,
+              title: AppStrings.error,
+              message: state.message,
+            );
           }
         },
         builder: (context, state) {

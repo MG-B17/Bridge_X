@@ -18,6 +18,8 @@ class EditProfileFormFields extends StatelessWidget {
     required this.selectedProfession,
     required this.professions,
     required this.onProfessionChanged,
+    this.fullNameValidator,
+    this.usernameValidator,
     super.key,
   });
 
@@ -29,6 +31,8 @@ class EditProfileFormFields extends StatelessWidget {
   final String selectedProfession;
   final List<String> professions;
   final Function(String) onProfessionChanged;
+  final String? Function(String?)? fullNameValidator;
+  final String? Function(String?)? usernameValidator;
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +44,16 @@ class EditProfileFormFields extends StatelessWidget {
           label: AppStrings.fullName,
           hint: AppStrings.fullNameHint,
           controller: fullNameController,
+          validator: fullNameValidator,
         ),
 
         VerticalSpacing(AppSpacing.lg),
 
         
-        UsernameField(controller: usernameController),
+        UsernameField(
+          controller: usernameController,
+          validator: usernameValidator,
+        ),
 
         VerticalSpacing(AppSpacing.lg),
 
@@ -65,6 +73,7 @@ class EditProfileFormFields extends StatelessWidget {
           hint: AppStrings.emailHint,
           controller: emailController,
           keyboardType: TextInputType.emailAddress,
+          enabled: false,
         ),
 
         VerticalSpacing(AppSpacing.lg),

@@ -5,6 +5,7 @@ import 'package:bridge_x/feature/profile/domain/repositories/profile_repository.
 import 'package:bridge_x/feature/profile/domain/usecases/change_password_usecase.dart';
 import 'package:bridge_x/feature/profile/domain/usecases/get_profile_dashboard_usecase.dart';
 import 'package:bridge_x/feature/profile/domain/usecases/get_profile_usecase.dart';
+import 'package:bridge_x/feature/profile/domain/usecases/soft_delete_profile_usecase.dart';
 import 'package:bridge_x/feature/profile/domain/usecases/update_profile_usecase.dart';
 import 'package:bridge_x/feature/profile/presentation/controller/change_password_cubit.dart';
 import 'package:bridge_x/feature/profile/presentation/controller/edit_profile_cubit.dart';
@@ -33,6 +34,9 @@ void initProfile() {
   );
   sl.registerLazySingleton<ChangePasswordUseCase>(
     () => ChangePasswordUseCase(repository: sl()),
+  );
+  sl.registerLazySingleton<SoftDeleteProfileUseCase>(
+    () => SoftDeleteProfileUseCase(repository: sl()),
   );
 
   // Cubits

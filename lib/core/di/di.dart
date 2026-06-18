@@ -21,6 +21,7 @@ import 'package:bridge_x/feature/auth/domain/usecases/reset_password_usecase.dar
 import 'package:bridge_x/feature/auth/domain/usecases/verify_email_usecase.dart';
 import 'package:bridge_x/feature/auth/domain/usecases/forget_password_usecase.dart';
 import 'package:bridge_x/feature/auth/domain/usecases/change_password_usecase.dart';
+import 'package:bridge_x/feature/auth/domain/usecases/complete_profile_usecase.dart';
 import 'package:bridge_x/feature/auth/domain/usecases/verify_password_usecase.dart';
 import 'package:bridge_x/feature/auth/presentation/controller/auth_cubit.dart';
 import 'package:bridge_x/feature/onboarding/presentation/controller/onboarding_provider.dart';
@@ -62,8 +63,12 @@ Future<void> init() async {
       forgetPasswordUsecase: sl(),
       verifyPasswordUsecase: sl(),
       changePasswordUsecase: sl(),
+      completeProfileUseCase: sl(),
       appState: sl(),
       pushNotificationService: sl(),
+      softDeleteProfileUseCase: sl(),
+      secureStorageService: sl(),
+      cacheService: sl(),
     ),
   );
   sl.registerLazySingleton<ScrollCubit>(()=>ScrollCubit());
@@ -76,6 +81,7 @@ Future<void> init() async {
   sl.registerLazySingleton<ForgetPasswordUsecase>(() => ForgetPasswordUsecase(authRepo: sl()));
   sl.registerLazySingleton<ChangePasswordUsecase>(() => ChangePasswordUsecase(authRepo: sl()));
   sl.registerLazySingleton<VerifyPasswordUsecase>(() => VerifyPasswordUsecase(authRepo: sl()));
+  sl.registerLazySingleton<CompleteProfileUseCase>(() => CompleteProfileUseCase(authRepo: sl()));
 
   // repositories
   sl.registerLazySingleton<AuthRepo>(

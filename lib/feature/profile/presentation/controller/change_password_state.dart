@@ -12,12 +12,7 @@ class ChangePasswordInitial extends ChangePasswordState {}
 class ChangePasswordLoading extends ChangePasswordState {}
 
 class ChangePasswordSuccess extends ChangePasswordState {
-  final String message;
-
-  const ChangePasswordSuccess({required this.message});
-
-  @override
-  List<Object?> get props => [message];
+  const ChangePasswordSuccess();
 }
 
 class ChangePasswordError extends ChangePasswordState {

@@ -48,6 +48,7 @@ class ApiEndpoint {
   static const String profileData = "/api/my/dashboard";
   static const String updateProfile = "/api/profile/update";
   static const String displayProfile = "/api/profile";
+  static const String softDeleteProfile = "/api/profile/soft-delete";
   static const String level = "/api/my/level-progression";
 
   // reports

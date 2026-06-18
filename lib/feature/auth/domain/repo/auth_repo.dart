@@ -26,4 +26,9 @@ abstract class AuthRepo {
   Future<Either<Failure, String>> changePassword({required ChangePasswordEntity changePasswordEntity});
 
   Future<Either<Failure, void>> logout();
+
+  Future<Either<Failure, Unit>> completeProfile({
+    required String track,
+    required String experienceLevel,
+  });
 }

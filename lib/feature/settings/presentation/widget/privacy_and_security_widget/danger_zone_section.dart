@@ -7,7 +7,12 @@ import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:flutter/material.dart';
 
 class DangerZoneSection extends StatelessWidget {
-  const DangerZoneSection({super.key});
+  final VoidCallback onDeleteTap;
+
+  const DangerZoneSection({
+    super.key,
+    required this.onDeleteTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +65,7 @@ class DangerZoneSection extends StatelessWidget {
               ),
             ),
             trailing: Icon(Icons.error_outline, color: context.colors.error.withValues(alpha: 0.7)),
-            onTap: () {},
+            onTap: onDeleteTap,
           ),
         ),
       ],

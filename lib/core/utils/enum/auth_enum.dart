@@ -7,6 +7,8 @@ enum AuthAction {
   resetPassword,
   changePassword,
   logout,
+  softDeleteProfile,
+  completeProfile,
 }
 
 

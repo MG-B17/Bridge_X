@@ -5,6 +5,7 @@ import 'package:bridge_x/feature/profile/data/models/change_password_request.dar
 import 'package:bridge_x/feature/profile/data/models/change_password_response_model.dart';
 import 'package:bridge_x/feature/profile/data/models/edit_profile_response_model.dart';
 import 'package:bridge_x/feature/profile/data/models/profile_dashboard_response_model.dart';
+import 'package:bridge_x/feature/profile/data/models/soft_delete_profile_response_model.dart';
 import 'package:bridge_x/feature/profile/data/models/update_profile_request_model.dart';
 import 'package:dio/dio.dart';
 
@@ -12,7 +13,8 @@ abstract class ProfileRemoteDataSource {
   Future<ProfileDashboardResponseModel> getProfileDashboard();
   Future<DisplayProfileResponseModel> displayProfile();
   Future<UpdateProfileResponseModel> updateProfile(UpdateProfileRequestModel request);
-  Future<ChangePasswordResponseModel> changePassword(ChangePasswordRequestModel request);
+  Future<void> changePassword(ChangePasswordRequestModel request);
+  Future<SoftDeleteProfileResponseModel> softDeleteProfile();
 }
 
 class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
@@ -67,14 +69,36 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   }
 
   @override
-  Future<ChangePasswordResponseModel> changePassword(ChangePasswordRequestModel request) async {
+  Future<void> changePassword(ChangePasswordRequestModel request) async {
     try {
       final response = await apiClient.post(
         path: ApiEndpoint.changePassword,
         data: request.toJson(),
       );
       if (response.data != null) {
-        return ChangePasswordResponseModel.fromJson(response.data);
+        ChangePasswordResponseModel.fromJson(
+          response.data as Map<String, dynamic>,
+        );
+      } else {
+        throw ServerException('Empty response data received');
+      }
+    } catch (e) {
+      if (e is DioException) rethrow;
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<SoftDeleteProfileResponseModel> softDeleteProfile() async {
+    try {
+      final response = await apiClient.post(
+        path: ApiEndpoint.softDeleteProfile,
+        data: {},
+      );
+      if (response.data != null) {
+        return SoftDeleteProfileResponseModel.fromJson(
+          response.data as Map<String, dynamic>,
+        );
       } else {
         throw ServerException('Empty response data received');
       }

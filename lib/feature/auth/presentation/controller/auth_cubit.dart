@@ -1,7 +1,10 @@
+import 'package:bridge_x/core/constant/app_keys.dart';
 import 'package:bridge_x/core/constant/app_feedback_messages.dart';
 import 'package:bridge_x/core/init/app_state.dart';
+import 'package:bridge_x/core/services/chache_service.dart';
 import 'package:bridge_x/core/services/logger_service.dart';
 import 'package:bridge_x/core/services/notification_services/firebase_push_notification_service.dart';
+import 'package:bridge_x/core/services/secure_storage_service.dart';
 import 'package:bridge_x/core/utils/enum/auth_enum.dart';
 import 'package:bridge_x/feature/auth/domain/entity/change_password_entity.dart';
 import 'package:bridge_x/feature/auth/domain/entity/forget_password_entity.dart';
@@ -10,12 +13,14 @@ import 'package:bridge_x/feature/auth/domain/entity/register_entity.dart';
 import 'package:bridge_x/feature/auth/domain/entity/reset_password_entity.dart';
 import 'package:bridge_x/feature/auth/domain/entity/verify_code_entity.dart';
 import 'package:bridge_x/feature/auth/domain/usecases/change_password_usecase.dart';
+import 'package:bridge_x/feature/auth/domain/usecases/complete_profile_usecase.dart';
 import 'package:bridge_x/feature/auth/domain/usecases/forget_password_usecase.dart';
 import 'package:bridge_x/feature/auth/domain/usecases/login_usecase.dart';
 import 'package:bridge_x/feature/auth/domain/usecases/register_usecase.dart';
 import 'package:bridge_x/feature/auth/domain/usecases/reset_password_usecase.dart';
 import 'package:bridge_x/feature/auth/domain/usecases/verify_email_usecase.dart';
 import 'package:bridge_x/feature/auth/domain/usecases/verify_password_usecase.dart';
+import 'package:bridge_x/feature/profile/domain/usecases/soft_delete_profile_usecase.dart';
 import 'package:bridge_x/feature/auth/presentation/controller/auth_state.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,8 +34,12 @@ class AuthCubit extends Cubit<AuthState> {
     required this.forgetPasswordUsecase,
     required this.changePasswordUsecase,
     required this.verifyPasswordUsecase,
+    required this.completeProfileUseCase,
     required this.appState,
     required this.pushNotificationService,
+    required this.softDeleteProfileUseCase,
+    required this.secureStorageService,
+    required this.cacheService,
   }) : super(AuthState());
 
   final LoginUsecase loginUsecase;
@@ -40,8 +49,12 @@ class AuthCubit extends Cubit<AuthState> {
   final ForgetPasswordUsecase forgetPasswordUsecase;
   final ChangePasswordUsecase changePasswordUsecase;
   final VerifyPasswordUsecase verifyPasswordUsecase;
+  final CompleteProfileUseCase completeProfileUseCase;
   final AppState appState;
   final PushNotificationService pushNotificationService;
+  final SoftDeleteProfileUseCase softDeleteProfileUseCase;
+  final SecureStorageService secureStorageService;
+  final CacheService cacheService;
 
   Future<void> login({required String email, required String password}) async {
     final token = pushNotificationService.fcmToken;
@@ -172,5 +185,70 @@ class AuthCubit extends Cubit<AuthState> {
         emit(state.copyWith(status: AuthStatus.success, message: AppFeedbackMessages.logoutSuccess));
       },
     );
+  }
+
+  Future<void> completeProfile({
+    required String track,
+    required String experienceLevel,
+  }) async {
+    if (state.status == AuthStatus.loading &&
+        state.action == AuthAction.completeProfile) {
+      return;
+    }
+    emit(state.copyWith(status: AuthStatus.loading, action: AuthAction.completeProfile));
+    final result = await completeProfileUseCase(
+      track: track,
+      experienceLevel: experienceLevel,
+    );
+    result.fold(
+      (failure) => emit(state.copyWith(status: AuthStatus.error, message: failure.message)),
+      (_) => emit(state.copyWith(status: AuthStatus.success, message: 'Profile completed')),
+    );
+  }
+
+  Future<void> softDeleteProfile() async {
+    if (state.status == AuthStatus.loading &&
+        state.action == AuthAction.softDeleteProfile) {
+      return;
+    }
+
+    emit(
+      state.copyWith(
+        status: AuthStatus.loading,
+        action: AuthAction.softDeleteProfile,
+        message: null,
+      ),
+    );
+
+    final result = await softDeleteProfileUseCase();
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          status: AuthStatus.error,
+          action: AuthAction.softDeleteProfile,
+          message: failure.message,
+        ),
+      ),
+      (_) => emit(
+        state.copyWith(
+          status: AuthStatus.success,
+          action: AuthAction.softDeleteProfile,
+          message: 'Account deleted successfully',
+        ),
+      ),
+    );
+  }
+
+  Future<void> completeSoftDeleteSignOut() async {
+    await _clearLocalSession();
+    appState.isLoggedIn = false;
+    await pushNotificationService.refreshToken();
+  }
+
+  Future<void> _clearLocalSession() async {
+    await secureStorageService.delete(key: AppKeys.authToken);
+    await secureStorageService.delete(key: AppKeys.userId);
+    await secureStorageService.delete(key: AppKeys.userName);
+    await cacheService.clearData();
   }
 }

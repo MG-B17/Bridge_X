@@ -7,9 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UsernameField extends StatelessWidget {
-  const UsernameField({required this.controller, super.key});
+  const UsernameField({required this.controller, this.validator, super.key});
 
   final TextEditingController controller;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +27,7 @@ class UsernameField extends StatelessWidget {
         VerticalSpacing(6),
         TextFormField(
           controller: controller,
+          validator: validator,
           style: context.textTheme.bodyMedium?.copyWith(color: context.colors.textPrimary),
           decoration: InputDecoration(
             hintText: AppStrings.usernameHint,

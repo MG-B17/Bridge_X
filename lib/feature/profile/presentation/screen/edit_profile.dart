@@ -5,6 +5,7 @@ import 'package:bridge_x/core/di/di.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/widget/buttons/bridge_x_button.dart';
 import 'package:bridge_x/core/widget/feedback/bridge_x_snackbar.dart';
 import 'package:bridge_x/core/widget/layout/bridge_x_screen_header.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
@@ -35,6 +36,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   late TextEditingController _emailController;
   late TextEditingController _bioController;
   late TextEditingController _professionController;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final ScrollController _scrollController = ScrollController();
   final ImagePicker _imagePicker = ImagePicker();
 
@@ -126,6 +128,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     final original = _originalProfile;
     if (original == null) return;
 
+    if (!_formKey.currentState!.validate()) return;
+
     final request = UpdateProfileRequestModel(
       fullName: _fullNameController.text.trim() != original.fullName
           ? _fullNameController.text.trim()
@@ -140,9 +144,110 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       avatarFile: _pickedImagePath != null ? File(_pickedImagePath!) : null,
     );
 
-    if (!request.hasChanges) return;
+    if (!request.hasChanges) {
+      BridgeXSnackBar.showWarning(
+        context: context,
+        message: 'No changes to save',
+      );
+      return;
+    }
 
     context.read<EditProfileCubit>().updateProfile(request);
+  }
+
+  Widget _buildBody(BuildContext context, bool isLoading, bool isUpdating, EditProfileState state) {
+    final isLoadError = state is EditProfileError && _originalProfile == null;
+
+    if (isLoadError) {
+      return Center(
+        child: Padding(
+          padding: EdgeInsets.all(AppSpacing.lg),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.error_outline, size: 64, color: context.colors.error),
+              VerticalSpacing(AppSpacing.md),
+              Text(
+                state.message,
+                textAlign: TextAlign.center,
+                style: context.textTheme.bodyMedium?.copyWith(
+                  color: context.colors.textSecondary,
+                ),
+              ),
+              VerticalSpacing(AppSpacing.lg),
+              BridgeXButton(
+                text: 'Retry',
+                onTap: () => context.read<EditProfileCubit>().fetchProfile(),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return BridgeXSkeletonizer(
+      enableloading: isLoading,
+      child: SingleChildScrollView(
+        controller: _scrollController,
+        physics: const BouncingScrollPhysics(),
+        padding: EdgeInsets.only(
+          left: AppSpacing.lg,
+          right: AppSpacing.lg,
+          top: AppSpacing.md,
+          bottom: AppSpacing.md + AppSpacing.spacing20,
+        ),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              BridgeXScreenHeader(
+                title: AppStrings.editProfile,
+                titleStyle: AppTextStyles.headlineMedium.copyWith(
+                  color: context.colors.textPrimary,
+                  fontWeight: FontWeight.bold,
+                ),
+                spacing: AppSpacing.lg,
+              ),
+              VerticalSpacing(AppSpacing.xl),
+              Center(
+                child: EditProfileAvatar(
+                  avatarUrl: _originalProfile?.avatarUrl,
+                  pickedImagePath: _pickedImagePath,
+                  onTap: _pickImage,
+                ),
+              ),
+              VerticalSpacing(AppSpacing.xl),
+              EditProfileFormFields(
+                fullNameController: _fullNameController,
+                usernameController: _usernameController,
+                emailController: _emailController,
+                bioController: _bioController,
+                professionController: _professionController,
+                selectedProfession: _selectedProfession,
+                professions: _professions,
+                fullNameValidator: (value) =>
+                    value == null || value.trim().isEmpty ? 'Full name is required' : null,
+                usernameValidator: (value) =>
+                    value == null || value.trim().isEmpty ? 'Username is required' : null,
+                onProfessionChanged: (value) {
+                  setState(() {
+                    _selectedProfession = value;
+                    _professionController.text = value;
+                  });
+                },
+              ),
+              VerticalSpacing(AppSpacing.xxl),
+              EditProfileActions(
+                onSave: () => _handleSave(context),
+                isLoading: isUpdating,
+              ),
+              VerticalSpacing(AppSpacing.xl),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -170,62 +275,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             controller: _scrollController,
             child: Scaffold(
               body: SafeArea(
-                child: BridgeXSkeletonizer(
-                  enableloading: isLoading,
-                  child: SingleChildScrollView(
-                    controller: _scrollController,
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(
-                      left: AppSpacing.lg,
-                      right: AppSpacing.lg,
-                      top: AppSpacing.md,
-                      bottom: AppSpacing.md + AppSpacing.spacing20,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        BridgeXScreenHeader(
-                          title: AppStrings.editProfile,
-                          titleStyle: AppTextStyles.headlineMedium.copyWith(
-                            color: context.colors.textPrimary,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          spacing: AppSpacing.lg,
-                        ),
-                        VerticalSpacing(AppSpacing.xl),
-                        Center(
-                          child: EditProfileAvatar(
-                            avatarUrl: _originalProfile?.avatarUrl,
-                            pickedImagePath: _pickedImagePath,
-                            onTap: _pickImage,
-                          ),
-                        ),
-                        VerticalSpacing(AppSpacing.xl),
-                        EditProfileFormFields(
-                          fullNameController: _fullNameController,
-                          usernameController: _usernameController,
-                          emailController: _emailController,
-                          bioController: _bioController,
-                          professionController: _professionController,
-                          selectedProfession: _selectedProfession,
-                          professions: _professions,
-                          onProfessionChanged: (value) {
-                            setState(() {
-                              _selectedProfession = value;
-                              _professionController.text = value;
-                            });
-                          },
-                        ),
-                        VerticalSpacing(AppSpacing.xxl),
-                        EditProfileActions(
-                          onSave: () => _handleSave(context),
-                          isLoading: isUpdating,
-                        ),
-                        VerticalSpacing(AppSpacing.xl),
-                      ],
-                    ),
-                  ),
-                ),
+                child: _buildBody(context, isLoading, isUpdating, state),
               ),
             ),
           );

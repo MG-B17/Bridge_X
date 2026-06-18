@@ -9,5 +9,6 @@ abstract class ProfileRepository {
   Future<Either<Failure, ProfileDashboardEntity>> getProfileDashboard();
   Future<Either<Failure, EditProfileEntity>> getProfile();
   Future<Either<Failure, EditProfileEntity>> updateProfile(UpdateProfileRequestModel request);
-  Future<Either<Failure, String>> changePassword(ChangePasswordRequestModel request);
+  Future<Either<Failure, Unit>> changePassword(ChangePasswordRequestModel request);
+  Future<Either<Failure, Unit>> softDeleteProfile();
 }

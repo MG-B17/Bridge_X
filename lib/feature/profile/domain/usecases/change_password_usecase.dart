@@ -8,7 +8,17 @@ class ChangePasswordUseCase {
 
   ChangePasswordUseCase({required this.repository});
 
-  Future<Either<Failure, String>> call(ChangePasswordRequestModel request) {
-    return repository.changePassword(request);
+  Future<Either<Failure, Unit>> call({
+    required String currentPassword,
+    required String password,
+    required String passwordConfirmation,
+  }) {
+    return repository.changePassword(
+      ChangePasswordRequestModel(
+        currentPassword: currentPassword,
+        password: password,
+        passwordConfirmation: passwordConfirmation,
+      ),
+    );
   }
 }

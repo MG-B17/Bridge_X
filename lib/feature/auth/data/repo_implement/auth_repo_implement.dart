@@ -7,6 +7,7 @@ import 'package:bridge_x/core/network/network_info.dart';
 import 'package:bridge_x/core/services/chache_service.dart';
 import 'package:bridge_x/core/services/secure_storage_service.dart';
 import 'package:bridge_x/core/services/logger_service.dart';
+import 'package:bridge_x/feature/auth/data/models/complete_profile_request_model.dart';
 import 'package:bridge_x/feature/auth/data/remote_data/auth_remote_data.dart';
 import 'package:bridge_x/feature/auth/domain/entity/change_password_entity.dart';
 import 'package:bridge_x/feature/auth/domain/entity/forget_password_entity.dart';
@@ -252,6 +253,34 @@ class AuthRepoImplement extends AuthRepo {
       await cacheService.clearData();
       LoggerService.warning('No internet — local token deleted anyway', tag: 'AuthRepo');
       return Right(null);
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> completeProfile({
+    required String track,
+    required String experienceLevel,
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        LoggerService.debug('Completing profile: track=$track, level=$experienceLevel', tag: 'AuthRepo');
+        await authRemoteData.completeProfile(
+          request: CompleteProfileRequestModel(
+            track: track,
+            experienceLevel: experienceLevel,
+          ),
+        );
+        LoggerService.info('Profile completed successfully', tag: 'AuthRepo');
+        return const Right(unit);
+      } on ServerException catch (e) {
+        LoggerService.error('Complete profile failed', exception: e, tag: 'AuthRepo');
+        return Left(ServerFailure(message: e.message!));
+      } on DioException catch (error) {
+        return Left(ErrorHandler.handle(error));
+      }
+    } else {
+      LoggerService.warning('No internet connection', tag: 'AuthRepo');
+      return Left(NetworkFailure(message: ErrorStrings.checkYouInternetConnection));
     }
   }
 }

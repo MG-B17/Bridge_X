@@ -1,8 +1,15 @@
+import 'package:bridge_x/core/constant/app_feedback_messages.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
-
+import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
 import 'package:bridge_x/core/theme/bridge_x_colors.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/core/utils/enum/auth_enum.dart';
+import 'package:bridge_x/core/widget/feedback/bridge_x_snackbar.dart';
+import 'package:bridge_x/core/widget/feedback/error_dialog.dart';
+import 'package:bridge_x/core/widget/feedback/loading_dialog.dart';
 import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
+import 'package:bridge_x/feature/auth/presentation/controller/auth_cubit.dart';
+import 'package:bridge_x/feature/auth/presentation/controller/auth_state.dart';
 import 'package:bridge_x/feature/auth/presentation/screens/complete_profile/cubit/complete_profile_cubit.dart';
 import 'package:bridge_x/feature/auth/presentation/screens/complete_profile/widget/experience_level_selector.dart';
 import 'package:bridge_x/feature/auth/presentation/screens/complete_profile/widget/profile_quote.dart';
@@ -12,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CompleteProfileScreen extends StatelessWidget {
@@ -20,72 +28,98 @@ class CompleteProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CompleteProfileCubit(),
-      child: Scaffold(
-        backgroundColor: const Color(0xFFF5F8FF),
-        body: Stack(
-          children: [
-            // Decorative background SVG blobs
-            _BackgroundDecoration(),
-            SafeArea(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: AppSpacing.spacing20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    VerticalSpacing(AppSpacing.spacing12),
-                    const ProfileSetupHeader(),
-                    VerticalSpacing(AppSpacing.spacing24),
-                    const TrackSelectionGrid(),
-                    VerticalSpacing(AppSpacing.spacing32),
-                    const ExperienceLevelSelector(),
-                    VerticalSpacing(AppSpacing.spacing32),
-                    const ProfileQuote(),
-                    VerticalSpacing(AppSpacing.spacing32),
-                    // Continue to Matching text button
-                    BlocBuilder<CompleteProfileCubit, CompleteProfileState>(
-                      builder: (context, state) {
-                        final isEnabled = state.selectedTrackIndex != -1;
-                        return Center(
-                          child: GestureDetector(
-                            onTap: isEnabled
-                                ? () => context
-                                    .read<CompleteProfileCubit>()
-                                    .submitProfile()
-                                : null,
-                            child: AnimatedOpacity(
-                              duration: const Duration(milliseconds: 200),
-                              opacity: isEnabled ? 1.0 : 0.4,
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    AppStrings.continueText,
-                                    style: GoogleFonts.inter(
-                                      fontSize: 18.sp,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.primaryBlue,
+      create: (context) => CompleteProfileCubit(
+        authCubit: context.read<AuthCubit>(),
+      ),
+      child: BlocListener<AuthCubit, AuthState>(
+        listenWhen: (prev, curr) =>
+            curr.action == AuthAction.completeProfile &&
+            prev.status != curr.status,
+        listener: (context, state) {
+          if (state.status == AuthStatus.loading) {
+            LoadingDialog.show(context: context, message: 'Completing profile...');
+          } else if (state.status == AuthStatus.success) {
+            LoadingDialog.hide(context);
+            BridgeXSnackBar.showSuccess(
+              context: context,
+              message: state.message ?? AppFeedbackMessages.profileCompleted,
+            );
+            context.goNamed(BridegeXRouteNames.home);
+          } else if (state.status == AuthStatus.error) {
+            LoadingDialog.hide(context);
+            ErrorDialog.show(
+              context: context,
+              title: 'Profile Setup Failed',
+              message: state.message ?? AppFeedbackMessages.genericError,
+            );
+          }
+        },
+        child: Scaffold(
+          backgroundColor: const Color(0xFFF5F8FF),
+          body: Stack(
+            children: [
+              // Decorative background SVG blobs
+              _BackgroundDecoration(),
+              SafeArea(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(horizontal: AppSpacing.spacing20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      VerticalSpacing(AppSpacing.spacing12),
+                      const ProfileSetupHeader(),
+                      VerticalSpacing(AppSpacing.spacing24),
+                      const TrackSelectionGrid(),
+                      VerticalSpacing(AppSpacing.spacing32),
+                      const ExperienceLevelSelector(),
+                      VerticalSpacing(AppSpacing.spacing32),
+                      const ProfileQuote(),
+                      VerticalSpacing(AppSpacing.spacing32),
+                      // Continue to Matching text button
+                      BlocBuilder<CompleteProfileCubit, CompleteProfileState>(
+                        builder: (context, state) {
+                          final isEnabled = state.selectedTrackIndex != -1;
+                          return Center(
+                            child: GestureDetector(
+                              onTap: isEnabled
+                                  ? () => context
+                                      .read<CompleteProfileCubit>()
+                                      .submitProfile()
+                                  : null,
+                              child: AnimatedOpacity(
+                                duration: const Duration(milliseconds: 200),
+                                opacity: isEnabled ? 1.0 : 0.4,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      AppStrings.continueText,
+                                      style: GoogleFonts.inter(
+                                        fontSize: 18.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.primaryBlue,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(width: 6.w),
-                                  Icon(
-                                    Icons.chevron_right_rounded,
-                                    color: AppColors.primaryBlue,
-                                    size: 24.sp,
-                                  ),
-                                ],
+                                    SizedBox(width: 6.w),
+                                    Icon(
+                                      Icons.chevron_right_rounded,
+                                      color: AppColors.primaryBlue,
+                                      size: 24.sp,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    ),
-                    VerticalSpacing(AppSpacing.spacing32),
-                  ],
+                          );
+                        },
+                      ),
+                      VerticalSpacing(AppSpacing.spacing32),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

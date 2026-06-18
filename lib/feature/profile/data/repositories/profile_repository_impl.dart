@@ -72,11 +72,29 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
 
   @override
-  Future<Either<Failure, String>> changePassword(ChangePasswordRequestModel request) async {
+  Future<Either<Failure, Unit>> changePassword(ChangePasswordRequestModel request) async {
     if (await networkInfo.isConnected) {
       try {
-        final result = await remoteDataSource.changePassword(request);
-        return Right(result.message);
+        await remoteDataSource.changePassword(request);
+        return Right(unit);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message ?? 'Server error'));
+      } on DioException catch (e) {
+        return Left(ErrorHandler.handle(e));
+      } catch (e) {
+        return Left(ServerFailure(message: e.toString()));
+      }
+    } else {
+      return const Left(NetworkFailure(message: 'No internet connection'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> softDeleteProfile() async {
+    if (await networkInfo.isConnected) {
+      try {
+        await remoteDataSource.softDeleteProfile();
+        return Right(unit);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message ?? 'Server error'));
       } on DioException catch (e) {

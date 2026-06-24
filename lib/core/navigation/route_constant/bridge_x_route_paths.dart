@@ -15,6 +15,7 @@ class BridgeXRoutePaths {
   static const String verifyEmailCode = 'verify-email-code';
 
 
+  static const String verifyEmail = '/verify-email';
   static const String completeProfile = '/complete-profile';
   static const String updateProfile = '/update-profile';
 

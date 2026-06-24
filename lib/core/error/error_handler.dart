@@ -12,7 +12,7 @@ class ErrorHandler {
     final data = response?.data;
 
     final message =
-        data?['message'] ??
+        (data is Map ? data['message'] : null) ??
         'Something went wrong';
 
     switch (statusCode) {
@@ -23,11 +23,23 @@ class ErrorHandler {
           statusCode: 401,
         );
 
+      case 403:
+        return AuthFailure(
+          message: message,
+          statusCode: 403,
+        );
+
       case 422:
         return ValidationFailure(
           message: message,
           statusCode: 422,
           errors: data?['errors'],
+        );
+
+      case 429:
+        return RateLimitFailure(
+          message: message,
+          statusCode: 429,
         );
 
       case 500:

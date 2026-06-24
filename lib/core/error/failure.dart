@@ -52,3 +52,10 @@ class ValidationFailure extends Failure {
       ];
 }
 
+class RateLimitFailure extends Failure {
+  const RateLimitFailure({
+    required super.message,
+    super.statusCode,
+  });
+}
+

@@ -1,6 +1,5 @@
 ﻿import 'package:bridge_x/bridge_x.dart';
 import 'package:bridge_x/core/services/logger_service.dart';
-import 'package:bridge_x/core/services/app_lifecycle_service.dart';
 import 'package:bridge_x/core/services/notification_services/firebase_push_notification_service.dart';
 import 'package:bridge_x/core/services/notification_services/flutter_local_notification_service.dart';
 import 'package:bridge_x/core/services/supabase_service.dart';
@@ -18,7 +17,7 @@ void main() async {
   final pushService = di.sl<PushNotificationService>();
   await pushService.init();
   await pushService.handleTerminatedMessage();
-  di.sl<AppLifecycleService>().init();
+  //di.sl<AppLifecycleService>().init();
   // di.sl<ConnectivityService>().init();
 
   runApp(const BridgeXApp());

@@ -23,7 +23,7 @@ class ApiEndpoint {
   static const String myChats = "/api/teams/my-chats";
   static const String searchProgrammers = "/api/search/programmers";
   static String teamSettings({required int projectId}) =>
-      "/api/teams/$projectId/details";
+      "/api/teams/projects/$projectId/team-details";
 
   // projects
   static const String allProject = "/api/my-projects";
@@ -36,13 +36,22 @@ class ApiEndpoint {
   static String submitprojectAsComplete({required int projectId}) =>
       "/api/projects/$projectId/complete";
 
+  static String changeLeader({required int projectId, required int userId}) =>
+      "/api/projects/$projectId/change-leader/$userId";
+
+  static String deleteTeam({required int projectId}) =>
+      "/api/projects/$projectId/team";
+
   // tasks
   static String teamDetailsWithtasks({required int teamId}) =>
       "/api/team/$teamId/full-details";
-  static String createTask({required int projectId}) =>
-      "/api/tasks/team/$projectId";
+  static String createTask({required int teamId}) =>
+      "/api/tasks/team/$teamId";
   static String viewTask({required int projectId}) =>
-      "/api/team/$projectId/full-details";
+      "/api/projects/$projectId/tasks";
+  static const String tasksInProgress = "/api/tasks/in-progress";
+  static const String tasksCompleted = "/api/tasks/completed";
+  static String taskDetails({required int taskId}) => "/api/tasks/$taskId";
 
   //profile
   static const String profileData = "/api/my/dashboard";
@@ -64,6 +73,13 @@ class ApiEndpoint {
 
   // ai matching
   static const String aiMatchTeams = "/api/ai/match-teams";
+
+  // join requests
+  static const String myJoinRequests = "/api/my/join-requests";
+  static String joinRequestDetails({required int joinRequestId}) =>
+      "/api/join-requests/$joinRequestId";
+  static String sendJoinRequest({required int projectId}) =>
+      "/api/projects/$projectId/join-request";
 
   // notifications
   static const String notifications = "/api/notifications";

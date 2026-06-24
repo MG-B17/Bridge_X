@@ -3,9 +3,9 @@ import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dar
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dart';
 import 'package:bridge_x/core/navigation/screens_args/request_review_invitation_args.dart';
 import 'package:bridge_x/core/navigation/screens_args/request_review_join_request_args.dart';
-import 'package:bridge_x/feature/invitaions/presentation/screens/requests_center_screen.dart';
-import 'package:bridge_x/feature/invitaions/presentation/screens/request_review_invitation_screen.dart';
-import 'package:bridge_x/feature/invitaions/presentation/screens/request_review_join_request_screen.dart';
+import 'package:bridge_x/features/invitaions/presentation/screens/requests_center_screen.dart';
+import 'package:bridge_x/features/invitaions/presentation/screens/request_review_invitation_screen.dart';
+import 'package:bridge_x/features/invitaions/presentation/screens/request_review_join_request_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 

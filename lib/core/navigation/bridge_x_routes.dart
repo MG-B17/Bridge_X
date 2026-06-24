@@ -3,20 +3,21 @@ import 'package:bridge_x/core/init/app_state.dart';
 import 'package:bridge_x/core/navigation/navigator_keys.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dart';
-import 'package:bridge_x/core/navigation/routes/chat_route.dart';
+
 import 'package:bridge_x/core/navigation/routes/home_route.dart';
 import 'package:bridge_x/core/navigation/routes/forget_password_route.dart';
 import 'package:bridge_x/core/navigation/routes/profile_route.dart';
 import 'package:bridge_x/core/navigation/routes/project_route.dart';
 import 'package:bridge_x/core/navigation/routes/singup_route.dart';
 import 'package:bridge_x/core/navigation/routes/invitaions_route.dart';
-import 'package:bridge_x/core/navigation/services/navigation_guard_simple.dart';
-import 'package:bridge_x/feature/auth/presentation/screens/complete_profile/complete_profile_screen.dart';
-import 'package:bridge_x/feature/auth/presentation/screens/login/login_screen.dart';
-import 'package:bridge_x/feature/layout/layout.dart';
-import 'package:bridge_x/feature/onboarding/presentation/screens/onboarding_screen.dart';
-import 'package:bridge_x/feature/profile/presentation/screen/edit_profile.dart';
-import 'package:bridge_x/feature/splash/splash_screen.dart';
+import 'package:bridge_x/core/navigation/services/navigation_guard.dart';
+import 'package:bridge_x/features/auth/presentation/screens/complete_profile/complete_profile_screen.dart';
+import 'package:bridge_x/features/auth/presentation/screens/login/login_screen.dart';
+import 'package:bridge_x/features/auth/presentation/screens/verify_code/screen/post_login_verify_email_screen.dart';
+import 'package:bridge_x/features/layout/layout.dart';
+import 'package:bridge_x/features/onboarding/presentation/screens/onboarding_screen.dart';
+import 'package:bridge_x/features/profile/presentation/screen/edit_profile.dart';
+import 'package:bridge_x/features/splash/splash_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final appRouter = GoRouter(
@@ -49,6 +50,11 @@ final appRouter = GoRouter(
     singupRoute,
     invitaionsRoute,
     GoRoute(
+      path: BridgeXRoutePaths.verifyEmail,
+      name: BridgeXRouteNames.verifyEmail,
+      builder: (context, state) => const PostLoginVerifyEmailScreen(),
+    ),
+    GoRoute(
       path: BridgeXRoutePaths.completeProfile,
       name: BridgeXRouteNames.completeProfile,
       builder: (context, state) => const CompleteProfileScreen(),
@@ -61,7 +67,7 @@ final appRouter = GoRouter(
     StatefulShellRoute.indexedStack(
       builder: (context, state, statefulNavigationShell) =>
           LayoutScreen(navigationShell: statefulNavigationShell),
-      branches: [homeRoute, chatRoute, projectRoute, profileRoute],
+      branches: [homeRoute,  projectRoute, profileRoute],// chatRoute
     ),
   ],
 );

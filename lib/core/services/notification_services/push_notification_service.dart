@@ -3,4 +3,7 @@ abstract class PushNotificationService {
   String? get fcmToken;
   Future<String?> refreshToken();
   Future<void> handleTerminatedMessage();
+  Future<void> requestPermission();
+  Future<bool> isPermissionGranted();
+  Future<void> openNotificationSettings();
 }

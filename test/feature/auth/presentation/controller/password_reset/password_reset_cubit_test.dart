@@ -1,15 +1,15 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:bridge_x/core/error/failure.dart';
-import 'package:bridge_x/feature/auth/domain/entity/forget_password_entity/forget_password_entity.dart';
-import 'package:bridge_x/feature/auth/domain/entity/reset_password_entity/reset_password_entity.dart';
-import 'package:bridge_x/feature/auth/domain/entity/verify_code_entity.dart';
-import 'package:bridge_x/feature/auth/domain/entity/verify_password_entity/verify_password_result_entity.dart';
-import 'package:bridge_x/feature/auth/domain/usecases/forget_password_usecase.dart';
-import 'package:bridge_x/feature/auth/domain/usecases/reset_password_usecase.dart';
-import 'package:bridge_x/feature/auth/domain/usecases/verify_password_usecase.dart';
-import 'package:bridge_x/feature/auth/presentation/controller/password_reset/password_reset_cubit.dart';
-import 'package:bridge_x/feature/auth/presentation/controller/password_reset/password_reset_state.dart';
-import 'package:bridge_x/feature/auth/utils/auth_enum.dart';
+import 'package:bridge_x/features/auth/domain/entity/forget_password_entity/forget_password_entity.dart';
+import 'package:bridge_x/features/auth/domain/entity/reset_password_entity/reset_password_entity.dart';
+import 'package:bridge_x/features/auth/domain/entity/verify_code_entity.dart';
+import 'package:bridge_x/features/auth/domain/entity/verify_password_entity/verify_password_result_entity.dart';
+import 'package:bridge_x/features/auth/domain/usecases/forget_password_usecase.dart';
+import 'package:bridge_x/features/auth/domain/usecases/reset_password_usecase.dart';
+import 'package:bridge_x/features/auth/domain/usecases/verify_password_usecase.dart';
+import 'package:bridge_x/features/auth/presentation/controller/password_reset/password_reset_cubit.dart';
+import 'package:bridge_x/features/auth/presentation/controller/password_reset/password_reset_state.dart';
+import 'package:bridge_x/features/auth/utils/auth_enum.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -168,7 +168,7 @@ void main() {
       },
       act: (cubit) => cubit.resetPassword(
         email: email,
-        code: code,
+        resetToken: code,
         newPassword: newPassword,
         passwordConfirmation: passwordConfirmation,
       ),
@@ -192,7 +192,7 @@ void main() {
       },
       act: (cubit) => cubit.resetPassword(
         email: email,
-        code: code,
+        resetToken: code,
         newPassword: newPassword,
         passwordConfirmation: passwordConfirmation,
       ),
@@ -214,7 +214,7 @@ void main() {
       },
       act: (cubit) => cubit.resetPassword(
         email: email,
-        code: code,
+        resetToken: code,
         newPassword: newPassword,
         passwordConfirmation: passwordConfirmation,
       ),

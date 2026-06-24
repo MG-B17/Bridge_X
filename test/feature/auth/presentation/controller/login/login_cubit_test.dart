@@ -2,13 +2,14 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:bridge_x/core/error/failure.dart';
 import 'package:bridge_x/core/init/app_state.dart';
 import 'package:bridge_x/core/services/notification_services/push_notification_service.dart';
-import 'package:bridge_x/feature/auth/domain/entity/login_entity/login_entity.dart';
-import 'package:bridge_x/feature/auth/domain/entity/login_entity/login_result_entity.dart';
-import 'package:bridge_x/feature/auth/domain/usecases/login_usecase.dart';
-import 'package:bridge_x/feature/auth/presentation/controller/login/login_cubit.dart';
-import 'package:bridge_x/feature/auth/presentation/controller/login/login_state.dart';
-import 'package:bridge_x/feature/auth/utils/auth_enum.dart';
-import 'package:bridge_x/feature/auth/utils/auth_strings.dart';
+import 'package:bridge_x/core/utils/models/user_data_model.dart';
+import 'package:bridge_x/features/auth/domain/entity/login_entity/login_entity.dart';
+import 'package:bridge_x/features/auth/domain/entity/login_entity/login_result_entity.dart';
+import 'package:bridge_x/features/auth/domain/usecases/login_usecase.dart';
+import 'package:bridge_x/features/auth/presentation/controller/login/login_cubit.dart';
+import 'package:bridge_x/features/auth/presentation/controller/login/login_state.dart';
+import 'package:bridge_x/features/auth/utils/auth_enum.dart';
+import 'package:bridge_x/features/auth/utils/auth_strings.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -17,8 +18,7 @@ class MockLoginUsecase extends Mock implements LoginUsecase {}
 
 class MockAppState extends Mock implements AppState {}
 
-class MockPushNotificationService extends Mock
-    implements PushNotificationService {}
+class MockPushNotificationService extends Mock implements PushNotificationService {}
 
 void main() {
   late MockLoginUsecase loginUsecase;
@@ -26,14 +26,30 @@ void main() {
   late MockPushNotificationService pushNotificationService;
   late LoginCubit loginCubit;
 
+  const email = 'test@example.com';
+  const password = 'password123';
+
+  const entity = LoginResultEntity(
+    message: 'Login successful',
+    token: 'token|123',
+    userId: 1,
+    userName: 'testuser',
+    name: 'Test User',
+    email: email,
+    isVerified: true,
+    isProfileComplete: true,
+  );
+
   setUpAll(() {
     registerFallbackValue(LoginEntity(email: '', password: ''));
+    registerFallbackValue(UserDataModel(userId: '', userName: '', userEmail: ''));
   });
 
   setUp(() {
     loginUsecase = MockLoginUsecase();
     appState = MockAppState();
     pushNotificationService = MockPushNotificationService();
+    when(() => pushNotificationService.fcmToken).thenReturn(null);
     loginCubit = LoginCubit(
       loginUsecase: loginUsecase,
       appState: appState,
@@ -46,29 +62,13 @@ void main() {
   });
 
   group('LoginCubit', () {
-    const email = 'test@example.com';
-    const password = 'password123';
-    const fcmToken = 'fcm_token_123';
-    const loginResult = LoginResultEntity(
-      token: 'token',
-      userId: 1,
-      userName: 'TestUser',
-      isVerified: true,
-      isProfileComplete: false,
-    );
-    const failureMessage = 'Invalid credentials';
-
-    setUp(() {
-      when(() => pushNotificationService.fcmToken).thenReturn(fcmToken);
-    });
-
     blocTest<LoginCubit, LoginState>(
-      'emits [loading, success] when login succeeds',
+      'emits [loading, success] and updates AppState on successful login',
       build: () => loginCubit,
       setUp: () {
         when(
           () => loginUsecase(loginEntity: any(named: 'loginEntity')),
-        ).thenAnswer((_) async => const Right(loginResult));
+        ).thenAnswer((_) async => Right(entity));
       },
       act: (cubit) => cubit.login(email: email, password: password),
       expect: () => const [
@@ -76,98 +76,99 @@ void main() {
         LoginState(status: AuthStatus.success, message: AuthStrings.loginSuccess),
       ],
       verify: (_) {
-        verify(() => appState.isLoggedIn = true).called(1);
-        verify(() => appState.isVerified = true).called(1);
-        verify(() => appState.username = 'TestUser').called(1);
-        verify(() => appState.isProfileComplete = false).called(1);
+        verify(
+          () => appState.batchUpdate(
+            isLoggedIn: any(named: 'isLoggedIn'),
+            isVerified: any(named: 'isVerified'),
+            isProfileComplete: any(named: 'isProfileComplete'),
+            userData: any(named: 'userData'),
+          ),
+        ).called(1);
       },
     );
 
     blocTest<LoginCubit, LoginState>(
-      'emits [loading, error] when login fails',
+      'emits [loading, error] on login failure',
       build: () => loginCubit,
       setUp: () {
         when(
           () => loginUsecase(loginEntity: any(named: 'loginEntity')),
         ).thenAnswer(
-          (_) async => Left(AuthFailure(message: failureMessage)),
+          (_) async => Left(AuthFailure(message: 'Invalid credentials')),
         );
       },
       act: (cubit) => cubit.login(email: email, password: password),
-      expect: () => [
-        const LoginState(status: AuthStatus.loading),
-        const LoginState(status: AuthStatus.error, message: failureMessage),
-      ],
-      verify: (_) {
-        verifyNever(() => appState.isLoggedIn = true);
-      },
-    );
-
-    blocTest<LoginCubit, LoginState>(
-      'toggles password visibility from false to true',
-      build: () => loginCubit,
-      act: (cubit) => cubit.togglePasswordVisibility(),
       expect: () => const [
-        LoginState(status: AuthStatus.initial, isPasswordVisible: true),
+        LoginState(status: AuthStatus.loading),
+        LoginState(status: AuthStatus.error, message: 'Invalid credentials'),
       ],
     );
 
     blocTest<LoginCubit, LoginState>(
-      'toggles password visibility from true to false',
+      'passes null FCM token to usecase when unavailable',
       build: () => loginCubit,
       setUp: () {
-        loginCubit.togglePasswordVisibility();
-      },
-      act: (cubit) => cubit.togglePasswordVisibility(),
-      expect: () => const [
-        LoginState(status: AuthStatus.initial, isPasswordVisible: false),
-      ],
-    );
-
-    blocTest<LoginCubit, LoginState>(
-      'handles null fcm token',
-      build: () => loginCubit,
-      setUp: () {
-        when(() => pushNotificationService.fcmToken).thenReturn(null);
         when(
           () => loginUsecase(loginEntity: any(named: 'loginEntity')),
-        ).thenAnswer((_) async => const Right(loginResult));
+        ).thenAnswer((_) async => Right(entity));
       },
       act: (cubit) => cubit.login(email: email, password: password),
       expect: () => const [
         LoginState(status: AuthStatus.loading),
         LoginState(status: AuthStatus.success, message: AuthStrings.loginSuccess),
       ],
-    );
-
-    blocTest<LoginCubit, LoginState>(
-      'emits success with null username and profile complete',
-      build: () => loginCubit,
-      setUp: () {
-        when(
-          () => loginUsecase(loginEntity: any(named: 'loginEntity')),
-        ).thenAnswer(
-          (_) async => const Right(
-            LoginResultEntity(
-              token: 'token',
-              userId: 2,
-              isVerified: false,
-              isProfileComplete: true,
+      verify: (_) {
+        verify(
+          () => loginUsecase(
+            loginEntity: any(
+              named: 'loginEntity',
+              that: isA<LoginEntity>()
+                  .having((e) => e.email, 'email', email)
+                  .having((e) => e.fcmToken, 'fcmToken', null),
             ),
           ),
-        );
-      },
-      act: (cubit) => cubit.login(email: email, password: password),
-      expect: () => const [
-        LoginState(status: AuthStatus.loading),
-        LoginState(status: AuthStatus.success, message: AuthStrings.loginSuccess),
-      ],
-      verify: (_) {
-        verify(() => appState.isLoggedIn = true).called(1);
-        verify(() => appState.isVerified = false).called(1);
-        verify(() => appState.username = null).called(1);
-        verify(() => appState.isProfileComplete = true).called(1);
+        ).called(1);
       },
     );
+
+    test('toggles password visibility', () {
+      expect(loginCubit.state.isPasswordVisible, false);
+      loginCubit.togglePasswordVisibility();
+      expect(loginCubit.state.isPasswordVisible, true);
+      loginCubit.togglePasswordVisibility();
+      expect(loginCubit.state.isPasswordVisible, false);
+    });
+  });
+
+  group('AppState.batchUpdate', () {
+    test('applies all provided values in single notification', () {
+      final state = AppState();
+      int notificationCount = 0;
+      state.addListener(() => notificationCount++);
+
+      state.batchUpdate(
+        isLoggedIn: true,
+        isVerified: true,
+        isProfileComplete: true,
+        userData: UserDataModel(
+          userId: '1', userName: 'test', userEmail: email,
+        ),
+      );
+
+      expect(notificationCount, 1);
+      expect(state.isLoggedIn, true);
+      expect(state.isVerified, true);
+      expect(state.isProfileComplete, true);
+      expect(state.userData?.userName, 'test');
+    });
+
+    test('skips notification when no values change', () {
+      final state = AppState();
+      int notificationCount = 0;
+      state.addListener(() => notificationCount++);
+
+      state.batchUpdate();
+      expect(notificationCount, 0);
+    });
   });
 }

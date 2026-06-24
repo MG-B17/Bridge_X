@@ -4,9 +4,9 @@ import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dar
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dart';
 import 'package:bridge_x/core/navigation/screens_args/otp_args.dart';
 import 'package:bridge_x/core/navigation/screens_args/reset_password_args.dart';
-import 'package:bridge_x/feature/auth/presentation/screens/forget_password/screens/forget_password_screen.dart';
-import 'package:bridge_x/feature/auth/presentation/screens/forget_password/screens/reset_password_screen.dart';
-import 'package:bridge_x/feature/auth/presentation/screens/verify_code/screen/verify_password_screen.dart';
+import 'package:bridge_x/features/auth/presentation/screens/forget_password/screens/forget_password_screen.dart';
+import 'package:bridge_x/features/auth/presentation/screens/forget_password/screens/reset_password_screen.dart';
+import 'package:bridge_x/features/auth/presentation/screens/verify_code/screen/verify_password_screen.dart';
 import 'package:go_router/go_router.dart';
 
 

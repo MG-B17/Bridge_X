@@ -3,15 +3,15 @@ import 'package:bridge_x/core/animation/screen_transtion_animation/transitions/s
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dart';
 import 'package:bridge_x/core/navigation/screens_args/notifications_details_args.dart';
-import 'package:bridge_x/feature/dashboard/domain/entities/project_detail_entity.dart';
-import 'package:bridge_x/feature/dashboard/presentation/screens/home_screen.dart';
-import 'package:bridge_x/feature/dashboard/presentation/screens/project_progress_screen.dart';
-import 'package:bridge_x/feature/matching/presentation/screens/matching_process_screen.dart';
-import 'package:bridge_x/feature/matching/presentation/screens/no_teams_found_screen.dart';
-import 'package:bridge_x/feature/matching/presentation/screens/recommended_teams_screen.dart';
-import 'package:bridge_x/feature/matching/presentation/screens/select_category_screen.dart';
-import 'package:bridge_x/feature/notifications/presentation/screens/notification_details_screen.dart';
-import 'package:bridge_x/feature/notifications/presentation/screens/notifications_screen.dart';
+import 'package:bridge_x/features/dashboard/domain/entities/project_detail_entity.dart';
+import 'package:bridge_x/features/dashboard/presentation/screens/home_screen.dart';
+import 'package:bridge_x/features/dashboard/presentation/screens/project_progress_screen.dart';
+import 'package:bridge_x/features/matching/presentation/screens/matching_process_screen.dart';
+import 'package:bridge_x/features/matching/presentation/screens/no_teams_found_screen.dart';
+import 'package:bridge_x/features/matching/presentation/screens/recommended_teams_screen.dart';
+import 'package:bridge_x/features/matching/presentation/screens/select_category_screen.dart';
+import 'package:bridge_x/features/notifications/presentation/screens/notification_details_screen.dart';
+import 'package:bridge_x/features/notifications/presentation/screens/notifications_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final BottomSheetTransitionPage bottomSheetTransitionPage = BottomSheetTransitionPage();

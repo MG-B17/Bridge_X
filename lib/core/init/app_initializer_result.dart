@@ -1,17 +1,13 @@
+import 'package:bridge_x/core/utils/models/user_data_model.dart';
+
 class AppInitializerResult {
   final bool isLoggedIn;
   final bool hasSeenOnboarding;
-  final bool isVerified;
-  final bool trackSelectionCompleted;
-  final bool isProfileComplete;
-  final String? username;
+  final UserDataModel? userData;
 
-  AppInitializerResult({
+  const AppInitializerResult({
     required this.isLoggedIn,
     required this.hasSeenOnboarding,
-    required this.isVerified,
-    required this.trackSelectionCompleted,
-    required this.isProfileComplete,
-    this.username,
+    this.userData,
   });
 }

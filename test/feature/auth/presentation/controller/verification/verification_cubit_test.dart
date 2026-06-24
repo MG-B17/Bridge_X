@@ -1,11 +1,11 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:bridge_x/core/error/failure.dart';
-import 'package:bridge_x/feature/auth/domain/entity/verify_code_entity.dart';
-import 'package:bridge_x/feature/auth/domain/usecases/resend_verify_usecase.dart';
-import 'package:bridge_x/feature/auth/domain/usecases/verify_email_usecase.dart';
-import 'package:bridge_x/feature/auth/presentation/controller/verification/verification_cubit.dart';
-import 'package:bridge_x/feature/auth/presentation/controller/verification/verification_state.dart';
-import 'package:bridge_x/feature/auth/utils/auth_enum.dart';
+import 'package:bridge_x/features/auth/domain/entity/verify_code_entity.dart';
+import 'package:bridge_x/features/auth/domain/usecases/resend_verify_usecase.dart';
+import 'package:bridge_x/features/auth/domain/usecases/verify_email_usecase.dart';
+import 'package:bridge_x/features/auth/presentation/controller/verification/verification_cubit.dart';
+import 'package:bridge_x/features/auth/presentation/controller/verification/verification_state.dart';
+import 'package:bridge_x/features/auth/utils/auth_enum.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -114,7 +114,7 @@ void main() {
     const failureMessage = 'Resend failed';
 
     blocTest<VerificationCubit, VerificationState>(
-      'emits [loading, success] when resendVerify succeeds',
+      'sets cooldownSeconds to 30 when resendVerify succeeds',
       build: () => verificationCubit,
       setUp: () {
         when(
@@ -123,13 +123,12 @@ void main() {
       },
       act: (cubit) => cubit.resendVerify(email: email),
       expect: () => const [
-        VerificationState(status: AuthStatus.loading),
-        VerificationState(status: AuthStatus.success, message: successMessage),
+        VerificationState(cooldownSeconds: 30),
       ],
     );
 
     blocTest<VerificationCubit, VerificationState>(
-      'emits [loading, error] when resendVerify fails',
+      'emits error when resendVerify fails',
       build: () => verificationCubit,
       setUp: () {
         when(
@@ -140,13 +139,12 @@ void main() {
       },
       act: (cubit) => cubit.resendVerify(email: email),
       expect: () => const [
-        VerificationState(status: AuthStatus.loading),
         VerificationState(status: AuthStatus.error, message: failureMessage),
       ],
     );
 
     blocTest<VerificationCubit, VerificationState>(
-      'calls resendVerify with correct email',
+      'calls resendVerify with correct email and sets cooldown',
       build: () => verificationCubit,
       setUp: () {
         when(
@@ -155,8 +153,7 @@ void main() {
       },
       act: (cubit) => cubit.resendVerify(email: email),
       expect: () => const [
-        VerificationState(status: AuthStatus.loading),
-        VerificationState(status: AuthStatus.success, message: successMessage),
+        VerificationState(cooldownSeconds: 30),
       ],
       verify: (_) {
         verify(() => resendVerifyUseCase(email: email)).called(1);

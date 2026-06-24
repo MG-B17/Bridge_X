@@ -7,6 +7,7 @@ class BridgeXRouteNames {
   static const String resetPassword = 'reset-password';
   static const String verifyEmailCode = 'verify-email-code';
   static const String verifyPasswordCode = 'verify-password-code';
+  static const String verifyEmail = 'verify-email';
   static const String completeProfile = 'complete-profile';
   static const String updateProfile = 'update-profile';
 

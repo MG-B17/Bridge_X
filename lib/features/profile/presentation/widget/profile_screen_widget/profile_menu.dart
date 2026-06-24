@@ -1,0 +1,105 @@
+import 'package:bridge_x/core/constant/bridge_x_strings.dart';
+import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
+import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/features/auth/utils/auth_enum.dart';
+import 'package:bridge_x/core/widget/feedback/bridge_x_snackbar.dart';
+import 'package:bridge_x/core/widget/feedback/error_dialog.dart';
+import 'package:bridge_x/core/widget/feedback/loading_dialog.dart';
+import 'package:bridge_x/core/widget/layout/bridge_x_divider.dart';
+import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
+import 'package:bridge_x/features/auth/presentation/controller/account/account_cubit.dart';
+import 'package:bridge_x/features/auth/presentation/controller/account/account_state.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:bridge_x/features/invitaions/presentation/utils/invitaions_strings.dart';
+import 'profile_menu_item.dart';
+import 'logout_dialog.dart';
+
+class ProfileMenu extends StatelessWidget {
+  const ProfileMenu({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<AccountCubit, AccountState>(
+      listenWhen: (prev, curr) => curr.action == AuthAction.logout,
+      listener: (context, state) {
+        if (!context.mounted) return;
+        if (state.status == AuthStatus.loading) {
+          LoadingDialog.show(context: context, message: 'Logging out...');
+        } else if (state.status == AuthStatus.success) {
+          LoadingDialog.hide(context);
+          BridgeXSnackBar.showSuccess(
+            context: context,
+            message: state.message ?? 'Logged out successfully',
+          );
+        } else if (state.status == AuthStatus.error) {
+          LoadingDialog.hide(context);
+          ErrorDialog.show(
+            context: context,
+            title: 'Error',
+            message: state.message ?? 'Logout failed',
+          );
+        }
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: context.colors.primary.withValues(alpha: 0.05),
+          borderRadius: BorderRadius.circular(AppSpacing.radiusCardLarge),
+        ),
+        child: Column(
+          children: [
+            VerticalSpacing(AppSpacing.sm),
+            ProfileMenuItem(
+              label: AppStrings.myTasks,
+              icon: Icons.task_alt_outlined,
+              badgeCount: 3,
+              onTap: () {
+                context.pushNamed(BridgeXRouteNames.myTasks);
+              },
+            ),
+            BridgeXDivider(height: 16, indent: 24, endIndent: 24, color: context.colors.divider),
+            ProfileMenuItem(
+              label: InvitaionsStrings.requestsCenter,
+              icon: Icons.mail_outline_rounded,
+              onTap: () {
+                context.pushNamed(BridgeXRouteNames.requestsCenter);
+              },
+            ),
+            BridgeXDivider(height: 16, indent: 24, endIndent: 24, color: context.colors.divider),
+            ProfileMenuItem(
+              label: AppStrings.skillsAndExperience,
+              icon: Icons.psychology_outlined,
+              onTap: () {
+                context.pushNamed(BridgeXRouteNames.skillsAndExperience);
+              },
+            ),
+            BridgeXDivider(height: 16, indent: 24, endIndent: 24, color: context.colors.divider),
+            ProfileMenuItem(
+              label: AppStrings.settings,
+              icon: Icons.settings_outlined,
+              onTap: () {
+                context.pushNamed(BridgeXRouteNames.settings);
+              },
+            ),
+            BridgeXDivider(height: 16, indent: 24, endIndent: 24, color: context.colors.divider),
+            ProfileMenuItem(
+              label: AppStrings.logout,
+              icon: Icons.logout_outlined,
+              onTap: () async {
+                final confirmed = await LogoutDialog.show(context);
+                if (confirmed ?? false) {
+                  if (!context.mounted) return;
+                  context.read<AccountCubit>().logout();
+                }
+              },
+              isDestructive: true,
+            ),
+            VerticalSpacing(AppSpacing.sm),
+          ],
+        ),
+      ),
+    );
+  }
+}

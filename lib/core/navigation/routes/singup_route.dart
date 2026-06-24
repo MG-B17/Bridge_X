@@ -3,8 +3,8 @@ import 'package:bridge_x/core/animation/screen_transtion_animation/transitions/s
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dart';
 import 'package:bridge_x/core/navigation/screens_args/otp_args.dart';
-import 'package:bridge_x/feature/auth/presentation/screens/register/register_screen.dart';
-import 'package:bridge_x/feature/auth/presentation/screens/verify_code/screen/verify_email_screen.dart';
+import 'package:bridge_x/features/auth/presentation/screens/register/register_screen.dart';
+import 'package:bridge_x/features/auth/presentation/screens/verify_code/screen/verify_email_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final BottomSheetTransitionPage bottomSheetTransitionPage = BottomSheetTransitionPage();

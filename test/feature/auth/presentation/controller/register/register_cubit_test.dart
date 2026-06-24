@@ -1,10 +1,10 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:bridge_x/core/error/failure.dart';
-import 'package:bridge_x/feature/auth/domain/entity/register_entity/register_entity.dart';
-import 'package:bridge_x/feature/auth/domain/usecases/register_usecase.dart';
-import 'package:bridge_x/feature/auth/presentation/controller/register/register_cubit.dart';
-import 'package:bridge_x/feature/auth/presentation/controller/register/register_state.dart';
-import 'package:bridge_x/feature/auth/utils/auth_enum.dart';
+import 'package:bridge_x/features/auth/domain/entity/register_entity/register_entity.dart';
+import 'package:bridge_x/features/auth/domain/usecases/register_usecase.dart';
+import 'package:bridge_x/features/auth/presentation/controller/register/register_cubit.dart';
+import 'package:bridge_x/features/auth/presentation/controller/register/register_state.dart';
+import 'package:bridge_x/features/auth/utils/auth_enum.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

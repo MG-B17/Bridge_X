@@ -1,5 +1,5 @@
-import 'package:bridge_x/feature/invitaions/domain/entities/join_request_entity.dart';
-import 'package:bridge_x/feature/invitaions/presentation/cubit/invitaions_cubit.dart';
+import 'package:bridge_x/features/invitaions/domain/entities/join_request_entity.dart';
+import 'package:bridge_x/features/invitaions/presentation/cubit/invitaions_cubit.dart';
 
 class RequestReviewJoinRequestArgs {
   final JoinRequestEntity joinRequest;

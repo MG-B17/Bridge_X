@@ -1,7 +1,7 @@
 import 'package:bridge_x/core/animation/bottom_nav_bar_animation/controller/scroll_cubit.dart';
 import 'package:bridge_x/core/constant/bridge_x_strings.dart';
-import 'package:bridge_x/feature/auth/presentation/controller/account/account_cubit.dart';
-import 'package:bridge_x/feature/notifications/presentation/cubit/notifications_cubit.dart';
+import 'package:bridge_x/features/auth/presentation/controller/account/account_cubit.dart';
+import 'package:bridge_x/features/notifications/presentation/cubit/notifications_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

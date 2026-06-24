@@ -1,6 +1,7 @@
 import 'package:bridge_x/core/animation/bottom_nav_bar_animation/controller/scroll_cubit.dart';
 import 'package:bridge_x/core/init/app_state.dart';
 import 'package:bridge_x/core/init/init_app.dart';
+import 'package:bridge_x/features/settings/presentation/controller/notification_settings_cubit.dart';
 import 'package:bridge_x/core/network/api/api_client.dart';
 import 'package:bridge_x/core/network/api/dio_factory.dart';
 import 'package:bridge_x/core/network/network_info.dart';
@@ -12,8 +13,8 @@ import 'package:bridge_x/core/services/supabase_service.dart';
 import 'package:bridge_x/core/services/notification_services/firebase_push_notification_service.dart';
 import 'package:bridge_x/core/services/notification_services/flutter_local_notification_service.dart';
 import 'package:bridge_x/core/theme/theme_controller.dart';
-import 'package:bridge_x/feature/onboarding/presentation/controller/onboarding_provider.dart';
-import 'package:bridge_x/feature/auth/di/auth_injection.dart';
+import 'package:bridge_x/features/onboarding/presentation/controller/onboarding_provider.dart';
+import 'package:bridge_x/features/auth/di/auth_injection.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,18 +25,18 @@ import 'package:bridge_x/core/network/interceptors/connectivity_interceptor.dart
 import 'package:bridge_x/core/network/interceptors/logging_interceptor.dart';
 import 'package:bridge_x/core/network/interceptors/refresh_token_interceptor.dart';
 import 'package:bridge_x/core/network/interceptors/retry_interceptor.dart';
-import 'package:bridge_x/feature/dashboard/di/dashboard_injection.dart';
-import 'package:bridge_x/feature/create_team/di/create_team_injection.dart';
-import 'package:bridge_x/feature/projects_management/di/projects_management_injection.dart';
-import 'package:bridge_x/feature/team_evaluation/di/team_evaluation_injection.dart';
-import 'package:bridge_x/feature/task_management/di/task_management_injection.dart';
-import 'package:bridge_x/feature/profile/di/profile_injection.dart';
-import 'package:bridge_x/feature/levels/di/levels_injection.dart';
-import 'package:bridge_x/feature/report/di/report_injection.dart';
-import 'package:bridge_x/feature/matching/di/matching_injection.dart';
-import 'package:bridge_x/feature/notifications/di/notifications_injection.dart';
-import 'package:bridge_x/features/chat/di/chat_injection.dart';
-import 'package:bridge_x/feature/invitaions/di/invitaions_injection.dart';
+import 'package:bridge_x/features/dashboard/di/dashboard_injection.dart';
+import 'package:bridge_x/features/team_managment/create_team/di/create_team_injection.dart';
+import 'package:bridge_x/features/team_managment/projects_management/di/projects_management_injection.dart';
+import 'package:bridge_x/features/team_managment/team_evaluation/di/team_evaluation_injection.dart';
+import 'package:bridge_x/features/team_managment/task_management/di/task_management_injection.dart';
+import 'package:bridge_x/features/profile/di/profile_injection.dart';
+import 'package:bridge_x/features/levels/di/levels_injection.dart';
+import 'package:bridge_x/features/team_managment/report/di/report_injection.dart';
+import 'package:bridge_x/features/matching/di/matching_injection.dart';
+import 'package:bridge_x/features/notifications/di/notifications_injection.dart';
+import 'package:bridge_x/features/invitaions/di/invitaions_injection.dart';
+import 'package:bridge_x/features/team_managment/my_tasks/di/my_tasks_injection.dart';
 
 final sl = GetIt.instance;
 
@@ -106,10 +107,13 @@ Future<void> init() async {
   // core singletons (registered before features that depend on them)
   sl.registerLazySingleton<AppInitializer>(()=>AppInitializer());
   sl.registerLazySingleton<AppState>(()=>AppState());
+  sl.registerFactory<NotificationSettingsCubit>(
+    () => NotificationSettingsCubit(pushNotificationService: sl()),
+  );
 
   // features
   initAuth();
-  initChatList();
+  //initChatList();
   initDashboard();
   initCreateTeam();
   initProjectsManagement();
@@ -121,4 +125,5 @@ Future<void> init() async {
   initMatching();
   initNotifications();
   initInvitaions();
+  initMyTasks();
 }

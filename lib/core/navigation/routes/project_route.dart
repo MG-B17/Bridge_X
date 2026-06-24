@@ -10,19 +10,20 @@ import 'package:bridge_x/core/navigation/screens_args/project_details_args.dart'
 import 'package:bridge_x/core/navigation/screens_args/team_settings_args.dart';
 import 'package:bridge_x/core/navigation/screens_args/view_task_args.dart';
 import 'package:bridge_x/core/navigation/screens_args/report_user_args.dart';
-import 'package:bridge_x/feature/create_team/presentation/screens/create_team_screen.dart';
-import 'package:bridge_x/feature/create_team/presentation/widgets/add_members_bottom_sheet.dart';
-import 'package:bridge_x/feature/projects_management/presentation/screens/completed_project_details_screen.dart';
-import 'package:bridge_x/feature/projects_management/presentation/screens/project_dashboard_screen.dart';
-import 'package:bridge_x/feature/projects_management/presentation/screens/project_details_screen.dart';
-import 'package:bridge_x/feature/projects_management/presentation/screens/projects_screen.dart';
-import 'package:bridge_x/feature/projects_management/presentation/screens/team_settings_screen.dart';
-import 'package:bridge_x/feature/task_management/presentation/bloc/create_task/create_task_cubit.dart';
-import 'package:bridge_x/feature/task_management/presentation/screens/create_task_screen.dart';
-import 'package:bridge_x/feature/task_management/presentation/screens/view_task_screen.dart';
-import 'package:bridge_x/feature/report/presentation/screen/report_user_screen.dart';
-import 'package:bridge_x/feature/team_evaluation/presentation/cubit/team_evaluation_cubit.dart';
-import 'package:bridge_x/feature/team_evaluation/presentation/screens/team_evaluation_screen.dart';
+import 'package:bridge_x/features/team_managment/create_team/presentation/screens/create_team_screen.dart';
+import 'package:bridge_x/features/team_managment/create_team/presentation/widgets/add_members_bottom_sheet.dart';
+import 'package:bridge_x/features/team_managment/projects_management/presentation/bloc/projects_feature/projects_feature_bloc.dart';
+import 'package:bridge_x/features/team_managment/projects_management/presentation/screens/completed_project_details_screen.dart';
+import 'package:bridge_x/features/team_managment/projects_management/presentation/screens/project_dashboard_screen.dart';
+import 'package:bridge_x/features/team_managment/projects_management/presentation/screens/project_details_screen.dart';
+import 'package:bridge_x/features/team_managment/projects_management/presentation/screens/projects_screen.dart';
+import 'package:bridge_x/features/team_managment/projects_management/presentation/screens/team_settings_screen.dart';
+import 'package:bridge_x/features/team_managment/task_management/presentation/bloc/create_task/create_task_cubit.dart';
+import 'package:bridge_x/features/team_managment/task_management/presentation/screens/create_task_screen.dart';
+import 'package:bridge_x/features/team_managment/task_management/presentation/screens/view_task_screen.dart';
+import 'package:bridge_x/features/team_managment/report/presentation/screen/report_user_screen.dart';
+import 'package:bridge_x/features/team_managment/team_evaluation/presentation/cubit/team_evaluation_cubit.dart';
+import 'package:bridge_x/features/team_managment/team_evaluation/presentation/screens/team_evaluation_screen.dart';
 import 'package:bridge_x/core/navigation/screens_args/team_evaluation_args.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -35,7 +36,10 @@ final BottomSheetTransitionPage _bottomSheetTransition =
 StatefulShellBranch projectRoute = StatefulShellBranch(
   routes: [
     ShellRoute(
-      builder: (context, state, child) => child,
+      builder: (context, state, child) => BlocProvider<ProjectsFeatureBloc>(
+        create: (_) => sl<ProjectsFeatureBloc>(),
+        child: child,
+      ),
       routes: [
         GoRoute(
           path: BridgeXRoutePaths.projects,
@@ -116,8 +120,8 @@ StatefulShellBranch projectRoute = StatefulShellBranch(
                 return _bottomSheetTransition.build(
                   child: BlocProvider<CreateTaskCubit>(
                     create: (_) =>
-                        sl<CreateTaskCubit>()..loadMembers(args.teamId),
-                    child: CreateTaskScreen(projectId: args.teamId),
+                        sl<CreateTaskCubit>()..loadMembers(args.projectId),
+                    child: CreateTaskScreen(teamId: args.teamId, projectId: args.projectId),
                   ),
                   state: state,
                 );

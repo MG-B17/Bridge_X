@@ -1,9 +1,8 @@
 export 'home_strings.dart';
 export 'matching_strings.dart';
 export 'misc_strings.dart';
-export 'onboarding_strings.dart';
 export 'profile_strings.dart';
-export 'project_strings.dart';
+
 export 'settings_strings.dart';
 export 'track_strings.dart';
 
@@ -169,152 +168,30 @@ class AppStrings {
   static const String logoutConfirm =
       'Are you sure you want to sign out? You will need to log back in to access your projects.';
 
-  // ── Projects ──────────────────────────────────────────────────────────────
-  static const String milestone = 'Milestone';
-  static const String projectVerified = 'Project Verified';
-  static const String projectLaunched = 'Project Launched';
-  static const String myProjects = 'My Projects';
-  static const String noProjects = 'No projects yet';
-  static const String startProject =
-      'Start your first project or join an existing team to begin your journey.';
-  static const String exploreTeams = 'Explore Public Teams';
-  static const String createProject = 'Create Project';
-  static const String submitProject = 'Submit Project';
-  static const String projectCompleted = 'Project Completed 🎉';
-  static const String githubUrl = 'Github URL';
-  static const String urlHint = 'URL';
-  static const String projectDescription = 'Project Description';
-  static const String describeProjectHint =
-      "Describe your project goals and what you're looking to build...";
-  static const String categorySelection = 'Category Selection';
+  // ── Projects (used by skills_and_experience & matching features) ───────────
   static const String marketing = 'Marketing';
   static const String research = 'Research';
   static const String business = 'Business';
-  static const String requiredRoles = 'Required Roles';
-  static const String addMoreHint = 'Add more...';
-  static const String rolesUsageDisclaimer =
-      'These roles will be used by the AI for matching.';
-  static const String inviteMembersManually = 'Invite members manually';
-  static const String youAreMentor = 'You are the mentor';
-  static const String projectSuccessfullySubmitted =
-      'You have successfully submitted this project';
-  static const String reviewPendingByAdmin = 'Review pending by administration';
-  static const String viewSummary = 'View Summary';
-  static const String backToProjects = 'Back to Projects';
   static const String addProject = '+ Add Project';
   static const String projectName = 'Project Name';
   static const String projectNameHint = 'e.g. Portfolio Redesign';
-  static const String myProjectsSubtitle =
-      'Manage and track your collaboration progress';
-  static const String all = 'All';
-  static const String developmentPhase = 'Development Phase';
-  static const String yourTeam = 'Your Team';
-  static const String myRole = 'MY ROLE';
-  static const String githubRepositoryLink = 'GitHub Repository Link';
-  static const String viewTasks = 'View Tasks';
-  static const String viewChat = 'View Chat';
 
-  // ── Teams ─────────────────────────────────────────────────────────────────
-  static const String teamMembers = 'Team Members';
-  static const String teamSettings = 'Team Settings';
+  // ── Teams (used by dashboard & notifications features) ─────────────────────
   static const String createTeam = 'Create Team 🚀';
-  static const String createTeamSubtitle =
-      'Set up your team and project details';
   static const String joinTeam = 'Join Team';
-  static const String teamName = 'Team Name';
-  static const String teamNameHint = 'e.g. Project Phoenix';
-  static const String teamInfo = 'Team Info';
-  static const String mentorAccess = 'Mentor Access';
-  static const String youAreTeamLeader =
-      'You are the Team Leader of this project';
-  static const String teamType = 'Team Type';
-  static const String private = 'Private';
-  static const String privateDesc = 'You manually add team members';
-  static const String public = 'Public';
-  static const String publicDesc =
-      'AI matches members & others can request to join';
-  static const String privateTeam = 'Private Team';
-  static const String privateTeamDesc = 'You manually add team members';
-  static const String publicTeam = 'Public Team';
-  static const String publicTeamDesc =
-      'AI matches members & others can request to join';
-  static const String addMember = 'Add Member';
-  static const String addMembers = 'Add Members';
-  static const String manageAll = 'Manage All';
-  static const String teamCreatedSuccessfully = 'Team Created Successfully 🎉';
-  static const String teamReadyStartCollaborating =
-      'Your team is ready to start collaborating. Invite members or jump straight into your workspace to begin building.';
-  static const String quickSetup = 'QUICK SETUP';
-  static const String goToTeam = 'Go to Team';
   static const String backToHome = 'Back to home';
   static const String viewTeam = 'View Team';
-  static const String openChat = 'Open Chat';
-  static const String backToTeam = 'Back to Team';
-  static const String membersManagement = 'Members Management';
-  static const String assignTasks = 'Assign Tasks';
-  static const String projectControl = 'Project Control';
-  static const String removeTeam = 'Remove Team';
-  static const String createAssignTask = 'Create / Assign Task';
-  static const String noMembersInTeam = 'No members in this team.';
-  static const String navigationToAssignTask =
-      'Navigation to Assign Task screen';
-  static const String projectCompletionSubmitted =
-      'Project Completion request submitted';
-  static const String removeTeamSubmitted = 'Remove Team request submitted';
-  static const String submitProjectAsCompleted = 'Submit Project as Completed';
-  static const String memberSettingsFor = 'Member settings for';
-  static const String addMemberToTeam = 'Add Member to Team';
-  static const String expandYourCollaborationNetwork =
-      'Expand your collaboration network';
-  static const String searchMembers = 'Search team members...';
-  static const String findColleagues =
-      "Find colleagues by their name or @username to start collaborating.";
-  static const String sendInvitation = "sent Invitation";
-  static const String noUserFound = "No users found";
-  static const String noUserFoundSubTittle =
-      "Try another username or email to invite them to the team.";
 
-  // ── Tasks ─────────────────────────────────────────────────────────────────
-  static const String createTask = 'Create Task';
-  static const String assignTask = 'Assign Task';
-  static const String taskTitle = 'Task Title';
-  static const String taskDetails = 'Task Details';
-  static const String tasksPending = 'Tasks Pending';
+  // ── Tasks (used by dashboard, levels & profile features) ───────────────────
   static const String completedTasks = 'Completed Tasks';
   static const String activeTasks = 'Active Tasks';
-  static const String ongoing = 'Ongoing';
   static const String completed = 'Completed';
-  static const String inProgress = 'In Progress';
-  static const String pending = 'Pending';
   static const String myTasks = 'My Tasks';
-  static const String myTasksSubtitle =
-      'Manage your daily workflow and projects';
-  static const String allCaughtUp = 'All caught up!';
-  static const String exploreProjects = 'Explore Projects';
-  static const String active = 'Active';
-  static const String nearCompletion = 'Near Completion';
-  static const String progress = 'Progress';
-  static const String noActiveTasks =
-      "You don't have any active tasks right now.";
-  static const String takeBreak = 'Take a break or find a new project.';
-  static const String description = 'Description';
-  static const String dueDate = 'Due Date';
-  static const String createdBy = 'Created By';
-  static const String attachments = 'Attachments';
-  static const String updateProgress = 'Update Progress';
-  static const String high = 'High';
-  static const String viewTask = 'VIEW TASK';
-  static const String viewAllTasks = 'View All Tasks';
-  static const String todo = 'TO DO';
-  static const String dueTomorrow = 'Due tomorrow';
-  static const String nextSprint = 'Next sprint';
-  static const String viewProjectDetails = 'View Project Details';
 
   // ── Productivity ──────────────────────────────────────────────────────────
   static const String yourProductivity = 'Your Productivity';
   static const String totalTasks = 'Total Tasks';
   static const String completedProjects = 'Projects Completed';
-  static const String activeMembers = 'Active Members';
   static const String totalDone = 'Total Done';
   static const String thisWeek = 'This Week';
   static const String recentlyFinished = 'Recently Finished';
@@ -322,10 +199,8 @@ class AppStrings {
   static const String goalSmashedDesc =
       "You've completed 20% more tasks this month than the previous one. Keep the momentum";
   static const String viewInsights = 'View Insights';
-  static const String viewReport = 'View Report';
   static const String submitReport = 'Submit Report';
   static const String reportUser = 'Report User';
-  static const String makeMentor = 'Make Mentor';
   static const String selectAReason = 'SELECT A REASON';
   static const String notContributing = 'Not contributing';
   static const String missedDeadlines = 'Missed deadlines';
@@ -499,36 +374,10 @@ class AppStrings {
   static const String success = 'Success';
   static const String error = 'Error';
   static const String noTeamMembersYet = 'No team members yet';
-  static const String projectCompletion = 'Project Completion';
-  static const String projectCompletionConfirmation =
-      '"Are you sure you want to mark this project as completed?"';
-  static const String markProjectAsCompletedDesc =
-      'Mark this project as completed when all tasks are done';
-  static const String youAreMentorBadge = 'YOU ARE THE MENTOR';
 
   // ── Error Dialog Titles ───────────────────────────────────────────────────
   static const String loginFailed = 'Login Failed';
   static const String registrationFailed = 'Registration Failed';
   static const String verificationFailed = 'Verification Failed';
   static const String requestFailed = 'Request Failed';
-
-  // ── Create Task Screen ────────────────────────────────────────────────────
-  static const String taskTitleHint = 'e.g. Implement OAuth2 flow';
-  static const String assignTo = 'Assign To';
-  static const String searchTeamMembers = 'Search team members...';
-  static const String add = 'Add';
-  static const String taskDetailsHint = 'Describe what needs to be done...';
-  static const String selectDate = 'Select date';
-  static const String priority = 'Priority';
-  static const String priorityLow = 'LOW';
-  static const String priorityMed = 'MED';
-  static const String priorityHigh = 'HIGH';
-  static const String tags = 'Tags';
-  static const String tag = 'Tag';
-  static const String addTag = 'Add Tag';
-  static const String enterTagName = 'Enter tag name';
-  static const String creatingTask = 'Creating task...';
-  static const String taskCreated = 'Task Created!';
-  static const String taskCreatedMessage =
-      'Task has been created successfully.';
 }

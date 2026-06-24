@@ -1,5 +1,5 @@
-import 'package:bridge_x/feature/invitaions/domain/entities/project_invitation_entity.dart';
-import 'package:bridge_x/feature/invitaions/presentation/cubit/invitaions_cubit.dart';
+import 'package:bridge_x/features/invitaions/domain/entities/project_invitation_entity.dart';
+import 'package:bridge_x/features/invitaions/presentation/cubit/invitaions_cubit.dart';
 
 class RequestReviewInvitationArgs {
   final ProjectInvitationEntity invitation;

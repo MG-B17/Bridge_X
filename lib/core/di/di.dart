@@ -15,6 +15,7 @@ import 'package:bridge_x/core/services/notification_services/flutter_local_notif
 import 'package:bridge_x/core/theme/theme_controller.dart';
 import 'package:bridge_x/features/onboarding/presentation/controller/onboarding_provider.dart';
 import 'package:bridge_x/features/auth/di/auth_injection.dart';
+import 'package:bridge_x/features/chat/di/chat_injection.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -113,7 +114,7 @@ Future<void> init() async {
 
   // features
   initAuth();
-  //initChatList();
+  initChatList();
   initDashboard();
   initCreateTeam();
   initProjectsManagement();

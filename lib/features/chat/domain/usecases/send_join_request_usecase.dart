@@ -4,22 +4,22 @@ import 'package:bridge_x/features/chat/domain/repositories/chat_repository.dart'
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
-class ResetUnreadCount implements UseCase<void, ResetUnreadCountParams> {
+class SendJoinRequest implements UseCase<void, SendJoinRequestParams> {
   final ChatRepository repository;
 
-  ResetUnreadCount(this.repository);
+  SendJoinRequest(this.repository);
 
   @override
-  Future<Either<Failure, void>> call(ResetUnreadCountParams params) async {
-    return await repository.resetUnreadCount(params.roomId, params.userId);
+  Future<Either<Failure, void>> call(SendJoinRequestParams params) async {
+    return await repository.sendJoinRequest(params.roomId, params.userId);
   }
 }
 
-class ResetUnreadCountParams extends Equatable {
+class SendJoinRequestParams extends Equatable {
   final String roomId;
   final int userId;
 
-  const ResetUnreadCountParams({required this.roomId, required this.userId});
+  const SendJoinRequestParams({required this.roomId, required this.userId});
 
   @override
   List<Object?> get props => [roomId, userId];

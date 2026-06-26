@@ -12,15 +12,16 @@ class SearchChatRooms implements UseCase<List<ChatRoomEntity>, SearchChatRoomsPa
 
   @override
   Future<Either<Failure, List<ChatRoomEntity>>> call(SearchChatRoomsParams params) async {
-    return await repository.searchChatRooms(params.query);
+    return await repository.searchChatRooms(params.userId, params.query);
   }
 }
 
 class SearchChatRoomsParams extends Equatable {
+  final int userId;
   final String query;
 
-  const SearchChatRoomsParams({required this.query});
+  const SearchChatRoomsParams({required this.userId, required this.query});
 
   @override
-  List<Object?> get props => [query];
+  List<Object?> get props => [userId, query];
 }

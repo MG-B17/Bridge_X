@@ -13,24 +13,27 @@ class GetMessages implements UseCase<List<MessageEntity>, GetMessagesParams> {
   @override
   Future<Either<Failure, List<MessageEntity>>> call(GetMessagesParams params) async {
     return await repository.getMessages(
-      params.teamId,
-      lastCreatedAt: params.lastCreatedAt,
+      params.roomId,
+      params.userId,
+      cursor: params.cursor,
       limit: params.limit,
     );
   }
 }
 
 class GetMessagesParams extends Equatable {
-  final String teamId;
-  final String? lastCreatedAt;
+  final String roomId;
+  final int userId;
+  final String? cursor;
   final int limit;
 
   const GetMessagesParams({
-    required this.teamId,
-    this.lastCreatedAt,
+    required this.roomId,
+    required this.userId,
+    this.cursor,
     this.limit = 20,
   });
 
   @override
-  List<Object?> get props => [teamId, lastCreatedAt, limit];
+  List<Object?> get props => [roomId, userId, cursor, limit];
 }

@@ -76,7 +76,7 @@ class ChatRoomListTile extends StatelessWidget {
     final isHighlighted = chatRoom.unreadCount > 0;
 
     final content = ListTile(
-      onTap: () => onTapped(chatRoom.teamId),
+      onTap: () => onTapped(chatRoom.roomId),
       contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.spacing16, vertical: AppSpacing.height8),
       leading: _buildAvatar(context),
       title: Text(

@@ -175,7 +175,7 @@ class MessageBubbleWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: isCurrentUser ? MainAxisAlignment.end : MainAxisAlignment.start,
             children: [
-              if (message.status == MessageStatus.failed)
+              if (message.sendStatus == MessageSendStatus.failed)
                 Padding(
                   padding: EdgeInsets.only(right: AppSpacing.spacing6),
                   child: Icon(Icons.error_outline, color: context.colors.error, size: AppSpacing.fontSize16),
@@ -235,15 +235,15 @@ class MessageBubbleWidget extends StatelessWidget {
               if (isCurrentUser) ...[
                 SizedBox(width: AppSpacing.spacing4),
                 Icon(
-                  message.status == MessageStatus.sending
+                  message.sendStatus == MessageSendStatus.sending
                       ? Icons.access_time_rounded
-                      : message.status == MessageStatus.failed
+                      : message.sendStatus == MessageSendStatus.failed
                           ? Icons.error_outline_rounded
                           : Icons.done_rounded,
                   size: AppSpacing.fontSize12,
-                  color: message.status == MessageStatus.sent
+                  color: message.sendStatus == MessageSendStatus.sent
                       ? context.colors.textHint
-                      : message.status == MessageStatus.failed
+                      : message.sendStatus == MessageSendStatus.failed
                           ? context.colors.error
                           : context.colors.textHint,
                 ),

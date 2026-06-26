@@ -12,25 +12,21 @@ class SendMessage implements UseCase<MessageEntity, SendMessageParams> {
 
   @override
   Future<Either<Failure, MessageEntity>> call(SendMessageParams params) async {
-    return await repository.sendMessage(
-      params.teamId,
-      params.content,
-      params.senderName,
-    );
+    return await repository.sendMessage(params.roomId, params.senderId, params.content);
   }
 }
 
 class SendMessageParams extends Equatable {
-  final String teamId;
+  final String roomId;
+  final int senderId;
   final String content;
-  final String senderName;
 
   const SendMessageParams({
-    required this.teamId,
+    required this.roomId,
+    required this.senderId,
     required this.content,
-    required this.senderName,
   });
 
   @override
-  List<Object?> get props => [teamId, content, senderName];
+  List<Object?> get props => [roomId, senderId, content];
 }

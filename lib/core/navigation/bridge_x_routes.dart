@@ -5,6 +5,7 @@ import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dar
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dart';
 
 import 'package:bridge_x/core/navigation/routes/home_route.dart';
+import 'package:bridge_x/core/navigation/routes/chat_route.dart';
 import 'package:bridge_x/core/navigation/routes/forget_password_route.dart';
 import 'package:bridge_x/core/navigation/routes/profile_route.dart';
 import 'package:bridge_x/core/navigation/routes/project_route.dart';
@@ -67,7 +68,7 @@ final appRouter = GoRouter(
     StatefulShellRoute.indexedStack(
       builder: (context, state, statefulNavigationShell) =>
           LayoutScreen(navigationShell: statefulNavigationShell),
-      branches: [homeRoute,  projectRoute, profileRoute],// chatRoute
+      branches: [homeRoute, chatRoute, projectRoute, profileRoute],
     ),
   ],
 );

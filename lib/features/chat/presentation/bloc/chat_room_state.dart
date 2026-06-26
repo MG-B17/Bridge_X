@@ -16,31 +16,31 @@ class ChatRoomLoaded extends ChatRoomState {
   final List<MessageEntity> messages;
   final bool hasMore;
   final bool loadingMore;
-  final bool sending;
+  final bool sendingMessage;
 
   const ChatRoomLoaded({
     required this.messages,
     this.hasMore = true,
     this.loadingMore = false,
-    this.sending = false,
+    this.sendingMessage = false,
   });
 
   ChatRoomLoaded copyWith({
     List<MessageEntity>? messages,
     bool? hasMore,
     bool? loadingMore,
-    bool? sending,
+    bool? sendingMessage,
   }) {
     return ChatRoomLoaded(
       messages: messages ?? this.messages,
       hasMore: hasMore ?? this.hasMore,
       loadingMore: loadingMore ?? this.loadingMore,
-      sending: sending ?? this.sending,
+      sendingMessage: sendingMessage ?? this.sendingMessage,
     );
   }
 
   @override
-  List<Object?> get props => [messages, hasMore, loadingMore, sending];
+  List<Object?> get props => [messages, hasMore, loadingMore, sendingMessage];
 }
 
 class ChatRoomError extends ChatRoomState {

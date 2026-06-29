@@ -51,3 +51,12 @@ class ChatRoomError extends ChatRoomState {
   @override
   List<Object?> get props => [message];
 }
+
+class ChatRoomRemoved extends ChatRoomState {
+  final String reason;
+
+  const ChatRoomRemoved({required this.reason});
+
+  @override
+  List<Object?> get props => [reason];
+}

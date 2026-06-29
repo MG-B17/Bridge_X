@@ -52,5 +52,11 @@ abstract class ChatRepository {
   Future<Either<Failure, String?>> getRoomIdByTeamId(int teamId);
 
   // Member Management
-  Future<Either<Failure, void>> addMemberToChatRoom(String roomId, int userId, {String role = 'member'});
+  Future<Either<Failure, void>> addMemberToChatRoom(String roomId, int userId, {String role = 'member', String? username});
+
+  // Room Membership watcher (for detecting removal)
+  Stream<Either<Failure, bool>> watchRoomMembership(String roomId, int userId);
+
+  // Connection status
+  Stream<bool> get connectionStatus;
 }

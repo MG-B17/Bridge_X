@@ -6,6 +6,7 @@ import 'package:bridge_x/core/init/app_state.dart';
 import 'package:bridge_x/core/services/logger_service.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/features/chat/domain/entities/chat_room_entity.dart';
 import 'package:bridge_x/features/chat/presentation/bloc/chat_list_cubit.dart';
 import 'package:bridge_x/features/chat/presentation/bloc/chat_list_state.dart';
 import 'package:bridge_x/features/chat/presentation/widgets/chat_list_empty_state.dart';
@@ -47,11 +48,6 @@ class _ChatListPageState extends State<ChatListPage> {
     }
   }
 
-  void _onRoomTapped(String roomId, int userId) {
-    _cubit.onChatRoomOpened(roomId);
-    context.push('${BridgeXRoutePaths.chat}/${BridgeXRoutePaths.chatDetails}/$roomId', extra: userId);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,12 +57,7 @@ class _ChatListPageState extends State<ChatListPage> {
           SearchBarWidget(onSearch: (query) => _cubit.searchChatRooms(query)),
           Expanded(
             child: _initialized
-                ? BlocSelector<ChatListCubit, ChatListState, ChatListState>(
-                    selector: (state) => state,
-                    builder: (context, state) {
-                      return _buildBody(state);
-                    },
-                  )
+                ? _ChatListView()
                 : const Center(child: CircularProgressIndicator()),
           ),
         ],
@@ -74,15 +65,103 @@ class _ChatListPageState extends State<ChatListPage> {
     );
   }
 
-  Widget _buildBody(ChatListState state) {
-    switch (state) {
-      case ChatListInitial():
-        return const SizedBox.shrink();
-      case ChatListLoading():
-        return const Center(child: CircularProgressIndicator());
-      case ChatListLoaded(rooms: final rooms):
+  @override
+  void dispose() {
+    _cubit.close();
+    super.dispose();
+  }
+}
+
+class _ChatListView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final cubit = context.read<ChatListCubit>();
+
+    return BlocBuilder<ChatListCubit, ChatListState>(
+      buildWhen: (previous, current) =>
+          previous.runtimeType != current.runtimeType ||
+          (current is ChatListLoaded && previous is ChatListLoaded && current.connected != previous.connected),
+      builder: (context, state) {
+        switch (state) {
+          case ChatListInitial():
+            return const SizedBox.shrink();
+          case ChatListLoading():
+            return const Center(child: CircularProgressIndicator());
+          case ChatListLoaded(connected: final connected):
+            return Column(
+              children: [
+                if (!connected)
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(vertical: AppSpacing.height6, horizontal: AppSpacing.spacing16),
+                    color: context.colors.error.withValues(alpha: 0.1),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 14,
+                          height: 14,
+                          child: CircularProgressIndicator(strokeWidth: 2, color: context.colors.error),
+                        ),
+                        SizedBox(width: AppSpacing.spacing8),
+                        Text(
+                          'Reconnecting...',
+                          style: TextStyle(fontSize: AppSpacing.fontSize13, color: context.colors.error),
+                        ),
+                      ],
+                    ),
+                  ),
+                Expanded(child: _RoomListView(cubit: cubit)),
+              ],
+            );
+          case ChatListEmpty():
+            return RefreshIndicator(
+              onRefresh: () => cubit.loadChatRooms(),
+              child: const CustomScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                slivers: [
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: ChatListEmptyState(),
+                  ),
+                ],
+              ),
+            );
+          case ChatListSearchEmpty():
+            return const Center(child: Text('No rooms match your search'));
+          case ChatListError(:final message):
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(message, style: TextStyle(color: context.colors.error)),
+                  SizedBox(height: AppSpacing.height16),
+                  ElevatedButton(
+                    onPressed: () => cubit.loadChatRooms(),
+                    child: const Text('Retry'),
+                  ),
+                ],
+              ),
+            );
+          default:
+            return const SizedBox.shrink();
+        }
+      },
+    );
+  }
+}
+
+class _RoomListView extends StatelessWidget {
+  final ChatListCubit cubit;
+
+  const _RoomListView({required this.cubit});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocSelector<ChatListCubit, ChatListState, List<ChatRoomEntity>>(
+      selector: (state) => state is ChatListLoaded ? state.rooms : [],
+      builder: (context, rooms) {
         return RefreshIndicator(
-          onRefresh: () => _cubit.loadChatRooms(),
+          onRefresh: () => cubit.loadChatRooms(),
           child: ListView.builder(
             itemCount: rooms.length,
             itemBuilder: (context, index) {
@@ -92,39 +171,15 @@ class _ChatListPageState extends State<ChatListPage> {
                   final userData = sl<AppState>().userData;
                   if (userData != null) {
                     final userId = int.tryParse(userData.userId) ?? 0;
-                    _onRoomTapped(roomId, userId);
+                    cubit.onChatRoomOpened(roomId);
+                    context.push('${BridgeXRoutePaths.chat}/${BridgeXRoutePaths.chatDetails}/$roomId', extra: userId);
                   }
                 },
               );
             },
           ),
         );
-      case ChatListEmpty():
-        return const ChatListEmptyState();
-      case ChatListSearchEmpty():
-        return const Center(child: Text('No rooms match your search'));
-      case ChatListError(message: final message):
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(message, style: TextStyle(color: context.colors.error)),
-              SizedBox(height: AppSpacing.height16),
-              ElevatedButton(
-                onPressed: () => _cubit.loadChatRooms(),
-                child: const Text('Retry'),
-              ),
-            ],
-          ),
-        );
-      default:
-        return const SizedBox.shrink();
-    }
-  }
-
-  @override
-  void dispose() {
-    _cubit.close();
-    super.dispose();
+      },
+    );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:bridge_x/core/di/di.dart';
 import 'package:bridge_x/core/init/app_state.dart';
 import 'package:bridge_x/core/init/init_app.dart';
+import 'package:bridge_x/features/chat/domain/usecases/save_user_chat_data_usecase.dart';
 import 'package:bridge_x/features/splash/widgets/splash_content.dart';
 import 'package:flutter/material.dart';
 
@@ -46,6 +47,14 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     if (result.userData != null) {
       _appState.isVerified = result.userData!.isVerified;
       _appState.isProfileComplete = result.userData!.isProfileComplete;
+      final userId = int.tryParse(result.userData!.userId);
+      if (userId != null && result.userData!.userName.isNotEmpty) {
+        sl<SaveUserChatData>()(SaveUserChatDataParams(
+          userId: userId,
+          username: result.userData!.userName,
+          email: result.userData!.userEmail.isNotEmpty ? result.userData!.userEmail : null,
+        ));
+      }
     }
   }
 

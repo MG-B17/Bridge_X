@@ -3,6 +3,7 @@ import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_colors.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/features/chat/domain/entities/message_entity.dart';
+import 'package:bridge_x/features/chat/presentation/constants/chat_avatar_colors.dart';
 import 'package:intl/intl.dart';
 
 class MessageBubbleWidget extends StatelessWidget {
@@ -17,15 +18,6 @@ class MessageBubbleWidget extends StatelessWidget {
 
   static const _youLabel = 'You';
   static final _timeFormat = DateFormat('h:mm a');
-
-  static const _avatarColors = [
-    AppColors.primaryBlue,
-    AppColors.burgundy,
-    AppColors.gold,
-    AppColors.teal,
-    AppColors.indigo,
-    AppColors.amber,
-  ];
 
   String? _parseFenceLanguage(String content) {
     if (!content.contains('```')) return null;
@@ -130,7 +122,7 @@ class MessageBubbleWidget extends StatelessWidget {
 
   Widget _buildAvatar(String senderName) {
     final hash = senderName.hashCode;
-    final color = _avatarColors[hash.abs() % _avatarColors.length];
+    final color = chatAvatarPalette[hash.abs() % chatAvatarPalette.length];
     return CircleAvatar(
       radius: AppSpacing.radius12,
       backgroundColor: color.withValues(alpha: 0.15),

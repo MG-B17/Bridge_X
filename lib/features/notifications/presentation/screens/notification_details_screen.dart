@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 class NotificationDetailsScreen extends StatefulWidget {
   final String title;
   final String subtitle;
+  final String? typeLabel;
   final IconData icon;
   final Color iconBg;
   final Color iconColor;
@@ -21,6 +22,7 @@ class NotificationDetailsScreen extends StatefulWidget {
     super.key,
     required this.title,
     required this.subtitle,
+    this.typeLabel,
     required this.icon,
     required this.iconBg,
     required this.iconColor,
@@ -76,6 +78,7 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                   NotificationDetailsHeader(
                     title: widget.title,
                     subtitle: widget.subtitle,
+                    typeLabel: widget.typeLabel,
                     icon: widget.icon,
                     iconBg: widget.iconBg,
                     iconColor: widget.iconColor,

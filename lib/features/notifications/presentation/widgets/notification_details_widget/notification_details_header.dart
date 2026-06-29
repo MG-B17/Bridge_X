@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 class NotificationDetailsHeader extends StatelessWidget {
   final String title;
   final String subtitle;
+  final String? typeLabel;
   final IconData icon;
   final Color iconBg;
   final Color iconColor;
@@ -16,6 +17,7 @@ class NotificationDetailsHeader extends StatelessWidget {
     super.key,
     required this.title,
     required this.subtitle,
+    this.typeLabel,
     required this.icon,
     required this.iconBg,
     required this.iconColor,
@@ -42,6 +44,17 @@ class NotificationDetailsHeader extends StatelessWidget {
           ),
           textAlign: TextAlign.center,
         ),
+        if (typeLabel != null) ...[
+          VerticalSpacing(AppSpacing.spacing8),
+          Text(
+            typeLabel!,
+            style: context.textTheme.labelSmall?.copyWith(
+              color: context.colors.textSecondary,
+              fontWeight: FontWeight.w500,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
         VerticalSpacing(AppSpacing.spacing16),
         Text(
           subtitle,

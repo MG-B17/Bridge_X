@@ -74,6 +74,7 @@ StatefulShellBranch homeRoute = StatefulShellBranch(
                   child: NotificationDetailsScreen(
                     title: args.title,
                     subtitle: args.subtitle,
+                    typeLabel: args.typeLabel,
                     icon: args.icon,
                     iconBg: args.iconBg,
                     iconColor: args.iconColor,

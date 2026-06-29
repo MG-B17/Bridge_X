@@ -348,14 +348,27 @@ class ChatRepositoryImpl implements ChatRepository {
   }
 
   @override
-  Future<Either<Failure, void>> addMemberToChatRoom(String roomId, int userId, {String role = 'member'}) async {
+  Future<Either<Failure, void>> addMemberToChatRoom(String roomId, int userId, {String role = 'member', String? username}) async {
     try {
-      await remoteDataSource.addMemberToChatRoom(roomId, userId, role: role);
+      await remoteDataSource.addMemberToChatRoom(roomId, userId, role: role, username: username);
       return const Right(null);
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message ?? 'Failed to add member'));
     } catch (e) {
       return Left(ServerFailure(message: e.toString()));
     }
+  }
+
+  @override
+  Stream<bool> get connectionStatus => remoteDataSource.connectionStatus;
+
+  @override
+  Stream<Either<Failure, bool>> watchRoomMembership(String roomId, int userId) {
+    return remoteDataSource.watchRoomMembership(roomId, userId).map(
+      (removed) => Right<Failure, bool>(removed),
+    ).handleError((error) {
+      LoggerService.error('watchRoomMembership error', exception: error, tag: 'ChatRepository');
+      return Left<Failure, bool>(ServerFailure(message: error.toString()));
+    });
   }
 }

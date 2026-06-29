@@ -27,7 +27,9 @@ import 'package:bridge_x/features/chat/domain/usecases/send_join_request_usecase
 import 'package:bridge_x/features/chat/domain/usecases/send_message_usecase.dart';
 import 'package:bridge_x/features/chat/domain/usecases/subscribe_to_chat_rooms_usecase.dart';
 import 'package:bridge_x/features/chat/domain/usecases/update_username_usecase.dart';
+import 'package:bridge_x/features/chat/domain/usecases/watch_connection_status_usecase.dart';
 import 'package:bridge_x/features/chat/domain/usecases/watch_messages_usecase.dart';
+import 'package:bridge_x/features/chat/domain/usecases/watch_room_membership_usecase.dart';
 import 'package:bridge_x/features/chat/presentation/bloc/chat_list_cubit.dart';
 import 'package:bridge_x/features/chat/presentation/bloc/chat_room_cubit.dart';
 import 'package:get_it/get_it.dart';
@@ -56,6 +58,8 @@ void initChatList() {
   sl.registerLazySingleton(() => GetMessages(sl()));
   sl.registerLazySingleton(() => SendMessage(sl()));
   sl.registerLazySingleton(() => WatchMessages(sl()));
+  sl.registerLazySingleton(() => WatchRoomMembership(sl()));
+  sl.registerLazySingleton(() => WatchConnectionStatus(sl()));
   sl.registerLazySingleton(() => ChangeLeader(sl()));
   sl.registerLazySingleton(() => DeleteChatRoom(sl()));
   sl.registerLazySingleton(() => SendJoinRequest(sl()));
@@ -89,6 +93,7 @@ void initChatList() {
       deleteMessageUseCase: sl(),
       markMessageReadUseCase: sl(),
       markMessagesDeliveredUseCase: sl(),
+      watchRoomMembershipUseCase: sl(),
     ),
   );
   sl.registerFactory(() => ChatListCubit(
@@ -98,5 +103,6 @@ void initChatList() {
         resetUnreadCountUseCase: sl(),
         deleteChatRoomUseCase: sl(),
         changeLeaderUseCase: sl(),
+        watchConnectionStatusUseCase: sl(),
       ));
 }

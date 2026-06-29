@@ -205,9 +205,13 @@ class InvitaionsCubit extends Cubit<InvitaionsState> {
             final roomIdResult = await chatRepository.getRoomIdByTeamId(teamId);
             roomIdResult.fold(
               (_) => LoggerService.warning('Chat room not found for team: $teamId', tag: 'InvitaionsCubit'),
-              (roomId) {
+              (roomId) async {
                 if (roomId != null) {
-                  chatRepository.addMemberToChatRoom(roomId, userId);
+                  final addResult = await chatRepository.addMemberToChatRoom(roomId, userId, username: userData.userName);
+                  addResult.fold(
+                    (failure) => LoggerService.warning('Failed to add member to chat room: ${failure.message}', tag: 'InvitaionsCubit'),
+                    (_) => LoggerService.debug('User added to chat room: $roomId', tag: 'InvitaionsCubit'),
+                  );
                 }
               },
             );
@@ -293,9 +297,13 @@ class InvitaionsCubit extends Cubit<InvitaionsState> {
               final roomIdResult = await chatRepository.getRoomIdByTeamId(entity.teamId);
               roomIdResult.fold(
                 (_) => LoggerService.warning('Chat room not found for team: ${entity.teamId}', tag: 'InvitaionsCubit'),
-                (roomId) {
+                (roomId) async {
                   if (roomId != null) {
-                    chatRepository.addMemberToChatRoom(roomId, userId);
+                    final addResult = await chatRepository.addMemberToChatRoom(roomId, userId, username: userData.userName);
+                    addResult.fold(
+                      (failure) => LoggerService.warning('Failed to add member to chat room: ${failure.message}', tag: 'InvitaionsCubit'),
+                      (_) => LoggerService.debug('User added to chat room: $roomId', tag: 'InvitaionsCubit'),
+                    );
                   }
                 },
               );

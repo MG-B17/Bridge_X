@@ -8,6 +8,7 @@ import 'package:bridge_x/features/chat/domain/usecases/get_chat_rooms_usecase.da
 import 'package:bridge_x/features/chat/domain/usecases/reset_unread_count_usecase.dart';
 import 'package:bridge_x/features/chat/domain/usecases/search_chat_rooms_usecase.dart';
 import 'package:bridge_x/features/chat/domain/usecases/subscribe_to_chat_rooms_usecase.dart';
+import 'package:bridge_x/features/chat/domain/usecases/watch_connection_status_usecase.dart';
 import 'package:bridge_x/features/chat/presentation/bloc/chat_list_state.dart';
 import 'package:flutter/material.dart';
 
@@ -18,8 +19,10 @@ class ChatListCubit extends Cubit<ChatListState> with WidgetsBindingObserver {
   final ResetUnreadCount resetUnreadCountUseCase;
   final DeleteChatRoom deleteChatRoomUseCase;
   final ChangeLeader changeLeaderUseCase;
+  final WatchConnectionStatus watchConnectionStatusUseCase;
 
   StreamSubscription? _chatRoomsSubscription;
+  StreamSubscription? _connectionSubscription;
   Timer? _debounce;
   int? _currentUserId;
   bool _initialized = false;
@@ -31,6 +34,7 @@ class ChatListCubit extends Cubit<ChatListState> with WidgetsBindingObserver {
     required this.resetUnreadCountUseCase,
     required this.deleteChatRoomUseCase,
     required this.changeLeaderUseCase,
+    required this.watchConnectionStatusUseCase,
   }) : super(ChatListInitial());
 
   @override
@@ -51,6 +55,7 @@ class ChatListCubit extends Cubit<ChatListState> with WidgetsBindingObserver {
     }
     await loadChatRooms();
     _subscribeToRealtimeUpdates();
+    _subscribeToConnectionStatus();
   }
 
   Future<void> loadChatRooms() async {
@@ -75,11 +80,9 @@ class ChatListCubit extends Cubit<ChatListState> with WidgetsBindingObserver {
     if (_currentUserId == null) return;
 
     _debounce?.cancel();
-    _chatRoomsSubscription?.pause();
 
     _debounce = Timer(const Duration(milliseconds: 400), () async {
       if (query.isEmpty) {
-        _chatRoomsSubscription?.resume();
         await loadChatRooms();
         return;
       }
@@ -151,7 +154,8 @@ class ChatListCubit extends Cubit<ChatListState> with WidgetsBindingObserver {
             if (isClosed) return;
 
             final currentState = state;
-            if (currentState is ChatListLoaded && !currentState.isSearching) {
+            if (currentState is ChatListLoaded) {
+              if (currentState.isSearching) return;
               if (_areListsEqual(currentState.rooms, rooms)) return;
             }
 
@@ -169,6 +173,19 @@ class ChatListCubit extends Cubit<ChatListState> with WidgetsBindingObserver {
     );
   }
 
+  void _subscribeToConnectionStatus() {
+    _connectionSubscription?.cancel();
+    _connectionSubscription = watchConnectionStatusUseCase().listen((connected) {
+      if (isClosed) return;
+      final currentState = state;
+      if (currentState is ChatListLoaded) {
+        if (currentState.connected != connected) {
+          emit(currentState.copyWith(connected: connected));
+        }
+      }
+    });
+  }
+
   bool _areListsEqual(List<ChatRoomEntity> a, List<ChatRoomEntity> b) {
     if (a.length != b.length) return false;
     for (int i = 0; i < a.length; i++) {
@@ -184,6 +201,7 @@ class ChatListCubit extends Cubit<ChatListState> with WidgetsBindingObserver {
   Future<void> close() {
     WidgetsBinding.instance.removeObserver(this);
     _chatRoomsSubscription?.cancel();
+    _connectionSubscription?.cancel();
     _debounce?.cancel();
     return super.close();
   }

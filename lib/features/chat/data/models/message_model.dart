@@ -25,11 +25,19 @@ class MessageModel extends MessageEntity {
       );
     }
 
+    String senderName = json['sender_name'] as String? ?? '';
+    if (senderName.isEmpty) {
+      final chatUsers = json['chat_users'];
+      if (chatUsers is Map<String, dynamic>) {
+        senderName = chatUsers['username'] as String? ?? '';
+      }
+    }
+
     return MessageModel(
       messageId: json['message_id'] as String,
       roomId: json['room_id'] as String,
       senderId: json['sender_id'] as int,
-      senderName: json['sender_name'] as String? ?? '',
+      senderName: senderName,
       content: json['content'] as String,
       isEdited: json['is_edited'] as bool? ?? false,
       isDeleted: json['is_deleted'] as bool? ?? false,
@@ -37,7 +45,7 @@ class MessageModel extends MessageEntity {
           ? DateTime.parse(json['created_at'] as String)
           : null,
       myStatus: myStatus,
-      localId: json['message_id'] as String,
+      localId: '',
     );
   }
 

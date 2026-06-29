@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/bridge_x_colors.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
+import 'package:bridge_x/features/chat/presentation/constants/chat_avatar_colors.dart';
 import 'package:bridge_x/features/chat/domain/entities/chat_room_entity.dart';
 
 class ChatRoomListTile extends StatelessWidget {
@@ -41,15 +42,6 @@ class ChatRoomListTile extends StatelessWidget {
     }
   }
 
-  static const _avatarPalette = [
-    AppColors.primaryBlue,
-    AppColors.burgundy,
-    AppColors.gold,
-    AppColors.teal,
-    AppColors.indigo,
-    AppColors.amber,
-  ];
-
   static const _avatarIcons = [
     Icons.smart_toy_rounded,
     Icons.terminal_rounded,
@@ -61,7 +53,7 @@ class ChatRoomListTile extends StatelessWidget {
 
   Widget _buildAvatar(BuildContext context) {
     final hash = chatRoom.teamName.hashCode;
-    final color = _avatarPalette[hash.abs() % _avatarPalette.length];
+    final color = chatAvatarPalette[hash.abs() % chatAvatarPalette.length];
     final icon = _avatarIcons[hash.abs() % _avatarIcons.length];
 
     return CircleAvatar(

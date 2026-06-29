@@ -16,27 +16,31 @@ class ChatListLoaded extends ChatListState {
   final List<ChatRoomEntity> rooms;
   final bool isSearching;
   final String searchQuery;
+  final bool connected;
 
   const ChatListLoaded({
     required this.rooms,
     this.isSearching = false,
     this.searchQuery = '',
+    this.connected = true,
   });
 
   ChatListLoaded copyWith({
     List<ChatRoomEntity>? rooms,
     bool? isSearching,
     String? searchQuery,
+    bool? connected,
   }) {
     return ChatListLoaded(
       rooms: rooms ?? this.rooms,
       isSearching: isSearching ?? this.isSearching,
       searchQuery: searchQuery ?? this.searchQuery,
+      connected: connected ?? this.connected,
     );
   }
 
   @override
-  List<Object> get props => [rooms, isSearching, searchQuery];
+  List<Object> get props => [rooms, isSearching, searchQuery, connected];
 }
 
 class ChatListEmpty extends ChatListState {}

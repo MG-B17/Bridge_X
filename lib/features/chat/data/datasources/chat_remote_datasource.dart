@@ -53,7 +53,13 @@ abstract class ChatRemoteDataSource {
   Future<String?> getRoomIdByTeamId(int teamId);
 
   // Member Management
-  Future<void> addMemberToChatRoom(String roomId, int userId, {String role = 'member'});
+  Future<void> addMemberToChatRoom(String roomId, int userId, {String role = 'member', String? username});
+
+  // Room Membership watcher (for detecting removal)
+  Stream<bool> watchRoomMembership(String roomId, int userId);
+
+  // Connection status
+  Stream<bool> get connectionStatus;
 
   void dispose();
 }
@@ -61,6 +67,13 @@ abstract class ChatRemoteDataSource {
 class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
   final SupabaseClient supabaseClient;
   bool _disposed = false;
+
+  // Connection status
+  final StreamController<bool> _connectionStatusController = StreamController<bool>.broadcast();
+  bool _connected = false;
+
+  @override
+  Stream<bool> get connectionStatus => _connectionStatusController.stream;
 
   // Chat list realtime
   StreamController<List<ChatRoomModel>>? _chatRoomsStreamController;
@@ -83,6 +96,11 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
       entry.controller.close();
     }
     _messageChannels.clear();
+    for (final entry in _membershipChannels.values) {
+      entry.channel.unsubscribe();
+      entry.controller.close();
+    }
+    _membershipChannels.clear();
   }
 
   // ===================== Chat Rooms =====================
@@ -243,7 +261,14 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
           table: 'chat_room_previews',
           callback: (_) => refreshChatRooms(),
         )
-        .subscribe();
+        .subscribe((status, _) {
+          if (_disposed) return;
+          final wasConnected = _connected;
+          _connected = status == RealtimeSubscribeStatus.subscribed;
+          if (wasConnected != _connected) {
+            _connectionStatusController.add(_connected);
+          }
+        });
 
     LoggerService.debug('Subscribed to chat_list:$userId', tag: 'ChatRemoteDataSource');
 
@@ -264,6 +289,28 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
 
     final now = DateTime.now().toUtc().toIso8601String();
     final allUserIds = <int>{creatorId, ...memberIds}.toList();
+
+    // Ensure all users exist in chat_users before inserting members
+    final existingUsers = await supabaseClient
+        .from('chat_users')
+        .select('user_id')
+        .inFilter('user_id', allUserIds);
+
+    final existingIds = existingUsers.map((u) => u['user_id'] as int).toSet();
+    final missingUsers = allUserIds
+        .where((uid) => !existingIds.contains(uid))
+        .map((uid) => {
+          'user_id': uid,
+          'username': 'User $uid',
+        })
+        .toList();
+
+    if (missingUsers.isNotEmpty) {
+      await supabaseClient.from('chat_users').upsert(
+        missingUsers,
+        onConflict: 'user_id',
+      );
+    }
 
     final members = allUserIds.map((uid) => {
       'room_id': roomId,
@@ -643,7 +690,21 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
   }
 
   @override
-  Future<void> addMemberToChatRoom(String roomId, int userId, {String role = 'member'}) async {
+  Future<void> addMemberToChatRoom(String roomId, int userId, {String role = 'member', String? username}) async {
+    // Ensure user exists in chat_users before inserting into chat_room_members
+    final existingUser = await supabaseClient
+        .from('chat_users')
+        .select('user_id')
+        .eq('user_id', userId)
+        .maybeSingle();
+
+    if (existingUser == null) {
+      await supabaseClient.from('chat_users').upsert({
+        'user_id': userId,
+        'username': username ?? 'User $userId',
+      }, onConflict: 'user_id');
+    }
+
     final now = DateTime.now().toUtc().toIso8601String();
     await supabaseClient.from('chat_room_members').upsert({
       'room_id': roomId,
@@ -654,6 +715,46 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
       'joined_at': now,
     }, onConflict: 'room_id, user_id');
   }
+
+  // Membership channels
+  final Map<String, _MembershipRealtimeState> _membershipChannels = {};
+
+  @override
+  Stream<bool> watchRoomMembership(String roomId, int userId) {
+    _membershipChannels[roomId]?.channel.unsubscribe();
+    _membershipChannels[roomId]?.controller.close();
+
+    final controller = StreamController<bool>.broadcast();
+    final channel = supabaseClient.channel('membership:$roomId:$userId');
+
+    channel.onPostgresChanges(
+      event: PostgresChangeEvent.delete,
+      schema: 'public',
+      table: 'chat_room_members',
+      filter: PostgresChangeFilter(
+        column: 'room_id',
+        value: roomId,
+        type: PostgresChangeFilterType.eq,
+      ),
+      callback: (_) {
+        if (!_disposed) controller.add(true);
+      },
+    ).subscribe();
+
+    _membershipChannels[roomId] = _MembershipRealtimeState(controller: controller, channel: channel);
+
+    return controller.stream;
+  }
+
+  void unsubscribeRoom(String roomId) {
+    _messageChannels[roomId]?.channel.unsubscribe();
+    _messageChannels[roomId]?.controller.close();
+    _messageChannels.remove(roomId);
+
+    _membershipChannels[roomId]?.channel.unsubscribe();
+    _membershipChannels[roomId]?.controller.close();
+    _membershipChannels.remove(roomId);
+  }
 }
 
 class _MessageRealtimeState {
@@ -661,4 +762,11 @@ class _MessageRealtimeState {
   final RealtimeChannel channel;
 
   _MessageRealtimeState({required this.controller, required this.channel});
+}
+
+class _MembershipRealtimeState {
+  final StreamController<bool> controller;
+  final RealtimeChannel channel;
+
+  _MembershipRealtimeState({required this.controller, required this.channel});
 }

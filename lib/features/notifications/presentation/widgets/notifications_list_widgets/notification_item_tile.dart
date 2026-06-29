@@ -22,7 +22,8 @@ class NotificationItemTile extends StatelessWidget {
     final title = _title;
     final subtitle = notification.message.isNotEmpty
         ? notification.message
-        : notification.type;
+        : (notification.notificationData.taskTitle ?? notification.type);
+    final typeLabel = _typeLabel;
     final time = _formatTime(notification.createdAt);
     final visuals = _visuals(context);
 
@@ -38,6 +39,7 @@ class NotificationItemTile extends StatelessWidget {
         final NotificationsDetailsArgs args = NotificationsDetailsArgs(
           title: title,
           subtitle: subtitle,
+          typeLabel: typeLabel,
           icon: visuals.icon,
           iconBg: visuals.iconBg,
           iconColor: visuals.iconColor,
@@ -91,6 +93,18 @@ class NotificationItemTile extends StatelessWidget {
                       fontSize: AppSpacing.fontSize14,
                     ),
                   ),
+                  if (typeLabel != null)
+                    Padding(
+                      padding: EdgeInsets.only(top: AppSpacing.spacing4),
+                      child: Text(
+                        typeLabel,
+                        style: context.textTheme.labelSmall?.copyWith(
+                          color: context.colors.textSecondary,
+                          fontSize: AppSpacing.fontSize11,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
                   VerticalSpacing(AppSpacing.spacing8),
                   Text(
                     time,
@@ -109,11 +123,26 @@ class NotificationItemTile extends StatelessWidget {
   }
 
   String get _title {
+    final taskTitle = notification.notificationData.taskTitle;
+    if (taskTitle != null && taskTitle.isNotEmpty) return taskTitle;
     final teamName = notification.notificationData.teamName;
     if (teamName != null && teamName.isNotEmpty) return teamName;
-    if (notification.type.isEmpty) return AppStrings.notifications;
+    final subType = notification.notificationData.dataSubType;
+    if (subType != null && subType.isNotEmpty) {
+      return subType
+          .replaceAll('_', ' ')
+          .split(' ')
+          .where((word) => word.isNotEmpty)
+          .map((word) => '${word[0].toUpperCase()}${word.substring(1)}')
+          .join(' ');
+    }
+    return AppStrings.notifications;
+  }
 
-    return notification.type
+  String? get _typeLabel {
+    final subType = notification.notificationData.dataSubType;
+    if (subType == null || subType.isEmpty) return null;
+    return subType
         .replaceAll('_', ' ')
         .split(' ')
         .where((word) => word.isNotEmpty)
@@ -124,7 +153,7 @@ class NotificationItemTile extends StatelessWidget {
   ({IconData icon, Color iconBg, Color iconColor}) _visuals(
     BuildContext context,
   ) {
-    final type = notification.type.toLowerCase();
+    final type = (notification.notificationData.dataSubType ?? notification.type).toLowerCase();
     if (type.contains('task')) {
       return (
         icon: Icons.assignment_outlined,

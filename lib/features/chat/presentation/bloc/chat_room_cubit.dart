@@ -10,6 +10,7 @@ import 'package:bridge_x/features/chat/domain/usecases/mark_messages_delivered_u
 import 'package:bridge_x/features/chat/domain/usecases/reset_unread_count_usecase.dart';
 import 'package:bridge_x/features/chat/domain/usecases/send_message_usecase.dart';
 import 'package:bridge_x/features/chat/domain/usecases/watch_messages_usecase.dart';
+import 'package:bridge_x/features/chat/domain/usecases/watch_room_membership_usecase.dart';
 import 'package:bridge_x/features/chat/presentation/bloc/chat_room_state.dart';
 import 'package:flutter/material.dart';
 
@@ -24,11 +25,16 @@ class ChatRoomCubit extends Cubit<ChatRoomState> with WidgetsBindingObserver {
   final DeleteMessage deleteMessageUseCase;
   final MarkMessageRead markMessageReadUseCase;
   final MarkMessagesDelivered markMessagesDeliveredUseCase;
+  final WatchRoomMembership watchRoomMembershipUseCase;
 
   StreamSubscription? _messagesSubscription;
+  StreamSubscription? _membershipSubscription;
   bool _initialized = false;
   bool _hasMore = true;
   final Set<String> _knownMessageIds = {};
+  final List<MessageEntity> _realtimeBuffer = [];
+  static int _localCounter = 0;
+  static const int _maxMessages = 500;
 
   ChatRoomCubit({
     required this.roomId,
@@ -41,6 +47,7 @@ class ChatRoomCubit extends Cubit<ChatRoomState> with WidgetsBindingObserver {
     required this.deleteMessageUseCase,
     required this.markMessageReadUseCase,
     required this.markMessagesDeliveredUseCase,
+    required this.watchRoomMembershipUseCase,
   }) : super(ChatRoomInitial());
 
   @override
@@ -63,6 +70,7 @@ class ChatRoomCubit extends Cubit<ChatRoomState> with WidgetsBindingObserver {
     await markMessagesDeliveredUseCase(MarkMessagesDeliveredParams(roomId: roomId, userId: userId));
     await loadMessages();
     _subscribeToRealtimeUpdates();
+    _subscribeToMembershipUpdates();
   }
 
   Future<void> loadMessages() async {
@@ -77,8 +85,37 @@ class ChatRoomCubit extends Cubit<ChatRoomState> with WidgetsBindingObserver {
         _hasMore = messages.length >= 20;
         _knownMessageIds.addAll(messages.map((m) => m.messageId).where((id) => id.isNotEmpty));
         emit(ChatRoomLoaded(messages: messages, hasMore: _hasMore));
+        _flushRealtimeBuffer();
       },
     );
+  }
+
+  void _flushRealtimeBuffer() {
+    if (_realtimeBuffer.isEmpty) return;
+    final currentState = state;
+    if (currentState is! ChatRoomLoaded) return;
+
+    final newMessages = <MessageEntity>[];
+    for (final msg in _realtimeBuffer) {
+      if (!_knownMessageIds.contains(msg.messageId)) {
+        _knownMessageIds.add(msg.messageId);
+        newMessages.add(msg);
+      }
+    }
+    _realtimeBuffer.clear();
+
+    if (newMessages.isEmpty) return;
+    final updated = [...newMessages, ...currentState.messages];
+    emit(currentState.copyWith(messages: _trimMessages(updated)));
+  }
+
+  List<MessageEntity> _trimMessages(List<MessageEntity> messages) {
+    if (messages.length <= _maxMessages) return messages;
+    final removed = messages.sublist(_maxMessages);
+    for (final msg in removed) {
+      _knownMessageIds.remove(msg.messageId);
+    }
+    return messages.sublist(0, _maxMessages);
   }
 
   Future<void> loadMoreMessages() async {
@@ -103,7 +140,7 @@ class ChatRoomCubit extends Cubit<ChatRoomState> with WidgetsBindingObserver {
         _hasMore = olderMessages.length >= 20;
         _knownMessageIds.addAll(olderMessages.map((m) => m.messageId).where((id) => id.isNotEmpty));
         emit(ChatRoomLoaded(
-          messages: [...currentState.messages, ...olderMessages],
+          messages: _trimMessages([...currentState.messages, ...olderMessages]),
           hasMore: _hasMore,
           loadingMore: false,
         ));
@@ -115,7 +152,8 @@ class ChatRoomCubit extends Cubit<ChatRoomState> with WidgetsBindingObserver {
     if (content.trim().isEmpty) return;
     if (content.trim().length > 2000) return;
 
-    final localId = DateTime.now().microsecondsSinceEpoch.toString();
+    _localCounter++;
+    final localId = '${DateTime.now().microsecondsSinceEpoch}_$_localCounter';
     final optimisticMessage = MessageEntity(
       messageId: '',
       roomId: roomId,
@@ -241,6 +279,11 @@ class ChatRoomCubit extends Cubit<ChatRoomState> with WidgetsBindingObserver {
         result.fold(
           (failure) => LoggerService.error('Realtime message error: ${failure.message}', tag: 'ChatRoomCubit'),
           (message) {
+            if (_knownMessageIds.contains(message.messageId)) return;
+            if (state is! ChatRoomLoaded) {
+              _realtimeBuffer.add(message);
+              return;
+            }
             _onRealtimeMessage(message);
           },
         );
@@ -260,16 +303,43 @@ class ChatRoomCubit extends Cubit<ChatRoomState> with WidgetsBindingObserver {
 
     _knownMessageIds.add(message.messageId);
 
-    if (message.senderId != userId) {
-      _knownMessageIds.add(message.messageId);
-      emit(currentState.copyWith(messages: [message, ...currentState.messages]));
-    }
+    emit(currentState.copyWith(messages: _trimMessages([message, ...currentState.messages])));
+
+    resetUnreadCountUseCase(ResetUnreadCountParams(roomId: roomId, userId: userId)).then((result) {
+      result.fold(
+        (failure) => LoggerService.warning('Failed to reset unread count: ${failure.message}', tag: 'ChatRoomCubit'),
+        (_) {},
+      );
+    });
+  }
+
+  void _subscribeToMembershipUpdates() {
+    _membershipSubscription?.cancel();
+    _membershipSubscription = watchRoomMembershipUseCase(
+      WatchRoomMembershipParams(roomId: roomId, userId: userId),
+    ).listen(
+      (result) {
+        if (isClosed) return;
+
+        result.fold(
+          (failure) => LoggerService.error('Membership error: ${failure.message}', tag: 'ChatRoomCubit'),
+          (_) {
+            if (isClosed) return;
+            emit(ChatRoomRemoved(reason: 'You have been removed from this chat room.'));
+          },
+        );
+      },
+      onError: (error) {
+        LoggerService.error('Membership realtime error', exception: error, tag: 'ChatRoomCubit');
+      },
+    );
   }
 
   @override
   Future<void> close() {
     WidgetsBinding.instance.removeObserver(this);
     _messagesSubscription?.cancel();
+    _membershipSubscription?.cancel();
     return super.close();
   }
 }

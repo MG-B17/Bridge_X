@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-const String baseUrl = "https://teamwork2-main-opmxfq.free.laravel.cloud/"; 
+const String baseUrl = "https://teamwork2-production-ucr9dn.laravel.cloud/"; 
 
 class DioFactory {
   static Dio createBase() {

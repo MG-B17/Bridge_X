@@ -1,14 +1,14 @@
 class SubmitReportRequestModel {
-  final int targetUserId;
+  final int targetProgrammerId;
   final String description;
 
   const SubmitReportRequestModel({
-    required this.targetUserId,
+    required this.targetProgrammerId,
     required this.description,
   });
 
   Map<String, dynamic> toJson() => {
-        'target_user_id': targetUserId,
+        'target_programmer_id': targetProgrammerId,
         'description': description,
       };
 }

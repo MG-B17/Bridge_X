@@ -9,6 +9,7 @@ class ProjectDetailsEntity extends Equatable {
   final String myTrack;
   final String? githubLink;
   final String? imageUrl;
+  final int? teamId;
   final List<TeamMemberEntity> teamMembers;
   final int teamMembersCount;
 
@@ -20,6 +21,7 @@ class ProjectDetailsEntity extends Equatable {
     required this.myTrack,
     this.githubLink,
     this.imageUrl,
+    this.teamId,
     required this.teamMembers,
     required this.teamMembersCount,
   });
@@ -35,6 +37,7 @@ class ProjectDetailsEntity extends Equatable {
         myTrack,
         githubLink,
         imageUrl,
+        teamId,
         teamMembers,
         teamMembersCount,
       ];

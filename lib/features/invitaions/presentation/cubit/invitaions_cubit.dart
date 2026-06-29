@@ -1,3 +1,9 @@
+import 'package:bridge_x/core/constant/app_keys.dart';
+import 'package:bridge_x/core/di/di.dart';
+import 'package:bridge_x/core/services/logger_service.dart';
+import 'package:bridge_x/core/services/secure_storage_service.dart';
+import 'package:bridge_x/core/utils/models/user_data_model.dart';
+import 'package:bridge_x/features/chat/domain/repositories/chat_repository.dart';
 import 'package:bridge_x/features/invitaions/domain/usecases/accept_invitation_usecase.dart';
 import 'package:bridge_x/features/invitaions/domain/usecases/decline_invitation_usecase.dart';
 import 'package:bridge_x/features/invitaions/domain/usecases/get_invitation_details_usecase.dart';
@@ -17,6 +23,7 @@ class InvitaionsCubit extends Cubit<InvitaionsState> {
   final AcceptInvitationUseCase acceptInvitationUseCase;
   final DeclineInvitationUseCase declineInvitationUseCase;
   final InvitaionsRepository repository;
+  final ChatRepository chatRepository;
 
   InvitaionsCubit({
     required this.getInvitaionsUseCase,
@@ -26,6 +33,7 @@ class InvitaionsCubit extends Cubit<InvitaionsState> {
     required this.acceptInvitationUseCase,
     required this.declineInvitationUseCase,
     required this.repository,
+    required this.chatRepository,
   }) : super(InvitaionsInitial());
 
   Future<void> fetchInvitations() async {
@@ -185,8 +193,26 @@ class InvitaionsCubit extends Cubit<InvitaionsState> {
           clearDetailsActionSuccess: true,
         ),
       ),
-      (_) {
+      (result) async {
         final updated = current.invitations.where((e) => e.id != id).toList();
+        final teamId = result.team.id;
+        final secureStorage = sl<SecureStorageService>();
+        final userDataStr = await secureStorage.read(key: AppKeys.userDataKey);
+        if (userDataStr != null && teamId > 0) {
+          final userData = UserDataModel.userDecodedata(userEncodedData: userDataStr);
+          final userId = int.tryParse(userData.userId);
+          if (userId != null) {
+            final roomIdResult = await chatRepository.getRoomIdByTeamId(teamId);
+            roomIdResult.fold(
+              (_) => LoggerService.warning('Chat room not found for team: $teamId', tag: 'InvitaionsCubit'),
+              (roomId) {
+                if (roomId != null) {
+                  chatRepository.addMemberToChatRoom(roomId, userId);
+                }
+              },
+            );
+          }
+        }
         emit(
           current.copyWith(
             invitations: updated,
@@ -255,8 +281,27 @@ class InvitaionsCubit extends Cubit<InvitaionsState> {
 
     result.fold(
       (failure) => emit(current.copyWith(actionError: failure.message)),
-      (_) {
+      (entity) async {
         final updated = current.joinRequests.where((e) => e.id != id).toList();
+        if (entity != null && entity.teamId > 0) {
+          final secureStorage = sl<SecureStorageService>();
+          final userDataStr = await secureStorage.read(key: AppKeys.userDataKey);
+          if (userDataStr != null) {
+            final userData = UserDataModel.userDecodedata(userEncodedData: userDataStr);
+            final userId = int.tryParse(userData.userId);
+            if (userId != null) {
+              final roomIdResult = await chatRepository.getRoomIdByTeamId(entity.teamId);
+              roomIdResult.fold(
+                (_) => LoggerService.warning('Chat room not found for team: ${entity.teamId}', tag: 'InvitaionsCubit'),
+                (roomId) {
+                  if (roomId != null) {
+                    chatRepository.addMemberToChatRoom(roomId, userId);
+                  }
+                },
+              );
+            }
+          }
+        }
         emit(current.copyWith(joinRequests: updated, clearError: true));
       },
     );

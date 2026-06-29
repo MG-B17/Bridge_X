@@ -38,7 +38,7 @@ class ReportCubit extends Cubit<ReportState> {
 
     emit(ReportSubmitting(userInfo: currentUserInfo));
 
-    final request = SubmitReportRequestModel(targetUserId: targetUserId, description: description);
+    final request = SubmitReportRequestModel(targetProgrammerId: targetUserId, description: description);
     final result = await _submitReportUseCase(request);
     if (isClosed) return;
 

@@ -90,6 +90,7 @@ void initAuth() {
       loginUsecase: sl(),
       appState: sl(),
       pushNotificationService: sl(),
+      saveUserChatData: sl(),
     ),
   );
 

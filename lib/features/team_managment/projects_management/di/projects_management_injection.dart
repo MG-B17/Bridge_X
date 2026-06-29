@@ -76,6 +76,7 @@ void initProjectsManagement() {
       submitProjectAsCompleteUseCase: sl(),
       changeLeaderUseCase: sl(),
       deleteTeamUseCase: sl(),
+      chatRepository: sl(),
     ),
   );
 }

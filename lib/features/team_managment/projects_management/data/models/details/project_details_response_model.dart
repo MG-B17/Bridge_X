@@ -9,6 +9,7 @@ class ProjectDetailsResponseModel {
   final String myTrack;
   final String? githubLink;
   final String? imageUrl;
+  final int? teamId;
   final List<TeamMemberModel> teamMembers;
   final int teamMembersCount;
 
@@ -20,6 +21,7 @@ class ProjectDetailsResponseModel {
     required this.myTrack,
     this.githubLink,
     this.imageUrl,
+    this.teamId,
     required this.teamMembers,
     required this.teamMembersCount,
   });
@@ -41,6 +43,7 @@ class ProjectDetailsResponseModel {
       myTrack: project['my_track'] as String? ?? '',
       githubLink: project['github_link'] as String?,
       imageUrl: project['image_url'] as String?,
+      teamId: project['team_id'] as int?,
       teamMembers: teamMembers,
       teamMembersCount: project['team_members_count'] as int? ?? teamMembers.length,
     );
@@ -54,6 +57,7 @@ class ProjectDetailsResponseModel {
         myTrack: myTrack,
         githubLink: githubLink,
         imageUrl: imageUrl,
+        teamId: teamId,
         teamMembers: teamMembers.map((m) => m.toEntity()).toList(),
         teamMembersCount: teamMembersCount,
       );

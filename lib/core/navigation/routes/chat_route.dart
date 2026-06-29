@@ -1,5 +1,6 @@
 import 'package:bridge_x/core/animation/screen_transtion_animation/transitions/slide_right_trnasition.dart';
 import 'package:bridge_x/core/di/di.dart';
+import 'package:bridge_x/core/navigation/navigator_keys.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dart';
 import 'package:bridge_x/features/chat/presentation/bloc/chat_list_cubit.dart';
@@ -27,6 +28,7 @@ final chatRoute = StatefulShellBranch(
         GoRoute(
           path: '${BridgeXRoutePaths.chatDetails}/:roomId',
           name: BridgeXRouteNames.chatDetails,
+          parentNavigatorKey: rootNavigatorKey,
           pageBuilder: (context, state) {
             final roomId = state.pathParameters['roomId'] ?? '';
             final userId = state.extra as int? ?? 0;

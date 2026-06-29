@@ -1,5 +1,10 @@
 import 'dart:async';
+import 'package:bridge_x/core/constant/app_keys.dart';
+import 'package:bridge_x/core/di/di.dart';
+import 'package:bridge_x/core/services/logger_service.dart';
+import 'package:bridge_x/core/services/secure_storage_service.dart';
 import 'package:bridge_x/core/utils/enum/create_team_status_enum.dart';
+import 'package:bridge_x/core/utils/models/user_data_model.dart';
 import 'package:bridge_x/features/team_managment/create_team/domain/entity/create_team_entity.dart';
 import 'package:bridge_x/features/team_managment/create_team/domain/entity/create_team_params.dart';
 import 'package:bridge_x/features/team_managment/create_team/domain/entity/programmer_search_entity.dart';
@@ -7,13 +12,13 @@ import 'package:bridge_x/features/team_managment/create_team/domain/usecases/cre
 import 'package:bridge_x/features/team_managment/create_team/domain/usecases/search_programmers_usecase.dart';
 import 'package:bridge_x/features/team_managment/create_team/presentation/controller/create_team_state.dart';
 import 'package:bridge_x/features/team_managment/create_team/presentation/utils/create_team_mapper.dart';
-// import 'package:bridge_x/features/chat/domain/usecases/create_team_chat_room_usecase.dart';
+import 'package:bridge_x/features/chat/domain/usecases/create_team_chat_room_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 class CreateTeamCubit extends Cubit<CreateTeamState> {
   final CreateTeamUseCase createTeamUseCase;
-  // final CreateTeamChatRoomUseCase createTeamChatRoomUseCase;
+  final CreateTeamChatRoom createTeamChatRoomUseCase;
   final SearchProgrammersUseCase searchProgrammersUseCase;
 
   Timer? _searchTimer;
@@ -21,7 +26,7 @@ class CreateTeamCubit extends Cubit<CreateTeamState> {
 
   CreateTeamCubit({
     required this.createTeamUseCase,
-    // required this.createTeamChatRoomUseCase,
+    required this.createTeamChatRoomUseCase,
     required this.searchProgrammersUseCase,
   }) : super(const CreateTeamState());
 
@@ -236,8 +241,8 @@ class CreateTeamCubit extends Cubit<CreateTeamState> {
     }
 
     final entityNonNull = entity!;
-    // final teamId = entityNonNull.team.id.toString();
-    // final teamName = entityNonNull.team.name;
+    final teamId = entityNonNull.team.id;
+    final teamName = entityNonNull.team.name;
     emit(
       state.copyWith(
         status: CreateTeamStatus.success,
@@ -249,21 +254,25 @@ class CreateTeamCubit extends Cubit<CreateTeamState> {
       ),
     );
 
-    // final userId = await sl<SecureStorageService>().read(key: AppKeys.userId);
-    // if (userId != null && userId.isNotEmpty) {
-    //   final chatResult = await createTeamChatRoomUseCase(
-    //     CreateTeamChatRoomParams(
-    //       teamId: teamId,
-    //       teamName: teamName,
-    //       creatorId: userId,
-    //       memberIds: entityNonNull.invitationsSent,
-    //     ),
-    //   );
-    //   chatResult.fold(
-    //     (failure) =>
-    //         debugPrint('Chat room creation failed: ${failure.message}'),
-    //     (_) => debugPrint('Chat room created for team: $teamId'),
-    //   );
-    // }
+    final secureStorage = sl<SecureStorageService>();
+    final userDataStr = await secureStorage.read(key: AppKeys.userDataKey);
+    if (userDataStr != null) {
+      final userData = UserDataModel.userDecodedata(userEncodedData: userDataStr);
+      final userId = int.tryParse(userData.userId);
+      if (userId != null) {
+        final chatResult = await createTeamChatRoomUseCase(
+          CreateTeamChatRoomParams(
+            teamId: teamId,
+            teamName: teamName,
+            creatorId: userId,
+            memberIds: const [],
+          ),
+        );
+        chatResult.fold(
+          (failure) => LoggerService.warning('Chat room creation failed: ${failure.message}', tag: 'CreateTeamCubit'),
+          (_) => LoggerService.debug('Chat room created for team: $teamId', tag: 'CreateTeamCubit'),
+        );
+      }
+    }
   }
 }

@@ -334,4 +334,28 @@ class ChatRepositoryImpl implements ChatRepository {
       return Left(ServerFailure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, String?>> getRoomIdByTeamId(int teamId) async {
+    try {
+      final roomId = await remoteDataSource.getRoomIdByTeamId(teamId);
+      return Right(roomId);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message ?? 'Failed to get room ID'));
+    } catch (e) {
+      return Left(ServerFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> addMemberToChatRoom(String roomId, int userId, {String role = 'member'}) async {
+    try {
+      await remoteDataSource.addMemberToChatRoom(roomId, userId, role: role);
+      return const Right(null);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message ?? 'Failed to add member'));
+    } catch (e) {
+      return Left(ServerFailure(message: e.toString()));
+    }
+  }
 }

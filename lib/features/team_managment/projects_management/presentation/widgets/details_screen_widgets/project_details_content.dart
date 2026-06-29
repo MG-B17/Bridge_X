@@ -31,7 +31,7 @@ class ProjectDetailsContent extends StatelessWidget {
           teamMembersCount: project.teamMembersCount,
         ),
         VerticalSpacing(AppSpacing.spacing24),
-        ProjectDetailsActionButtons(projectId: project.id),
+        ProjectDetailsActionButtons(projectId: project.id, teamId: project.teamId),
         VerticalSpacing(AppSpacing.spacing32),
       ],
     );

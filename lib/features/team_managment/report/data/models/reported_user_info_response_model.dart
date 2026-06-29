@@ -11,7 +11,7 @@ class ReportedUserInfoResponseModel extends ReportedUserInfoEntity {
   factory ReportedUserInfoResponseModel.fromJson(Map<String, dynamic> json) {
     final data = json['data'] as Map<String, dynamic>? ?? json;
     return ReportedUserInfoResponseModel(
-      id: data['id'] as int? ?? 0,
+      id: (data['programmer_id'] ?? data['id']) as int? ?? 0,
       name: data['name'] as String? ?? '',
       track: data['track'] as String? ?? '',
       avatarUrl: data['avatar_url'] as String?,

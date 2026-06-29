@@ -43,11 +43,12 @@ class ChatListCubit extends Cubit<ChatListState> with WidgetsBindingObserver {
   }
 
   Future<void> init(int userId) async {
-    if (_initialized) return;
-    _initialized = true;
+    if (_currentUserId == userId && _initialized) return;
     _currentUserId = userId;
-    WidgetsBinding.instance.addObserver(this);
-
+    if (!_initialized) {
+      _initialized = true;
+      WidgetsBinding.instance.addObserver(this);
+    }
     await loadChatRooms();
     _subscribeToRealtimeUpdates();
   }

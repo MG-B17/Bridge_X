@@ -54,7 +54,6 @@ class ProfileMenu extends StatelessWidget {
             ProfileMenuItem(
               label: AppStrings.myTasks,
               icon: Icons.task_alt_outlined,
-              badgeCount: 3,
               onTap: () {
                 context.pushNamed(BridgeXRouteNames.myTasks);
               },

@@ -1,4 +1,5 @@
 import 'package:bridge_x/core/error/failure.dart';
+import 'package:bridge_x/features/chat/domain/repositories/chat_repository.dart';
 import 'package:bridge_x/features/team_managment/projects_management/domain/entities/paginated_projects_entity.dart';
 import 'package:bridge_x/features/team_managment/projects_management/domain/usecases/change_leader_usecase.dart';
 import 'package:bridge_x/features/team_managment/projects_management/domain/usecases/delete_team_usecase.dart';
@@ -23,6 +24,7 @@ class ProjectsFeatureBloc
   final SubmitProjectAsCompleteUseCase submitProjectAsCompleteUseCase;
   final ChangeLeaderUseCase changeLeaderUseCase;
   final DeleteTeamUseCase deleteTeamUseCase;
+  final ChatRepository chatRepository;
 
   ProjectsFeatureBloc({
     required this.getProjectsUseCase,
@@ -33,6 +35,7 @@ class ProjectsFeatureBloc
     required this.submitProjectAsCompleteUseCase,
     required this.changeLeaderUseCase,
     required this.deleteTeamUseCase,
+    required this.chatRepository,
   }) : super(const ProjectsFeatureState()) {
     on<ProjectsLoadAllTabsRequested>(_onLoadAllTabs);
     on<ProjectsPullToRefreshRequested>(_onRefreshAllTabs);
@@ -619,17 +622,44 @@ class ProjectsFeatureBloc
         ),
       ),
       (data) {
-        emit(
-          state.copyWith(
-            changeLeader: FeatureActionState(
-              status: FeatureActionStatus.success,
-              message: data.message,
-            ),
-          ),
-        );
-        add(const ProjectsLoadAllTabsRequested());
+        _performChangeLeaderChatActions(event, data, emit);
       },
     );
+  }
+
+  void _performChangeLeaderChatActions(
+    ChangeLeaderRequested event,
+    dynamic data,
+    Emitter<ProjectsFeatureState> emit,
+  ) {
+    final teamSettings = state.teamSettings.data;
+    final teamId = teamSettings?.teamId;
+    if (teamId != null) {
+      chatRepository.getRoomIdByTeamId(teamId).then((roomIdResult) {
+        roomIdResult.fold(
+          (_) {},
+          (roomId) {
+            if (roomId != null) {
+              final oldLeaderId = teamSettings?.members
+                  .where((m) => m.role == 'leader')
+                  .firstOrNull?.programmerId;
+              if (oldLeaderId != null) {
+                chatRepository.changeChatRoomLeader(roomId, event.userId, oldLeaderId);
+              }
+            }
+          },
+        );
+      });
+    }
+    emit(
+      state.copyWith(
+        changeLeader: FeatureActionState(
+          status: FeatureActionStatus.success,
+          message: data.message,
+        ),
+      ),
+    );
+    add(const ProjectsLoadAllTabsRequested());
   }
 
   Future<void> _onDeleteTeam(
@@ -662,17 +692,34 @@ class ProjectsFeatureBloc
         ),
       ),
       (data) {
-        emit(
-          state.copyWith(
-            deleteTeam: FeatureActionState(
-              status: FeatureActionStatus.success,
-              message: data.message,
-            ),
-          ),
-        );
-        add(const ProjectsLoadAllTabsRequested());
+        _performDeleteTeamChatActions(data, emit);
       },
     );
+  }
+
+  void _performDeleteTeamChatActions(dynamic data, Emitter<ProjectsFeatureState> emit) {
+    final teamId = state.teamSettings.data?.teamId;
+    if (teamId != null) {
+      chatRepository.getRoomIdByTeamId(teamId).then((roomIdResult) {
+        roomIdResult.fold(
+          (_) {},
+          (roomId) {
+            if (roomId != null) {
+              chatRepository.deleteChatRoom(roomId);
+            }
+          },
+        );
+      });
+    }
+    emit(
+      state.copyWith(
+        deleteTeam: FeatureActionState(
+          status: FeatureActionStatus.success,
+          message: data.message,
+        ),
+      ),
+    );
+    add(const ProjectsLoadAllTabsRequested());
   }
 
   void _onClearSubmitProject(

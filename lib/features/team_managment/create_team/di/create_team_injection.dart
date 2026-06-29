@@ -5,8 +5,6 @@ import 'package:bridge_x/features/team_managment/create_team/domain/repo/create_
 import 'package:bridge_x/features/team_managment/create_team/domain/usecases/create_team_usecase.dart';
 import 'package:bridge_x/features/team_managment/create_team/domain/usecases/search_programmers_usecase.dart';
 import 'package:bridge_x/features/team_managment/create_team/presentation/controller/create_team_cubit.dart';
-// import 'package:bridge_x/features/chat/domain/usecases/create_team_chat_room_usecase.dart';
-// import 'package:bridge_x/features/chat/domain/repositories/chat_repository.dart';
 
 void initCreateTeam() {
   // Remote Data Source
@@ -26,16 +24,13 @@ void initCreateTeam() {
   sl.registerLazySingleton<SearchProgrammersUseCase>(
     () => SearchProgrammersUseCase(repository: sl()),
   );
-  // sl.registerLazySingleton<CreateTeamChatRoomUseCase>(
-  //   () => CreateTeamChatRoomUseCase(sl<ChatRepository>()),
-  // );
 
   // Cubit
   sl.registerFactory<CreateTeamCubit>(
     () => CreateTeamCubit(
       createTeamUseCase: sl(),
+      createTeamChatRoomUseCase: sl(),
       searchProgrammersUseCase: sl(),
-      // createTeamChatRoomUseCase: sl(),
     ),
   );
 }

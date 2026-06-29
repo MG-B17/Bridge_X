@@ -7,6 +7,7 @@ import 'package:bridge_x/features/auth/domain/usecases/login_usecase.dart';
 import 'package:bridge_x/features/auth/presentation/controller/login/login_state.dart';
 import 'package:bridge_x/features/auth/utils/auth_enum.dart';
 import 'package:bridge_x/features/auth/utils/auth_strings.dart';
+import 'package:bridge_x/features/chat/domain/usecases/save_user_chat_data_usecase.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,11 +16,13 @@ class LoginCubit extends Cubit<LoginState> {
     required this.loginUsecase,
     required this.appState,
     required this.pushNotificationService,
+    required this.saveUserChatData,
   }) : super(LoginState());
 
   final LoginUsecase loginUsecase;
   final AppState appState;
   final PushNotificationService pushNotificationService;
+  final SaveUserChatData saveUserChatData;
 
   Future<void> login({required String email, required String password}) async {
     final token = pushNotificationService.fcmToken;
@@ -45,6 +48,11 @@ class LoginCubit extends Cubit<LoginState> {
             isProfileComplete: entity.isProfileComplete,
           ),
         );
+        saveUserChatData(SaveUserChatDataParams(
+          userId: entity.userId,
+          username: entity.userName,
+          email: entity.email,
+        ));
         emit(state.copyWith(status: AuthStatus.success, message: AuthStrings.loginSuccess));
       },
     );

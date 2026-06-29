@@ -27,12 +27,10 @@ class MessageListWidget extends StatelessWidget {
       );
     }
 
-    final reversed = messages.reversed.toList();
-
     return ListView.builder(
       reverse: true,
       padding: EdgeInsets.symmetric(vertical: AppSpacing.height8),
-      itemCount: reversed.length + (loadingMore ? 1 : 0),
+      itemCount: messages.length + (loadingMore ? 1 : 0),
       itemBuilder: (context, index) {
         if (loadingMore && index == 0) {
           return const Padding(
@@ -41,7 +39,8 @@ class MessageListWidget extends StatelessWidget {
           );
         }
 
-        final message = reversed[index];
+        final messageIndex = loadingMore ? index - 1 : index;
+        final message = messages[messageIndex];
         final isCurrentUser = message.senderId == currentUserId;
 
         return MessageBubbleWidget(

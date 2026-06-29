@@ -49,6 +49,12 @@ abstract class ChatRemoteDataSource {
   // Members
   Future<List<ChatUserModel>> getRoomMembers(String roomId);
 
+  // Room Lookup
+  Future<String?> getRoomIdByTeamId(int teamId);
+
+  // Member Management
+  Future<void> addMemberToChatRoom(String roomId, int userId, {String role = 'member'});
+
   void dispose();
 }
 
@@ -89,14 +95,26 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
         .from('chat_room_members')
         .select('''
           room_id, user_id, role, unread_count,
-          chat_rooms!inner(team_id, team_name, leader_id, is_active),
-          chat_room_previews!left(last_message, last_message_at, last_message_sender_id)
+          chat_rooms!inner(team_id, team_name, is_active)
         ''')
         .eq('user_id', userId)
-        .eq('chat_rooms.is_active', true)
-        .order('last_message_at', referencedTable: 'chat_room_previews', ascending: false, nullsFirst: false);
+        .eq('chat_rooms.is_active', true);
 
-    return await _enrichChatRoomsWithSenderNames(response);
+    final roomIds = response.map((r) => r['room_id'] as String).toList();
+    final rooms = response.map((json) => ChatRoomModel.fromJson(json)).toList();
+
+    if (roomIds.isNotEmpty) {
+      await _attachPreviews(rooms, roomIds);
+    }
+
+    rooms.sort((a, b) {
+      if (a.lastMessageAt == null && b.lastMessageAt == null) return 0;
+      if (a.lastMessageAt == null) return 1;
+      if (b.lastMessageAt == null) return -1;
+      return b.lastMessageAt!.compareTo(a.lastMessageAt!);
+    });
+
+    return await _enrichWithSenderNames(rooms);
   }
 
   @override
@@ -107,20 +125,59 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
         .from('chat_room_members')
         .select('''
           room_id, user_id, role, unread_count,
-          chat_rooms!inner(team_id, team_name, leader_id, is_active),
-          chat_room_previews!left(last_message, last_message_at, last_message_sender_id)
+          chat_rooms!inner(team_id, team_name, is_active)
         ''')
         .eq('user_id', userId)
         .eq('chat_rooms.is_active', true)
-        .ilike('chat_rooms.team_name', '%$query%')
-        .order('last_message_at', referencedTable: 'chat_room_previews', ascending: false, nullsFirst: false);
+        .ilike('chat_rooms.team_name', '%$query%');
 
-    return await _enrichChatRoomsWithSenderNames(response);
+    final roomIds = response.map((r) => r['room_id'] as String).toList();
+    final rooms = response.map((json) => ChatRoomModel.fromJson(json)).toList();
+
+    if (roomIds.isNotEmpty) {
+      await _attachPreviews(rooms, roomIds);
+    }
+
+    rooms.sort((a, b) {
+      if (a.lastMessageAt == null && b.lastMessageAt == null) return 0;
+      if (a.lastMessageAt == null) return 1;
+      if (b.lastMessageAt == null) return -1;
+      return b.lastMessageAt!.compareTo(a.lastMessageAt!);
+    });
+
+    return await _enrichWithSenderNames(rooms);
   }
 
-  Future<List<ChatRoomModel>> _enrichChatRoomsWithSenderNames(List<dynamic> rows) async {
-    final rooms = rows.map((json) => ChatRoomModel.fromJson(json)).toList();
+  Future<void> _attachPreviews(List<ChatRoomModel> rooms, List<String> roomIds) async {
+    final previewResponse = await supabaseClient
+        .from('chat_room_previews')
+        .select('room_id, last_message, last_message_at, last_message_sender_id')
+        .inFilter('room_id', roomIds);
 
+    final previewMap = {
+      for (final p in previewResponse)
+        p['room_id'] as String: {
+          'last_message': p['last_message'] as String?,
+          'last_message_at': p['last_message_at'] as String?,
+          'last_message_sender_id': p['last_message_sender_id'] as int?,
+        }
+    };
+
+    for (var i = 0; i < rooms.length; i++) {
+      final preview = previewMap[rooms[i].roomId];
+      if (preview != null) {
+        rooms[i] = rooms[i].copyWith(
+          lastMessage: preview['last_message'] as String?,
+          lastMessageAt: preview['last_message_at'] != null
+              ? DateTime.tryParse(preview['last_message_at'] as String)
+              : null,
+          lastMessageSenderId: preview['last_message_sender_id'] as int?,
+        );
+      }
+    }
+  }
+
+  Future<List<ChatRoomModel>> _enrichWithSenderNames(List<ChatRoomModel> rooms) async {
     final senderIds = rooms
         .map((r) => r.lastMessageSenderId)
         .whereType<int>()
@@ -140,7 +197,7 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
       if (room.lastMessageSenderId != null && usernameMap.containsKey(room.lastMessageSenderId)) {
         return room.copyWith(
           lastMessageSenderName: usernameMap[room.lastMessageSenderId],
-        ) as ChatRoomModel;
+        );
       }
       return room;
     }).toList();
@@ -199,7 +256,7 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
 
     final roomResponse = await supabaseClient
         .from('chat_rooms')
-        .insert({'team_id': teamId, 'team_name': teamName})
+        .insert({'team_id': teamId, 'team_name': teamName, 'is_active': true})
         .select('room_id')
         .single();
 
@@ -573,6 +630,29 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
         'avatar_url': user['avatar_url'] as String?,
       });
     }).toList();
+  }
+
+  @override
+  Future<String?> getRoomIdByTeamId(int teamId) async {
+    final response = await supabaseClient
+        .from('chat_rooms')
+        .select('room_id')
+        .eq('team_id', teamId)
+        .maybeSingle();
+    return response?['room_id'] as String?;
+  }
+
+  @override
+  Future<void> addMemberToChatRoom(String roomId, int userId, {String role = 'member'}) async {
+    final now = DateTime.now().toUtc().toIso8601String();
+    await supabaseClient.from('chat_room_members').upsert({
+      'room_id': roomId,
+      'user_id': userId,
+      'role': role,
+      'unread_count': 0,
+      'last_read_at': now,
+      'joined_at': now,
+    }, onConflict: 'room_id, user_id');
   }
 }
 

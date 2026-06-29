@@ -80,6 +80,10 @@ class ApiEndpoint {
       "/api/join-requests/$joinRequestId";
   static String sendJoinRequest({required int projectId}) =>
       "/api/projects/$projectId/join-request";
+  static String acceptJoinRequest({required int joinRequestId}) =>
+      "/api/join-requests/$joinRequestId/accept";
+  static String declineJoinRequest({required int joinRequestId}) =>
+      "/api/join-requests/$joinRequestId/decline";
 
   // notifications
   static const String notifications = "/api/notifications";

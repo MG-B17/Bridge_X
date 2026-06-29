@@ -1,7 +1,6 @@
 import 'package:bridge_x/core/extensions/context_extension.dart';
 import 'package:bridge_x/core/theme/app_color_schema.dart';
 import 'package:bridge_x/core/theme/bridge_x_colors.dart';
-import 'package:bridge_x/core/widget/layout/horizontal_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -58,16 +57,18 @@ class BridgeXButton extends StatelessWidget {
                   spacing: 5.w,
                   children: [
                     prefixicon != null? Icon(prefixicon, color: context.colors.surface, size: 20.sp) :SizedBox.shrink(),
-                    Text(
-                      text,
-                      style: context.textTheme.titleMedium?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 0.3,
-                        fontSize: 17.sp,
+                    Flexible(
+                      child: Text(
+                        text,
+                        overflow: TextOverflow.ellipsis,
+                        style: context.textTheme.titleMedium?.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0.3,
+                          fontSize: 17.sp,
+                        ),
                       ),
                     ),
-                    HorizontalSpacing(8),
                     suffixicon != null? Icon(suffixicon, color: context.colors.surface, size: 20.sp) :SizedBox.shrink(),
                   ],
                 ),

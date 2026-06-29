@@ -6,6 +6,7 @@ import 'package:bridge_x/core/network/network_info.dart';
 import 'package:bridge_x/features/invitaions/data/datasource/invitaions_mock_datasource.dart';
 import 'package:bridge_x/features/invitaions/data/datasource/invitaions_remote_datasource.dart';
 import 'package:bridge_x/features/invitaions/data/datasource/join_requests_remote_datasource.dart';
+import 'package:bridge_x/features/invitaions/domain/entities/accept_join_request_entity.dart';
 import 'package:bridge_x/features/invitaions/domain/entities/accepted_invitation_entity.dart';
 import 'package:bridge_x/features/invitaions/domain/entities/invitation_entity.dart';
 import 'package:bridge_x/features/invitaions/domain/entities/invitation_details_entity.dart';
@@ -108,22 +109,21 @@ class InvitaionsRepositoryImpl implements InvitaionsRepository {
   }
 
   @override
-  Future<Either<Failure, void>> acceptJoinRequest(String requestId) async {
-    try {
-      await mockDataSource.removeJoinRequest(requestId);
-      return const Right(null);
-    } catch (e) {
-      return Left(InvitaionsFailure(message: e.toString()));
-    }
+  Future<Either<Failure, AcceptJoinRequestEntity?>> acceptJoinRequest(String requestId) async {
+    return _safeRemoteCall(() async {
+      final result = await joinRequestsRemoteDataSource.acceptJoinRequest(
+        joinRequestId: int.parse(requestId),
+      );
+      return AcceptJoinRequestEntity(teamId: result.teamId);
+    });
   }
 
   @override
   Future<Either<Failure, void>> declineJoinRequest(String requestId) async {
-    try {
-      await mockDataSource.removeJoinRequest(requestId);
-      return const Right(null);
-    } catch (e) {
-      return Left(InvitaionsFailure(message: e.toString()));
-    }
+    return _safeRemoteCall(() async {
+      await joinRequestsRemoteDataSource.declineJoinRequest(
+        joinRequestId: int.parse(requestId),
+      );
+    });
   }
 }

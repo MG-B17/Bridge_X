@@ -47,4 +47,10 @@ abstract class ChatRepository {
 
   // Members
   Future<Either<Failure, List<ChatUserEntity>>> getRoomMembers(String roomId);
+
+  // Room Lookup
+  Future<Either<Failure, String?>> getRoomIdByTeamId(int teamId);
+
+  // Member Management
+  Future<Either<Failure, void>> addMemberToChatRoom(String roomId, int userId, {String role = 'member'});
 }

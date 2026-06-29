@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bridge_x/core/di/di.dart';
 import 'package:bridge_x/core/extensions/context_extension.dart';
+import 'package:bridge_x/core/init/app_state.dart';
+import 'package:bridge_x/core/services/logger_service.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dart';
-import 'package:bridge_x/core/services/secure_storage_service.dart';
-import 'package:bridge_x/core/constant/app_keys.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
-import 'package:bridge_x/core/utils/models/user_data_model.dart';
 import 'package:bridge_x/features/chat/presentation/bloc/chat_list_cubit.dart';
 import 'package:bridge_x/features/chat/presentation/bloc/chat_list_state.dart';
 import 'package:bridge_x/features/chat/presentation/widgets/chat_list_empty_state.dart';
@@ -33,11 +32,15 @@ class _ChatListPageState extends State<ChatListPage> {
   }
 
   Future<void> _initCubit() async {
-    final secureStorage = sl<SecureStorageService>();
-    final userDataStr = await secureStorage.read(key: AppKeys.userDataKey);
-    if (userDataStr != null) {
-      final userData = UserDataModel.userDecodedata(userEncodedData: userDataStr);
-      _cubit.init(int.tryParse(userData.userId) ?? 0);
+    final userData = sl<AppState>().userData;
+    if (userData != null) {
+      final userId = int.tryParse(userData.userId);
+      LoggerService.debug('_initCubit: userData.userId="${userData.userId}", parsed=$userId', tag: 'ChatListPage');
+      if (userId != null) {
+        _cubit.init(userId);
+      }
+    } else {
+      LoggerService.debug('_initCubit: userData is null', tag: 'ChatListPage');
     }
     if (mounted) {
       setState(() => _initialized = true);
@@ -78,7 +81,6 @@ class _ChatListPageState extends State<ChatListPage> {
       case ChatListLoading():
         return const Center(child: CircularProgressIndicator());
       case ChatListLoaded(rooms: final rooms):
-        final secureStorage = sl<SecureStorageService>();
         return RefreshIndicator(
           onRefresh: () => _cubit.loadChatRooms(),
           child: ListView.builder(
@@ -87,12 +89,11 @@ class _ChatListPageState extends State<ChatListPage> {
               return ChatRoomListTile(
                 chatRoom: rooms[index],
                 onTapped: (roomId) {
-                  secureStorage.read(key: AppKeys.userDataKey).then((data) {
-                    if (data != null) {
-                      final user = UserDataModel.userDecodedata(userEncodedData: data);
-                      _onRoomTapped(roomId, int.tryParse(user.userId) ?? 0);
-                    }
-                  });
+                  final userData = sl<AppState>().userData;
+                  if (userData != null) {
+                    final userId = int.tryParse(userData.userId) ?? 0;
+                    _onRoomTapped(roomId, userId);
+                  }
                 },
               );
             },

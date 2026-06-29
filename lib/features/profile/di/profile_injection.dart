@@ -44,7 +44,7 @@ void initProfile() {
     () => ProfileDashboardCubit(getProfileDashboardUseCase: sl()),
   );
   sl.registerFactory<EditProfileCubit>(
-    () => EditProfileCubit(getProfileUseCase: sl(), updateProfileUseCase: sl(), secureStorageService: sl()),
+    () => EditProfileCubit(getProfileUseCase: sl(), updateProfileUseCase: sl(), updateUsername: sl(), secureStorageService: sl()),
   );
   sl.registerFactory<ChangePasswordCubit>(
     () => ChangePasswordCubit(changePasswordUseCase: sl()),

@@ -10,6 +10,7 @@ import 'package:bridge_x/features/auth/presentation/controller/login/login_cubit
 import 'package:bridge_x/features/auth/presentation/controller/login/login_state.dart';
 import 'package:bridge_x/features/auth/utils/auth_enum.dart';
 import 'package:bridge_x/features/auth/utils/auth_strings.dart';
+import 'package:bridge_x/features/chat/domain/usecases/save_user_chat_data_usecase.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -20,10 +21,13 @@ class MockAppState extends Mock implements AppState {}
 
 class MockPushNotificationService extends Mock implements PushNotificationService {}
 
+class MockSaveUserChatData extends Mock implements SaveUserChatData {}
+
 void main() {
   late MockLoginUsecase loginUsecase;
   late MockAppState appState;
   late MockPushNotificationService pushNotificationService;
+  late MockSaveUserChatData saveUserChatData;
   late LoginCubit loginCubit;
 
   const email = 'test@example.com';
@@ -49,11 +53,13 @@ void main() {
     loginUsecase = MockLoginUsecase();
     appState = MockAppState();
     pushNotificationService = MockPushNotificationService();
+    saveUserChatData = MockSaveUserChatData();
     when(() => pushNotificationService.fcmToken).thenReturn(null);
     loginCubit = LoginCubit(
       loginUsecase: loginUsecase,
       appState: appState,
       pushNotificationService: pushNotificationService,
+      saveUserChatData: saveUserChatData,
     );
   });
 

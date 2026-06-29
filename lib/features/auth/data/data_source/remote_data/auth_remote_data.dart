@@ -2,6 +2,7 @@ import 'package:bridge_x/core/error/error_strings.dart';
 import 'package:bridge_x/core/error/exception.dart';
 import 'package:bridge_x/core/network/api/api_client.dart';
 import 'package:bridge_x/core/network/api/api_endpoint.dart';
+import 'package:bridge_x/core/services/logger_service.dart';
 import 'package:bridge_x/features/auth/data/models/change_password_models/change_password_model.dart';
 import 'package:bridge_x/features/auth/data/models/complete_profile_models/complete_profile_request_model.dart';
 import 'package:bridge_x/features/auth/data/models/forget_password_models/forget_password_model.dart';
@@ -117,7 +118,9 @@ class AuthRemoteDataImpl implements AuthRemoteData {
       if (response.data == null) {
         throw ServerException('Empty login response');
       }
-      return LoginResponseModel.fromJson(response.data);
+      final model = LoginResponseModel.fromJson(response.data);
+      LoggerService.debug('Login parsed userId=${model.userId}', tag: 'AuthRemoteData');
+      return model;
     } catch (e) {
       _rethrowOrServerException(e);
     }

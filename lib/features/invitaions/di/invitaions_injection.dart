@@ -68,6 +68,7 @@ void initInvitaions() {
       acceptInvitationUseCase: sl(),
       declineInvitationUseCase: sl(),
       repository: sl(),
+      chatRepository: sl(),
     ),
   );
 }

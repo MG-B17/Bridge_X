@@ -44,9 +44,9 @@ class LoginResponseModel {
     return LoginResponseModel(
       message: json['message'] as String? ?? data['message'] as String? ?? '',
       token: json['token'] as String? ?? data['token'] as String? ?? '',
-      userId: user['id'] is int
-          ? user['id'] as int
-          : int.tryParse('${user['id']}') ?? 0,
+      userId: user['programmer_id'] is int
+          ? user['programmer_id'] as int
+          : int.tryParse('${user['programmer_id']}') ?? 0,
       userName:
           user['user_name'] as String? ?? user['username'] as String? ?? '',
       name: user['name'] as String? ?? '',

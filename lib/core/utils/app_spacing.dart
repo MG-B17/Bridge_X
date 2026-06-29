@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 abstract class AppSpacing {
   static double get spacing2 => 2.w;
   static double get spacing4 => 4.w;
+  static double get spacing5 => 5.w;
   static double get spacing6 => 6.w;
   static double get spacing8 => 8.w;
   static double get spacing10 => 10.w;
@@ -38,6 +39,7 @@ abstract class AppSpacing {
   static double get height16 => 16.h;
   static double get height18 => 18.h;
   static double get height20 => 20.h;
+  static double get height24 => 24.h;
   static double get height40 => 40.h;
   static double get height50 => 50.h;
   static double get height58 => 58.h;
@@ -50,17 +52,20 @@ abstract class AppSpacing {
   static double get fontSize8 => 8.sp;
   static double get fontSize10 => 10.sp;
   static double get fontSize12 => 12.sp;
+  static double get fontSize13 => 13.sp;
   static double get fontSize14 => 14.sp;
   static double get fontSize15 => 15.sp;
   static double get fontSize16 => 16.sp;
   static double get fontSize18 => 18.sp;
   static double get fontSize20 => 20.sp;
   static double get fontSize22 => 22.sp;
+  static double get fontSize24 => 24.sp;
   static double get fontSize26 => 26.sp;
   static double get fontSize30 => 30.sp;
   static double get fontSize32 => 32.sp;
+  static double get fontSize40 => 40.sp;
+  static double get fontSize64 => 64.sp;
   static double get fontSize90 => 90.sp;
-  static double get fontSize24 => 24.sp;
 
   static double get radius2 => 2.r;
   static double get radius5 => 5.r;
@@ -72,10 +77,32 @@ abstract class AppSpacing {
   static double get radius16 => 16.r;
   static double get radius18 => 18.r;
   static double get radius20 => 20.r;
+  static double get radius22 => 22.r;
   static double get radius24 => 24.r;
+  static double get radius25 => 25.r;
   static double get radius28 => 28.r;
   static double get radius30 => 30.r;
   static double get radius32 => 32.r;
+
+  static double get width50 => 50.w;
+  static double get width64 => 64.w;
+  static double get width72 => 72.w;
+  static double get width80 => 80.w;
+  static double get width85 => 85.w;
+  static double get width90 => 90.w;
+  static double get width95 => 95.w;
+  static double get width100 => 100.w;
+  static double get width110 => 110.w;
+
+  static double get height41 => 41.h;
+  static double get height52 => 52.h;
+  static double get height60 => 60.h;
+  static double get height200 => 200.h;
+  static double get height350 => 350.h;
+  static double get height450 => 450.h;
+  static double get height580 => 580.h;
+  static double get height700 => 700.h;
+  static double get height800 => 800.h;
 
   static double get otpCellSize => 45.w;
   static double get section => 40.w;
@@ -97,8 +124,21 @@ abstract class AppSpacing {
   static double get height140 => 140.h;
   static double get height100 => 100.h;
 
+  static const Duration animationFast = Duration(milliseconds: 200);
   static const Duration animationNormal = Duration(milliseconds: 300);
   static const Duration animationSlow = Duration(milliseconds: 700);
+
+  static const double borderWidth1 = 1;
+  static const double borderWidth1_5 = 1.5;
+  static const double borderWidth2 = 2;
+  static const double strokeWidth3 = 3;
+
+  static const double lineHeight1_4 = 1.4;
+  static const double lineHeight1_5 = 1.5;
+
+  static const double dragHandleWidth = 48;
+  static const double dragHandleHeight = 5;
+  static const double sendButtonHeight = 52;
 
   static EdgeInsets get pagePadding =>
       EdgeInsets.symmetric(horizontal: spacing16, vertical: spacing16);

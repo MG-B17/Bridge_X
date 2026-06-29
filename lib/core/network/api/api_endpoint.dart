@@ -21,10 +21,11 @@ class ApiEndpoint {
   // teams
   static const String createTeam = "/api/teams";
   static const String myChats = "/api/teams/my-chats";
+  static const String searchProgrammers = "/api/search/programmers";
   static String teamSettings({required int projectId}) =>
-      "/api/teams/$projectId/details";
+      "/api/teams/projects/$projectId/team-details";
 
-  // projects 
+  // projects
   static const String allProject = "/api/my-projects";
   static String projectDashboard({required int projectId}) =>
       "/api/zero-project/$projectId";
@@ -33,24 +34,35 @@ class ApiEndpoint {
       "/api/my-projects/$projectId/details";
 
   static String submitprojectAsComplete({required int projectId}) =>
-      "/api/projects/$projectId/complete";    
+      "/api/projects/$projectId/complete";
 
-  // tasks 
+  static String changeLeader({required int projectId, required int userId}) =>
+      "/api/projects/$projectId/change-leader/$userId";
+
+  static String deleteTeam({required int projectId}) =>
+      "/api/projects/$projectId/team";
+
+  // tasks
   static String teamDetailsWithtasks({required int teamId}) =>
       "/api/team/$teamId/full-details";
-  static String createTask({required int projectId}) =>
-      "/api/tasks/team/$projectId";
+  static String createTask({required int teamId}) =>
+      "/api/tasks/team/$teamId";
   static String viewTask({required int projectId}) =>
-      "/api/team/$projectId/full-details";
+      "/api/projects/$projectId/tasks";
+  static const String tasksInProgress = "/api/tasks/in-progress";
+  static const String tasksCompleted = "/api/tasks/completed";
+  static String taskDetails({required int taskId}) => "/api/tasks/$taskId";
 
-  //profile 
+  //profile
   static const String profileData = "/api/my/dashboard";
   static const String updateProfile = "/api/profile/update";
   static const String displayProfile = "/api/profile";
+  static const String softDeleteProfile = "/api/profile/soft-delete";
   static const String level = "/api/my/level-progression";
 
   // reports
-  static String reportInfo({required int userId}) => "/api/user/$userId/report-info";
+  static String reportInfo({required int userId}) =>
+      "/api/user/$userId/report-info";
   static const String reports = "/api/reports";
 
   // team evaluation
@@ -62,4 +74,25 @@ class ApiEndpoint {
   // ai matching
   static const String aiMatchTeams = "/api/ai/match-teams";
 
+  // join requests
+  static const String myJoinRequests = "/api/my/join-requests";
+  static String joinRequestDetails({required int joinRequestId}) =>
+      "/api/join-requests/$joinRequestId";
+  static String sendJoinRequest({required int projectId}) =>
+      "/api/projects/$projectId/join-request";
+
+  // notifications
+  static const String notifications = "/api/notifications";
+  static const String invitations = "/api/invitations";
+  static String invitationDetails({required int invitationId}) =>
+      "/api/invitations/$invitationId/details";
+  static String acceptTeamInvitation({required int invitationId}) =>
+      "/api/teams/invitations/$invitationId/accept";
+  static String declineTeamInvitation({required int invitationId}) =>
+      "/api/teams/invitations/$invitationId/decline";
+  static String notificationRead({required String notificationId}) =>
+      "/api/notifications/$notificationId/read";
+  static const String notificationsReadAll = "/api/notifications/read-all";
+  static const String notificationsUnreadCount =
+      "/api/notifications/unread-count";
 }

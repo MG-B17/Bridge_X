@@ -16,4 +16,5 @@ class AppFeedbackMessages {
   static const String taskCreatedAndAssigned = 'Task created & assigned';
   static const String settingsUpdated = 'Settings updated';
   static const String reportSubmittedSuccess = 'Report submitted successfully';
+  static const String profileCompleted = 'Profile completed successfully!';
 }

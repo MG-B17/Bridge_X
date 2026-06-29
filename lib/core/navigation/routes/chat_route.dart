@@ -1,11 +1,13 @@
 import 'package:bridge_x/core/animation/screen_transtion_animation/transitions/slide_right_trnasition.dart';
-import 'package:bridge_x/core/navigation/route_constant/bridege_x_route_names.dart';
+import 'package:bridge_x/core/di/di.dart';
+import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_names.dart';
 import 'package:bridge_x/core/navigation/route_constant/bridge_x_route_paths.dart';
-import 'package:bridge_x/feature/chats/presentation/widgets/chat_list_widgets/empty_chat_view.dart';
+import 'package:bridge_x/features/chat/presentation/bloc/chat_list_cubit.dart';
+import 'package:bridge_x/features/chat/presentation/bloc/chat_room_cubit.dart';
+import 'package:bridge_x/features/chat/presentation/pages/chat_list_page.dart';
+import 'package:bridge_x/features/chat/presentation/pages/chat_room_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../feature/chats/presentation/screens/chat_details_screen.dart';
-import '../../../feature/chats/presentation/screens/chat_list_screen.dart';
 
 final SlideRightTransitionPage slideRightTransitionPage = SlideRightTransitionPage();
 
@@ -13,16 +15,29 @@ final chatRoute = StatefulShellBranch(
   routes: [
     GoRoute(
       path: BridgeXRoutePaths.chat,
-      name: BridegeXRouteNames.chat,
-      builder: (context, state) => const ChatListScreen(),
+      name: BridgeXRouteNames.chat,
+      pageBuilder: (context, state) => slideRightTransitionPage.build(
+        state: state,
+        child: BlocProvider<ChatListCubit>(
+          create: (_) => sl<ChatListCubit>(),
+          child: const ChatListPage(),
+        ),
+      ),
       routes: [
         GoRoute(
-          path: BridgeXRoutePaths.chatDetails,
-          name: BridegeXRouteNames.chatDetails,
-          pageBuilder: (context, state) => slideRightTransitionPage.build(
-            child: const ChatDetailsScreen(),
-            state: state,
-          ),
+          path: '${BridgeXRoutePaths.chatDetails}/:roomId',
+          name: BridgeXRouteNames.chatDetails,
+          pageBuilder: (context, state) {
+            final roomId = state.pathParameters['roomId'] ?? '';
+            final userId = state.extra as int? ?? 0;
+            return slideRightTransitionPage.build(
+              state: state,
+              child: BlocProvider<ChatRoomCubit>(
+                create: (_) => sl<ChatRoomCubit>(param1: roomId, param2: userId),
+                child: ChatRoomPage(roomId: roomId),
+              ),
+            );
+          },
         ),
       ],
     ),

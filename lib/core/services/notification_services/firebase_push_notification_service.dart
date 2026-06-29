@@ -1,5 +1,6 @@
 export 'package:bridge_x/core/services/notification_services/push_notification_service.dart';
 
+import 'dart:io';
 import 'package:bridge_x/core/services/logger_service.dart';
 import 'package:bridge_x/core/services/notification_services/local_notification_service.dart';
 import 'package:bridge_x/core/services/notification_services/push_notification_service.dart';
@@ -7,6 +8,17 @@ import 'package:bridge_x/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+
+@pragma('vm:entry-point')
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  if (kDebugMode) {
+    LoggerService.info(
+      'Background message: ${message.notification?.title ?? message.data['title']}',
+      tag: 'PushNotification',
+    );
+  }
+}
 
 class FirebasePushNotificationService implements PushNotificationService {
   FirebasePushNotificationService({required this.localNotificationService});
@@ -27,17 +39,19 @@ class FirebasePushNotificationService implements PushNotificationService {
 
     _fcm = FirebaseMessaging.instance;
 
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
     if (kDebugMode) {
       LoggerService.info('Firebase initialized', tag: 'PushNotification');
     }
 
-    await _requestPermission();
     await _getToken();
     _listenToTokenRefresh();
     _listenToForegroundMessages();
   }
 
-  Future<void> _requestPermission() async {
+  @override
+  Future<void> requestPermission() async {
     final settings = await _fcm.requestPermission(
       alert: true,
       badge: true,
@@ -49,6 +63,24 @@ class FirebasePushNotificationService implements PushNotificationService {
         'Notification permission: ${settings.authorizationStatus}',
         tag: 'PushNotification',
       );
+    }
+  }
+
+  @override
+  Future<bool> isPermissionGranted() async {
+    final settings = await _fcm.getNotificationSettings();
+    return settings.authorizationStatus == AuthorizationStatus.authorized ||
+        settings.authorizationStatus == AuthorizationStatus.provisional;
+  }
+
+  @override
+  Future<void> openNotificationSettings() async {
+    if (Platform.isAndroid) {
+      const channel = MethodChannel('bridge_x/settings');
+      await channel.invokeMethod('openNotificationSettings');
+    } else if (Platform.isIOS) {
+      const channel = MethodChannel('bridge_x/settings');
+      await channel.invokeMethod('openNotificationSettings');
     }
   }
 

@@ -11,6 +11,17 @@ import UIKit
   }
 
   func didInitializeImplicitFlutterEngine(_ engineBridge: FlutterImplicitEngineBridge) {
+    let channel = FlutterMethodChannel(
+      name: "bridge_x/settings",
+      binaryMessenger: engineBridge.binaryMessenger
+    )
+    channel.setMethodCallHandler { call, _ in
+      if call.method == "openNotificationSettings" {
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+          UIApplication.shared.open(url)
+        }
+      }
+    }
     GeneratedPluginRegistrant.register(with: engineBridge.pluginRegistry)
   }
 }

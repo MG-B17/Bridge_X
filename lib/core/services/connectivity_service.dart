@@ -1,7 +1,7 @@
 import 'dart:async';
+import 'package:bridge_x/core/navigation/navigator_keys.dart';
 import 'package:flutter/widgets.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
-import 'package:bridge_x/core/navigation/bridge_x_routes.dart';
 import 'package:bridge_x/core/widget/feedback/error_dialog.dart';
 import 'package:bridge_x/core/services/logger_service.dart';
 

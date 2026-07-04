@@ -1,5 +1,5 @@
 # Bridge X
-<img width="1024" alt="Bridge X Banner" src="YOUR_BANNER_URL" />
+<img width="1536" height="1024" alt="Image" src="https://github.com/user-attachments/assets/e7925ed4-357f-4908-ad5d-bbea27a57c53" />
 
 ![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter)
 ![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart)
@@ -10,14 +10,19 @@
 Bridge X bridges the gap between academic education and the job market by providing a realistic, collaborative training environment. Students and early-career programmers can form or join multidisciplinary teams and work on real-world projects that simulate professional workplace conditions. The platform features an AI-powered team matching engine and **The Score™** evaluation system — combining Self Evaluation, Peer Evaluation, and Automated Evaluation from GitHub activity and task completion metrics.
 
 ## 📱 Screenshots
-<!-- ![Image](YOUR_SCREENSHOT_URL) -->
-<!-- ![Image](YOUR_SCREENSHOT_URL) -->
-<!-- ![Image](YOUR_SCREENSHOT_URL) -->
-<!-- ![Image](YOUR_SCREENSHOT_URL) -->
-<!-- ![Image](YOUR_SCREENSHOT_URL) -->
-<!-- ![Image](YOUR_SCREENSHOT_URL) -->
-<!-- ![Image](YOUR_SCREENSHOT_URL) -->
-<!-- ![Image](YOUR_SCREENSHOT_URL) -->
+<img width="386" height="844" alt="Image" src="https://github.com/user-attachments/assets/eaa011d9-d5c1-4d6a-8e33-040ef056f6d9" />
+<img width="414" height="850" alt="Image" src="https://github.com/user-attachments/assets/414818dc-322d-424f-94dd-0819f717f86c" />
+<img width="397" height="859" alt="Image" src="https://github.com/user-attachments/assets/6261c7c9-a924-482f-90fb-c2266abe6dc9" />
+<img width="406" height="843" alt="Image" src="https://github.com/user-attachments/assets/bd648436-8a95-4ded-9ebf-2fbb2732bf3e" />
+<img width="391" height="857" alt="Image" src="https://github.com/user-attachments/assets/893751fb-6f15-402a-ae29-eba6f0373d8c" />
+<img width="399" height="849" alt="Image" src="https://github.com/user-attachments/assets/2e51fe55-e044-465c-bd43-fa8a11465625" />
+<img width="412" height="866" alt="Image" src="https://github.com/user-attachments/assets/7c216a5e-459a-461b-9e9b-ee2b88a13108" />
+<img width="396" height="868" alt="Image" src="https://github.com/user-attachments/assets/e1a15e75-b4ab-43ef-b41e-b08d03503d6e" />
+<img width="403" height="848" alt="Image" src="https://github.com/user-attachments/assets/abbf7d47-7ff9-415c-8d91-93da8de80ae0" />
+<img width="398" height="844" alt="Image" src="https://github.com/user-attachments/assets/66c981a0-b7aa-4f25-aaa7-9c8b4e63542f" />
+<img width="395" height="868" alt="Image" src="https://github.com/user-attachments/assets/35a7f26a-eeb6-4d53-8626-d414dc912a49" />
+<img width="412" height="867" alt="Image" src="https://github.com/user-attachments/assets/71648857-7ea0-41ba-b4f1-3fffa6dd853c" />
+<img width="407" height="856" alt="Image" src="https://github.com/user-attachments/assets/4869bde9-5984-4e4a-b26d-30c1ba8fb665" />
 
 ## 🎦 Video Demonstration
 <!-- 🎥 [Watch App Demo](YOUR_VIDEO_URL) -->

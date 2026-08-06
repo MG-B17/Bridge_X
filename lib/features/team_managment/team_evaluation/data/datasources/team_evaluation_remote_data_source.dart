@@ -7,9 +7,9 @@ import 'package:bridge_x/features/team_managment/team_evaluation/data/models/tea
 import 'package:dio/dio.dart';
 
 abstract class TeamEvaluationRemoteDataSource {
-  Future<TeamBasicDetailsResponseModel> getTeamBasicDetails(int teamId);
+  Future<TeamBasicDetailsResponseModel> getTeamBasicDetails(int projectId);
   Future<EvaluateAllResponseModel> submitEvaluations(
-    int teamId,
+    int projectId,
     List<Map<String, dynamic>> evaluations,
   );
 }
@@ -21,10 +21,10 @@ class TeamEvaluationRemoteDataSourceImpl
   TeamEvaluationRemoteDataSourceImpl({required this.apiClient});
 
   @override
-  Future<TeamBasicDetailsResponseModel> getTeamBasicDetails(int teamId) async {
+  Future<TeamBasicDetailsResponseModel> getTeamBasicDetails(int projectId) async {
     try {
       final response = await apiClient.get(
-        path: ApiEndpoint.teamBasicDetails(teamId: teamId),
+        path: ApiEndpoint.teamBasicDetails(projectId: projectId),
       );
       if (response.data != null) {
         return TeamBasicDetailsResponseModel.fromJson(response.data);
@@ -38,12 +38,12 @@ class TeamEvaluationRemoteDataSourceImpl
 
   @override
   Future<EvaluateAllResponseModel> submitEvaluations(
-    int teamId,
+    int projectId,
     List<Map<String, dynamic>> evaluations,
   ) async {
     try {
       final response = await apiClient.post(
-        path: ApiEndpoint.evaluateAll(teamId: teamId),
+        path: ApiEndpoint.evaluateAll(projectId: projectId),
         data: {'evaluations': evaluations},
       );
       if (response.data != null) {

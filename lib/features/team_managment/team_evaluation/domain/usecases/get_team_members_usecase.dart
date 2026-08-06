@@ -15,15 +15,15 @@ class GetTeamMembersUseCase
   Future<Either<Failure, TeamBasicDetailsEntity>> call(
     GetTeamMembersParams params,
   ) async {
-    return await repository.getTeamBasicDetails(params.teamId);
+    return await repository.getTeamBasicDetails(params.projectId);
   }
 }
 
 class GetTeamMembersParams extends Equatable {
-  final int teamId;
+  final int projectId;
 
-  const GetTeamMembersParams({required this.teamId});
+  const GetTeamMembersParams({required this.projectId});
 
   @override
-  List<Object?> get props => [teamId];
+  List<Object?> get props => [projectId];
 }

@@ -41,7 +41,8 @@ class _MyTasksScreenState extends State<MyTasksScreen> {
         body: SafeArea(
           child: BlocConsumer<MyTasksCubit, MyTasksState>(
             listener: (context, state) {
-              if (state is MyTasksLoaded && state.partialFailureMessage != null) {
+              if (state is MyTasksLoaded &&
+                  state.partialFailureMessage != null) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(state.partialFailureMessage!),
@@ -53,27 +54,23 @@ class _MyTasksScreenState extends State<MyTasksScreen> {
             builder: (context, state) {
               return BridgeXRefreshIndicator(
                 color: context.colors.primary,
-                onRefresh: () =>
-                    context.read<MyTasksCubit>().fetchAllTasks(),
+                onRefresh: () => context.read<MyTasksCubit>().fetchAllTasks(),
                 child: NestedScrollView(
                   controller: _scrollController,
-                  headerSliverBuilder:
-                      (context, innerBoxIsScrolled) => [
-                    const SliverToBoxAdapter(
-                      child: MyTasksHeader(),
-                    ),
+                  headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                    const SliverToBoxAdapter(child: MyTasksHeader()),
                     SliverAppBar(
                       pinned: true,
                       primary: false,
                       automaticallyImplyLeading: false,
-                      backgroundColor:
-                          context.colors.scaffoldBg,
+                      backgroundColor: context.colors.scaffoldBg,
                       surfaceTintColor: Colors.transparent,
                       toolbarHeight: AppSpacing.spacing20 + 44,
                       titleSpacing: 0,
                       title: Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: AppSpacing.spacing20),
+                          horizontal: AppSpacing.spacing20,
+                        ),
                         child: MyTasksTabSelector(
                           isActiveTab: _isActiveTab,
                           onTabChanged: (val) {
@@ -92,9 +89,7 @@ class _MyTasksScreenState extends State<MyTasksScreen> {
                           top: AppSpacing.spacing16,
                           bottom: AppSpacing.spacing20,
                         ),
-                        sliver: SliverToBoxAdapter(
-                          child: _buildContent(state),
-                        ),
+                        sliver: SliverToBoxAdapter(child: _buildContent(state)),
                       ),
                     ],
                   ),
@@ -118,8 +113,7 @@ class _MyTasksScreenState extends State<MyTasksScreen> {
       return BridgeXErrorWidget(
         errorTittle: 'Error',
         errorMessage: state.message,
-        refreshButtonTap: () =>
-            context.read<MyTasksCubit>().fetchAllTasks(),
+        refreshButtonTap: () => context.read<MyTasksCubit>().fetchAllTasks(),
       );
     }
 
@@ -137,5 +131,4 @@ class _MyTasksScreenState extends State<MyTasksScreen> {
 
     return const SizedBox.shrink();
   }
-
 }

@@ -5,6 +5,8 @@ import 'task_user_entity.dart';
 class TaskDetailsEntity extends TaskEntity {
   final String description;
   final String projectName;
+  final String? gitLink;
+  final List<String> tags;
   final TaskUserEntity createdBy;
   final TaskUserEntity assignedTo;
   final List<AttachmentEntity> attachments;
@@ -17,6 +19,8 @@ class TaskDetailsEntity extends TaskEntity {
     required super.priority,
     required super.deadline,
     required this.projectName,
+    this.gitLink,
+    this.tags = const [],
     required this.createdBy,
     required this.assignedTo,
     required this.attachments,
@@ -27,6 +31,8 @@ class TaskDetailsEntity extends TaskEntity {
         ...super.props,
         description,
         projectName,
+        gitLink,
+        tags,
         createdBy,
         assignedTo,
         attachments,

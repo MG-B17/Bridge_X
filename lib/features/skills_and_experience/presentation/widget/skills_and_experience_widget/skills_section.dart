@@ -6,7 +6,16 @@ import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:flutter/material.dart';
 
 class SkillsSection extends StatelessWidget {
-  const SkillsSection({super.key});
+  const SkillsSection({
+    super.key,
+    required this.skills,
+    required this.onAddSkill,
+    required this.onRemoveSkill,
+  });
+
+  final List<String> skills;
+  final VoidCallback onAddSkill;
+  final ValueChanged<String> onRemoveSkill;
 
   @override
   Widget build(BuildContext context) {
@@ -35,15 +44,13 @@ class SkillsSection extends StatelessWidget {
               Wrap(
                 spacing: AppSpacing.sm,
                 runSpacing: AppSpacing.sm,
-                children: [
-                  _buildSkillChip(context, 'Flutter'),
-                  _buildSkillChip(context, 'React'),
-                  _buildSkillChip(context, 'UI/UX'),
-                ],
+                children: skills
+                    .map((skill) => _buildSkillChip(context, skill))
+                    .toList(),
               ),
               VerticalSpacing(AppSpacing.sm),
               GestureDetector(
-                onTap: () {},
+                onTap: onAddSkill,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -84,7 +91,14 @@ class SkillsSection extends StatelessWidget {
             ),
           ),
           HorizontalSpacing(4),
-          Icon(Icons.close, color: context.colors.textSecondary, size: 14),
+          GestureDetector(
+            onTap: () => onRemoveSkill(label),
+            child: Icon(
+              Icons.close,
+              color: context.colors.textSecondary,
+              size: 14,
+            ),
+          ),
         ],
       ),
     );

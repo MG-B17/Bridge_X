@@ -36,10 +36,11 @@ final BottomSheetTransitionPage _bottomSheetTransition =
 StatefulShellBranch projectRoute = StatefulShellBranch(
   routes: [
     ShellRoute(
-      builder: (context, state, child) => BlocProvider<ProjectsFeatureBloc>(
-        create: (_) => sl<ProjectsFeatureBloc>(),
-        child: child,
-      ),
+      builder: (context, state, child) =>
+          BlocProvider<ProjectsFeatureBloc>.value(
+            value: sl<ProjectsFeatureBloc>(),
+            child: child,
+          ),
       routes: [
         GoRoute(
           path: BridgeXRoutePaths.projects,
@@ -157,8 +158,8 @@ StatefulShellBranch projectRoute = StatefulShellBranch(
                 return slideRightTransitionPage.build(
                   child: BlocProvider<TeamEvaluationCubit>(
                     create: (_) =>
-                        sl<TeamEvaluationCubit>()..loadMembers(args.teamId),
-                    child: TeamEvaluationScreen(teamId: args.teamId),
+                        sl<TeamEvaluationCubit>()..loadMembers(args.projectId),
+                    child: TeamEvaluationScreen(projectId: args.projectId),
                   ),
                   state: state,
                 );

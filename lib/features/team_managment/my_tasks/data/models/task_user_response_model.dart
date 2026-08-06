@@ -12,10 +12,19 @@ class TaskUserResponseModel {
   });
 
   factory TaskUserResponseModel.fromJson(Map<String, dynamic> json) {
+    final user = json['user'] as Map<String, dynamic>?;
     return TaskUserResponseModel(
-      id: json['id'] as int? ?? 0,
-      name: json['name'] as String? ?? '',
-      avatarUrl: json['avatar_url'] as String?,
+      id: _readInt(json['id'] ?? json['programmer_id']),
+      name: _readString(
+        json['name'] ??
+            json['full_name'] ??
+            user?['name'] ??
+            user?['full_name'] ??
+            user?['username'],
+      ),
+      avatarUrl: _readNullableString(
+        json['avatar_url'] ?? user?['avatar_url'] ?? user?['avatar'],
+      ),
     );
   }
 
@@ -24,4 +33,16 @@ class TaskUserResponseModel {
         name: name,
         avatarUrl: avatarUrl,
       );
+
+  static int _readInt(dynamic value) {
+    if (value is int) return value;
+    return int.tryParse(value?.toString() ?? '') ?? 0;
+  }
+
+  static String _readString(dynamic value) => value?.toString() ?? '';
+
+  static String? _readNullableString(dynamic value) {
+    final text = value?.toString();
+    return text == null || text.isEmpty ? null : text;
+  }
 }

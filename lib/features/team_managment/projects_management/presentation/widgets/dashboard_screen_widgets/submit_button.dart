@@ -65,7 +65,7 @@ class SubmitButton extends StatelessWidget {
             onAction: () {
               context.pushNamed(
                 BridgeXRouteNames.teamEvaluation,
-                extra: TeamEvaluationArgs(teamId: projectId),
+                extra: TeamEvaluationArgs(projectId: projectId),
               );
             },
           );

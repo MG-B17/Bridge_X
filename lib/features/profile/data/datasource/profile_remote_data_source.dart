@@ -7,12 +7,20 @@ import 'package:bridge_x/features/profile/data/models/edit_profile_response_mode
 import 'package:bridge_x/features/profile/data/models/profile_dashboard_response_model.dart';
 import 'package:bridge_x/features/profile/data/models/soft_delete_profile_response_model.dart';
 import 'package:bridge_x/features/profile/data/models/update_profile_request_model.dart';
+import 'package:bridge_x/features/skills_and_experience/data/model/skills_experience_response_model.dart';
+import 'package:bridge_x/features/skills_and_experience/data/model/update_skills_experience_request_model.dart';
 import 'package:dio/dio.dart';
 
 abstract class ProfileRemoteDataSource {
   Future<ProfileDashboardResponseModel> getProfileDashboard();
   Future<DisplayProfileResponseModel> displayProfile();
-  Future<UpdateProfileResponseModel> updateProfile(UpdateProfileRequestModel request);
+  Future<UpdateProfileResponseModel> updateProfile(
+    UpdateProfileRequestModel request,
+  );
+  Future<SkillsExperienceResponseModel> getSkillsExperience();
+  Future<void> updateSkillsExperience(
+    UpdateSkillsExperienceRequestModel request,
+  );
   Future<void> changePassword(ChangePasswordRequestModel request);
   Future<SoftDeleteProfileResponseModel> softDeleteProfile();
 }
@@ -53,13 +61,51 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   }
 
   @override
-  Future<UpdateProfileResponseModel> updateProfile(UpdateProfileRequestModel request) async {
+  Future<UpdateProfileResponseModel> updateProfile(
+    UpdateProfileRequestModel request,
+  ) async {
     try {
       final formData = await request.toFormData();
-      final response = await apiClient.post(path: ApiEndpoint.updateProfile, data: formData);
+      final response = await apiClient.post(
+        path: ApiEndpoint.updateProfile,
+        data: formData,
+      );
       if (response.data != null) {
         return UpdateProfileResponseModel.fromJson(response.data);
       } else {
+        throw ServerException('Empty response data received');
+      }
+    } catch (e) {
+      if (e is DioException) rethrow;
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<SkillsExperienceResponseModel> getSkillsExperience() async {
+    try {
+      final response = await apiClient.get(path: ApiEndpoint.skillsExperience);
+      if (response.data != null) {
+        return SkillsExperienceResponseModel.fromJson(response.data);
+      } else {
+        throw ServerException('Empty response data received');
+      }
+    } catch (e) {
+      if (e is DioException) rethrow;
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> updateSkillsExperience(
+    UpdateSkillsExperienceRequestModel request,
+  ) async {
+    try {
+      final response = await apiClient.post(
+        path: ApiEndpoint.skillsExperience,
+        data: request.toJson(),
+      );
+      if (response.data == null) {
         throw ServerException('Empty response data received');
       }
     } catch (e) {

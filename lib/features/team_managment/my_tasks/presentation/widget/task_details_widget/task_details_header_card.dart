@@ -28,17 +28,19 @@ class TaskDetailsHeaderCard extends StatelessWidget {
             children: [
               _buildTag(
                 context,
-                TaskStrings.inProgress.toUpperCase(),
-                context.colors.primary,
-                context.colors.primary.withValues(alpha: 0.1),
+                _statusText(task.status),
+                _statusColor(context, task.status),
+                _statusColor(context, task.status).withValues(alpha: 0.1),
               ),
-              HorizontalSpacing(AppSpacing.spacing4),
-              _buildTag(
-                context,
-                TaskStrings.high.toUpperCase(),
-                context.colors.error,
-                context.colors.error.withValues(alpha: 0.1),
-              ),
+              if (task.priority.isNotEmpty) ...[
+                HorizontalSpacing(AppSpacing.spacing4),
+                _buildTag(
+                  context,
+                  task.priority.toUpperCase(),
+                  context.colors.error,
+                  context.colors.error.withValues(alpha: 0.1),
+                ),
+              ],
             ],
           ),
           VerticalSpacing(AppSpacing.spacing16),
@@ -82,5 +84,30 @@ class TaskDetailsHeaderCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _statusText(TaskStatus status) {
+    switch (status) {
+      case TaskStatus.inProgress:
+        return TaskStrings.inProgress.toUpperCase();
+      case TaskStatus.pending:
+        return TaskStrings.pending.toUpperCase();
+      case TaskStatus.nearCompletion:
+        return TaskStrings.nearCompletion.toUpperCase();
+      case TaskStatus.completed:
+        return TaskStrings.completed.toUpperCase();
+    }
+  }
+
+  Color _statusColor(BuildContext context, TaskStatus status) {
+    switch (status) {
+      case TaskStatus.inProgress:
+        return context.colors.primary;
+      case TaskStatus.pending:
+        return context.colors.warning;
+      case TaskStatus.nearCompletion:
+      case TaskStatus.completed:
+        return context.colors.success;
+    }
   }
 }

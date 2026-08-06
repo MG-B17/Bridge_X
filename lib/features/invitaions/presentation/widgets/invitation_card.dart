@@ -2,21 +2,27 @@ import 'package:bridge_x/core/theme/app_color_schema.dart';
 import 'package:bridge_x/core/theme/bridge_x_text_styles.dart';
 import 'package:bridge_x/core/utils/app_spacing.dart';
 import 'package:bridge_x/core/utils/extensions.dart';
-import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:bridge_x/core/widget/layout/horizontal_spacing.dart';
+import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:bridge_x/features/invitaions/domain/entities/project_invitation_entity.dart';
 import 'package:bridge_x/features/invitaions/presentation/utils/invitaions_strings.dart';
 import 'package:bridge_x/features/invitaions/presentation/widgets/avatar_stack.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../../core/navigation/route_constant/bridge_x_route_names.dart';
+import '../../../../core/navigation/route_constant/bridge_x_route_paths.dart';
 
 class InvitationCard extends StatelessWidget {
   final ProjectInvitationEntity invitation;
   final VoidCallback onReview;
+  final VoidCallback? onOpenProject;
 
   const InvitationCard({
     super.key,
     required this.invitation,
     required this.onReview,
+    this.onOpenProject,
   });
 
   @override
@@ -25,7 +31,9 @@ class InvitationCard extends StatelessWidget {
       margin: EdgeInsets.only(bottom: AppSpacing.spacing16),
       padding: EdgeInsets.all(AppSpacing.spacing16),
       decoration: BoxDecoration(
-        color: context.appColors.surface,
+        color: invitation.status.toLowerCase() == 'accepted'
+            ? context.appColors.success.withValues(alpha: 0.08)
+            : context.appColors.surface,
         borderRadius: BorderRadius.circular(AppSpacing.radius16),
         border: Border.all(
           color: context.appColors.divider.withValues(alpha: 0.5),
@@ -124,26 +132,52 @@ class InvitationCard extends StatelessWidget {
                   AvatarStack(avatarUrls: invitation.memberAvatars),
                 ],
               ),
-              GestureDetector(
-                onTap: onReview,
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: AppSpacing.spacing20,
-                    vertical: AppSpacing.spacing10,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(AppSpacing.radius10),
-                    gradient: AppColorScheme.gradient,
-                  ),
-                  child: Text(
-                    InvitaionsStrings.requestReview,
-                    style: AppTextStyles.labelSmall.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+              invitation.status.toLowerCase() == 'pending'
+                  ? GestureDetector(
+                      onTap: onReview,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: AppSpacing.spacing20,
+                          vertical: AppSpacing.spacing10,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            AppSpacing.radius10,
+                          ),
+                          gradient: AppColorScheme.gradient,
+                        ),
+                        child: Text(
+                          InvitaionsStrings.requestReview,
+                          style: AppTextStyles.labelSmall.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    )
+                  : GestureDetector(
+                      onTap: () {
+                        context.goNamed(BridgeXRouteNames.projects);
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Open Project',
+                            style: AppTextStyles.labelSmall.copyWith(
+                              color: context.appColors.success,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const HorizontalSpacing(6),
+                          Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            size: 14,
+                            color: context.appColors.success,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ),
-              ),
             ],
           ),
         ],

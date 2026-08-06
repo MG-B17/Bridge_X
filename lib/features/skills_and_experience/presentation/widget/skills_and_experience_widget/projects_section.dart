@@ -23,8 +23,15 @@ class _ProjectsSectionState extends State<ProjectsSection> {
   ];
 
   bool _isAddingProject = false;
-  final _projectNameController = TextEditingController();
-  final _roleController = TextEditingController();
+  late final TextEditingController _projectNameController;
+  late final TextEditingController _roleController;
+
+  @override
+  void initState() {
+    super.initState();
+    _projectNameController = TextEditingController();
+    _roleController = TextEditingController();
+  }
 
   @override
   void dispose() {

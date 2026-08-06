@@ -20,13 +20,13 @@ class TeamEvaluationRepositoryImpl implements TeamEvaluationRepository {
 
   @override
   Future<Either<Failure, TeamBasicDetailsEntity>> getTeamBasicDetails(
-    int teamId,
+    int projectId,
   ) async {
     if (!await networkInfo.isConnected) {
       return Left(NetworkFailure(message: ErrorStrings.checkYouInternetConnection));
     }
     try {
-      final response = await remoteDataSource.getTeamBasicDetails(teamId);
+      final response = await remoteDataSource.getTeamBasicDetails(projectId);
       return Right(TeamBasicDetailsEntity(
         teamName: response.teamName,
         projectDescription: response.projectDescription,
@@ -43,7 +43,7 @@ class TeamEvaluationRepositoryImpl implements TeamEvaluationRepository {
 
   @override
   Future<Either<Failure, String>> submitEvaluations(
-    int teamId,
+    int projectId,
     List<Map<String, dynamic>> evaluations,
   ) async {
     if (!await networkInfo.isConnected) {
@@ -51,14 +51,14 @@ class TeamEvaluationRepositoryImpl implements TeamEvaluationRepository {
     }
     try {
       final response = await remoteDataSource.submitEvaluations(
-        teamId,
+        projectId,
         evaluations,
       );
-      if (response.success) {
+      if (response.success && response.errors.isEmpty) {
         return Right(response.message);
       }
       final errorMsg = response.errors.isNotEmpty
-          ? response.errors.join(', ')
+          ? '${response.message} ${response.errors.join(', ')}'.trim()
           : response.message;
       return Left(ServerFailure(message: errorMsg));
     } on ServerException catch (e) {

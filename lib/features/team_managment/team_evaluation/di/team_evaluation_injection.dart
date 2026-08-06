@@ -30,6 +30,7 @@ void initTeamEvaluation() {
     () => TeamEvaluationCubit(
       getTeamMembersUseCase: sl(),
       submitEvaluationsUseCase: sl(),
+      appState: sl(),
     ),
   );
 }

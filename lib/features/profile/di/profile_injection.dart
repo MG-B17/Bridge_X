@@ -10,6 +10,9 @@ import 'package:bridge_x/features/profile/domain/usecases/update_profile_usecase
 import 'package:bridge_x/features/profile/presentation/controller/change_password_cubit.dart';
 import 'package:bridge_x/features/profile/presentation/controller/edit_profile_cubit.dart';
 import 'package:bridge_x/features/profile/presentation/controller/profile_dashboard_cubit.dart';
+import 'package:bridge_x/features/skills_and_experience/domain/usecases/get_skills_experience_usecase.dart';
+import 'package:bridge_x/features/skills_and_experience/domain/usecases/update_skills_experience_usecase.dart';
+import 'package:bridge_x/features/skills_and_experience/presentation/controller/skills_experience_cubit.dart';
 
 void initProfile() {
   // Data sources
@@ -38,15 +41,32 @@ void initProfile() {
   sl.registerLazySingleton<SoftDeleteProfileUseCase>(
     () => SoftDeleteProfileUseCase(repository: sl()),
   );
+  sl.registerLazySingleton<GetSkillsExperienceUseCase>(
+    () => GetSkillsExperienceUseCase(repository: sl()),
+  );
+  sl.registerLazySingleton<UpdateSkillsExperienceUseCase>(
+    () => UpdateSkillsExperienceUseCase(repository: sl()),
+  );
 
   // Cubits
   sl.registerFactory<ProfileDashboardCubit>(
     () => ProfileDashboardCubit(getProfileDashboardUseCase: sl()),
   );
   sl.registerFactory<EditProfileCubit>(
-    () => EditProfileCubit(getProfileUseCase: sl(), updateProfileUseCase: sl(), updateUsername: sl(), secureStorageService: sl()),
+    () => EditProfileCubit(
+      getProfileUseCase: sl(),
+      updateProfileUseCase: sl(),
+      updateUsername: sl(),
+      secureStorageService: sl(),
+    ),
   );
   sl.registerFactory<ChangePasswordCubit>(
     () => ChangePasswordCubit(changePasswordUseCase: sl()),
+  );
+  sl.registerFactory<SkillsExperienceCubit>(
+    () => SkillsExperienceCubit(
+      getSkillsExperienceUseCase: sl(),
+      updateSkillsExperienceUseCase: sl(),
+    ),
   );
 }

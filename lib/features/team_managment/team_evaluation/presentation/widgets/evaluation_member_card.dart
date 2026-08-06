@@ -11,6 +11,7 @@ class EvaluationMemberCard extends StatelessWidget {
   final int rating;
   final TextEditingController feedbackController;
   final ValueChanged<int> onRatingChanged;
+  final ValueChanged<String> onFeedbackChanged;
 
   const EvaluationMemberCard({
     super.key,
@@ -18,6 +19,7 @@ class EvaluationMemberCard extends StatelessWidget {
     required this.rating,
     required this.feedbackController,
     required this.onRatingChanged,
+    required this.onFeedbackChanged,
   });
 
   @override
@@ -112,6 +114,7 @@ class EvaluationMemberCard extends StatelessWidget {
           SizedBox(height: AppSpacing.spacing8),
           TextField(
             controller: feedbackController,
+            onChanged: onFeedbackChanged,
             maxLines: 3,
             decoration: InputDecoration(
               hintText: 'Write your feedback about this member...',

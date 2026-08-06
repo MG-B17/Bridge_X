@@ -58,6 +58,7 @@ class ApiEndpoint {
   static const String updateProfile = "/api/profile/update";
   static const String displayProfile = "/api/profile";
   static const String softDeleteProfile = "/api/profile/soft-delete";
+  static const String skillsExperience = "/api/profile/skills-experience";
   static const String level = "/api/my/level-progression";
 
   // reports
@@ -66,10 +67,10 @@ class ApiEndpoint {
   static const String reports = "/api/reports";
 
   // team evaluation
-  static String teamBasicDetails({required int teamId}) =>
-      "/api/teams/$teamId/basic-details";
-  static String evaluateAll({required int teamId}) =>
-      "/api/teams/$teamId/evaluate-all";
+  static String teamBasicDetails({required int projectId}) =>
+      "/api/projects/$projectId/basic-details";
+  static String evaluateAll({required int projectId}) =>
+      "/api/projects/$projectId/evaluate-all";
 
   // ai matching
   static const String aiMatchTeams = "/api/ai/match-teams";

@@ -25,7 +25,9 @@ class TaskStrings {
   static const String description = 'Description';
   static const String dueDate = 'Due Date';
   static const String createdBy = 'Created By';
+  static const String assignedTo = 'Assigned To';
   static const String attachments = 'Attachments';
+  static const String gitLink = 'Git Link';
   static const String updateProgress = 'Update Progress';
   static const String high = 'High';
   static const String viewTask = 'VIEW TASK';

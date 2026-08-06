@@ -12,19 +12,22 @@ class SubmitEvaluationsUseCase
 
   @override
   Future<Either<Failure, String>> call(SubmitEvaluationsParams params) async {
-    return await repository.submitEvaluations(params.teamId, params.evaluations);
+    return await repository.submitEvaluations(
+      params.projectId,
+      params.evaluations,
+    );
   }
 }
 
 class SubmitEvaluationsParams extends Equatable {
-  final int teamId;
+  final int projectId;
   final List<Map<String, dynamic>> evaluations;
 
   const SubmitEvaluationsParams({
-    required this.teamId,
+    required this.projectId,
     required this.evaluations,
   });
 
   @override
-  List<Object?> get props => [teamId, evaluations];
+  List<Object?> get props => [projectId, evaluations];
 }

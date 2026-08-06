@@ -5,10 +5,19 @@ import 'package:bridge_x/core/services/notification_services/flutter_local_notif
 import 'package:bridge_x/core/services/supabase_service.dart';
 import 'package:flutter/material.dart';
 import 'core/di/di.dart' as di;
+import 'dart:ui';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.dumpErrorToConsole(details);
+  };
 
+  PlatformDispatcher.instance.onError = (error, stack) {
+    print("UNCAUGHT ERROR: $error");
+    print(stack);
+    return true;
+  };
   LoggerService.info('🚀 Starting BridgeX Application');
 
   await SupabaseService().init();

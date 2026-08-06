@@ -12,9 +12,14 @@ class TaskItem {
   final double progress;
   final String dueDate;
   final TaskStatus status;
+  final String priority;
   final String description;
   final String createdBy;
   final String creatorAvatar;
+  final String assignedTo;
+  final String assignedAvatar;
+  final String? gitLink;
+  final List<String> tags;
   final List<TaskAttachment> attachments;
 
   TaskItem({
@@ -24,9 +29,14 @@ class TaskItem {
     required this.progress,
     required this.dueDate,
     required this.status,
+    this.priority = '',
     required this.description,
     required this.createdBy,
     required this.creatorAvatar,
+    this.assignedTo = '',
+    this.assignedAvatar = '',
+    this.gitLink,
+    this.tags = const [],
     required this.attachments,
   });
 }

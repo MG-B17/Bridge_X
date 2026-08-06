@@ -6,7 +6,9 @@ import 'package:bridge_x/core/widget/layout/vertical_spacing.dart';
 import 'package:flutter/material.dart';
 
 class ExperienceLevelSection extends StatelessWidget {
-  const ExperienceLevelSection({super.key});
+  const ExperienceLevelSection({super.key, required this.experienceLevel});
+
+  final String experienceLevel;
 
   @override
   Widget build(BuildContext context) {
@@ -37,16 +39,32 @@ class ExperienceLevelSection extends StatelessWidget {
           VerticalSpacing(AppSpacing.md),
           Row(
             children: [
-              _buildChip(context, AppStrings.beginner, false),
+              _buildChip(
+                context,
+                AppStrings.beginner,
+                _isSelected(AppStrings.beginner),
+              ),
               HorizontalSpacing(AppSpacing.sm),
-              _buildChip(context, AppStrings.junior, true),
+              _buildChip(
+                context,
+                AppStrings.junior,
+                _isSelected(AppStrings.junior),
+              ),
               HorizontalSpacing(AppSpacing.sm),
-              _buildChip(context, AppStrings.senior, false),
+              _buildChip(
+                context,
+                AppStrings.senior,
+                _isSelected(AppStrings.senior),
+              ),
             ],
           ),
         ],
       ),
     );
+  }
+
+  bool _isSelected(String label) {
+    return label.toLowerCase() == experienceLevel.toLowerCase();
   }
 
   Widget _buildChip(BuildContext context, String label, bool isSelected) {

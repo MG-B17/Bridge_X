@@ -8,6 +8,8 @@ import 'package:bridge_x/features/profile/data/models/update_profile_request_mod
 import 'package:bridge_x/features/profile/domain/entities/edit_profile_entity.dart';
 import 'package:bridge_x/features/profile/domain/entities/profile_dashboard_entity.dart';
 import 'package:bridge_x/features/profile/domain/repositories/profile_repository.dart';
+import 'package:bridge_x/features/skills_and_experience/data/model/update_skills_experience_request_model.dart';
+import 'package:bridge_x/features/skills_and_experience/domain/entities/skills_experience_entity.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
@@ -15,7 +17,10 @@ class ProfileRepositoryImpl implements ProfileRepository {
   final ProfileRemoteDataSource remoteDataSource;
   final NetworkInfo networkInfo;
 
-  ProfileRepositoryImpl({required this.remoteDataSource, required this.networkInfo});
+  ProfileRepositoryImpl({
+    required this.remoteDataSource,
+    required this.networkInfo,
+  });
 
   @override
   Future<Either<Failure, ProfileDashboardEntity>> getProfileDashboard() async {
@@ -54,11 +59,51 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
 
   @override
-  Future<Either<Failure, EditProfileEntity>> updateProfile(UpdateProfileRequestModel request) async {
+  Future<Either<Failure, EditProfileEntity>> updateProfile(
+    UpdateProfileRequestModel request,
+  ) async {
     if (await networkInfo.isConnected) {
       try {
         final result = await remoteDataSource.updateProfile(request);
         return Right(result);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message ?? 'Server error'));
+      } on DioException catch (e) {
+        return Left(ErrorHandler.handle(e));
+      } catch (e) {
+        return Left(ServerFailure(message: e.toString()));
+      }
+    } else {
+      return const Left(NetworkFailure(message: 'No internet connection'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, SkillsExperienceEntity>> getSkillsExperience() async {
+    if (await networkInfo.isConnected) {
+      try {
+        final result = await remoteDataSource.getSkillsExperience();
+        return Right(result);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message ?? 'Server error'));
+      } on DioException catch (e) {
+        return Left(ErrorHandler.handle(e));
+      } catch (e) {
+        return Left(ServerFailure(message: e.toString()));
+      }
+    } else {
+      return const Left(NetworkFailure(message: 'No internet connection'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> updateSkillsExperience(
+    UpdateSkillsExperienceRequestModel request,
+  ) async {
+    if (await networkInfo.isConnected) {
+      try {
+        await remoteDataSource.updateSkillsExperience(request);
+        return Right(unit);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message ?? 'Server error'));
       } on DioException catch (e) {

@@ -1,5 +1,5 @@
 class TeamEvaluationArgs {
-  final int teamId;
+  final int projectId;
 
-  const TeamEvaluationArgs({required this.teamId});
+  const TeamEvaluationArgs({required this.projectId});
 }

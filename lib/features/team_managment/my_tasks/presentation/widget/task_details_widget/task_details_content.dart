@@ -57,21 +57,23 @@ class TaskDetailsContent extends StatelessWidget {
         ),
         VerticalSpacing(AppSpacing.lg),
         TaskDetailField(
-          label: TaskStrings.createdBy,
+          label: task.assignedTo.isNotEmpty
+              ? TaskStrings.assignedTo
+              : TaskStrings.createdBy,
           child: Row(
             children: [
               CircleAvatar(
                 radius: 16.r,
-                backgroundImage: task.creatorAvatar.isNotEmpty
-                    ? NetworkImage(task.creatorAvatar)
+                backgroundImage: _avatarUrl(task).isNotEmpty
+                    ? NetworkImage(_avatarUrl(task))
                     : null,
-                child: task.creatorAvatar.isEmpty
+                child: _avatarUrl(task).isEmpty
                     ? const Icon(Icons.person)
                     : null,
               ),
               HorizontalSpacing(AppSpacing.sm),
               Text(
-                task.createdBy,
+                task.assignedTo.isNotEmpty ? task.assignedTo : task.createdBy,
                 style: context.textTheme.bodyMedium?.copyWith(
                   color: context.colors.textPrimary,
                   fontWeight: FontWeight.bold,
@@ -81,6 +83,39 @@ class TaskDetailsContent extends StatelessWidget {
           ),
         ),
         VerticalSpacing(AppSpacing.lg),
+        if (task.gitLink != null && task.gitLink!.isNotEmpty) ...[
+          TaskDetailField(
+            label: TaskStrings.gitLink,
+            child: Text(
+              task.gitLink!,
+              style: context.textTheme.bodyMedium?.copyWith(
+                color: context.colors.primary,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          VerticalSpacing(AppSpacing.lg),
+        ],
+        if (task.tags.isNotEmpty) ...[
+          TaskDetailField(
+            label: TaskStrings.tags,
+            child: Wrap(
+              spacing: AppSpacing.spacing8,
+              runSpacing: AppSpacing.spacing8,
+              children: task.tags
+                  .map(
+                    (tag) => Chip(
+                      label: Text(tag),
+                      backgroundColor:
+                          context.colors.primary.withValues(alpha: 0.08),
+                      side: BorderSide(color: context.colors.divider),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+          VerticalSpacing(AppSpacing.lg),
+        ],
         if (task.attachments.isNotEmpty) ...[
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0, left: 4.0),
@@ -109,5 +144,11 @@ class TaskDetailsContent extends StatelessWidget {
         VerticalSpacing(AppSpacing.xl),
       ],
     );
+  }
+
+  String _avatarUrl(TaskItem task) {
+    return task.assignedAvatar.isNotEmpty
+        ? task.assignedAvatar
+        : task.creatorAvatar;
   }
 }

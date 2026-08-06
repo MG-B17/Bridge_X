@@ -1,5 +1,5 @@
-import 'package:bridge_x/core/widget/feedback/error_dialog.dart';
 import 'package:bridge_x/core/widget/feedback/bridge_x_error_widget.dart';
+import 'package:bridge_x/core/widget/feedback/error_dialog.dart';
 import 'package:bridge_x/core/widget/feedback/loading_dialog.dart';
 import 'package:bridge_x/core/widget/feedback/success_dialog.dart';
 import 'package:bridge_x/core/widget/loading/bridge_x_skeletonizer.dart';
@@ -15,10 +15,7 @@ import 'package:go_router/go_router.dart';
 class RequestReviewInvitationScreen extends StatefulWidget {
   final ProjectInvitationEntity invitation;
 
-  const RequestReviewInvitationScreen({
-    super.key,
-    required this.invitation,
-  });
+  const RequestReviewInvitationScreen({super.key, required this.invitation});
 
   @override
   State<RequestReviewInvitationScreen> createState() =>
@@ -44,10 +41,12 @@ class _RequestReviewInvitationScreenState
   void _showLoadingDialog() {
     if (_isLoadingDialogShowing) return;
     _isLoadingDialogShowing = true;
-    LoadingDialog.show(context: context, message: 'Processing invitation...')
-        .then((_) {
-          _isLoadingDialogShowing = false;
-        });
+    LoadingDialog.show(
+      context: context,
+      message: 'Processing invitation...',
+    ).then((_) {
+      _isLoadingDialogShowing = false;
+    });
   }
 
   void _hideLoadingDialog() {
@@ -95,7 +94,8 @@ class _RequestReviewInvitationScreenState
             context: context,
             title: 'Action Failed',
             message: state.detailsActionError!,
-            onAction: () => context.read<InvitaionsCubit>().clearActionFeedback(),
+            onAction: () =>
+                context.read<InvitaionsCubit>().clearActionFeedback(),
           );
         }
       },
@@ -103,7 +103,8 @@ class _RequestReviewInvitationScreenState
         final loadedState = state is InvitaionsLoaded ? state : null;
         final isDetailsLoading = loadedState?.isDetailsLoading ?? false;
         final details = loadedState?.selectedInvitationDetails;
-        final matchesCurrent = details?.invitationId.toString() == widget.invitation.id;
+        final matchesCurrent =
+            details?.invitationId.toString() == widget.invitation.id;
         final currentInvitation = matchesCurrent && details != null
             ? ProjectInvitationEntity.fromInvitationDetailsEntity(details)
             : widget.invitation;

@@ -23,7 +23,7 @@ import 'package:go_router/go_router.dart';
 
 final appRouter = GoRouter(
   navigatorKey: rootNavigatorKey,
-  initialLocation: BridgeXRoutePaths.splash,
+  initialLocation: BridgeXRoutePaths.login,
   redirect: (context, state) {
     final appState = sl<AppState>();
     final redirect = NavigationGuard.calculateRedirect(state.matchedLocation, appState);

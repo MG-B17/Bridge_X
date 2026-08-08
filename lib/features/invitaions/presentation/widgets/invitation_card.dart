@@ -9,9 +9,7 @@ import 'package:bridge_x/features/invitaions/presentation/utils/invitaions_strin
 import 'package:bridge_x/features/invitaions/presentation/widgets/avatar_stack.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../../core/navigation/route_constant/bridge_x_route_names.dart';
-import '../../../../core/navigation/route_constant/bridge_x_route_paths.dart';
 
 class InvitationCard extends StatelessWidget {
   final ProjectInvitationEntity invitation;

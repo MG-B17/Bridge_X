@@ -627,7 +627,7 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
     await supabaseClient.from('chat_users').upsert({
       'user_id': userId,
       'username': username,
-      if (email != null) 'email': email,
+      'email': email,
     }, onConflict: 'user_id');
   }
 

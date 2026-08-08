@@ -13,9 +13,9 @@ class LoginSocialRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SocialButton(onTap: () {/* TODO: implement GitHub login */}, child: const GithubWidget()),
+        SocialButton(onTap: () {}, child: const GithubWidget()),
         HorizontalSpacing(AppSpacing.spacing16),
-        SocialButton(onTap: () {/* TODO: implement Google login */}, child: const GoogleWidget()),
+        SocialButton(onTap: () {}, child: const GoogleWidget()),
       ],
     );
   }

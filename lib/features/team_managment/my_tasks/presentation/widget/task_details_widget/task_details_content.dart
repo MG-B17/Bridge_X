@@ -136,8 +136,7 @@ class TaskDetailsContent extends StatelessWidget {
         ],
         BridgeXButton(
           text: TaskStrings.updateProgress,
-          onTap: () {
-            // TODO: Implement progress update — needs API endpoint, repo method, cubit flow
+          onTap: () { 
             Navigator.of(context).pop();
           },
         ),

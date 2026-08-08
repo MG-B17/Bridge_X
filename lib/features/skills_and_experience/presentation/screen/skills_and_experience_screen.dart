@@ -237,7 +237,7 @@ class _SkillsAndExperienceScreenState extends State<SkillsAndExperienceScreen> {
     return BlocProvider<SkillsExperienceCubit>(
       create: (_) => sl<SkillsExperienceCubit>()..fetchSkillsExperience(),
       child: BlocConsumer<SkillsExperienceCubit, SkillsExperienceState>(
-        listener: (context, state) async {
+        listener: (context, state)  {
           if (state is SkillsExperienceLoaded) {
             if (!mounted) return;
             setState(() => _populateFields(state.skillsExperience));
@@ -248,8 +248,6 @@ class _SkillsAndExperienceScreenState extends State<SkillsAndExperienceScreen> {
               message: 'Skills & Experience updated successfully',
 
             );
-            await Future.delayed(const Duration(milliseconds: 700));
-
             if (context.mounted) {
               context.pop();
             }
